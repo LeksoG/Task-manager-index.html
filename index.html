@@ -454,6 +454,7 @@
         .tasks-header {
             margin-bottom: 1.5rem;
             position: relative;
+            transition: transform 0.3s ease;
         }
 
         /* REDESIGNED SEARCH CONTAINER */
@@ -673,10 +674,26 @@
             font-size: 1.1rem;
         }
 
+        /* Fixed at top when scrolling */
+        .task-filters-wrapper {
+            position: sticky;
+            top: 70px;
+            background-color: var(--gray-50);
+            z-index: 20;
+            padding: 1rem 0;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform: translateY(0);
+            border-radius: 0 0 12px 12px;
+        }
+
+        .task-filters-wrapper.fixed {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
         .task-filters {
             display: flex;
             gap: 1rem;
-            margin-bottom: 1.5rem;
         }
 
         .filter-btn {
@@ -756,7 +773,7 @@
         }
 
         .btn-secondary {
-            background: var(--secondary-gradient);
+            background: var(--secondary);
             color: white;
             box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.3);
         }
@@ -812,9 +829,18 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
+            opacity: 1;
+            transform: translateY(0);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        /* Hidden dashboard when scrolling */
+        .dashboard.hidden {
             opacity: 0;
-            transform: translateY(20px);
-            animation: fade-slide-up 0.6s ease-out forwards;
+            transform: translateY(-20px);
+            max-height: 0;
+            margin: 0;
+            overflow: hidden;
         }
 
         @keyframes fade-slide-up {
@@ -913,9 +939,13 @@
             flex: 1;
             overflow-y: auto;
             padding-right: 0.5rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fade-slide-up 0.6s ease-out 0.4s forwards;
+            opacity: 1;
+            transform: translateY(0);
+            transition: transform 0.3s ease, opacity 0.3s ease, padding-top 0.3s ease;
+        }
+
+        .task-list-wrapper.expanded {
+            padding-top: 0;
         }
 
         .task-list {
@@ -1077,7 +1107,7 @@
             gap: 0.75rem;
         }
 
-        .task-category, .task-date {
+        .task-category, .task-date, .task-time {
             display: flex;
             align-items: center;
             padding: 0.3rem 0.75rem;
@@ -1086,7 +1116,7 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
-        .task-category i, .task-date i {
+        .task-category i, .task-date i, .task-time i {
             margin-right: 0.35rem;
             font-size: 0.95rem;
         }
@@ -1396,6 +1426,11 @@
             color: var(--gray-700);
         }
 
+        .task-detail-badge.time {
+            background-color: var(--secondary-light);
+            color: var(--secondary-dark);
+        }
+
         .task-detail-badge.status {
             background-color: var(--success-light);
             color: var(--success);
@@ -1617,6 +1652,43 @@
 
         .input-with-icon {
             padding-left: 2.75rem;
+        }
+
+        /* Datetime input group */
+        .datetime-input-group {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .date-input {
+            flex: 2;
+        }
+
+        .time-input {
+            flex: 1;
+        }
+
+        .time-input-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .time-input-field {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 1.05rem;
+            background-color: var(--gray-50);
+            transition: all 0.3s ease;
+        }
+
+        .time-input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+            background-color: white;
         }
 
         .form-actions {
@@ -1883,14 +1955,16 @@
         /* Right slide-in notification for reminders */
         .reminder-notification-container {
             position: fixed;
-            top: 100px;
+            bottom: 30px;
             right: -400px; /* Start off-screen */
             z-index: 1600;
-            transition: right 0.5s ease;
+            transition: right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 350px;
+            width: 100%;
         }
 
         .reminder-notification-container.show {
-            right: 20px;
+            right: 30px;
         }
 
         .reminder-notification {
@@ -1899,8 +1973,6 @@
             background-color: white;
             color: var(--gray-800);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
-            max-width: 350px;
-            width: 100%;
             border-left: 4px solid var(--highlight-color);
             position: relative;
         }
@@ -2150,10 +2222,23 @@
             display: flex;
             gap: 1rem;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .custom-reminder-inputs > div {
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .custom-reminder-inputs label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray-700);
         }
 
         .custom-reminder-inputs input {
-            width: 80px;
+            width: 100%;
             text-align: center;
             padding: 0.6rem;
             border: 1px solid var(--gray-300);
@@ -2272,6 +2357,14 @@
             .reminder-options {
                 grid-template-columns: 1fr;
             }
+            
+            .datetime-input-group {
+                flex-direction: column;
+            }
+            
+            .time-input {
+                width: 100%;
+            }
         }
 
         /* Dark Mode Styles */
@@ -2296,9 +2389,14 @@
         body.dark-mode .task-sort,
         body.dark-mode .search-suggestions,
         body.dark-mode .task-detail-content,
-        body.dark-mode .reminder-notification {
+        body.dark-mode .reminder-notification,
+        body.dark-mode .task-filters-wrapper {
             background-color: var(--gray-800);
             border-color: var(--gray-700);
+        }
+
+        body.dark-mode .task-filters-wrapper {
+            background-color: var(--gray-900);
         }
 
         body.dark-mode .task-detail-description,
@@ -2338,7 +2436,8 @@
         body.dark-mode .search-input,
         body.dark-mode .form-control,
         body.dark-mode .form-select,
-        body.dark-mode .custom-reminder-inputs input {
+        body.dark-mode .custom-reminder-inputs input,
+        body.dark-mode .time-input-field {
             background-color: var(--gray-700);
             border-color: var(--gray-600);
             color: var(--gray-200);
@@ -2347,7 +2446,8 @@
         body.dark-mode .search-input:focus,
         body.dark-mode .form-control:focus,
         body.dark-mode .form-select:focus,
-        body.dark-mode .custom-reminder-inputs input:focus {
+        body.dark-mode .custom-reminder-inputs input:focus,
+        body.dark-mode .time-input-field:focus {
             background-color: var(--gray-800);
         }
 
@@ -2519,7 +2619,7 @@
                 </aside>
 
                 <div class="tasks-container">
-                    <div class="tasks-header">
+                    <div class="tasks-header" id="tasksHeader">
                         <!-- Redesigned Search Container -->
                         <div class="search-container">
                             <i class="fas fa-search search-icon" aria-hidden="true"></i>
@@ -2595,13 +2695,15 @@
                         </div>
                     </div>
 
-                    <!-- Filter buttons -->
-                    <div class="task-filters" id="taskFilters">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="pending">Pending</button>
-                        <button class="filter-btn" data-filter="completed">Completed</button>
-                        <button class="filter-btn" data-filter="overdue">Overdue</button>
-                        <button class="filter-btn" data-filter="today">Due Today</button>
+                    <!-- Filter buttons - Now in a wrapper for sticky behavior -->
+                    <div class="task-filters-wrapper" id="taskFiltersWrapper">
+                        <div class="task-filters" id="taskFilters">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="pending">Pending</button>
+                            <button class="filter-btn" data-filter="completed">Completed</button>
+                            <button class="filter-btn" data-filter="overdue">Overdue</button>
+                            <button class="filter-btn" data-filter="today">Due Today</button>
+                        </div>
                     </div>
 
                     <div class="task-list-wrapper" id="taskListWrapper">
@@ -2662,133 +2764,142 @@
                     <form id="taskForm">
                         <input type="hidden" id="taskId">
                         <input type="hidden" id="taskReminderTime" value="">
+                        <input type="hidden" id="taskReminderMinutes" value="30"> <!-- Store minutes before due time -->
 
                         <!-- Task Details Tab Content -->
                         <div class="task-form-content active" id="task-details-content">
                             <div class="form-group">
                                 <label for="taskTitle" class="form-label">Task Title</label>
                                 <div class="input-group">
-                                    <i class="fas fa-tasks input-icon" aria-hidden="true"></i>
-                                    <input type="text" id="taskTitle" class="form-control input-with-icon" placeholder="What needs to be done?" required aria-required="true">
+                                    <!-- This is the continuation of the existing form input that was cut off -->
+<i class="fas fa-tasks input-icon" aria-hidden="true"></i>
+                                    <input type="text" id="taskTitle" class="form-control input-with-icon" placeholder="What needs to be done?" required>
                                 </div>
-                                <div class="form-error" id="titleError">Please enter a task title</div>
+                                <div class="form-error" id="taskTitleError">Please enter a task title</div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="taskDescription" class="form-label">Description (Optional)</label>
-                                <div class="input-group">
-                                    <i class="fas fa-align-left input-icon" aria-hidden="true"></i>
-                                    <textarea id="taskDescription" class="form-control input-with-icon" rows="3" placeholder="Add details about your task"></textarea>
-                                </div>
+                                <textarea id="taskDescription" class="form-control" rows="3" placeholder="Add details about your task..."></textarea>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Category</label>
-                                <div class="category-selector">
-                                    <label class="category-option work" data-value="work">
-                                        <input type="radio" name="category" value="work">
-                                        <i class="fas fa-briefcase" aria-hidden="true"></i>
+                                <div class="category-selector" id="categorySelector">
+                                    <div class="category-option work">
+                                        <input type="radio" name="taskCategory" id="categoryWork" value="work" required>
+                                        <i class="fas fa-briefcase"></i>
                                         Work
-                                    </label>
-                                    <label class="category-option personal" data-value="personal">
-                                        <input type="radio" name="category" value="personal">
-                                        <i class="fas fa-user" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="category-option personal">
+                                        <input type="radio" name="taskCategory" id="categoryPersonal" value="personal">
+                                        <i class="fas fa-user"></i>
                                         Personal
-                                    </label>
-                                    <label class="category-option shopping" data-value="shopping">
-                                        <input type="radio" name="category" value="shopping">
-                                        <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="category-option shopping">
+                                        <input type="radio" name="taskCategory" id="categoryShopping" value="shopping">
+                                        <i class="fas fa-shopping-cart"></i>
                                         Shopping
-                                    </label>
-                                    <label class="category-option health" data-value="health">
-                                        <input type="radio" name="category" value="health">
-                                        <i class="fas fa-heartbeat" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="category-option health">
+                                        <input type="radio" name="taskCategory" id="categoryHealth" value="health">
+                                        <i class="fas fa-heartbeat"></i>
                                         Health
-                                    </label>
-                                    <label class="category-option finance" data-value="finance">
-                                        <input type="radio" name="category" value="finance">
-                                        <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="category-option finance">
+                                        <input type="radio" name="taskCategory" id="categoryFinance" value="finance">
+                                        <i class="fas fa-dollar-sign"></i>
                                         Finance
-                                    </label>
-                                    <label class="category-option education" data-value="education">
-                                        <input type="radio" name="category" value="education">
-                                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="category-option education">
+                                        <input type="radio" name="taskCategory" id="categoryEducation" value="education">
+                                        <i class="fas fa-graduation-cap"></i>
                                         Education
-                                    </label>
+                                    </div>
                                 </div>
-                                <input type="hidden" id="taskCategory" value="work">
+                                <div class="form-error" id="taskCategoryError">Please select a category</div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Priority</label>
-                                <div class="priority-selector">
-                                    <label class="priority-option low" data-value="low">
-                                        <input type="radio" name="priority" value="low">
-                                        <i class="fas fa-flag" aria-hidden="true"></i> Low
-                                    </label>
-                                    <label class="priority-option medium" data-value="medium">
-                                        <input type="radio" name="priority" value="medium">
-                                        <i class="fas fa-flag" aria-hidden="true"></i> Medium
-                                    </label>
-
-                                    <label class="priority-option high" data-value="high">
-                                        <input type="radio" name="priority" value="high">
-                                        <i class="fas fa-flag" aria-hidden="true"></i> High
-                                    </label>
+                                <div class="priority-selector" id="prioritySelector">
+                                    <div class="priority-option low">
+                                        <input type="radio" name="taskPriority" id="priorityLow" value="low" required>
+                                        <i class="fas fa-arrow-down"></i> Low
+                                    </div>
+                                    <div class="priority-option medium">
+                                        <input type="radio" name="taskPriority" id="priorityMedium" value="medium">
+                                        <i class="fas fa-equals"></i> Medium
+                                    </div>
+                                    <div class="priority-option high">
+                                        <input type="radio" name="taskPriority" id="priorityHigh" value="high">
+                                        <i class="fas fa-arrow-up"></i> High
+                                    </div>
                                 </div>
-                                <input type="hidden" id="taskPriority" value="medium">
+                                <div class="form-error" id="taskPriorityError">Please select a priority</div>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label for="dueDate" class="form-label">Due Date</label>
-                                <div class="input-group">
-                                    <i class="fas fa-calendar-alt input-icon" aria-hidden="true"></i>
-                                    <input type="date" id="dueDate" class="form-control input-with-icon" required aria-required="true">
+                                <label class="form-label">Due Date and Time</label>
+                                <div class="datetime-input-group">
+                                    <div class="date-input">
+                                        <div class="input-group">
+                                            <i class="fas fa-calendar input-icon" aria-hidden="true"></i>
+                                            <input type="date" id="taskDueDate" class="form-control input-with-icon" required>
+                                        </div>
+                                        <div class="form-error" id="taskDueDateError">Please select a due date</div>
+                                    </div>
+                                    <div class="time-input">
+                                        <div class="time-input-container">
+                                            <div class="input-group">
+                                                <i class="fas fa-clock input-icon" aria-hidden="true"></i>
+                                                <input type="time" id="taskDueTime" class="time-input-field input-with-icon">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-error" id="dateError">Please select a due date</div>
                             </div>
                         </div>
 
                         <!-- Reminders Tab Content -->
                         <div class="task-form-content" id="reminders-content">
                             <div class="form-group">
-                                <label class="form-label">Set Reminder</label>
+                                <label class="form-label">Set a Reminder</label>
                                 <div class="reminder-options">
-                                    <label class="reminder-option" data-value="none">
-                                        <input type="radio" name="reminder" value="none" checked>
-                                        <i class="fas fa-bell-slash" aria-hidden="true"></i> No Reminder
-                                    </label>
-                                    <label class="reminder-option" data-value="sameday">
-                                        <input type="radio" name="reminder" value="sameday">
-                                        <i class="fas fa-bell" aria-hidden="true"></i> Same Day (9am)
-                                    </label>
-                                    <label class="reminder-option" data-value="1day">
-                                        <input type="radio" name="reminder" value="1day">
-                                        <i class="fas fa-bell" aria-hidden="true"></i> 1 Day Before
-                                    </label>
-                                    <label class="reminder-option" data-value="2days">
-                                        <input type="radio" name="reminder" value="2days">
-                                        <i class="fas fa-bell" aria-hidden="true"></i> 2 Days Before
-                                    </label>
+                                    <div class="reminder-option">
+                                        <input type="radio" name="reminderOption" id="reminder10min" value="10">
+                                        <i class="fas fa-bell"></i> 10 minutes before
+                                    </div>
+                                    <div class="reminder-option">
+                                        <input type="radio" name="reminderOption" id="reminder30min" value="30" checked>
+                                        <i class="fas fa-bell"></i> 30 minutes before
+                                    </div>
+                                    <div class="reminder-option">
+                                        <input type="radio" name="reminderOption" id="reminder1hour" value="60">
+                                        <i class="fas fa-bell"></i> 1 hour before
+                                    </div>
+                                    <div class="reminder-option">
+                                        <input type="radio" name="reminderOption" id="reminder1day" value="1440">
+                                        <i class="fas fa-bell"></i> 1 day before
+                                    </div>
                                 </div>
-                                
+
                                 <div class="custom-reminder">
                                     <button type="button" class="custom-reminder-btn" id="customReminderBtn">
-                                        <i class="fas fa-cog" aria-hidden="true"></i> Custom Reminder
+                                        <i class="fas fa-plus"></i> Custom Reminder
                                     </button>
-                                    
                                     <div class="custom-reminder-form" id="customReminderForm">
                                         <div class="custom-reminder-inputs">
                                             <div>
-                                                <label>Days</label>
+                                                <label for="reminderDays">Days</label>
                                                 <input type="number" id="reminderDays" min="0" max="30" value="0">
                                             </div>
                                             <div>
-                                                <label>Hours</label>
+                                                <label for="reminderHours">Hours</label>
                                                 <input type="number" id="reminderHours" min="0" max="23" value="0">
                                             </div>
                                             <div>
-                                                <label>Minutes</label>
+                                                <label for="reminderMinutes">Minutes</label>
                                                 <input type="number" id="reminderMinutes" min="0" max="59" value="30">
                                             </div>
                                         </div>
@@ -2800,7 +2911,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-actions">
                             <button type="button" class="btn btn-cancel" id="cancelTaskBtn">Cancel</button>
                             <button type="submit" class="btn btn-primary" id="saveTaskBtn">Save Task</button>
@@ -2815,34 +2926,78 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">Delete Task</h3>
-                    <button class="modal-close" id="deleteModalClose" aria-label="Close modal">
+                    <button class="modal-close" id="deleteModalClose" aria-label="Close delete modal">
                         <i class="fas fa-times" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <i class="fas fa-exclamation-triangle delete-icon" aria-hidden="true"></i>
+                    <i class="fas fa-trash-alt delete-icon" aria-hidden="true"></i>
                     <p class="delete-message">
                         Are you sure you want to delete this task?
                         <strong id="deleteTaskTitle"></strong>
+                        This action cannot be undone.
                     </p>
                     <div class="form-actions">
                         <button type="button" class="btn btn-cancel" id="cancelDeleteBtn">Cancel</button>
-                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete Task</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Notification Container -->
+        <!-- Notification System -->
         <div class="notification-container" id="notificationContainer"></div>
 
-        <!-- Reminder Notification Container -->
-        <div class="reminder-notification-container" id="reminderContainer"></div>
+        <!-- Reminder Notification -->
+        <div class="reminder-notification-container" id="reminderContainer">
+            <div class="reminder-notification">
+                <div class="reminder-notification-header">
+                    <div class="reminder-notification-title">
+                        <i class="fas fa-bell"></i> Task Reminder
+                    </div>
+                    <button class="reminder-notification-close" id="closeReminderBtn" aria-label="Close reminder">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="reminder-notification-content">
+                    <div class="reminder-notification-task" id="reminderTaskTitle"></div>
+                    <div class="reminder-notification-message" id="reminderMessage"></div>
+                    <div class="reminder-notification-actions">
+                        <button class="reminder-notification-btn dismiss" id="dismissReminderBtn">Dismiss</button>
+                        <button class="reminder-notification-btn view" id="viewReminderTaskBtn">View Task</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- JAVASCRIPT -->
     <script>
-        // Wait for DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
+            'use strict';
+
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            // Check for saved theme preference
+            if (localStorage.getItem('theme') === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                }
+            });
+
             // Welcome Animation
             const welcomeOverlay = document.getElementById('welcomeOverlay');
             const appContainer = document.getElementById('appContainer');
@@ -2851,476 +3006,903 @@
                 welcomeOverlay.style.opacity = '0';
                 welcomeOverlay.style.visibility = 'hidden';
                 appContainer.classList.add('visible');
-            }, 3800); // Duration of welcome animation before showing app
-            
-            // Theme Toggle
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = themeToggle.querySelector('i');
-            const body = document.body;
-            
-            // Check local storage for saved theme preference
-            if (localStorage.getItem('darkMode') === 'true') {
-                body.classList.add('dark-mode');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            }
-            
-            themeToggle.addEventListener('click', () => {
-                body.classList.toggle('dark-mode');
-                
-                if (body.classList.contains('dark-mode')) {
-                    themeIcon.classList.remove('fa-moon');
-                    themeIcon.classList.add('fa-sun');
-                    localStorage.setItem('darkMode', 'true');
-                } else {
-                    themeIcon.classList.remove('fa-sun');
-                    themeIcon.classList.add('fa-moon');
-                    localStorage.setItem('darkMode', 'false');
-                }
-            });
-            
-            // Task Data Store
+            }, 3500);
+
+            // Task data storage
             let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            
-            // DOM Elements
-            const categoryContainer = document.getElementById('categoryContainer');
-            const dashboard = document.getElementById('dashboard');
+            let currentFilter = 'all';
+            let currentCategory = 'all';
+
+            // Elements
+            const categorySlider = document.getElementById('categorySlider');
+            const activeCategoryIndicator = document.getElementById('activeCategoryIndicator');
+            const currentCategoryEl = document.getElementById('currentCategory');
+            const categoryDescriptionEl = document.getElementById('categoryDescription');
+            const addTaskBtn = document.getElementById('addTaskBtn');
+            const taskModal = document.getElementById('taskModal');
+            const modalClose = document.getElementById('modalClose');
+            const taskForm = document.getElementById('taskForm');
+            const saveTaskBtn = document.getElementById('saveTaskBtn');
+            const cancelTaskBtn = document.getElementById('cancelTaskBtn');
             const taskList = document.getElementById('taskList');
             const emptyState = document.getElementById('emptyState');
-            const currentCategory = document.getElementById('currentCategory');
-            const categoryDescription = document.getElementById('categoryDescription');
-            const categorySlider = document.getElementById('categorySlider');
-            const categories = document.querySelectorAll('.category');
-            const activeCategoryIndicator = document.getElementById('activeCategoryIndicator');
-            const sortSelect = document.getElementById('sortSelect');
-            const taskFilters = document.getElementById('taskFilters');
-            const filterButtons = document.querySelectorAll('.filter-btn');
+            const taskFilterBtns = document.querySelectorAll('.filter-btn');
+            const searchInput = document.getElementById('searchInput');
+            const searchSuggestions = document.getElementById('searchSuggestions');
+            const searchOverlay = document.getElementById('searchOverlay');
+            const taskDetailModal = document.getElementById('taskDetailModal');
+            const detailClose = document.getElementById('detailClose');
+            const detailEditBtn = document.getElementById('detailEditBtn');
+            const dashboard = document.getElementById('dashboard');
+            const deleteModal = document.getElementById('deleteModal');
+            const deleteModalClose = document.getElementById('deleteModalClose');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            const notificationContainer = document.getElementById('notificationContainer');
+            const reminderContainer = document.getElementById('reminderContainer');
+            const closeReminderBtn = document.getElementById('closeReminderBtn');
+            const dismissReminderBtn = document.getElementById('dismissReminderBtn');
+            const viewReminderTaskBtn = document.getElementById('viewReminderTaskBtn');
+            const modalHeader = document.getElementById('modalHeader');
+            const categoryOptions = document.querySelectorAll('.category-option');
+            const priorityOptions = document.querySelectorAll('.priority-option');
             
-            // Task counts
-            const taskCounts = document.querySelectorAll('.task-count');
+            // Task form tabs
+            const taskFormTabs = document.querySelectorAll('.task-form-tab');
+            const taskFormContents = document.querySelectorAll('.task-form-content');
+            
+            // Reminder options
+            const reminderOptions = document.querySelectorAll('.reminder-option');
+            const customReminderBtn = document.getElementById('customReminderBtn');
+            const customReminderForm = document.getElementById('customReminderForm');
+            const cancelCustomReminderBtn = document.getElementById('cancelCustomReminderBtn');
+            const applyCustomReminderBtn = document.getElementById('applyCustomReminderBtn');
+            
+            // Dashboard counter elements
             const totalTasksValue = document.getElementById('totalTasksValue');
             const completedTasksValue = document.getElementById('completedTasksValue');
             const pendingTasksValue = document.getElementById('pendingTasksValue');
             const overdueTasksValue = document.getElementById('overdueTasksValue');
             
-            // Forms and Modals
-            const taskForm = document.getElementById('taskForm');
-            const taskModal = document.getElementById('taskModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalHeader = document.getElementById('modalHeader');
-            const modalClose = document.getElementById('modalClose');
-            const addTaskBtn = document.getElementById('addTaskBtn');
-            const saveTaskBtn = document.getElementById('saveTaskBtn');
-            const cancelTaskBtn = document.getElementById('cancelTaskBtn');
+            // Stats for task counts by category
+            const taskCountElements = document.querySelectorAll('.task-count');
             
-            // Task Form Fields
-            const taskIdInput = document.getElementById('taskId');
-            const taskTitleInput = document.getElementById('taskTitle');
-            const taskDescriptionInput = document.getElementById('taskDescription');
-            const taskCategoryInput = document.getElementById('taskCategory');
-            const taskPriorityInput = document.getElementById('taskPriority');
-            const dueDateInput = document.getElementById('dueDate');
-            const categoryOptions = document.querySelectorAll('.category-option');
-            const priorityOptions = document.querySelectorAll('.priority-option');
+            // Task Filters Sticky Behavior
+            const taskFiltersWrapper = document.getElementById('taskFiltersWrapper');
+            const taskListWrapper = document.getElementById('taskListWrapper');
+            const tasksHeader = document.getElementById('tasksHeader');
             
-            // Form Tabs
-            const formTabs = document.querySelectorAll('.task-form-tab');
-            const formContents = document.querySelectorAll('.task-form-content');
+            // Category descriptions
+            const categoryDescriptions = {
+                all: 'View and manage all your tasks in one place.',
+                work: 'Work tasks related to your job, projects, and professional commitments.',
+                personal: 'Personal tasks for your daily life and individual goals.',
+                shopping: 'Shopping lists and items you need to purchase.',
+                health: 'Health and wellness related tasks including exercise, appointments, and medications.',
+                finance: 'Financial tasks like bills, payments, and budget management.',
+                education: 'Tasks related to learning, courses, and educational activities.'
+            };
             
-            // Reminders
-            const reminderOptions = document.querySelectorAll('.reminder-option');
-            const taskReminderTimeInput = document.getElementById('taskReminderTime');
-            const customReminderBtn = document.getElementById('customReminderBtn');
-            const customReminderForm = document.getElementById('customReminderForm');
-            const cancelCustomReminderBtn = document.getElementById('cancelCustomReminderBtn');
-            const applyCustomReminderBtn = document.getElementById('applyCustomReminderBtn');
-            const reminderDaysInput = document.getElementById('reminderDays');
-            const reminderHoursInput = document.getElementById('reminderHours');
-            const reminderMinutesInput = document.getElementById('reminderMinutes');
-            
-            // Delete Modal
-            const deleteModal = document.getElementById('deleteModal');
-            const deleteModalClose = document.getElementById('deleteModalClose');
-            const deleteTaskTitle = document.getElementById('deleteTaskTitle');
-            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-            
-            // Task Detail Modal
-            const taskDetailModal = document.getElementById('taskDetailModal');
-            const detailTitle = document.getElementById('detailTitle');
-            const detailClose = document.getElementById('detailClose');
-            const detailMeta = document.getElementById('detailMeta');
-            const detailDescription = document.getElementById('detailDescription');
-            const detailEditBtn = document.getElementById('detailEditBtn');
-            
-            // Search
-            const searchInput = document.getElementById('searchInput');
-            const searchSuggestions = document.getElementById('searchSuggestions');
-            const searchOverlay = document.getElementById('searchOverlay');
-            
-            // Notification elements
-            const notificationContainer = document.getElementById('notificationContainer');
-            const reminderContainer = document.getElementById('reminderContainer');
-            
-            // Set today's date as the minimum for the due date input
-            const today = new Date();
-            const formattedDate = today.toISOString().split('T')[0];
-            dueDateInput.min = formattedDate;
-            
-            // Initialize the app
-            init();
-            
-            // FUNCTIONS
-            
-            // Initialize the app
+            // Category icons
+            const categoryIcons = {
+                all: '<i class="fas fa-layer-group"></i>',
+                work: '<i class="fas fa-briefcase"></i>',
+                personal: '<i class="fas fa-user"></i>',
+                shopping: '<i class="fas fa-shopping-cart"></i>',
+                health: '<i class="fas fa-heartbeat"></i>',
+                finance: '<i class="fas fa-dollar-sign"></i>',
+                education: '<i class="fas fa-graduation-cap"></i>'
+            };
+
+            // Initialize the application
             function init() {
-                // Set default sort option
-                sortSelect.value = 'date';
+                renderTasks();
+                updateDashboard();
+                updateCategoryCounts();
                 
-                // Load tasks from localStorage and render them
-                renderTasks('all', 'all');
-                updateStats();
+                // Set active category indicator position initially
+                const activeCategory = document.querySelector('.category.active');
+                if (activeCategory) {
+                    updateActiveCategoryIndicator(activeCategory);
+                }
                 
-                // Check for any reminders
                 checkReminders();
                 
-                // Set active category indicator initial position
-                setTimeout(() => {
-                    const activeCategory = document.querySelector('.category.active');
-                    if (activeCategory) {
-                        activeCategoryIndicator.style.transform = `translateY(${activeCategory.offsetTop}px)`;
-                    }
-                }, 100);
-                
-                // Set interval to check reminders every minute
+                // Check for reminders every minute
                 setInterval(checkReminders, 60000);
             }
-            
-            // Create or update a task
-            function saveTask(e) {
+
+            // Category selection and sliding indicator
+            categorySlider.addEventListener('click', (e) => {
+                const categoryEl = e.target.closest('.category');
+                if (!categoryEl) return;
+                
+                // Remove active class from all categories
+                document.querySelectorAll('.category').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked category
+                categoryEl.classList.add('active');
+                
+                // Update the sliding indicator position
+                updateActiveCategoryIndicator(categoryEl);
+                
+                // Update current category and tasks
+                currentCategory = categoryEl.dataset.category;
+                currentCategoryEl.innerHTML = `${categoryIcons[currentCategory]} ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} Tasks`;
+                categoryDescriptionEl.textContent = categoryDescriptions[currentCategory];
+                
+                // Show/hide dashboard based on category
+                if (currentCategory === 'all') {
+                    dashboard.classList.remove('hidden');
+                } else {
+                    dashboard.classList.add('hidden');
+                }
+                
+                // Update task list
+                renderTasks();
+            });
+
+            // Update active category indicator position
+            function updateActiveCategoryIndicator(activeCategory) {
+                const categoryRect = activeCategory.getBoundingClientRect();
+                const sliderRect = categorySlider.getBoundingClientRect();
+                
+                activeCategoryIndicator.style.transform = `translateY(${activeCategory.offsetTop}px)`;
+                activeCategoryIndicator.style.height = `${categoryRect.height}px`;
+            }
+
+            // Add Task button click
+            addTaskBtn.addEventListener('click', () => {
+                openAddTaskModal();
+            });
+
+            // Empty state click
+            emptyState.addEventListener('click', () => {
+                openAddTaskModal();
+            });
+
+            // Open Add Task Modal
+            function openAddTaskModal() {
+                // Reset the form
+                taskForm.reset();
+                document.getElementById('taskId').value = '';
+                document.getElementById('taskReminderTime').value = '';
+                document.getElementById('taskReminderMinutes').value = '30';
+                
+                // Set the due date to today by default
+                const today = new Date();
+                const formattedDate = today.toISOString().substr(0, 10);
+                document.getElementById('taskDueDate').value = formattedDate;
+                
+                // Reset form errors
+                document.querySelectorAll('.form-error').forEach(error => {
+                    error.style.display = 'none';
+                });
+                
+                // Reset category and priority selections
+                document.querySelectorAll('.category-option, .priority-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                // Reset reminder options
+                document.querySelectorAll('.reminder-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                // Select 30 min reminder by default
+                document.getElementById('reminder30min').checked = true;
+                document.querySelector('.reminder-option:nth-child(2)').classList.add('selected');
+                
+                // Hide custom reminder form
+                customReminderForm.classList.remove('active');
+                
+                // Reset tab selection to first tab
+                taskFormTabs.forEach(tab => tab.classList.remove('active'));
+                taskFormContents.forEach(content => content.classList.remove('active'));
+                taskFormTabs[0].classList.add('active');
+                taskFormContents[0].classList.add('active');
+                
+                // Pre-select the current category if it's not 'all'
+                if (currentCategory !== 'all') {
+                    const categoryInput = document.getElementById(`category${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)}`);
+                    if (categoryInput) {
+                        categoryInput.checked = true;
+                        document.querySelector(`.category-option.${currentCategory}`).classList.add('selected');
+                    }
+                }
+                
+                // Update modal header
+                document.getElementById('modalTitle').textContent = 'Add New Task';
+                modalHeader.className = 'modal-header';
+                
+                // Show the modal
+                taskModal.classList.add('active');
+            }
+
+            // Close Task Modal
+            modalClose.addEventListener('click', () => {
+                taskModal.classList.remove('active');
+            });
+
+            // Cancel Task Button
+            cancelTaskBtn.addEventListener('click', () => {
+                taskModal.classList.remove('active');
+            });
+
+            // Task Form Tabs
+            taskFormTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.dataset.tab;
+                    
+                    // Remove active class from all tabs and contents
+                    taskFormTabs.forEach(t => t.classList.remove('active'));
+                    taskFormContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and its content
+                    tab.classList.add('active');
+                    document.getElementById(`${tabId}-content`).classList.add('active');
+                });
+            });
+
+            // Category options selection
+            categoryOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Unselect all options
+                    categoryOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Select clicked option
+                    option.classList.add('selected');
+                    
+                    // Check the radio button
+                    const radio = option.querySelector('input[type="radio"]');
+                    if (radio) radio.checked = true;
+                    
+                    // Update modal header class
+                    const category = radio.value;
+                    modalHeader.className = `modal-header ${category}`;
+                });
+            });
+
+            // Priority options selection
+            priorityOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Unselect all options
+                    priorityOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Select clicked option
+                    option.classList.add('selected');
+                    
+                    // Check the radio button
+                    const radio = option.querySelector('input[type="radio"]');
+                    if (radio) radio.checked = true;
+                });
+            });
+
+            // Reminder options selection
+            reminderOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Unselect all options
+                    reminderOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Select clicked option
+                    option.classList.add('selected');
+                    
+                    // Check the radio button
+                    const radio = option.querySelector('input[type="radio"]');
+                    if (radio) {
+                        radio.checked = true;
+                        document.getElementById('taskReminderMinutes').value = radio.value;
+                    }
+                });
+            });
+
+            // Custom reminder button
+            customReminderBtn.addEventListener('click', () => {
+                customReminderForm.classList.toggle('active');
+            });
+
+            // Cancel custom reminder
+            cancelCustomReminderBtn.addEventListener('click', () => {
+                customReminderForm.classList.remove('active');
+            });
+
+            // Apply custom reminder
+            applyCustomReminderBtn.addEventListener('click', () => {
+                const days = parseInt(document.getElementById('reminderDays').value) || 0;
+                const hours = parseInt(document.getElementById('reminderHours').value) || 0;
+                const minutes = parseInt(document.getElementById('reminderMinutes').value) || 0;
+                
+                const totalMinutes = (days * 24 * 60) + (hours * 60) + minutes;
+                
+                // Unselect all options
+                reminderOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                    opt.querySelector('input[type="radio"]').checked = false;
+                });
+                
+                document.getElementById('taskReminderMinutes').value = totalMinutes;
+                
+                // Hide custom reminder form
+                customReminderForm.classList.remove('active');
+                
+                // Show notification
+                showNotification('Custom reminder set', 'success');
+            });
+
+            // Save Task
+            taskForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 
-                const title = taskTitleInput.value.trim();
-                const description = taskDescriptionInput.value.trim();
-                const category = taskCategoryInput.value;
-                const priority = taskPriorityInput.value;
-                const dueDate = dueDateInput.value;
-                const reminderTime = taskReminderTimeInput.value;
-                const id = taskIdInput.value || Date.now().toString();
-                const isCompleted = taskIdInput.value ? (tasks.find(task => task.id === taskIdInput.value) || {}).isCompleted || false : false;
+                // Validate form
+                let isValid = true;
                 
+                const title = document.getElementById('taskTitle').value.trim();
                 if (!title) {
-                    document.getElementById('titleError').style.display = 'block';
-                    return;
-                }
-                
-                if (!dueDate) {
-                    document.getElementById('dateError').style.display = 'block';
-                    return;
-                }
-                
-                const task = {
-                    id,
-                    title,
-                    description,
-                    category,
-                    priority,
-                    dueDate,
-                    reminderTime,
-                    isCompleted,
-                    createdAt: taskIdInput.value ? (tasks.find(task => task.id === taskIdInput.value) || {}).createdAt || new Date().toISOString() : new Date().toISOString()
-                };
-                
-                if (taskIdInput.value) {
-                    // Update existing task
-                    tasks = tasks.map(t => t.id === id ? task : t);
-                    showNotification('Task updated successfully!', 'success');
+                    document.getElementById('taskTitleError').style.display = 'block';
+                    isValid = false;
                 } else {
-                    // Create new task
-                    tasks.push(task);
-                    showNotification('Task added successfully!', 'success');
+                    document.getElementById('taskTitleError').style.display = 'none';
+                }
+                
+                // Get selected category
+                const categoryRadio = document.querySelector('input[name="taskCategory"]:checked');
+                if (!categoryRadio) {
+                    document.getElementById('taskCategoryError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('taskCategoryError').style.display = 'none';
+                }
+                
+                // Get selected priority
+                const priorityRadio = document.querySelector('input[name="taskPriority"]:checked');
+                if (!priorityRadio) {
+                    document.getElementById('taskPriorityError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('taskPriorityError').style.display = 'none';
+                }
+                
+                // Check due date
+                const dueDate = document.getElementById('taskDueDate').value;
+                if (!dueDate) {
+                    document.getElementById('taskDueDateError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('taskDueDateError').style.display = 'none';
+                }
+                
+                if (!isValid) return;
+                
+                // Get form values
+                const taskId = document.getElementById('taskId').value;
+                const description = document.getElementById('taskDescription').value.trim();
+                const category = categoryRadio.value;
+                const priority = priorityRadio.value;
+                const dueTime = document.getElementById('taskDueTime').value || '23:59';
+                const reminderMinutes = parseInt(document.getElementById('taskReminderMinutes').value);
+                
+                // Create due date time object
+                const dueDateObj = new Date(`${dueDate}T${dueTime}`);
+                
+                // Calculate reminder time
+                let reminderTime = null;
+                if (reminderMinutes > 0) {
+                    reminderTime = new Date(dueDateObj.getTime() - (reminderMinutes * 60 * 1000));
+                }
+                
+                if (taskId) {
+                    // Update existing task
+                    const taskIndex = tasks.findIndex(task => task.id === taskId);
+                    if (taskIndex !== -1) {
+                        tasks[taskIndex] = {
+                            ...tasks[taskIndex],
+                            title,
+                            description,
+                            category,
+                            priority,
+                            dueDate: dueDateObj.toISOString(),
+                            reminderTime: reminderTime ? reminderTime.toISOString() : null,
+                            reminderMinutes,
+                            modifiedAt: new Date().toISOString()
+                        };
+                        
+                        showNotification('Task updated successfully', 'success');
+                    }
+                } else {
+                    // Add new task
+                    const newTask = {
+                        id: generateId(),
+                        title,
+                        description,
+                        category,
+                        priority,
+                        completed: false,
+                        dueDate: dueDateObj.toISOString(),
+                        reminderTime: reminderTime ? reminderTime.toISOString() : null,
+                        reminderMinutes,
+                        createdAt: new Date().toISOString(),
+                        modifiedAt: new Date().toISOString()
+                    };
+                    
+                    tasks.push(newTask);
+                    showNotification('Task added successfully', 'success');
                 }
                 
                 // Save to localStorage
                 saveTasks();
                 
-                // Reset and close the form
-                resetForm();
-                closeTaskModal();
+                // Close modal
+                taskModal.classList.remove('active');
                 
-                // Re-render tasks and update stats
-                renderTasks(getCurrentCategory(), getCurrentFilter());
-                updateStats();
-            }
-            
-            // Delete a task
-            function deleteTask(id) {
-                tasks = tasks.filter(task => task.id !== id);
-                saveTasks();
-                showNotification('Task deleted successfully!', 'info');
-                renderTasks(getCurrentCategory(), getCurrentFilter());
-                updateStats();
-                closeDeleteModal();
-            }
-            
-            // Toggle task completion status
-            function toggleTaskCompletion(id) {
-                tasks = tasks.map(task => {
-                    if (task.id === id) {
-                        return { ...task, isCompleted: !task.isCompleted };
+                // Re-render tasks
+                renderTasks();
+                updateDashboard();
+                updateCategoryCounts();
+            });
+
+            // Filter Task buttons
+            taskFilterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    taskFilterBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+                    
+                    // Update filter
+                    currentFilter = btn.dataset.filter;
+                    
+                    // Re-render tasks
+                    renderTasks();
+                });
+            });
+
+            // Edit Task
+            function editTask(taskId) {
+                const task = tasks.find(t => t.id === taskId);
+                if (!task) return;
+                
+                // Set form values
+                document.getElementById('taskId').value = task.id;
+                document.getElementById('taskTitle').value = task.title;
+                document.getElementById('taskDescription').value = task.description || '';
+                
+                // Set category
+                const categoryInput = document.getElementById(`category${task.category.charAt(0).toUpperCase() + task.category.slice(1)}`);
+                if (categoryInput) {
+                    categoryInput.checked = true;
+                    document.querySelectorAll('.category-option').forEach(opt => opt.classList.remove('selected'));
+                    document.querySelector(`.category-option.${task.category}`).classList.add('selected');
+                }
+                
+                // Set priority
+                const priorityInput = document.getElementById(`priority${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}`);
+                if (priorityInput) {
+                    priorityInput.checked = true;
+                    document.querySelectorAll('.priority-option').forEach(opt => opt.classList.remove('selected'));
+                    document.querySelector(`.priority-option.${task.priority}`).classList.add('selected');
+                }
+                
+                // Set due date and time
+                const dueDate = new Date(task.dueDate);
+                document.getElementById('taskDueDate').value = dueDate.toISOString().substr(0, 10);
+                
+                // Format time as HH:MM
+                const hours = dueDate.getHours().toString().padStart(2, '0');
+                const minutes = dueDate.getMinutes().toString().padStart(2, '0');
+                document.getElementById('taskDueTime').value = `${hours}:${minutes}`;
+                
+                // Set reminder
+                document.getElementById('taskReminderMinutes').value = task.reminderMinutes || 30;
+                
+                // Select corresponding reminder option or reset to custom
+                const reminderValue = task.reminderMinutes;
+                let reminderFound = false;
+                
+                reminderOptions.forEach(option => {
+                    option.classList.remove('selected');
+                    const radio = option.querySelector('input[type="radio"]');
+                    radio.checked = false;
+                    
+                    if (radio.value == reminderValue) {
+                        radio.checked = true;
+                        option.classList.add('selected');
+                        reminderFound = true;
                     }
-                    return task;
                 });
                 
-                saveTasks();
-                renderTasks(getCurrentCategory(), getCurrentFilter());
-                updateStats();
-                
-                const task = tasks.find(task => task.id === id);
-                if (task) {
-                    showNotification(
-                        task.isCompleted 
-                            ? `Task "${task.title}" marked as completed!` 
-                            : `Task "${task.title}" marked as pending!`,
-                        task.isCompleted ? 'success' : 'warning'
-                    );
+                // If custom reminder
+                if (!reminderFound && reminderValue) {
+                    const days = Math.floor(reminderValue / (24 * 60));
+                    const hours = Math.floor((reminderValue % (24 * 60)) / 60);
+                    const minutes = reminderValue % 60;
+                    
+                    document.getElementById('reminderDays').value = days;
+                    document.getElementById('reminderHours').value = hours;
+                    document.getElementById('reminderMinutes').value = minutes;
                 }
+                
+                // Set reminder time if exists
+                if (task.reminderTime) {
+                    document.getElementById('taskReminderTime').value = task.reminderTime;
+                }
+                
+                // Update modal title and header
+                document.getElementById('modalTitle').textContent = 'Edit Task';
+                modalHeader.className = `modal-header ${task.category}`;
+                
+                // Reset tab selection to first tab
+                taskFormTabs.forEach(tab => tab.classList.remove('active'));
+                taskFormContents.forEach(content => content.classList.remove('active'));
+                taskFormTabs[0].classList.add('active');
+                taskFormContents[0].classList.add('active');
+                
+                // Show the modal
+                taskModal.classList.add('active');
+            }
+
+            // Delete Task
+            function confirmDeleteTask(taskId) {
+                const task = tasks.find(t => t.id === taskId);
+                if (!task) return;
+                
+                // Set task title in confirmation
+                document.getElementById('deleteTaskTitle').textContent = task.title;
+                
+                // Show delete modal
+                deleteModal.classList.add('active');
+                
+                // Set up confirm delete button
+                confirmDeleteBtn.onclick = () => {
+                    deleteTask(taskId);
+                    deleteModal.classList.remove('active');
+                };
             }
             
+            // Close delete modal
+            deleteModalClose.addEventListener('click', () => {
+                deleteModal.classList.remove('active');
+            });
+            
+            // Cancel delete
+            cancelDeleteBtn.addEventListener('click', () => {
+                deleteModal.classList.remove('active');
+            });
+
+            // Delete task function
+            function deleteTask(taskId) {
+                tasks = tasks.filter(task => task.id !== taskId);
+                saveTasks();
+                renderTasks();
+                updateDashboard();
+                updateCategoryCounts();
+                showNotification('Task deleted successfully', 'success');
+            }
+
+            // Toggle task completion
+            function toggleTaskCompletion(taskId) {
+                const taskIndex = tasks.findIndex(task => task.id === taskId);
+                if (taskIndex !== -1) {
+                    tasks[taskIndex].completed = !tasks[taskIndex].completed;
+                    tasks[taskIndex].modifiedAt = new Date().toISOString();
+                    
+                    if (tasks[taskIndex].completed) {
+                        tasks[taskIndex].completedAt = new Date().toISOString();
+                        showNotification('Task completed!', 'success');
+                    } else {
+                        tasks[taskIndex].completedAt = null;
+                    }
+                    
+                    saveTasks();
+                    renderTasks();
+                    updateDashboard();
+                    updateCategoryCounts();
+                }
+            }
+
+            // View task details
+            function viewTaskDetails(taskId) {
+                const task = tasks.find(t => t.id === taskId);
+                if (!task) return;
+                
+                // Set task details
+                document.getElementById('detailTitle').textContent = task.title;
+                
+                // Format meta information
+                const metaEl = document.getElementById('detailMeta');
+                const dueDate = new Date(task.dueDate);
+                
+                const formattedDate = new Intl.DateTimeFormat('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }).format(dueDate);
+                
+                const formattedTime = new Intl.DateTimeFormat('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                }).format(dueDate);
+                
+                metaEl.innerHTML = `
+                    <div class="task-detail-badge category ${task.category}">
+                        ${categoryIcons[task.category]} ${task.category.charAt(0).toUpperCase() + task.category.slice(1)}
+                    </div>
+                    <div class="task-detail-badge priority ${task.priority}">
+                        <i class="fas fa-flag"></i> ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority
+                    </div>
+                    <div class="task-detail-badge date">
+                        <i class="fas fa-calendar"></i> ${formattedDate}
+                    </div>
+                    <div class="task-detail-badge time">
+                        <i class="fas fa-clock"></i> ${formattedTime}
+                    </div>
+                    <div class="task-detail-badge status ${task.completed ? '' : 'pending'}">
+                        <i class="fas ${task.completed ? 'fa-check-circle' : 'fa-clock'}"></i>
+                        ${task.completed ? 'Completed' : 'Pending'}
+                    </div>
+                    ${task.reminderMinutes ? `
+                        <div class="task-detail-badge reminder">
+                            <i class="fas fa-bell"></i> Reminder set
+                        </div>
+                    ` : ''}
+                `;
+                
+                // Set description
+                document.getElementById('detailDescription').textContent = task.description || 'No description provided.';
+                
+                // Setup edit button
+                detailEditBtn.onclick = () => {
+                    taskDetailModal.classList.remove('active');
+                    editTask(task.id);
+                };
+                
+                // Show the modal
+                taskDetailModal.classList.add('active');
+            }
+
+            // Close detail modal
+            detailClose.addEventListener('click', () => {
+                taskDetailModal.classList.remove('active');
+            });
+
+            // Generate unique ID
+            function generateId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+
             // Save tasks to localStorage
             function saveTasks() {
                 localStorage.setItem('tasks', JSON.stringify(tasks));
             }
-            
-            // Get current active category
-            function getCurrentCategory() {
-                const activeCategory = document.querySelector('.category.active');
-                return activeCategory ? activeCategory.dataset.category : 'all';
-            }
-            
-            // Get current active filter
-            function getCurrentFilter() {
-                const activeFilter = document.querySelector('.filter-btn.active');
-                return activeFilter ? activeFilter.dataset.filter : 'all';
-            }
-            
-            // Render tasks based on category and filter
-            function renderTasks(category, filter) {
-                let filteredTasks;
+
+            // Render tasks
+            function renderTasks() {
+                // Filter tasks based on current category and filter
+                let filteredTasks = tasks;
                 
                 // Filter by category
-                if (category === 'all') {
-                    filteredTasks = [...tasks];
-                    dashboard.style.display = 'grid';
-                } else {
-                    filteredTasks = tasks.filter(task => task.category === category);
-                    dashboard.style.display = 'none';
+                if (currentCategory !== 'all') {
+                    filteredTasks = filteredTasks.filter(task => task.category === currentCategory);
                 }
                 
-                // Then filter by status filter
-                switch (filter) {
-                    case 'pending':
-                        filteredTasks = filteredTasks.filter(task => !task.isCompleted);
-                        break;
-                    case 'completed':
-                        filteredTasks = filteredTasks.filter(task => task.isCompleted);
-                        break;
-                    case 'overdue':
-                        filteredTasks = filteredTasks.filter(task => {
-                            const dueDate = new Date(task.dueDate);
-                            const today = new Date();
-                            today.setHours(0, 0, 0, 0);
-                            return dueDate < today && !task.isCompleted;
-                        });
-                        break;
-                    case 'today':
-                        filteredTasks = filteredTasks.filter(task => {
-                            const dueDate = new Date(task.dueDate);
-                            const today = new Date();
-                            return dueDate.getDate() === today.getDate() &&
-                                dueDate.getMonth() === today.getMonth() &&
-                                dueDate.getFullYear() === today.getFullYear();
-                        });
-                        break;
-                    default:
-                        // 'all' filter - no additional filtering needed
-                        break;
-                }
-                
-                // Sort tasks
-                const sortOption = sortSelect.value;
-                filteredTasks = sortTasks(filteredTasks, sortOption);
-                
-                // Render the filtered and sorted tasks
-                if (filteredTasks.length === 0) {
-                    if (category === 'all') {
-                        emptyState.innerHTML = `
-                            <i class="fas fa-clipboard-list"></i>
-                            <h3>No tasks yet</h3>
-                            <p>Add your first task to get started</p>
-                        `;
-                    } else {
-                        const categoryIcon = document.querySelector(`.category[data-category="${category}"] i`).className;
-                        emptyState.innerHTML = `
-                            <i class="${categoryIcon}"></i>
-                            <h3>No ${category} tasks yet</h3>
-                            <p>Add a task to this category</p>
-                        `;
-                    }
-                    emptyState.classList.add(category);
-                    emptyState.style.display = 'block';
-                    taskList.innerHTML = '';
-                    taskList.appendChild(emptyState);
-                } else {
-                    emptyState.style.display = 'none';
-                    
-                    // Create task elements
-                    taskList.innerHTML = '';
-                    filteredTasks.forEach(task => {
-                        const taskElement = createTaskElement(task);
-                        taskList.appendChild(taskElement);
-                    });
-                }
-                
-                // Apply category-specific class to task list
-                taskList.className = 'task-list';
-                if (category !== 'all') {
-                    taskList.classList.add(category);
-                }
-                
-                // Update task counts
-                updateTaskCounts();
-            }
-            
-            // Create a task DOM element
-            function createTaskElement(task) {
-                const taskElement = document.createElement('div');
-                taskElement.className = `task-item ${task.isCompleted ? 'completed' : ''}`;
-                taskElement.dataset.id = task.id;
-                
-                // Calculate if task is overdue
-                const isOverdue = new Date(task.dueDate) < new Date().setHours(0, 0, 0, 0) && !task.isCompleted;
-                
-                // Format due date for display
-                const formattedDate = formatDate(task.dueDate);
-                
-                // Check if task has a reminder
-                const hasReminder = task.reminderTime && task.reminderTime !== 'none';
-                
-                taskElement.innerHTML = `
-                    <div class="task-checkbox">
-                        <input type="checkbox" ${task.isCompleted ? 'checked' : ''} aria-label="Mark task as ${task.isCompleted ? 'incomplete' : 'complete'}">
-                    </div>
-                    <div class="task-content">
-                        <h3 class="task-title">${task.title}</h3>
-                        <p class="task-description">${task.description || 'No description'}</p>
-                        <div class="task-meta">
-                            <div class="task-category">
-                                <i class="fas fa-folder-open"></i> ${capitalizeFirstLetter(task.category)}
-                            </div>
-                            <div class="task-date" style="${isOverdue ? 'color: var(--danger); font-weight: bold;' : ''}">
-                                <i class="fas fa-calendar-day"></i> ${formattedDate}
-                            </div>
-                            <div class="task-priority priority-${task.priority}">
-                                ${capitalizeFirstLetter(task.priority)} Priority
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-actions">
-                        <button class="task-action-btn view" aria-label="View task details">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="task-action-btn edit" aria-label="Edit task">
-                            <i class="fas fa-pencil-alt"></i>
-                        </button>
-                        <button class="task-action-btn delete" aria-label="Delete task">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                    ${hasReminder ? '<div class="task-reminder-indicator" title="This task has a reminder"><i class="fas fa-bell"></i></div>' : ''}
-                `;
-                
-                // Add event listeners
-                const checkbox = taskElement.querySelector('.task-checkbox input');
-                checkbox.addEventListener('change', () => {
-                    toggleTaskCompletion(task.id);
-                });
-                
-                const viewBtn = taskElement.querySelector('.task-action-btn.view');
-                viewBtn.addEventListener('click', () => {
-                    showTaskDetail(task.id);
-                });
-                
-                const editBtn = taskElement.querySelector('.task-action-btn.edit');
-                editBtn.addEventListener('click', () => {
-                    openEditTaskModal(task.id);
-                });
-                
-                const deleteBtn = taskElement.querySelector('.task-action-btn.delete');
-                deleteBtn.addEventListener('click', () => {
-                    openDeleteModal(task.id);
-                });
-                
-                // Make the task item clickable to view details
-                taskElement.addEventListener('click', (e) => {
-                    // Don't trigger if clicking on buttons or checkbox
-                    if (!e.target.closest('.task-action-btn') && !e.target.closest('.task-checkbox')) {
-                        showTaskDetail(task.id);
-                    }
-                });
-                
-                return taskElement;
-            }
-            
-            // Sort tasks based on sort option
-            function sortTasks(tasksArray, sortOption) {
-                const sortedTasks = [...tasksArray];
-                
-                switch (sortOption) {
-                    case 'date':
-                        sortedTasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
-                        break;
-                    case 'priority':
-                        // Custom priority sorting: high -> medium -> low
-                        const priorityWeight = { high: 1, medium: 2, low: 3 };
-                        sortedTasks.sort((a, b) => priorityWeight[a.priority] - priorityWeight[b.priority]);
-                        break;
-                    case 'name':
-                        sortedTasks.sort((a, b) => a.title.localeCompare(b.title));
-                        break;
-                }
-                
-                return sortedTasks;
-            }
-            
-            // Update task counts in sidebar and dashboard
-            function updateTaskCounts() {
-                // All tasks count
-                const allTasksCount = tasks.length;
-                taskCounts[0].textContent = allTasksCount;
-                
-                // Category-specific counts
-                categories.forEach((category, index) => {
-                    if (index > 0) { // Skip the "All Tasks" category
-                        const categoryName = category.dataset.category;
-                        const count = tasks.filter(task => task.category === categoryName).length;
-                        taskCounts[index].textContent = count;
-                    }
-                });
-            }
-            
-            // Update dashboard statistics
-            function updateStats() {
-                const totalTasks = tasks.length;
-                const completedTasks = tasks.filter(task => task.isCompleted).length;
-                const pendingTasks = totalTasks - completedTasks;
-                
-                // Calculate overdue tasks
-                const overdueTasks = tasks.filter(task => {
-                    const dueDate = new Date(task.dueDate);
+                // Filter by filter type
+                if (currentFilter !== 'all') {
                     const today = new Date();
                     today.setHours(0, 0, 0, 0);
-                    return dueDate < today && !task.isCompleted;
+                    
+                    switch (currentFilter) {
+                        case 'pending':
+                            filteredTasks = filteredTasks.filter(task => !task.completed);
+                            break;
+                        case 'completed':
+                            filteredTasks = filteredTasks.filter(task => task.completed);
+                            break;
+                        case 'overdue':
+                            filteredTasks = filteredTasks.filter(task => {
+                                const dueDate = new Date(task.dueDate);
+                                return !task.completed && dueDate < new Date();
+                            });
+                            break;
+                        case 'today':
+                            filteredTasks = filteredTasks.filter(task => {
+                                const dueDate = new Date(task.dueDate);
+                                dueDate.setHours(0, 0, 0, 0);
+                                return dueDate.getTime() === today.getTime();
+                            });
+                            break;
+                    }
+                }
+                
+                // Sort tasks by due date (default)
+                filteredTasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+                
+                // Check if there are tasks to display
+                if (filteredTasks.length === 0) {
+                    // Show empty state
+                    taskList.innerHTML = '';
+                    
+                    // Category-specific empty states
+                    let emptyStateClass = '';
+                    if (currentCategory !== 'all') {
+                        emptyStateClass = currentCategory;
+                    }
+                    
+                    let emptyStateMessage = 'No tasks yet';
+                    let emptyStateDescription = 'Add your first task to get started';
+                    
+                    if (currentFilter !== 'all') {
+                        switch (currentFilter) {
+                            case 'pending':
+                                emptyStateMessage = 'No pending tasks';
+                                emptyStateDescription = 'All tasks are completed!';
+                                break;
+                            case 'completed':
+                                emptyStateMessage = 'No completed tasks';
+                                emptyStateDescription = 'Complete some tasks to see them here';
+                                break;
+                            case 'overdue':
+                                emptyStateMessage = 'No overdue tasks';
+                                emptyStateDescription = "You're on track! Keep it up!";
+                                break;
+                            case 'today':
+                                emptyStateMessage = 'No tasks due today';
+                                emptyStateDescription = 'Enjoy your day!';
+                                break;
+                        }
+                    }
+                    
+                    const emptyStateHtml = `
+                        <div class="empty-state ${emptyStateClass}" id="emptyState">
+                            <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+                            <h3>${emptyStateMessage}</h3>
+                            <p>${emptyStateDescription}</p>
+                        </div>
+                    `;
+                    
+                    taskList.innerHTML = emptyStateHtml;
+                    
+                    // Add event listener to empty state
+                    document.getElementById('emptyState').addEventListener('click', () => {
+                        openAddTaskModal();
+                    });
+                    
+                    return;
+                }
+                
+                // Clear task list
+                taskList.innerHTML = '';
+                
+                // Add category-specific class to task list
+                taskList.className = 'task-list';
+                if (currentCategory !== 'all') {
+                    taskList.classList.add(currentCategory);
+                }
+                
+                // Render each task
+                filteredTasks.forEach(task => {
+                    const dueDate = new Date(task.dueDate);
+                    const formattedDate = new Intl.DateTimeFormat('en-US', {
+                        month: 'short',
+                        day: 'numeric'
+                    }).format(dueDate);
+                    
+                    const formattedTime = new Intl.DateTimeFormat('en-US', {
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }).format(dueDate);
+                    
+                    // Check if task is overdue
+                    const isOverdue = !task.completed && dueDate < new Date();
+                    
+                    // Priority classes
+                    let priorityClass = '';
+                    switch (task.priority) {
+                        case 'low':
+                            priorityClass = 'success';
+                            break;
+                        case 'medium':
+                            priorityClass = 'warning';
+                            break;
+                        case 'high':
+                            priorityClass = 'danger';
+                            break;
+                    }
+                    
+                    // Create task element
+                    const taskEl = document.createElement('div');
+                    taskEl.className = `task-item ${task.completed ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}`;
+                    taskEl.dataset.id = task.id;
+                    
+                    // Add reminder indicator if task has a reminder
+                    const reminderIndicator = task.reminderTime ? `
+                        <div class="task-reminder-indicator" title="Reminder set">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                    ` : '';
+                    
+                    taskEl.innerHTML = `
+                        ${reminderIndicator}
+                        <div class="task-checkbox">
+                            <input type="checkbox" ${task.completed ? 'checked' : ''} aria-label="Mark task as ${task.completed ? 'incomplete' : 'complete'}">
+                        </div>
+                        <div class="task-content">
+                            <div class="task-title">${task.title}</div>
+                            ${task.description ? `<div class="task-description">${task.description}</div>` : ''}
+                            <div class="task-meta">
+                                <div class="task-category">
+                                    ${categoryIcons[task.category]} ${task.category.charAt(0).toUpperCase() + task.category.slice(1)}
+                                </div>
+                                <div class="task-priority task-${task.priority}" style="background-color: var(--${priorityClass}-light); color: var(--${priorityClass});">
+                                    ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                                </div>
+                                <div class="task-date">
+                                    <i class="fas fa-calendar"></i> ${formattedDate}
+                                </div>
+                                <div class="task-time">
+                                    <i class="fas fa-clock"></i> ${formattedTime}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="task-actions">
+                            <button class="task-action-btn edit" aria-label="Edit task">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="task-action-btn delete" aria-label="Delete task">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Add event listeners
+                    
+                    // Complete/uncomplete task
+                    const checkbox = taskEl.querySelector('.task-checkbox input');
+                    checkbox.addEventListener('change', () => {
+                        toggleTaskCompletion(task.id);
+                    });
+                    
+                    // Edit task
+                    const editBtn = taskEl.querySelector('.task-action-btn.edit');
+                    editBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        editTask(task.id);
+                    });
+                    
+                    // Delete task
+                    const deleteBtn = taskEl.querySelector('.task-action-btn.delete');
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        confirmDeleteTask(task.id);
+                    });
+                    
+                    // View task details
+                    taskEl.addEventListener('click', (e) => {
+                        if (e.target.closest('.task-checkbox') || 
+                            e.target.closest('.task-action-btn')) {
+                            return;
+                        }
+                        viewTaskDetails(task.id);
+                    });
+                    
+                    // Add task to list
+                    taskList.appendChild(taskEl);
+                });
+            }
+
+            // Update dashboard
+            function updateDashboard() {
+                // Calculate task statistics
+                const totalTasks = tasks.length;
+                const completedTasks = tasks.filter(task => task.completed).length;
+                const pendingTasks = tasks.filter(task => !task.completed).length;
+                const overdueTasks = tasks.filter(task => {
+                    const dueDate = new Date(task.dueDate);
+                    return !task.completed && dueDate < new Date();
                 }).length;
                 
                 // Update dashboard values
@@ -3328,442 +3910,221 @@
                 completedTasksValue.textContent = completedTasks;
                 pendingTasksValue.textContent = pendingTasks;
                 overdueTasksValue.textContent = overdueTasks;
-                
-                // Update task counts in sidebar
-                updateTaskCounts();
             }
-            
-            // Show task details modal
-            function showTaskDetail(taskId) {
-                const task = tasks.find(t => t.id === taskId);
-                if (!task) return;
-                
-                // Update modal content
-                detailTitle.textContent = task.title;
-                
-                // Create meta badges
-                const formattedDate = formatDate(task.dueDate);
-                const isOverdue = new Date(task.dueDate) < new Date().setHours(0, 0, 0, 0) && !task.isCompleted;
-                
-                detailMeta.innerHTML = `
-                    <div class="task-detail-badge category ${task.category}">
-                        <i class="fas fa-folder-open"></i> ${capitalizeFirstLetter(task.category)}
-                    </div>
-                    <div class="task-detail-badge priority ${task.priority}">
-                        <i class="fas fa-flag"></i> ${capitalizeFirstLetter(task.priority)} Priority
-                    </div>
-                    <div class="task-detail-badge date" style="${isOverdue ? 'background-color: var(--danger-light); color: var(--danger);' : ''}">
-                        <i class="fas fa-calendar-day"></i> ${formattedDate}
-                    </div>
-                    <div class="task-detail-badge status ${task.isCompleted ? 'completed' : 'pending'}">
-                        <i class="fas fa-${task.isCompleted ? 'check-circle' : 'clock'}"></i> 
-                        ${task.isCompleted ? 'Completed' : 'Pending'}
-                    </div>
-                    ${task.reminderTime && task.reminderTime !== 'none' ? `
-                        <div class="task-detail-badge reminder">
-                            <i class="fas fa-bell"></i> Reminder Set
-                        </div>
-                    ` : ''}
-                `;
-                
-                // Set description
-                detailDescription.innerHTML = task.description || 'No description provided for this task.';
-                
-                // Show the modal
-                taskDetailModal.classList.add('active');
-                
-                // Setup edit button
-                detailEditBtn.onclick = () => {
-                    closeTaskDetailModal();
-                    openEditTaskModal(taskId);
+
+            // Update category counts
+            function updateCategoryCounts() {
+                // Count tasks by category
+                const categoryCounts = {
+                    all: tasks.length,
+                    work: tasks.filter(task => task.category === 'work').length,
+                    personal: tasks.filter(task => task.category === 'personal').length,
+                    shopping: tasks.filter(task => task.category === 'shopping').length,
+                    health: tasks.filter(task => task.category === 'health').length,
+                    finance: tasks.filter(task => task.category === 'finance').length,
+                    education: tasks.filter(task => task.category === 'education').length
                 };
-            }
-            
-            // Open task form for creating a new task
-            function openAddTaskModal() {
-                resetForm();
-                modalTitle.textContent = 'Add New Task';
-                modalHeader.className = 'modal-header';
-                taskModal.classList.add('active');
-                taskTitleInput.focus();
                 
-                // Set default category based on current view
-                const currentCat = getCurrentCategory();
-                if (currentCat !== 'all') {
-                    taskCategoryInput.value = currentCat;
-                    categoryOptions.forEach(option => {
-                        if (option.dataset.value === currentCat) {
-                            option.classList.add('selected');
-                            option.querySelector('input').checked = true;
-                        } else {
-                            option.classList.remove('selected');
+                // Update category count elements
+                taskCountElements.forEach(el => {
+                    const category = el.closest('.category').dataset.category;
+                    el.textContent = categoryCounts[category] || 0;
+                });
+            }
+
+            // Check for reminders
+            function checkReminders() {
+                const now = new Date();
+                
+                // Find tasks with reminders that are due now
+                tasks.forEach(task => {
+                    if (task.completed) return;
+                    
+                    if (task.reminderTime) {
+                        const reminderTime = new Date(task.reminderTime);
+                        const timeDiff = Math.abs(reminderTime - now);
+                        
+                        // If within 2 minutes of reminder time and not yet reminded
+                        if (timeDiff <= 2 * 60 * 1000 && !task.reminded) {
+                            showTaskReminder(task);
+                            
+                            // Mark as reminded
+                            const taskIndex = tasks.findIndex(t => t.id === task.id);
+                            if (taskIndex !== -1) {
+                                tasks[taskIndex].reminded = true;
+                                saveTasks();
+                            }
                         }
-                    });
+                    }
+                });
+            }
+
+            // Show task reminder
+            function showTaskReminder(task) {
+                const reminderTaskTitle = document.getElementById('reminderTaskTitle');
+                const reminderMessage = document.getElementById('reminderMessage');
+                
+                // Set reminder content
+                reminderTaskTitle.textContent = task.title;
+                
+                // Format date and time
+                const dueDate = new Date(task.dueDate);
+                const formattedDate = new Intl.DateTimeFormat('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
+                }).format(dueDate);
+                
+                const formattedTime = new Intl.DateTimeFormat('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                }).format(dueDate);
+                
+                reminderMessage.textContent = `Due on ${formattedDate} at ${formattedTime}`;
+                
+                // Show reminder
+                reminderContainer.classList.add('show');
+                
+                // Set up view task button
+                viewReminderTaskBtn.onclick = () => {
+                    reminderContainer.classList.remove('show');
+                    viewTaskDetails(task.id);
+                };
+                
+                // Play notification sound if available
+                if (window.Audio) {
+                    try {
+                        const audio = new Audio('https://raw.githubusercontent.com/rafaelreis-hotmart/Audio-Sample-files/master/sample-notification.mp3');
+                        audio.volume = 0.5;
+                        audio.play();
+                    } catch (e) {
+                        console.log('Notification sound not available');
+                    }
                 }
-                
-                // Set default priority to medium
-                taskPriorityInput.value = 'medium';
-                priorityOptions.forEach(option => {
-                    if (option.dataset.value === 'medium') {
-                        option.classList.add('selected');
-                        option.querySelector('input').checked = true;
-                    } else {
-                        option.classList.remove('selected');
-                    }
-                });
-                
-                // Set default due date to today
-                dueDateInput.value = formattedDate;
-                
-                // Reset reminders
-                taskReminderTimeInput.value = '';
-                reminderOptions.forEach(option => {
-                    if (option.dataset.value === 'none') {
-                        option.classList.add('selected');
-                        option.querySelector('input').checked = true;
-                    } else {
-                        option.classList.remove('selected');
-                    }
-                });
-                
-                // Reset tabs to first tab
-                formTabs.forEach((tab, index) => {
-                    if (index === 0) {
-                        tab.classList.add('active');
-                    } else {
-                        tab.classList.remove('active');
-                    }
-                });
-                
-                formContents.forEach((content, index) => {
-                    if (index === 0) {
-                        content.classList.add('active');
-                    } else {
-                        content.classList.remove('active');
-                    }
-                });
             }
+
+            // Close reminder
+            closeReminderBtn.addEventListener('click', () => {
+                reminderContainer.classList.remove('show');
+            });
             
-            // Open task form for editing an existing task
-            function openEditTaskModal(taskId) {
-                const task = tasks.find(t => t.id === taskId);
-                if (!task) return;
-                
-                resetForm();
-                
-                // Set form title and header class
-                modalTitle.textContent = 'Edit Task';
-                modalHeader.className = 'modal-header ' + task.category;
-                
-                // Fill form with task data
-                taskIdInput.value = task.id;
-                taskTitleInput.value = task.title;
-                taskDescriptionInput.value = task.description || '';
-                taskCategoryInput.value = task.category;
-                taskPriorityInput.value = task.priority;
-                dueDateInput.value = task.dueDate;
-                taskReminderTimeInput.value = task.reminderTime || '';
-                
-                // Select the correct category option
-                categoryOptions.forEach(option => {
-                    if (option.dataset.value === task.category) {
-                        option.classList.add('selected');
-                        option.querySelector('input').checked = true;
-                    } else {
-                        option.classList.remove('selected');
-                    }
-                });
-                
-                // Select the correct priority option
-                priorityOptions.forEach(option => {
-                    if (option.dataset.value === task.priority) {
-                        option.classList.add('selected');
-                        option.querySelector('input').checked = true;
-                    } else {
-                        option.classList.remove('selected');
-                    }
-                });
-                
-                // Select the correct reminder option
-                let reminderFound = false;
-                reminderOptions.forEach(option => {
-                    if (task.reminderTime === option.dataset.value) {
-                        option.classList.add('selected');
-                        option.querySelector('input').checked = true;
-                        reminderFound = true;
-                    } else {
-                        option.classList.remove('selected');
-                    }
-                });
-                
-                // If custom reminder value that doesn't match predefined options
-                if (task.reminderTime && !reminderFound && task.reminderTime !== 'none') {
-                    reminderOptions.forEach(option => {
-                        option.classList.remove('selected');
-                        option.querySelector('input').checked = false;
-                    });
-                    // We'd need to parse the custom reminder value and set the appropriate inputs
-                    // This is a simplified version
-                    customReminderForm.classList.add('active');
-                }
-                
-                // Show the modal
-                taskModal.classList.add('active');
-                taskTitleInput.focus();
-            }
-            
-            // Reset the task form
-            function resetForm() {
-                taskForm.reset();
-                taskIdInput.value = '';
-                document.getElementById('titleError').style.display = 'none';
-                document.getElementById('dateError').style.display = 'none';
-                
-                // Reset custom reminder form
-                customReminderForm.classList.remove('active');
-                
-                // Clear selection classes
-                categoryOptions.forEach(option => option.classList.remove('selected'));
-                priorityOptions.forEach(option => option.classList.remove('selected'));
-                reminderOptions.forEach(option => option.classList.remove('selected'));
-            }
-            
-            // Close the task modal
-            function closeTaskModal() {
-                taskModal.classList.remove('active');
-                resetForm();
-            }
-            
-            // Close the task detail modal
-            function closeTaskDetailModal() {
-                taskDetailModal.classList.remove('active');
-            }
-            
-            // Open delete confirmation modal
-            function openDeleteModal(taskId) {
-                const task = tasks.find(t => t.id === taskId);
-                if (!task) return;
-                
-                deleteTaskTitle.textContent = task.title;
-                
-                // Set up confirm delete button
-                confirmDeleteBtn.onclick = () => deleteTask(taskId);
-                
-                // Show the modal
-                deleteModal.classList.add('active');
-            }
-            
-            // Close delete confirmation modal
-            function closeDeleteModal() {
-                deleteModal.classList.remove('active');
-            }
-            
+            // Dismiss reminder
+            dismissReminderBtn.addEventListener('click', () => {
+                reminderContainer.classList.remove('show');
+            });
+
             // Show notification
             function showNotification(message, type = 'info') {
                 const notification = document.createElement('div');
                 notification.className = `notification ${type}`;
                 
-                let icon;
+                let icon = 'info-circle';
                 switch (type) {
                     case 'success':
-                        icon = 'fa-check-circle';
+                        icon = 'check-circle';
                         break;
                     case 'warning':
-                        icon = 'fa-exclamation-triangle';
+                        icon = 'exclamation-circle';
                         break;
                     case 'error':
-                        icon = 'fa-times-circle';
+                        icon = 'times-circle';
                         break;
-                    default:
-                        icon = 'fa-info-circle';
                 }
                 
                 notification.innerHTML = `
-                    <i class="fas ${icon} notification-icon"></i>
-                    <span>${message}</span>
+                    <i class="fas fa-${icon} notification-icon"></i> ${message}
                 `;
                 
                 notificationContainer.appendChild(notification);
                 
-                // Show with animation
+                // Show notification with a slight delay
                 setTimeout(() => {
                     notification.classList.add('show');
-                }, 10);
+                }, 100);
                 
-                // Remove after 3 seconds
+                // Remove notification after 3 seconds
                 setTimeout(() => {
                     notification.classList.remove('show');
+                    
+                    // Remove from DOM after animation completes
                     setTimeout(() => {
-                        notificationContainer.removeChild(notification);
+                        notification.remove();
                     }, 300);
                 }, 3000);
             }
-            
-            // Show reminder notification
-            function showReminderNotification(task) {
-                const reminderNotification = document.createElement('div');
-                reminderNotification.className = 'reminder-notification';
-                
-                reminderNotification.innerHTML = `
-                    <div class="reminder-notification-header">
-                        <div class="reminder-notification-title">
-                            <i class="fas fa-bell"></i> Reminder
-                        </div>
-                        <button class="reminder-notification-close" aria-label="Dismiss reminder">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="reminder-notification-content">
-                        <div class="reminder-notification-task">${task.title}</div>
-                        <div class="reminder-notification-message">
-                            This task is due on ${formatDate(task.dueDate)}
-                        </div>
-                    </div>
-                    <div class="reminder-notification-actions">
-                        <button class="reminder-notification-btn dismiss">Dismiss</button>
-                        <button class="reminder-notification-btn view">View Task</button>
-                    </div>
-                `;
-                
-                // Clear previous reminders
-                reminderContainer.innerHTML = '';
-                reminderContainer.appendChild(reminderNotification);
-                
-                // Show with animation
-                setTimeout(() => {
-                    reminderContainer.classList.add('show');
-                }, 10);
-                
-                // Setup close button
-                const closeBtn = reminderNotification.querySelector('.reminder-notification-close');
-                closeBtn.addEventListener('click', () => {
-                    reminderContainer.classList.remove('show');
-                });
-                
-                // Setup dismiss button
-                const dismissBtn = reminderNotification.querySelector('.reminder-notification-btn.dismiss');
-                dismissBtn.addEventListener('click', () => {
-                    reminderContainer.classList.remove('show');
-                });
-                
-                // Setup view button
-                const viewBtn = reminderNotification.querySelector('.reminder-notification-btn.view');
-                viewBtn.addEventListener('click', () => {
-                    reminderContainer.classList.remove('show');
-                    showTaskDetail(task.id);
-                });
-            }
-            
-            // Check for task reminders
-            function checkReminders() {
-                const now = new Date();
-                
-                tasks.forEach(task => {
-                    if (task.isCompleted || !task.reminderTime || task.reminderTime === 'none') return;
-                    
-                    const dueDate = new Date(task.dueDate);
-                    let reminderDate;
-                    
-                    // Calculate reminder time based on reminder option
-                    switch (task.reminderTime) {
-                        case 'sameday':
-                            reminderDate = new Date(dueDate);
-                            reminderDate.setHours(9, 0, 0, 0);
-                            break;
-                        case '1day':
-                            reminderDate = new Date(dueDate);
-                            reminderDate.setDate(reminderDate.getDate() - 1);
-                            reminderDate.setHours(9, 0, 0, 0);
-                            break;
-                        case '2days':
-                            reminderDate = new Date(dueDate);
-                            reminderDate.setDate(reminderDate.getDate() - 2);
-                            reminderDate.setHours(9, 0, 0, 0);
-                            break;
-                        default:
-                            // Custom reminder format: "days:hours:minutes"
-                            if (task.reminderTime.includes(':')) {
-                                const [days, hours, minutes] = task.reminderTime.split(':').map(Number);
-                                reminderDate = new Date(dueDate);
-                                reminderDate.setDate(reminderDate.getDate() - days);
-                                reminderDate.setHours(reminderDate.getHours() - hours);
-                                reminderDate.setMinutes(reminderDate.getMinutes() - minutes);
-                            }
-                    }
-                    
-                    // Check if reminder time has passed but not more than 30 minutes ago
-                    if (reminderDate && 
-                        now >= reminderDate && 
-                        now <= new Date(reminderDate.getTime() + 30 * 60000)) {
-                        showReminderNotification(task);
-                    }
-                });
-            }
-            
-            // Format date for display
-            function formatDate(dateString) {
-                const date = new Date(dateString);
-                const today = new Date();
-                const tomorrow = new Date(today);
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                
-                // Check if date is today or tomorrow
-                if (date.toDateString() === today.toDateString()) {
-                    return 'Today';
-                } else if (date.toDateString() === tomorrow.toDateString()) {
-                    return 'Tomorrow';
-                } else {
-                    return date.toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric',
-                        year: date.getFullYear() !== today.getFullYear() ? 'numeric' : undefined
-                    });
-                }
-            }
-            
-            // Capitalize first letter of a string
-            function capitalizeFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            }
-            
+
             // Search functionality
-            function performSearch(query) {
-                if (!query) {
-                    searchSuggestions.classList.remove('active');
-                    searchOverlay.classList.remove('active');
+            searchInput.addEventListener('focus', () => {
+                searchSuggestions.classList.add('active');
+                searchOverlay.classList.add('active');
+            });
+            
+            searchOverlay.addEventListener('click', () => {
+                searchSuggestions.classList.remove('active');
+                searchOverlay.classList.remove('active');
+            });
+            
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.trim().toLowerCase();
+                
+                if (searchTerm.length === 0) {
+                    searchSuggestions.innerHTML = '';
                     return;
                 }
                 
-                // Search tasks
-                const searchResults = tasks.filter(task => 
-                    task.title.toLowerCase().includes(query.toLowerCase()) ||
-                    (task.description && task.description.toLowerCase().includes(query.toLowerCase()))
+                // Filter tasks by search term
+                const matchedTasks = tasks.filter(task => 
+                    task.title.toLowerCase().includes(searchTerm) || 
+                    (task.description && task.description.toLowerCase().includes(searchTerm))
                 );
                 
-                // Show search results as suggestions
-                if (searchResults.length > 0) {
-                    searchSuggestions.innerHTML = '';
-                    
-                    searchResults.slice(0, 5).forEach(task => {
+                // Limit to 5 suggestions
+                const limitedMatches = matchedTasks.slice(0, 5);
+                
+                // Clear suggestions
+                searchSuggestions.innerHTML = '';
+                
+                if (limitedMatches.length > 0) {
+                    limitedMatches.forEach(task => {
                         const suggestionItem = document.createElement('div');
                         suggestionItem.className = 'suggestion-item';
                         suggestionItem.style.borderLeftColor = `var(--${task.category}-color)`;
+                        
+                        const dueDate = new Date(task.dueDate);
+                        const formattedDate = new Intl.DateTimeFormat('en-US', {
+                            month: 'short',
+                            day: 'numeric'
+                        }).format(dueDate);
+                        
+                        let priorityClass = '';
+                        switch (task.priority) {
+                            case 'low':
+                                priorityClass = 'priority-low';
+                                break;
+                            case 'medium':
+                                priorityClass = 'priority-medium';
+                                break;
+                            case 'high':
+                                priorityClass = 'priority-high';
+                                break;
+                        }
                         
                         suggestionItem.innerHTML = `
                             <div class="suggestion-content">
                                 <div class="suggestion-title">${task.title}</div>
                                 <div class="suggestion-category">
-                                    <i class="fas fa-folder-open"></i> ${capitalizeFirstLetter(task.category)}
+                                    ${categoryIcons[task.category]} ${task.category.charAt(0).toUpperCase() + task.category.slice(1)} • ${formattedDate}
                                 </div>
                             </div>
-                            <div class="suggestion-priority priority-${task.priority}">
-                                ${capitalizeFirstLetter(task.priority)}
+                            <div class="suggestion-priority ${priorityClass}">
+                                ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
                             </div>
                             <div class="suggestion-actions">
-                                <button class="suggestion-action edit">
+                                <button class="suggestion-action edit" aria-label="Edit task">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="suggestion-action delete">
+                                <button class="suggestion-action delete" aria-label="Delete task">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -3771,251 +4132,115 @@
                         
                         // Add event listeners
                         suggestionItem.addEventListener('click', () => {
+                            viewTaskDetails(task.id);
                             searchSuggestions.classList.remove('active');
                             searchOverlay.classList.remove('active');
                             searchInput.value = '';
-                            showTaskDetail(task.id);
                         });
                         
+                        // Edit task
                         const editBtn = suggestionItem.querySelector('.suggestion-action.edit');
                         editBtn.addEventListener('click', (e) => {
                             e.stopPropagation();
+                            editTask(task.id);
                             searchSuggestions.classList.remove('active');
                             searchOverlay.classList.remove('active');
                             searchInput.value = '';
-                            openEditTaskModal(task.id);
                         });
                         
+                        // Delete task
                         const deleteBtn = suggestionItem.querySelector('.suggestion-action.delete');
                         deleteBtn.addEventListener('click', (e) => {
                             e.stopPropagation();
+                            confirmDeleteTask(task.id);
                             searchSuggestions.classList.remove('active');
                             searchOverlay.classList.remove('active');
                             searchInput.value = '';
-                            openDeleteModal(task.id);
                         });
                         
                         searchSuggestions.appendChild(suggestionItem);
                     });
-                    
-                    searchSuggestions.classList.add('active');
-                    searchOverlay.classList.add('active');
                 } else {
                     searchSuggestions.innerHTML = `
-                        <div class="suggestion-item">
-                            <div class="suggestion-content">
-                                <div class="suggestion-title">No results found</div>
-                                <div class="suggestion-category">
-                                    Try a different search term
-                                </div>
-                            </div>
+                        <div class="suggestion-item" style="justify-content: center; color: var(--gray-500);">
+                            No tasks found matching "${searchTerm}"
                         </div>
                     `;
-                    searchSuggestions.classList.add('active');
-                    searchOverlay.classList.add('active');
                 }
-            }
-            
-            // Highlight a task when searched and selected
-            function highlightTask(taskId) {
-                // First, clear any existing highlights
-                document.querySelectorAll('.task-item').forEach(item => {
-                    item.classList.remove('search-highlight');
-                });
-                
-                // Find the task element
-                const taskElement = document.querySelector(`.task-item[data-id="${taskId}"]`);
-                if (!taskElement) return;
-                
-                // Highlight the task
-                taskElement.classList.add('search-highlight');
-                
-                // Scroll to the task
-                taskElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-            
-            // EVENT LISTENERS
-            
-            // Add new task
-            addTaskBtn.addEventListener('click', openAddTaskModal);
-            
-            // Save task
-            taskForm.addEventListener('submit', saveTask);
-            
-            // Close modals
-            modalClose.addEventListener('click', closeTaskModal);
-            cancelTaskBtn.addEventListener('click', closeTaskModal);
-            detailClose.addEventListener('click', closeTaskDetailModal);
-            deleteModalClose.addEventListener('click', closeDeleteModal);
-            cancelDeleteBtn.addEventListener('click', closeDeleteModal);
-            
-            // Form validation - clear errors on input
-            taskTitleInput.addEventListener('input', () => {
-                document.getElementById('titleError').style.display = 'none';
             });
             
-            dueDateInput.addEventListener('input', () => {
-                document.getElementById('dateError').style.display = 'none';
-            });
-            
-            // Category selection in form
-            categoryOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    categoryOptions.forEach(opt => opt.classList.remove('selected'));
-                    option.classList.add('selected');
-                    taskCategoryInput.value = option.dataset.value;
-                    option.querySelector('input').checked = true;
-                });
-            });
-            
-            // Priority selection in form
-            priorityOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    priorityOptions.forEach(opt => opt.classList.remove('selected'));
-                    option.classList.add('selected');
-                    taskPriorityInput.value = option.dataset.value;
-                    option.querySelector('input').checked = true;
-                });
-            });
-            
-            // Form tabs
-            formTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    formTabs.forEach(t => t.classList.remove('active'));
-                    formContents.forEach(c => c.classList.remove('active'));
+            // Search form submission - show matching tasks with highlight
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
                     
-                    tab.classList.add('active');
-                    document.getElementById(`${tab.dataset.tab}-content`).classList.add('active');
-                });
-            });
-            
-            // Reminder options
-            reminderOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    reminderOptions.forEach(opt => opt.classList.remove('selected'));
-                    option.classList.add('selected');
-                    taskReminderTimeInput.value = option.dataset.value;
-                    option.querySelector('input').checked = true;
-                });
-            });
-            
-            // Custom reminder buttons
-            customReminderBtn.addEventListener('click', () => {
-                customReminderForm.classList.add('active');
-            });
-            
-            cancelCustomReminderBtn.addEventListener('click', () => {
-                customReminderForm.classList.remove('active');
-            });
-            
-            applyCustomReminderBtn.addEventListener('click', () => {
-                const days = parseInt(reminderDaysInput.value) || 0;
-                const hours = parseInt(reminderHoursInput.value) || 0;
-                const minutes = parseInt(reminderMinutesInput.value) || 0;
-                
-                if (days === 0 && hours === 0 && minutes === 0) {
-                    showNotification('Please set a valid reminder time', 'warning');
-                    return;
-                }
-                
-                // Set custom reminder value
-                taskReminderTimeInput.value = `${days}:${hours}:${minutes}`;
-                
-                // Deselect all other options
-                reminderOptions.forEach(opt => {
-                    opt.classList.remove('selected');
-                    opt.querySelector('input').checked = false;
-                });
-                
-                customReminderForm.classList.remove('active');
-                showNotification('Custom reminder set', 'success');
-            });
-            
-            // Category selection in sidebar
-            categories.forEach(category => {
-                category.addEventListener('click', () => {
-                    categories.forEach(cat => cat.classList.remove('active'));
-                    category.classList.add('active');
+                    const searchTerm = searchInput.value.trim().toLowerCase();
+                    if (searchTerm.length === 0) return;
                     
-                    // Move active indicator
-                    activeCategoryIndicator.style.transform = `translateY(${category.offsetTop}px)`;
+                    // Close search suggestions
+                    searchSuggestions.classList.remove('active');
+                    searchOverlay.classList.remove('active');
                     
-                    const categoryName = category.dataset.category;
+                    // Find matching tasks
+                    const matchedTasks = tasks.filter(task => 
+                        task.title.toLowerCase().includes(searchTerm) || 
+                        (task.description && task.description.toLowerCase().includes(searchTerm))
+                    );
                     
-                    // Update section title and description
-                    if (categoryName === 'all') {
-                        currentCategory.innerHTML = '<i class="fas fa-layer-group"></i> All Tasks';
-                        categoryDescription.textContent = 'View and manage all your tasks in one place.';
-                    } else {
-                        const categoryIcon = category.querySelector('i').className;
-                        currentCategory.innerHTML = `<i class="${categoryIcon}"></i> ${capitalizeFirstLetter(categoryName)} Tasks`;
+                    if (matchedTasks.length > 0) {
+                        // Switch to "all" category
+                        document.querySelectorAll('.category').forEach(cat => {
+                            cat.classList.remove('active');
+                        });
+                        document.querySelector('.category[data-category="all"]').classList.add('active');
+                        currentCategory = 'all';
+                        currentCategoryEl.innerHTML = `${categoryIcons.all} All Tasks`;
+                        categoryDescriptionEl.textContent = `Search results for "${searchTerm}"`;
                         
-                        // Set category-specific descriptions
-                        switch (categoryName) {
-                            case 'work':
-                                categoryDescription.textContent = 'Manage your professional tasks and projects.';
-                                break;
-                            case 'personal':
-                                categoryDescription.textContent = 'Track your personal goals and activities.';
-                                break;
-                            case 'shopping':
-                                categoryDescription.textContent = 'Keep track of items you need to purchase.';
-                                break;
-                            case 'health':
-                                categoryDescription.textContent = 'Monitor your health and wellness activities.';
-                                break;
-                            case 'finance':
-                                categoryDescription.textContent = 'Manage your financial tasks and goals.';
-                                break;
-                            case 'education':
-                                categoryDescription.textContent = 'Track your learning and educational activities.';
-                                break;
-                        }
-                    }
-                    
-                    // Render tasks for the selected category
-                    renderTasks(categoryName, getCurrentFilter());
-                    
-                    // Show/hide dashboard based on category
-                    if (categoryName === 'all') {
-                        dashboard.style.display = 'grid';
+                        // Reset filter to "all"
+                        taskFilterBtns.forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+                        currentFilter = 'all';
+                        
+                        // Show dashboard
+                        dashboard.classList.remove('hidden');
+                        
+                        // Update the sliding indicator position
+                        updateActiveCategoryIndicator(document.querySelector('.category[data-category="all"]'));
+                        
+                        // Render all tasks
+                        renderTasks();
+                        
+                        // Highlight matching tasks
+                        const taskIds = matchedTasks.map(task => task.id);
+                        const taskElements = document.querySelectorAll('.task-item');
+                        
+                        taskElements.forEach(el => {
+                            if (taskIds.includes(el.dataset.id)) {
+                                el.classList.add('search-highlight');
+                                
+                                // Smooth scroll to first match
+                                if (el === taskElements[0]) {
+                                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                            }
+                        });
+                        
+                        // Show notification
+                        showNotification(`Found ${matchedTasks.length} tasks matching "${searchTerm}"`, 'success');
                     } else {
-                        dashboard.style.display = 'none';
+                        showNotification(`No tasks found matching "${searchTerm}"`, 'warning');
                     }
-                });
-            });
-            
-            // Filter buttons
-            filterButtons.forEach(filterBtn => {
-                filterBtn.addEventListener('click', () => {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    filterBtn.classList.add('active');
                     
-                    const filterValue = filterBtn.dataset.filter;
-                    renderTasks(getCurrentCategory(), filterValue);
-                });
-            });
-            
-            // Sort select
-            sortSelect.addEventListener('change', () => {
-                renderTasks(getCurrentCategory(), getCurrentFilter());
-            });
-            
-            // Search functionality
-            searchInput.addEventListener('input', () => {
-                performSearch(searchInput.value.trim());
-            });
-            
-            searchInput.addEventListener('focus', () => {
-                if (searchInput.value.trim()) {
-                    performSearch(searchInput.value.trim());
+                    // Clear search
+                    searchInput.value = '';
                 }
             });
-            
-            searchOverlay.addEventListener('click', () => {
-                searchSuggestions.classList.remove('active');
-                searchOverlay.classList.remove('active');
-            });
+
+            // Initialize the app
+            init();
         });
     </script>
 </body>
