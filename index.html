@@ -80,6 +80,8 @@
             min-height: 100vh;
             overflow-x: hidden;
             width: 100%;
+            /* Prevent zoom on input focus for iOS */
+            -webkit-text-size-adjust: 100%;
         }
 
         /* Typography */
@@ -633,13 +635,33 @@
         /* End of SEARCH REDESIGN */
 
         .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Change from center to flex-start */
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-200);
+    gap: 1rem; /* Add gap between elements */
+}
+
+.section-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Add gap between buttons and sort dropdown */
+}
+
+/* ADD THIS NEW CSS HERE */
+.task-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    padding-right: 0.5rem;
+}
+
+.task-controls .btn {
+    min-width: 120px;
+}
+
 
         .section-title h2 {
             font-size: 1.75rem;
@@ -750,6 +772,9 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             letter-spacing: -0.01em;
             font-size: 1rem;
+            /* Ensure buttons work well on touch devices */
+            touch-action: manipulation;
+            min-height: 44px; /* Apple recommended touch target size */
         }
 
         .btn-icon {
@@ -1151,6 +1176,9 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
             font-size: 1.1rem;
             z-index: 2;
+            /* Better touch targets for mobile */
+            min-width: 44px;
+            min-height: 44px;
         }
 
         .task-action-btn:hover {
@@ -1621,6 +1649,8 @@
             font-size: 1.05rem;
             transition: all 0.3s ease;
             background-color: var(--gray-50);
+            /* Prevent iOS zoom on input focus */
+            font-size: 16px;
         }
 
         .form-control:focus {
@@ -1679,7 +1709,7 @@
             padding: 0.9rem 1rem;
             border: 1px solid var(--gray-300);
             border-radius: 8px;
-            font-size: 1.05rem;
+            font-size: 16px; /* Prevent iOS zoom */
             background-color: var(--gray-50);
             transition: all 0.3s ease;
         }
@@ -1717,6 +1747,11 @@
             position: relative;
             overflow: hidden;
             font-size: 1.05rem;
+            /* Better touch targets */
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .priority-option:hover {
@@ -1781,6 +1816,12 @@
             color: var(--gray-700);
             position: relative;
             font-size: 1rem;
+            /* Better touch targets */
+            min-height: 44px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .category-option:hover {
@@ -1888,6 +1929,400 @@
             border-left: 4px solid var(--education-color);
             background-color: rgba(254, 226, 226, 0.3);
         }
+
+      /* Full view styles - UPDATED */
+.full-view-active .sidebar {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.full-view-active .main-content {
+    gap: 0;
+    margin-left: -280px; /* Pull the entire content left to cover sidebar space */
+    width: calc(100% + 280px); /* Expand width to fill the sidebar space */
+    transition: all 0.4s ease;
+}
+
+.full-view-active .tasks-container {
+    flex: 1;
+    max-width: 100%;
+    width: 100%;
+    margin-left: 280px; /* Push content back to normal position */
+    transition: all 0.4s ease;
+}
+
+/* Full view search blur overlay */
+.full-view-search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 15;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    pointer-events: none;
+}
+
+.full-view-search-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Ensure search container stays on top in full view */
+.full-view-active .search-container {
+    position: relative;
+    z-index: 30; /* Higher z-index */
+    max-width: 600px;
+    margin: 0 auto 1rem auto;
+    transition: all 0.4s ease;
+}
+
+/* Search suggestions even higher z-index in full view */
+.full-view-active .search-suggestions {
+    z-index: 35; /* Higher z-index */
+}
+
+/* Blur specific elements, NOT the search container */
+.full-view-active.search-blur .section-actions {
+    filter: blur(4px);
+    transition: filter 0.4s ease;
+}
+
+.full-view-active.search-blur .task-controls {
+    filter: blur(4px);
+    transition: filter 0.4s ease;
+}
+
+.full-view-active.search-blur .task-filters-wrapper {
+    filter: blur(4px);
+    transition: filter 0.4s ease;
+}
+
+.full-view-active.search-blur .task-list-wrapper {
+    filter: blur(4px);
+    transition: filter 0.4s ease;
+}
+
+.full-view-active.search-blur .dashboard {
+    filter: blur(4px);
+    transition: filter 0.4s ease;
+}
+
+/* EXPLICITLY keep search elements sharp - IMPORTANT */
+.full-view-active .search-container,
+.full-view-active .search-input,
+.full-view-active .search-suggestions,
+.full-view-active .search-icon {
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Enhanced search container in full view when focused */
+.full-view-active .search-container.focused {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    z-index: 30; /* Ensure it stays on top */
+}
+
+.full-view-active .search-input.focused {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+    background: white;
+    filter: none !important; /* Force no filter */
+}
+
+/* Dark mode support for blur overlay */
+body.dark-mode .full-view-search-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .full-view-active .search-input.focused {
+    background: var(--gray-800);
+    border-color: var(--primary-light);
+}
+
+/* Ensure search suggestions are always visible */
+body.dark-mode .full-view-active .search-suggestions {
+    background: var(--gray-800);
+    filter: none !important;
+}
+
+/* Position Add Task and Sort buttons in top right corner */
+.full-view-active .section-title {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    padding-bottom: 0;
+    border-bottom: none;
+    gap: 0;
+    min-height: 60px;
+}
+
+.full-view-active .section-actions {
+    position: absolute;
+    top: -15px; /* Higher at the top */
+    right: 0;
+    display: flex;
+    flex-direction: row !important; /* Force horizontal layout */
+    align-items: center;
+    justify-content: flex-end; /* Align to the right */
+    gap: 0.65rem; /* Slightly bigger gap */
+    z-index: 10;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    transform: translateY(0);
+    opacity: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: auto;
+    flex-wrap: nowrap;
+}
+
+/* Slightly bigger Sort dropdown with curved edges */
+.full-view-active .section-actions .task-sort {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: white;
+    padding: 0.6rem 0.6rem; /* Slightly bigger horizontal padding */
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px; /* Curved edges */
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.82rem; /* Slightly bigger font */
+    height: 40px; /* Same height */
+    box-sizing: border-box;
+    max-width: fit-content; /* Only as wide as content */
+}
+
+.full-view-active .section-actions .sort-label {
+    margin-right: 0.35rem; /* Slightly bigger margin */
+    font-weight: 500;
+    color: var(--gray-600);
+    white-space: nowrap;
+    font-size: 0.78rem; /* Slightly bigger font */
+}
+
+.full-view-active .section-actions .btn-select {
+    min-width: 70px; /* Slightly longer width */
+    width: 70px; /* Fixed slightly longer width */
+    transition: all 0.3s ease;
+    border: 1px solid var(--gray-300);
+    background: var(--gray-50);
+    padding: 0.25rem 0.35rem; /* Slightly bigger padding */
+    font-size: 0.78rem; /* Slightly bigger font */
+    border-radius: 8px; /* Curved edges for dropdown */
+    height: 28px; /* Fixed height for dropdown */
+    box-sizing: border-box;
+}
+
+/* Slightly bigger Add Task button with curved edges */
+.full-view-active .section-actions .btn {
+    margin: 0;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    min-width: 75px; /* Slightly longer width */
+    width: auto; /* Let it size to content */
+    padding: 0.6rem 0.6rem; /* Slightly bigger horizontal padding */
+    box-shadow: var(--card-shadow);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem; /* Slightly bigger font */
+    border-radius: 12px; /* Curved edges - same as sort */
+    height: 40px; /* Same fixed height as sort */
+    box-sizing: border-box;
+    max-width: fit-content; /* Only as wide as content */
+}
+
+.full-view-active .section-actions .btn .btn-icon {
+    margin-right: 0.3rem; /* Slightly bigger icon margin */
+    font-size: 0.78rem; /* Slightly bigger icon */
+}
+
+/* Hover effects */
+.full-view-active .section-actions .task-sort:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--primary);
+}
+
+.full-view-active .section-actions .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.full-view-active .section-actions .btn-select:hover {
+    border-color: var(--primary);
+    background: white;
+}
+
+/* Dark mode support */
+body.dark-mode .full-view-active .section-actions .task-sort {
+    background: var(--gray-800);
+    border: 1px solid var(--gray-700);
+}
+
+body.dark-mode .full-view-active .section-actions .task-sort:hover {
+    background: var(--gray-750);
+    border-color: var(--primary-light);
+}
+
+body.dark-mode .full-view-active .section-actions .sort-label {
+    color: var(--gray-300);
+}
+
+body.dark-mode .full-view-active .section-actions .btn-select {
+    background: var(--gray-700);
+    border-color: var(--gray-600);
+    color: var(--gray-200);
+}
+
+/* Style the Add Task button separately */
+.full-view-active .section-actions .btn {
+    margin: 0;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    padding: 0.75rem 1.5rem; /* Consistent padding */
+    box-shadow: var(--card-shadow); /* Individual shadow */
+}
+
+.full-view-active .section-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+/* Style the sort label and select */
+.full-view-active .section-actions .sort-label {
+    margin-right: 0.75rem;
+    font-weight: 500;
+    color: var(--gray-600);
+    white-space: nowrap;
+}
+
+.full-view-active .section-actions .btn-select {
+    min-width: 120px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--gray-300);
+    background: var(--gray-50);
+}
+
+.full-view-active .section-actions .btn-select:hover {
+    border-color: var(--primary);
+    background: white;
+}
+
+/* Hide the title and description in full view */
+.full-view-active .section-title h2,
+.full-view-active .category-description {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+/* Ensure search stays centered */
+.full-view-active .search-container {
+    max-width: 600px;
+    margin: 0 auto 1rem auto;
+    position: relative;
+    z-index: 5;
+    transition: all 0.4s ease;
+}
+
+/* Full view button icon change */
+.full-view-active #fullViewBtn i {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+/* Hide dashboard in full view mode */
+.full-view-active .dashboard {
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+    margin: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+/* Better height utilization in full view */
+.full-view-active .task-list-wrapper {
+    flex: 1;
+    height: calc(100vh - 180px);
+    overflow-y: auto;
+    margin-top: 0;
+    transition: all 0.4s ease;
+}
+
+.full-view-active .task-list {
+    min-height: calc(100vh - 240px);
+}
+
+/* Animation for entering full view */
+.full-view-active .section-actions .task-sort {
+    animation: slideInFromTop 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: 0.1s;
+}
+
+.full-view-active .section-actions .btn {
+    animation: slideInFromTop 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+@keyframes slideInFromTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dark mode support for the separate buttons */
+body.dark-mode .full-view-active .section-actions .task-sort {
+    background: var(--gray-800);
+    border: 1px solid var(--gray-700);
+}
+
+body.dark-mode .full-view-active .section-actions .task-sort:hover {
+    background: var(--gray-750);
+}
+
+body.dark-mode .full-view-active .section-actions .sort-label {
+    color: var(--gray-300);
+}
+
+body.dark-mode .full-view-active .section-actions .btn-select {
+    background: var(--gray-700);
+    border-color: var(--gray-600);
+    color: var(--gray-200);
+}
 
         /* Notification System */
         .notification-container {
@@ -2099,6 +2534,10 @@
             position: relative;
             color: var(--gray-600);
             transition: all 0.3s ease;
+            /* Better touch targets */
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
         .task-form-tab.active {
@@ -2131,6 +2570,87 @@
             display: block;
         }
 
+        /* NEW REMINDER TOGGLE STYLES */
+        .reminder-toggle-container {
+            margin-bottom: 1rem;
+        }
+
+        .reminder-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: var(--gray-50);
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reminder-toggle:hover {
+            background-color: var(--gray-100);
+            border-color: var(--primary);
+        }
+
+        .reminder-toggle-label {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .reminder-toggle-label i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+            color: var(--highlight-color);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            background-color: var(--gray-300);
+            border-radius: 24px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .toggle-switch.active {
+            background-color: var(--highlight-color);
+        }
+
+        .toggle-switch-handle {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active .toggle-switch-handle {
+            transform: translateX(24px);
+        }
+
+        /* Reminder Options Container */
+        .reminder-options-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+            opacity: 0;
+            padding: 0;
+        }
+
+        .reminder-options-container.active {
+            max-height: 600px;
+            opacity: 1;
+            padding: 1rem 0;
+        }
+
         /* Reminder Option Styles */
         .reminder-options {
             display: grid;
@@ -2147,6 +2667,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
+            /* Better touch targets */
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
         .reminder-option:hover {
@@ -2169,7 +2695,7 @@
 
         .reminder-option i {
             font-size: 1.25rem;
-            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
         .custom-reminder {
@@ -2192,6 +2718,8 @@
             align-items: center;
             justify-content: center;
             width: fit-content;
+            /* Better touch targets */
+            min-height: 44px;
         }
 
         .custom-reminder-btn:hover {
@@ -2243,7 +2771,7 @@
             padding: 0.6rem;
             border: 1px solid var(--gray-300);
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 16px; /* Prevent iOS zoom */
         }
 
         .custom-reminder-actions {
@@ -2259,6 +2787,10 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
+            /* Better touch targets */
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
         .custom-reminder-btn-small.cancel {
@@ -2297,6 +2829,7 @@
             .main-content {
                 flex-direction: column;
                 height: auto;
+                gap: 1rem;
             }
 
             .sidebar {
@@ -2305,16 +2838,71 @@
                 max-height: 300px;
                 margin-bottom: 1.5rem;
                 overflow-y: auto;
+                position: relative;
+                top: 0;
             }
             
             .tasks-container {
                 height: auto;
             }
+
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 0 0.75rem;
+            }
+
+            /* ADD THIS MOBILE CSS HERE */
+    .task-controls {
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    .task-controls .btn {
+        width: 100%;
+    }
+
+            /* Welcome screen mobile */
+            .app-title {
+                font-size: 2rem;
+            }
+
+            .welcome-container {
+                width: 150px;
+                height: 150px;
+            }
+
+            .task-card {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+
+            /* Header mobile */
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .logo i {
+                width: 36px;
+                height: 36px;
+                font-size: 1.5rem;
+                margin-right: 0.5rem;
+            }
+
             .main-content {
                 flex-direction: column;
+                margin-top: 0.5rem;
             }
 
             .sidebar {
@@ -2324,12 +2912,38 @@
                 height: auto;
                 max-height: none;
                 border-radius: 12px;
+                padding: 1rem 0.75rem;
             }
 
+            /* Category options mobile */
+            .categories-container {
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+
+            .category-slider {
+                flex-direction: row;
+                gap: 0.5rem;
+                min-width: max-content;
+            }
+
+            .category {
+                white-space: nowrap;
+                margin-bottom: 0;
+                margin-right: 0.5rem;
+                min-width: 120px;
+                flex-shrink: 0;
+            }
+
+            .active-category-indicator {
+                display: none; /* Hide on mobile for horizontal scroll */
+            }
+
+            /* Task items mobile */
             .task-item {
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 1.25rem;
+                padding: 1rem;
             }
 
             .task-content {
@@ -2339,31 +2953,274 @@
 
             .task-meta {
                 margin-bottom: 1rem;
+                justify-content: flex-start;
             }
 
             .task-actions {
                 width: 100%;
                 justify-content: flex-end;
+                align-self: flex-end;
             }
 
             .dashboard {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+
+            /* Form mobile optimizations */
+            .modal-content {
+                width: 95%;
+                max-height: 85vh;
+            }
+
+            .modal-body {
+                padding: 1rem;
             }
 
             .category-selector {
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            .priority-selector {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
             .reminder-options {
                 grid-template-columns: 1fr;
+                gap: 0.75rem;
             }
             
             .datetime-input-group {
                 flex-direction: column;
+                gap: 1rem;
             }
             
             .time-input {
                 width: 100%;
+            }
+
+            .custom-reminder-inputs {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            /* Filter buttons mobile */
+            .task-filters {
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            /* Search mobile */
+            .search-container {
+                max-width: none;
+                margin: 0 0 1rem 0;
+            }
+
+            .search-input {
+                font-size: 16px; /* Prevent iOS zoom */
+            }
+
+            /* Notifications mobile */
+            .notification-container {
+                left: 1rem;
+                right: 1rem;
+                transform: none;
+                bottom: 20px;
+            }
+
+            .reminder-notification-container {
+                right: -350px;
+                max-width: calc(100vw - 2rem);
+            }
+
+            .reminder-notification-container.show {
+                right: 1rem;
+            }
+
+            /* Task detail modal mobile */
+            .task-detail-content {
+                width: 95%;
+                max-height: 85vh;
+            }
+
+            .task-detail-body {
+                padding: 1rem;
+            }
+
+            .task-detail-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .task-detail-badge {
+                width: fit-content;
+            }
+
+            /* Mobile full view styles */
+    .full-view-active .tasks-container {
+        margin-left: 0;
+        padding-left: 0;
+    }
+    
+    .full-view-active .section-title {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+    
+    .full-view-active .section-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+    
+    .full-view-active .section-actions .btn,
+    .full-view-active .task-sort {
+        width: 100%;
+    }
+}
+
+            /* Section title mobile */
+            .section-title h2 {
+                font-size: 1.25rem;
+            }
+
+            .section-title h2 i {
+                font-size: 1.25rem;
+            }
+
+            .category-description {
+                font-size: 1rem;
+            }
+
+            /* Better spacing for mobile */
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+
+            .task-form-tabs {
+                margin-bottom: 1rem;
+            }
+
+            .task-form-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Mobile full view styles */
+    .full-view-active .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .full-view-active .tasks-container {
+        margin-left: 0;
+    }
+    
+    .full-view-active .section-actions {
+        position: static;
+        top: auto;
+        right: auto;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+        margin-bottom: 1rem;
+    }
+    
+    .full-view-active .section-actions .btn,
+    .full-view-active .task-sort {
+        width: 100%;
+    }
+    
+    .full-view-active .search-container {
+        margin-bottom: 0.5rem;
+    }
+}
+
+        @media (max-width: 480px) {
+            .app-title {
+                font-size: 1.75rem;
+            }
+
+            .welcome-container {
+                width: 120px;
+                height: 120px;
+            }
+
+            .task-card {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .logo i {
+                width: 32px;
+                height: 32px;
+                font-size: 1.25rem;
+            }
+
+            .container {
+                padding: 0 0.5rem;
+            }
+
+            .sidebar {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .task-item {
+                padding: 0.75rem;
+            }
+
+            .modal-content {
+                width: 98%;
+            }
+
+            .modal-body {
+                padding: 0.75rem;
+            }
+
+            .task-detail-body {
+                padding: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 0.75rem;
+            }
+
+            .category-selector {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -2400,8 +3257,13 @@
         }
 
         body.dark-mode .task-detail-description,
-        body.dark-mode .custom-reminder-form {
+        body.dark-mode .custom-reminder-form,
+        body.dark-mode .reminder-toggle {
             background-color: var(--gray-900);
+        }
+
+        body.dark-mode .reminder-options-container {
+            background-color: var(--gray-800);
         }
 
         body.dark-mode .suggestion-item:hover {
@@ -2509,6 +3371,37 @@
 
         body.dark-mode .task-list.education {
             background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Ensure proper scrolling on iOS */
+        @supports (-webkit-overflow-scrolling: touch) {
+            .sidebar,
+            .task-list-wrapper,
+            .search-suggestions,
+            .modal-body,
+            .task-detail-body {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .btn,
+            .task-item,
+            .category-option,
+            .priority-option,
+            .reminder-option {
+                border-width: 2px;
+            }
         }
     </style>
     <!-- Font Awesome CDN -->
@@ -2627,29 +3520,30 @@
                             <div class="search-suggestions" id="searchSuggestions"></div>
                         </div>
                         <div class="search-overlay" id="searchOverlay"></div>
+
+                        <div class="search-overlay" id="searchOverlay"></div>
+<div class="full-view-search-overlay" id="fullViewSearchOverlay"></div>
                         
                         <div class="category-container" id="categoryContainer">
                             <div class="section-title">
-                                <div>
-                                    <h2 id="currentCategory"><i class="fas fa-layer-group"></i> All Tasks</h2>
-                                    <p class="category-description" id="categoryDescription">View and manage all your tasks in one place.</p>
-                                </div>
-                                <div class="section-actions">
-                                    <div class="task-sort">
-                                        <span class="sort-label">Sort by:</span>
-                                        <select id="sortSelect" class="btn-select" aria-label="Sort tasks">
-                                            <option value="date">Due Date</option>
-                                            <option value="priority">Priority</option>
-                                            <option value="name">Name</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button class="btn btn-primary" id="addTaskBtn" aria-label="Add New Task">
-                                    <i class="fas fa-plus btn-icon" aria-hidden="true"></i> Add Task
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+    <div>
+        <h2 id="currentCategory"><i class="fas fa-layer-group"></i> All Tasks</h2>
+        <p class="category-description" id="categoryDescription">View and manage all your tasks in one place.</p>
+    </div>
+    <div class="section-actions">
+        <div class="task-sort">
+            <span class="sort-label">Sort by:</span>
+            <select id="sortSelect" class="btn-select" aria-label="Sort tasks">
+                <option value="date">Due Date</option>
+                <option value="priority">Priority</option>
+                <option value="name">Name</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" id="addTaskBtn" aria-label="Add New Task">
+            <i class="fas fa-plus btn-icon" aria-hidden="true"></i> Add Task
+        </button>
+    </div>
+</div>
 
                     <!-- Dashboard Section - Only shown for "all" category -->
                     <div class="dashboard" id="dashboard">
@@ -2694,6 +3588,13 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Add this new container for the full view button -->
+<div class="task-controls">
+    <button class="btn btn-secondary" id="fullViewBtn" aria-label="Toggle Full View">
+        <i class="fas fa-expand btn-icon" aria-hidden="true"></i> Full View
+    </button>
+</div>
 
                     <!-- Filter buttons - Now in a wrapper for sticky behavior -->
                     <div class="task-filters-wrapper" id="taskFiltersWrapper">
@@ -2771,8 +3672,7 @@
                             <div class="form-group">
                                 <label for="taskTitle" class="form-label">Task Title</label>
                                 <div class="input-group">
-                                    <!-- This is the continuation of the existing form input that was cut off -->
-<i class="fas fa-tasks input-icon" aria-hidden="true"></i>
+                                    <i class="fas fa-tasks input-icon" aria-hidden="true"></i>
                                     <input type="text" id="taskTitle" class="form-control input-with-icon" placeholder="What needs to be done?" required>
                                 </div>
                                 <div class="form-error" id="taskTitleError">Please enter a task title</div>
@@ -2861,51 +3761,70 @@
                             </div>
                         </div>
 
-                        <!-- Reminders Tab Content -->
+                        <!-- Reminders Tab Content with NEW TOGGLE DESIGN -->
                         <div class="task-form-content" id="reminders-content">
                             <div class="form-group">
-                                <label class="form-label">Set a Reminder</label>
-                                <div class="reminder-options">
-                                    <div class="reminder-option">
-                                        <input type="radio" name="reminderOption" id="reminder10min" value="10">
-                                        <i class="fas fa-bell"></i> 10 minutes before
-                                    </div>
-                                    <div class="reminder-option">
-                                        <input type="radio" name="reminderOption" id="reminder30min" value="30" checked>
-                                        <i class="fas fa-bell"></i> 30 minutes before
-                                    </div>
-                                    <div class="reminder-option">
-                                        <input type="radio" name="reminderOption" id="reminder1hour" value="60">
-                                        <i class="fas fa-bell"></i> 1 hour before
-                                    </div>
-                                    <div class="reminder-option">
-                                        <input type="radio" name="reminderOption" id="reminder1day" value="1440">
-                                        <i class="fas fa-bell"></i> 1 day before
+                                <!-- Reminder Toggle -->
+                                <div class="reminder-toggle-container">
+                                    <div class="reminder-toggle" id="reminderToggle">
+                                        <div class="reminder-toggle-label">
+                                            <i class="fas fa-bell"></i>
+                                            Set Reminder
+                                        </div>
+                                        <div class="toggle-switch" id="toggleSwitch">
+                                            <div class="toggle-switch-handle"></div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="custom-reminder">
-                                    <button type="button" class="custom-reminder-btn" id="customReminderBtn">
-                                        <i class="fas fa-plus"></i> Custom Reminder
-                                    </button>
-                                    <div class="custom-reminder-form" id="customReminderForm">
-                                        <div class="custom-reminder-inputs">
-                                            <div>
-                                                <label for="reminderDays">Days</label>
-                                                <input type="number" id="reminderDays" min="0" max="30" value="0">
-                                            </div>
-                                            <div>
-                                                <label for="reminderHours">Hours</label>
-                                                <input type="number" id="reminderHours" min="0" max="23" value="0">
-                                            </div>
-                                            <div>
-                                                <label for="reminderMinutes">Minutes</label>
-                                                <input type="number" id="reminderMinutes" min="0" max="59" value="30">
-                                            </div>
+                                <!-- Reminder Options (Hidden by default) -->
+                                <div class="reminder-options-container" id="reminderOptionsContainer">
+                                    <div class="reminder-options">
+                                        <div class="reminder-option">
+                                            <input type="radio" name="reminderOption" id="reminder10min" value="10">
+                                            <i class="fas fa-bell"></i>
+                                            10 minutes before
                                         </div>
-                                        <div class="custom-reminder-actions">
-                                            <button type="button" class="custom-reminder-btn-small cancel" id="cancelCustomReminderBtn">Cancel</button>
-                                            <button type="button" class="custom-reminder-btn-small apply" id="applyCustomReminderBtn">Apply</button>
+                                        <div class="reminder-option selected">
+                                            <input type="radio" name="reminderOption" id="reminder30min" value="30" checked>
+                                            <i class="fas fa-bell"></i>
+                                            30 minutes before
+                                        </div>
+                                        <div class="reminder-option">
+                                            <input type="radio" name="reminderOption" id="reminder1hour" value="60">
+                                            <i class="fas fa-bell"></i>
+                                            1 hour before
+                                        </div>
+                                        <div class="reminder-option">
+                                            <input type="radio" name="reminderOption" id="reminder1day" value="1440">
+                                            <i class="fas fa-bell"></i>
+                                            1 day before
+                                        </div>
+                                    </div>
+
+                                    <div class="custom-reminder">
+                                        <button type="button" class="custom-reminder-btn" id="customReminderBtn">
+                                            <i class="fas fa-plus"></i> Custom Reminder
+                                        </button>
+                                        <div class="custom-reminder-form" id="customReminderForm">
+                                            <div class="custom-reminder-inputs">
+                                                <div>
+                                                    <label for="reminderDays">Days</label>
+                                                    <input type="number" id="reminderDays" min="0" max="30" value="0">
+                                                </div>
+                                                <div>
+                                                    <label for="reminderHours">Hours</label>
+                                                    <input type="number" id="reminderHours" min="0" max="23" value="0">
+                                                </div>
+                                                <div>
+                                                    <label for="reminderMinutes">Minutes</label>
+                                                    <input type="number" id="reminderMinutes" min="0" max="59" value="30">
+                                                </div>
+                                            </div>
+                                            <div class="custom-reminder-actions">
+                                                <button type="button" class="custom-reminder-btn-small cancel" id="cancelCustomReminderBtn">Cancel</button>
+                                                <button type="button" class="custom-reminder-btn-small apply" id="applyCustomReminderBtn">Apply</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -3012,6 +3931,7 @@
             let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
             let currentFilter = 'all';
             let currentCategory = 'all';
+            let reminderEnabled = false;
 
             // Elements
             const categorySlider = document.getElementById('categorySlider');
@@ -3051,6 +3971,11 @@
             const taskFormTabs = document.querySelectorAll('.task-form-tab');
             const taskFormContents = document.querySelectorAll('.task-form-content');
             
+            // NEW: Reminder toggle elements
+            const reminderToggle = document.getElementById('reminderToggle');
+            const toggleSwitch = document.getElementById('toggleSwitch');
+            const reminderOptionsContainer = document.getElementById('reminderOptionsContainer');
+            
             // Reminder options
             const reminderOptions = document.querySelectorAll('.reminder-option');
             const customReminderBtn = document.getElementById('customReminderBtn');
@@ -3063,6 +3988,10 @@
             const completedTasksValue = document.getElementById('completedTasksValue');
             const pendingTasksValue = document.getElementById('pendingTasksValue');
             const overdueTasksValue = document.getElementById('overdueTasksValue');
+
+            // ADD THIS LINE HERE:
+const fullViewBtn = document.getElementById('fullViewBtn');
+let isFullView = false;
             
             // Stats for task counts by category
             const taskCountElements = document.querySelectorAll('.task-count');
@@ -3112,6 +4041,76 @@
                 setInterval(checkReminders, 60000);
             }
 
+            // NEW: Reminder Toggle Functionality
+            reminderToggle.addEventListener('click', () => {
+                reminderEnabled = !reminderEnabled;
+                
+                if (reminderEnabled) {
+                    toggleSwitch.classList.add('active');
+                    reminderOptionsContainer.classList.add('active');
+                    // Set default reminder if none selected
+                    if (!document.querySelector('input[name="reminderOption"]:checked')) {
+                        document.getElementById('reminder30min').checked = true;
+                        document.querySelector('.reminder-option:nth-child(2)').classList.add('selected');
+                        document.getElementById('taskReminderMinutes').value = '30';
+                    }
+                } else {
+                    toggleSwitch.classList.remove('active');
+                    reminderOptionsContainer.classList.remove('active');
+                    // Clear reminder settings
+                    document.getElementById('taskReminderMinutes').value = '';
+                    document.getElementById('taskReminderTime').value = '';
+                }
+            });
+
+            fullViewBtn.addEventListener('click', () => {
+    isFullView = !isFullView;
+    
+    if (isFullView) {
+        // Enter full view
+        document.body.classList.add('full-view-active');
+        fullViewBtn.innerHTML = '<i class="fas fa-compress btn-icon" aria-hidden="true"></i> Exit Full View';
+        
+        // Make Add Task button shorter text
+        addTaskBtn.innerHTML = '<i class="fas fa-plus btn-icon" aria-hidden="true"></i> Add';
+        
+        // Add smooth transition class
+        document.querySelector('.main-content').style.transition = 'all 0.4s ease';
+        
+        // Hide dashboard regardless of category when in full view
+        dashboard.classList.add('hidden');
+        
+        // If search is currently focused, switch to full view blur
+        if (searchInput.classList.contains('focused')) {
+            searchOverlay.classList.remove('active');
+            fullViewSearchOverlay.classList.add('active');
+            document.body.classList.add('search-blur');
+        }
+        
+        showNotification('Full view activated', 'info');
+    } else {
+        // Exit full view
+        document.body.classList.remove('full-view-active');
+        document.body.classList.remove('search-blur');
+        fullViewBtn.innerHTML = '<i class="fas fa-expand btn-icon" aria-hidden="true"></i> Full View';
+        
+        // Restore original Add Task button text
+        addTaskBtn.innerHTML = '<i class="fas fa-plus btn-icon" aria-hidden="true"></i> Add Task';
+        
+        // Restore dashboard visibility based on current category
+        if (currentCategory === 'all') {
+            dashboard.classList.remove('hidden');
+        }
+        
+        // If search is currently focused, switch back to regular overlay
+        if (searchInput.classList.contains('focused')) {
+            fullViewSearchOverlay.classList.remove('active');
+            searchOverlay.classList.add('active');
+        }
+        
+        showNotification('Full view deactivated', 'info');
+    }
+});
             // Category selection and sliding indicator
             categorySlider.addEventListener('click', (e) => {
                 const categoryEl = e.target.closest('.category');
@@ -3125,32 +4124,33 @@
                 // Add active class to clicked category
                 categoryEl.classList.add('active');
                 
-                // Update the sliding indicator position
-                updateActiveCategoryIndicator(categoryEl);
+                // Update the sliding indicator position (only on desktop)
+                if (window.innerWidth > 768) {
+                    updateActiveCategoryIndicator(categoryEl);
+                }
                 
                 // Update current category and tasks
                 currentCategory = categoryEl.dataset.category;
                 currentCategoryEl.innerHTML = `${categoryIcons[currentCategory]} ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} Tasks`;
                 categoryDescriptionEl.textContent = categoryDescriptions[currentCategory];
                 
-                // Show/hide dashboard based on category
-                if (currentCategory === 'all') {
-                    dashboard.classList.remove('hidden');
-                } else {
-                    dashboard.classList.add('hidden');
-                }
+                // Show/hide dashboard based on category and full view mode
+if (currentCategory === 'all' && !isFullView) {
+    dashboard.classList.remove('hidden');
+} else {
+    dashboard.classList.add('hidden');
+}
                 
                 // Update task list
                 renderTasks();
             });
 
-            // Update active category indicator position
+            // Update active category indicator position (only for desktop)
             function updateActiveCategoryIndicator(activeCategory) {
-                const categoryRect = activeCategory.getBoundingClientRect();
-                const sliderRect = categorySlider.getBoundingClientRect();
-                
-                activeCategoryIndicator.style.transform = `translateY(${activeCategory.offsetTop}px)`;
-                activeCategoryIndicator.style.height = `${categoryRect.height}px`;
+                if (window.innerWidth > 768) {
+                    activeCategoryIndicator.style.transform = `translateY(${activeCategory.offsetTop}px)`;
+                    activeCategoryIndicator.style.height = `${activeCategory.offsetHeight}px`;
+                }
             }
 
             // Add Task button click
@@ -3169,7 +4169,12 @@
                 taskForm.reset();
                 document.getElementById('taskId').value = '';
                 document.getElementById('taskReminderTime').value = '';
-                document.getElementById('taskReminderMinutes').value = '30';
+                document.getElementById('taskReminderMinutes').value = '';
+                
+                // Reset reminder toggle
+                reminderEnabled = false;
+                toggleSwitch.classList.remove('active');
+                reminderOptionsContainer.classList.remove('active');
                 
                 // Set the due date to today by default
                 const today = new Date();
@@ -3190,10 +4195,6 @@
                 document.querySelectorAll('.reminder-option').forEach(option => {
                     option.classList.remove('selected');
                 });
-                
-                // Select 30 min reminder by default
-                document.getElementById('reminder30min').checked = true;
-                document.querySelector('.reminder-option:nth-child(2)').classList.add('selected');
                 
                 // Hide custom reminder form
                 customReminderForm.classList.remove('active');
@@ -3283,6 +4284,9 @@
             // Reminder options selection
             reminderOptions.forEach(option => {
                 option.addEventListener('click', () => {
+                    // Only allow selection if reminder is enabled
+                    if (!reminderEnabled) return;
+                    
                     // Unselect all options
                     reminderOptions.forEach(opt => opt.classList.remove('selected'));
                     
@@ -3300,6 +4304,7 @@
 
             // Custom reminder button
             customReminderBtn.addEventListener('click', () => {
+                if (!reminderEnabled) return;
                 customReminderForm.classList.toggle('active');
             });
 
@@ -3381,14 +4386,14 @@
                 const category = categoryRadio.value;
                 const priority = priorityRadio.value;
                 const dueTime = document.getElementById('taskDueTime').value || '23:59';
-                const reminderMinutes = parseInt(document.getElementById('taskReminderMinutes').value);
+                const reminderMinutes = reminderEnabled ? (parseInt(document.getElementById('taskReminderMinutes').value) || 0) : 0;
                 
                 // Create due date time object
                 const dueDateObj = new Date(`${dueDate}T${dueTime}`);
                 
                 // Calculate reminder time
                 let reminderTime = null;
-                if (reminderMinutes > 0) {
+                if (reminderEnabled && reminderMinutes > 0) {
                     reminderTime = new Date(dueDateObj.getTime() - (reminderMinutes * 60 * 1000));
                 }
                 
@@ -3404,7 +4409,7 @@
                             priority,
                             dueDate: dueDateObj.toISOString(),
                             reminderTime: reminderTime ? reminderTime.toISOString() : null,
-                            reminderMinutes,
+                            reminderMinutes: reminderEnabled ? reminderMinutes : 0,
                             modifiedAt: new Date().toISOString()
                         };
                         
@@ -3421,7 +4426,7 @@
                         completed: false,
                         dueDate: dueDateObj.toISOString(),
                         reminderTime: reminderTime ? reminderTime.toISOString() : null,
-                        reminderMinutes,
+                        reminderMinutes: reminderEnabled ? reminderMinutes : 0,
                         createdAt: new Date().toISOString(),
                         modifiedAt: new Date().toISOString()
                     };
@@ -3495,33 +4500,42 @@
                 document.getElementById('taskDueTime').value = `${hours}:${minutes}`;
                 
                 // Set reminder
-                document.getElementById('taskReminderMinutes').value = task.reminderMinutes || 30;
+                reminderEnabled = task.reminderMinutes > 0;
+                document.getElementById('taskReminderMinutes').value = task.reminderMinutes || '';
                 
-                // Select corresponding reminder option or reset to custom
-                const reminderValue = task.reminderMinutes;
-                let reminderFound = false;
-                
-                reminderOptions.forEach(option => {
-                    option.classList.remove('selected');
-                    const radio = option.querySelector('input[type="radio"]');
-                    radio.checked = false;
+                if (reminderEnabled) {
+                    toggleSwitch.classList.add('active');
+                    reminderOptionsContainer.classList.add('active');
                     
-                    if (radio.value == reminderValue) {
-                        radio.checked = true;
-                        option.classList.add('selected');
-                        reminderFound = true;
+                    // Select corresponding reminder option or reset to custom
+                    const reminderValue = task.reminderMinutes;
+                    let reminderFound = false;
+                    
+                    reminderOptions.forEach(option => {
+                        option.classList.remove('selected');
+                        const radio = option.querySelector('input[type="radio"]');
+                        radio.checked = false;
+                        
+                        if (radio.value == reminderValue) {
+                            radio.checked = true;
+                            option.classList.add('selected');
+                            reminderFound = true;
+                        }
+                    });
+                    
+                    // If custom reminder
+                    if (!reminderFound && reminderValue) {
+                        const days = Math.floor(reminderValue / (24 * 60));
+                        const hours = Math.floor((reminderValue % (24 * 60)) / 60);
+                        const minutes = reminderValue % 60;
+                        
+                        document.getElementById('reminderDays').value = days;
+                        document.getElementById('reminderHours').value = hours;
+                        document.getElementById('reminderMinutes').value = minutes;
                     }
-                });
-                
-                // If custom reminder
-                if (!reminderFound && reminderValue) {
-                    const days = Math.floor(reminderValue / (24 * 60));
-                    const hours = Math.floor((reminderValue % (24 * 60)) / 60);
-                    const minutes = reminderValue % 60;
-                    
-                    document.getElementById('reminderDays').value = days;
-                    document.getElementById('reminderHours').value = hours;
-                    document.getElementById('reminderMinutes').value = minutes;
+                } else {
+                    toggleSwitch.classList.remove('active');
+                    reminderOptionsContainer.classList.remove('active');
                 }
                 
                 // Set reminder time if exists
@@ -3995,8 +5009,9 @@
                 // Play notification sound if available
                 if (window.Audio) {
                     try {
-                        const audio = new Audio('https://raw.githubusercontent.com/rafaelreis-hotmart/Audio-Sample-files/master/sample-notification.mp3');
-                        audio.volume = 0.5;
+                        // Replace 'path/to/your/audio-file.mp3' with the actual path to your audio file
+                        const audio = new Audio('sounds/success-notification.wav');
+                        audio.volume = 0.3;
                         audio.play();
                     } catch (e) {
                         console.log('Notification sound not available');
@@ -4054,120 +5069,181 @@
                 }, 3000);
             }
 
-            // Search functionality
-            searchInput.addEventListener('focus', () => {
-                searchSuggestions.classList.add('active');
-                searchOverlay.classList.add('active');
-            });
+            // Updated search functionality with blur effect for full view
+const fullViewSearchOverlay = document.getElementById('fullViewSearchOverlay');
+
+searchInput.addEventListener('focus', () => {
+    // Add focused class for styling
+    searchInput.classList.add('focused');
+    searchInput.closest('.search-container').classList.add('focused');
+    
+    // Show suggestions
+    searchSuggestions.classList.add('active');
+    
+    // In full view mode, show blur overlay and add blur class
+    if (isFullView) {
+        fullViewSearchOverlay.classList.add('active');
+        document.body.classList.add('search-blur');
+    } else {
+        // Regular mode overlay
+        searchOverlay.classList.add('active');
+    }
+});
+
+// Handle blur (when search loses focus)
+searchInput.addEventListener('blur', (e) => {
+    // Delay to allow clicking on suggestions
+    setTimeout(() => {
+        // Remove focused classes
+        searchInput.classList.remove('focused');
+        searchInput.closest('.search-container').classList.remove('focused');
+        
+        // Hide suggestions
+        searchSuggestions.classList.remove('active');
+        
+        // Remove blur effects
+        if (isFullView) {
+            fullViewSearchOverlay.classList.remove('active');
+            document.body.classList.remove('search-blur');
+        } else {
+            searchOverlay.classList.remove('active');
+        }
+    }, 150);
+});
+
+// Handle clicking on overlays to close search
+searchOverlay.addEventListener('click', () => {
+    searchInput.blur();
+    searchSuggestions.classList.remove('active');
+    searchOverlay.classList.remove('active');
+});
+
+fullViewSearchOverlay.addEventListener('click', () => {
+    searchInput.blur();
+    searchSuggestions.classList.remove('active');
+    fullViewSearchOverlay.classList.remove('active');
+    document.body.classList.remove('search-blur');
+});
+
+// Update your existing search input event listener
+searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.trim().toLowerCase();
+    
+    if (searchTerm.length === 0) {
+        searchSuggestions.innerHTML = '';
+        return;
+    }
+    
+    // Filter tasks by search term
+    const matchedTasks = tasks.filter(task => 
+        task.title.toLowerCase().includes(searchTerm) || 
+        (task.description && task.description.toLowerCase().includes(searchTerm))
+    );
+    
+    // Limit to 5 suggestions
+    const limitedMatches = matchedTasks.slice(0, 5);
+    
+    // Clear suggestions
+    searchSuggestions.innerHTML = '';
+    
+    if (limitedMatches.length > 0) {
+        limitedMatches.forEach(task => {
+            const suggestionItem = document.createElement('div');
+            suggestionItem.className = 'suggestion-item';
+            suggestionItem.style.borderLeftColor = `var(--${task.category}-color)`;
             
-            searchOverlay.addEventListener('click', () => {
+            const dueDate = new Date(task.dueDate);
+            const formattedDate = new Intl.DateTimeFormat('en-US', {
+                month: 'short',
+                day: 'numeric'
+            }).format(dueDate);
+            
+            let priorityClass = '';
+            switch (task.priority) {
+                case 'low':
+                    priorityClass = 'priority-low';
+                    break;
+                case 'medium':
+                    priorityClass = 'priority-medium';
+                    break;
+                case 'high':
+                    priorityClass = 'priority-high';
+                    break;
+            }
+            
+            suggestionItem.innerHTML = `
+                <div class="suggestion-content">
+                    <div class="suggestion-title">${task.title}</div>
+                    <div class="suggestion-category">
+                        ${categoryIcons[task.category]} ${task.category.charAt(0).toUpperCase() + task.category.slice(1)} • ${formattedDate}
+                    </div>
+                </div>
+                <div class="suggestion-priority ${priorityClass}">
+                    ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                </div>
+                <div class="suggestion-actions">
+                    <button class="suggestion-action edit" aria-label="Edit task">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="suggestion-action delete" aria-label="Delete task">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            `;
+            
+            // Add event listeners
+            suggestionItem.addEventListener('click', () => {
+                viewTaskDetails(task.id);
                 searchSuggestions.classList.remove('active');
-                searchOverlay.classList.remove('active');
+                if (isFullView) {
+                    fullViewSearchOverlay.classList.remove('active');
+                    document.body.classList.remove('search-blur');
+                } else {
+                    searchOverlay.classList.remove('active');
+                }
+                searchInput.value = '';
             });
             
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.trim().toLowerCase();
-                
-                if (searchTerm.length === 0) {
-                    searchSuggestions.innerHTML = '';
-                    return;
-                }
-                
-                // Filter tasks by search term
-                const matchedTasks = tasks.filter(task => 
-                    task.title.toLowerCase().includes(searchTerm) || 
-                    (task.description && task.description.toLowerCase().includes(searchTerm))
-                );
-                
-                // Limit to 5 suggestions
-                const limitedMatches = matchedTasks.slice(0, 5);
-                
-                // Clear suggestions
-                searchSuggestions.innerHTML = '';
-                
-                if (limitedMatches.length > 0) {
-                    limitedMatches.forEach(task => {
-                        const suggestionItem = document.createElement('div');
-                        suggestionItem.className = 'suggestion-item';
-                        suggestionItem.style.borderLeftColor = `var(--${task.category}-color)`;
-                        
-                        const dueDate = new Date(task.dueDate);
-                        const formattedDate = new Intl.DateTimeFormat('en-US', {
-                            month: 'short',
-                            day: 'numeric'
-                        }).format(dueDate);
-                        
-                        let priorityClass = '';
-                        switch (task.priority) {
-                            case 'low':
-                                priorityClass = 'priority-low';
-                                break;
-                            case 'medium':
-                                priorityClass = 'priority-medium';
-                                break;
-                            case 'high':
-                                priorityClass = 'priority-high';
-                                break;
-                        }
-                        
-                        suggestionItem.innerHTML = `
-                            <div class="suggestion-content">
-                                <div class="suggestion-title">${task.title}</div>
-                                <div class="suggestion-category">
-                                    ${categoryIcons[task.category]} ${task.category.charAt(0).toUpperCase() + task.category.slice(1)} • ${formattedDate}
-                                </div>
-                            </div>
-                            <div class="suggestion-priority ${priorityClass}">
-                                ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
-                            </div>
-                            <div class="suggestion-actions">
-                                <button class="suggestion-action edit" aria-label="Edit task">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </button>
-                                <button class="suggestion-action delete" aria-label="Delete task">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                        `;
-                        
-                        // Add event listeners
-                        suggestionItem.addEventListener('click', () => {
-                            viewTaskDetails(task.id);
-                            searchSuggestions.classList.remove('active');
-                            searchOverlay.classList.remove('active');
-                            searchInput.value = '';
-                        });
-                        
-                        // Edit task
-                        const editBtn = suggestionItem.querySelector('.suggestion-action.edit');
-                        editBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            editTask(task.id);
-                            searchSuggestions.classList.remove('active');
-                            searchOverlay.classList.remove('active');
-                            searchInput.value = '';
-                        });
-                        
-                        // Delete task
-                        const deleteBtn = suggestionItem.querySelector('.suggestion-action.delete');
-                        deleteBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            confirmDeleteTask(task.id);
-                            searchSuggestions.classList.remove('active');
-                            searchOverlay.classList.remove('active');
-                            searchInput.value = '';
-                        });
-                        
-                        searchSuggestions.appendChild(suggestionItem);
-                    });
+            // Edit task
+            const editBtn = suggestionItem.querySelector('.suggestion-action.edit');
+            editBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                editTask(task.id);
+                searchSuggestions.classList.remove('active');
+                if (isFullView) {
+                    fullViewSearchOverlay.classList.remove('active');
+                    document.body.classList.remove('search-blur');
                 } else {
-                    searchSuggestions.innerHTML = `
-                        <div class="suggestion-item" style="justify-content: center; color: var(--gray-500);">
-                            No tasks found matching "${searchTerm}"
-                        </div>
-                    `;
+                    searchOverlay.classList.remove('active');
                 }
+                searchInput.value = '';
             });
+            
+            // Delete task
+            const deleteBtn = suggestionItem.querySelector('.suggestion-action.delete');
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                confirmDeleteTask(task.id);
+                searchSuggestions.classList.remove('active');
+                if (isFullView) {
+                    fullViewSearchOverlay.classList.remove('active');
+                    document.body.classList.remove('search-blur');
+                } else {
+                    searchOverlay.classList.remove('active');
+                }
+                searchInput.value = '';
+            });
+            
+            searchSuggestions.appendChild(suggestionItem);
+        });
+    } else {
+        searchSuggestions.innerHTML = `
+            <div class="suggestion-item" style="justify-content: center; color: var(--gray-500);">
+                No tasks found matching "${searchTerm}"
+            </div>
+        `;
+    }
+});
             
             // Search form submission - show matching tasks with highlight
             searchInput.addEventListener('keydown', (e) => {
@@ -4207,8 +5283,10 @@
                         // Show dashboard
                         dashboard.classList.remove('hidden');
                         
-                        // Update the sliding indicator position
-                        updateActiveCategoryIndicator(document.querySelector('.category[data-category="all"]'));
+                        // Update the sliding indicator position (only on desktop)
+                        if (window.innerWidth > 768) {
+                            updateActiveCategoryIndicator(document.querySelector('.category[data-category="all"]'));
+                        }
                         
                         // Render all tasks
                         renderTasks();
@@ -4238,6 +5316,39 @@
                     searchInput.value = '';
                 }
             });
+
+            // Handle window resize for mobile optimizations
+            window.addEventListener('resize', () => {
+                // Update category indicator position on resize (desktop only)
+                if (window.innerWidth > 768) {
+                    const activeCategory = document.querySelector('.category.active');
+                    if (activeCategory) {
+                        updateActiveCategoryIndicator(activeCategory);
+                    }
+                }
+            });
+
+            // Close modals when clicking outside on mobile
+            [taskModal, taskDetailModal, deleteModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+
+            // Prevent zoom on input focus for iOS
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                const inputs = document.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    input.addEventListener('focus', () => {
+                        input.style.fontSize = '16px';
+                    });
+                    input.addEventListener('blur', () => {
+                        input.style.fontSize = '';
+                    });
+                });
+            }
 
             // Initialize the app
             init();
