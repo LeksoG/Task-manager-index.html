@@ -2,7 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#4f46e5">
+
+    <!-- PWA Enhancement Tags -->
+    <meta name="application-name" content="Tasklytic">
+    <meta name="apple-mobile-web-app-title" content="Tasklytic">
+    <meta name="description" content="Modern task management application - organize your tasks efficiently">
+    <meta name="format-detection" content="telephone=no">
+
+     <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Additional PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- iOS Splash Screens -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-startup-image" href="icons/splash-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/splash-1668x2224.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/splash-1536x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+
+    <!-- App Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="icons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="icons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-touch-icon-57x57.png">
+
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#4f46e5">
+    <meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <!-- END OF NEW PWA TAGS ↑ -->
+
     <title>Tasklytic</title>
     <style>
         :root {
@@ -237,7 +284,7 @@
 
         /* App Container fade in effect */
         .app-container {
-            position: fixed;
+            position: relative;
             top: 0;
             left: 0;
             width: 100%;
@@ -322,6 +369,217 @@
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
         }
+
+        .settings-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.settings-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Settings Panel */
+.settings-panel {
+    position: fixed;
+    top: 80px;
+    right: -400px;
+    width: 350px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+    z-index: 1100;
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+}
+
+.settings-panel.active {
+    right: 20px;
+}
+
+.settings-content {
+    padding: 0;
+}
+
+.settings-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.settings-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.25rem;
+}
+
+.settings-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.settings-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.settings-options {
+    padding: 1rem;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--gray-50);
+}
+
+.setting-item:hover {
+    background: var(--gray-100);
+    transform: translateX(5px);
+}
+
+.setting-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.setting-info i {
+    width: 20px;
+    text-align: center;
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.setting-info span {
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.setting-toggle .toggle-switch {
+    width: 44px;
+    height: 22px;
+    background-color: var(--gray-300);
+    border-radius: 22px;
+    position: relative;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.setting-toggle .toggle-switch.active {
+    background-color: var(--primary);
+}
+
+.setting-toggle .toggle-switch-handle {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.setting-toggle .toggle-switch.active .toggle-switch-handle {
+    transform: translateX(22px);
+}
+
+.setting-action {
+    color: var(--gray-400);
+    transition: all 0.3s ease;
+}
+
+.setting-item:hover .setting-action {
+    color: var(--primary);
+    transform: translateX(5px);
+}
+
+/* Settings Overlay */
+.settings-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    z-index: 1050;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.settings-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Dark mode support */
+body.dark-mode .settings-panel {
+    background: var(--gray-800);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .settings-header {
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .setting-item {
+    background: var(--gray-900);
+}
+
+body.dark-mode .setting-item:hover {
+    background: var(--gray-700);
+}
+
+body.dark-mode .setting-info span {
+    color: var(--gray-200);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .settings-panel {
+        right: -100%;
+        width: calc(100vw - 2rem);
+        top: 70px;
+    }
+    
+    .settings-panel.active {
+        right: 1rem;
+    }
+}
 
         /* Main Content */
         .main-content {
@@ -2862,15 +3120,32 @@ body.dark-mode .full-view-active .section-actions .btn-select {
                 padding: 0 0.75rem;
             }
 
-            /* ADD THIS MOBILE CSS HERE */
-    .task-controls {
-        justify-content: center;
-        margin-bottom: 0.5rem;
-    }
-    
-    .task-controls .btn {
-        width: 100%;
-    }
+            /* Enhanced Mobile Touch Targets */
+            .btn, .task-action-btn, .category, .filter-btn, 
+            .priority-option, .category-option, .reminder-option {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 12px 16px;
+            }
+            
+            .task-checkbox input {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .theme-toggle, .settings-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .task-controls {
+                justify-content: center;
+                margin-bottom: 0.5rem;
+            }
+            
+            .task-controls .btn {
+                width: 100%;
+            }
 
             /* Welcome screen mobile */
             .app-title {
@@ -2888,31 +3163,76 @@ body.dark-mode .full-view-active .section-actions .btn-select {
                 font-size: 1.2rem;
             }
 
-            /* Header mobile */
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .logo i {
-                width: 36px;
-                height: 36px;
-                font-size: 1.5rem;
-                margin-right: 0.5rem;
-            }
-
-            .main-content {
-                flex-direction: column;
-                margin-top: 0.5rem;
-            }
-
-            .sidebar {
-                width: 100%;
-                position: relative;
+            /* Header mobile - UPDATED */
+            header {
+                padding: 12px 0;
+                position: fixed;
                 top: 0;
-                height: auto;
-                max-height: none;
-                border-radius: 12px;
-                padding: 1rem 0.75rem;
+                left: 0;
+                right: 0;
+                z-index: 200;
+            }
+            
+            .logo {
+                font-size: 1.25rem;
+            }
+            
+            .logo i {
+                width: 32px;
+                height: 32px;
+                font-size: 1.25rem;
+            }
+            
+            /* Add padding to body to account for fixed header */
+            body {
+                padding-top: 70px;
+            }
+
+           /* Mobile Sidebar - REPLACE EXISTING SIDEBAR STYLES */
+            .sidebar {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 280px;
+                height: calc(100vh - 70px);
+                z-index: 150;
+                transition: left 0.3s ease;
+                background: white;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            /* Sidebar toggle button */
+            .sidebar-toggle {
+                display: block;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 8px;
+            }
+            
+            /* Overlay for sidebar */
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 140;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .sidebar-overlay.active {
+                opacity: 1;
+                visibility: visible;
             }
 
             /* Category options mobile */
@@ -2939,29 +3259,40 @@ body.dark-mode .full-view-active .section-actions .btn-select {
                 display: none; /* Hide on mobile for horizontal scroll */
             }
 
-            /* Task items mobile */
+            /* Task items mobile - ENHANCED */
             .task-item {
                 flex-direction: column;
-                align-items: flex-start;
-                padding: 1rem;
+                align-items: stretch;
+                padding: 16px;
+                gap: 12px;
             }
-
+            
+            .task-checkbox {
+                align-self: flex-start;
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+            
             .task-content {
                 width: 100%;
-                margin-bottom: 1rem;
             }
-
-            .task-meta {
-                margin-bottom: 1rem;
-                justify-content: flex-start;
-            }
-
+            
             .task-actions {
-                width: 100%;
                 justify-content: flex-end;
-                align-self: flex-end;
+                gap: 12px;
+            }
+            
+            .task-action-btn {
+                min-width: 44px;
+                min-height: 44px;
+            }
+            
+            .task-meta {
+                flex-wrap: wrap;
+                gap: 8px;
             }
 
+            /* Dashboard mobile */
             .dashboard {
                 grid-template-columns: 1fr;
                 gap: 1rem;
@@ -2975,33 +3306,52 @@ body.dark-mode .full-view-active .section-actions .btn-select {
                 font-size: 2rem;
             }
 
-            /* Form mobile optimizations */
+            /* Form mobile optimizations - ENHANCED */
             .modal-content {
-                width: 95%;
-                max-height: 85vh;
+                width: 95vw;
+                height: 90vh;
+                margin: 5vh auto;
+                max-height: none;
+            }
+            
+            .form-control, .time-input-field {
+                font-size: 16px; /* Prevents zoom on iOS */
+                padding: 14px 16px;
+                border-radius: 8px;
+            }
+            
+            .input-with-icon {
+                padding-left: 48px;
+            }
+            
+            .input-icon {
+                left: 16px;
+                font-size: 1.2rem;
+            }
+            
+            /* Stack form elements vertically */
+            .datetime-input-group {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .category-selector {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .priority-selector {
+                flex-direction: column;
+                gap: 12px;
             }
 
             .modal-body {
                 padding: 1rem;
             }
 
-            .category-selector {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .priority-selector {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
             .reminder-options {
                 grid-template-columns: 1fr;
                 gap: 0.75rem;
-            }
-            
-            .datetime-input-group {
-                flex-direction: column;
-                gap: 1rem;
             }
             
             .time-input {
@@ -3034,14 +3384,31 @@ body.dark-mode .full-view-active .section-actions .btn-select {
                 flex-shrink: 0;
             }
 
-            /* Search mobile */
+            /* Search mobile - ENHANCED */
             .search-container {
+                margin: 0 0 16px 0;
                 max-width: none;
-                margin: 0 0 1rem 0;
             }
-
+            
             .search-input {
-                font-size: 16px; /* Prevent iOS zoom */
+                font-size: 16px;
+                padding: 14px 16px 14px 48px;
+            }
+            
+            .search-suggestions {
+                border-radius: 8px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            }
+            
+            .suggestion-item {
+                padding: 16px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            
+            .suggestion-actions {
+                justify-content: flex-end;
             }
 
             /* Notifications mobile */
@@ -3403,6 +3770,840 @@ body.dark-mode .full-view-active .section-actions .btn-select {
                 border-width: 2px;
             }
         }
+
+        /* Update the folders section */
+.folders-section {
+    margin-bottom: 1.5rem; /* Reduced from 2.5rem */
+    padding: 0.75rem; /* Reduced from 1rem */
+    background: rgba(249, 250, 251, 0.3); /* Lighter background */
+    border-radius: 8px;
+    border-bottom: 1px solid var(--gray-200); /* Thinner border */
+}
+
+.folders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.folders-header h4 {
+    font-size: 1.1rem;
+    color: var(--gray-800);
+    font-weight: 600;
+}
+
+.add-folder-btn {
+    background: var(--primary-light);
+    color: var(--primary);
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.add-folder-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Update the folders container */
+.folders-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column */
+    gap: 0.5rem; /* Reduced gap */
+    margin-bottom: 0.5rem; /* Reduced margin */
+}
+
+.folder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    position: relative;
+    min-height: 80px;
+    justify-content: center;
+}
+
+.folder-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
+    background: var(--gray-100);
+}
+
+.folder-icon {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.folder-item:hover .folder-icon {
+    transform: scale(1.1);
+}
+
+.folder-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--gray-700);
+    text-align: center;
+    word-break: break-word;
+    line-height: 1.2;
+}
+
+.folder-count {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: var(--primary);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+}
+
+.folder-count:empty {
+    display: none;
+}
+
+/* Folder Expansion Animation - Apple Style */
+.folder-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Ensure modals opened from folder interface appear on top */
+.folder-overlay.active ~ .modal.active {
+    z-index: 2100;
+}
+
+.folder-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.folder-expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    width: 90%;
+    max-width: 800px;
+    height: 85%;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.folder-overlay.active .folder-expanded {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.folder-expanded-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    background: var(--primary-gradient);
+    color: white;
+    flex-shrink: 0;
+}
+
+.folder-expanded-title {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.folder-expanded-title i {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+}
+
+.folder-expanded-title h3 {
+    font-size: 1.5rem;
+    color: white;
+    margin: 0;
+}
+
+.folder-expanded-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.folder-action-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.folder-action-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.folder-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.folder-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.folder-expanded-content {
+    padding: 1.5rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.folder-tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.folder-task-item {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.folder-task-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+    background: white;
+}
+
+.folder-task-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--gray-800);
+}
+
+.folder-task-item {
+    position: relative; /* ADD THIS LINE to existing rule */
+}
+
+.folder-task-move-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.folder-task-item:hover .folder-task-move-btn {
+    opacity: 1;
+}
+
+.folder-task-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--gray-600);
+}
+
+.folder-empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--gray-500);
+}
+
+.folder-empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--gray-300);
+}
+
+/* Drag and Drop Styles */
+.folder-item.drag-over {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    transform: scale(1.05);
+}
+
+.task-item.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+}
+
+.drop-zone {
+    border: 2px dashed var(--primary);
+    background: var(--primary-light);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    color: var(--primary);
+    margin: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.drop-zone.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* Folder Creation Modal */
+.folder-modal .modal-content {
+    max-width: 450px;
+}
+
+.folder-color-picker {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.color-option {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.selected {
+    border-color: var(--gray-700);
+    transform: scale(1.1);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .folders-container {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 0.5rem;
+    }
+    
+    .folder-item {
+        min-height: 70px;
+        padding: 0.5rem;
+    }
+    
+    .folder-icon {
+        font-size: 1.5rem;
+    }
+    
+    .folder-name {
+        font-size: 0.75rem;
+    }
+    
+    .folder-expanded {
+        width: 95%;
+        height: 90%;
+    }
+    
+    .folder-tasks-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Dark mode support */
+body.dark-mode .folders-section {
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .folder-item {
+    background: var(--gray-800);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .folder-item:hover {
+    background: var(--gray-700);
+}
+
+body.dark-mode .folder-expanded {
+    background: var(--gray-800);
+}
+
+body.dark-mode .folder-expanded-header {
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .folder-task-item {
+    background: var(--gray-900);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .folder-task-item:hover {
+    background: var(--gray-800);
+}
+
+body.dark-mode .folder-name {
+    color: var(--gray-200);
+}
+
+body.dark-mode .folder-task-title {
+    color: var(--gray-200);
+}
+
+body.dark-mode .folder-task-item p {
+    color: var(--gray-400) !important;
+}
+
+/* Update the main folders container */
+.folders-main-container {
+    position: relative;
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(79, 70, 229, 0.1) 100%);
+    border: 2px solid var(--primary-light);
+    min-height: 60px; /* Reduced from 90px */
+    padding: 0.5rem; /* Reduced padding */
+}
+
+.folders-main-container:hover {
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(79, 70, 229, 0.2) 100%);
+    border-color: var(--primary);
+}
+
+.folders-main-container .folder-icon {
+    font-size: 1.5rem; /* Reduced from 2.2rem */
+    margin-bottom: 0.25rem; /* Reduced margin */
+}
+
+.folders-meta {
+    font-size: 0.65rem; /* Smaller font */
+    color: var(--gray-500);
+    text-align: center;
+    margin-top: 0.15rem; /* Reduced margin */
+}
+
+/* Folders Overview Modal */
+.folders-overview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.folders-overview.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.folders-overview-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    width: 90%;
+    max-width: 900px;
+    height: 85%;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.folders-overview.active .folders-overview-content {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.folders-overview-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--primary-gradient);
+    color: white;
+    flex-shrink: 0;
+}
+
+.folders-overview-title {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.folders-overview-title i {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+}
+
+.folders-overview-title h3 {
+    font-size: 1.5rem;
+    color: white;
+    margin: 0;
+}
+
+.folders-overview-body {
+    padding: 1.5rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.folders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.folder-card {
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.folder-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover);
+    background: white;
+}
+
+.folder-card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.folder-card:hover .folder-card-icon {
+    transform: scale(1.1);
+}
+
+.folder-card-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 0.5rem;
+}
+
+.folder-card-count {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+}
+
+.folder-card-actions {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 0.25rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.folder-card:hover .folder-card-actions {
+    opacity: 1;
+}
+
+.folder-card-action {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.folder-card-action.edit {
+    background: var(--secondary-light);
+    color: var(--secondary);
+}
+
+.folder-card-action.edit:hover {
+    background: var(--secondary);
+    color: white;
+}
+
+.folder-card-action.delete {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.folder-card-action.delete:hover {
+    background: var(--danger);
+    color: white;
+}
+
+/* Empty folders state */
+.folders-empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--gray-500);
+}
+
+.folders-empty-state i {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    color: var(--gray-300);
+}
+
+.folders-empty-state h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--gray-700);
+}
+
+/* Folder Selection Popup */
+.folder-selection-popup {
+    position: fixed;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--gray-200);
+    z-index: 1200;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.9);
+    transition: all 0.2s ease;
+    min-width: 200px;
+    max-width: 250px;
+}
+
+.folder-selection-popup.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.folder-selection-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--gray-200);
+    font-weight: 600;
+    color: var(--gray-700);
+    font-size: 0.9rem;
+}
+
+.folder-selection-list {
+    padding: 0.5rem 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.folder-selection-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.folder-selection-item:hover {
+    background: var(--gray-100);
+}
+
+.folder-selection-item i {
+    margin-right: 0.75rem;
+    font-size: 1rem;
+}
+
+.folder-selection-item .folder-task-count {
+    margin-left: auto;
+    background: var(--gray-200);
+    color: var(--gray-600);
+    font-size: 0.7rem;
+    font-weight: 600;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dark Mode Support for Folder Selection Popup */
+body.dark-mode .folder-selection-popup {
+    background: var(--gray-800);
+    border-color: var(--gray-700);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .folder-selection-header {
+    border-color: var(--gray-700);
+    color: var(--gray-200);
+}
+
+body.dark-mode .folder-selection-item {
+    color: var(--gray-200);
+}
+
+body.dark-mode .folder-selection-item:hover {
+    background: var(--gray-700);
+}
+
+body.dark-mode .folder-selection-item .folder-task-count {
+    background: var(--gray-700);
+    color: var(--gray-300);
+}
+
+/* Improve drag over visibility in dark mode */
+body.dark-mode .folders-main-container.drag-over {
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(129, 140, 248, 0.3) 100%);
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.4);
+}
+
+/* Dark mode folder main container */
+body.dark-mode .folders-main-container {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(79, 70, 229, 0.1) 100%);
+    border-color: var(--gray-600);
+}
+
+body.dark-mode .folders-main-container:hover {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.3) 0%, rgba(79, 70, 229, 0.2) 100%);
+    border-color: var(--primary-light);
+}
+
+body.dark-mode .folders-main-container .folder-name {
+    color: var(--gray-200);
+}
+
+body.dark-mode .folders-meta {
+    color: var(--gray-400);
+}
+
+body.dark-mode .folders-section {
+    background: rgba(31, 41, 55, 0.3);
+    border-color: var(--gray-700);
+}
+
+/* Better drag and drop visual feedback */
+.folders-main-container.drag-over {
+    background: linear-gradient(135deg, var(--primary) 0%, rgba(79, 70, 229, 0.8) 100%);
+    border-color: var(--primary);
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.folders-main-container.drag-over .folder-name,
+.folders-main-container.drag-over .folders-meta,
+.folders-main-container.drag-over .folder-count {
+    color: white;
+}
+
+.folders-main-container.drag-over .folder-icon {
+    color: white !important;
+    transform: scale(1.1);
+}
+
+/* Dragging task styling */
+.task-item.dragging {
+    opacity: 0.7;
+    transform: rotate(2deg) scale(0.95);
+    z-index: 1000;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced Mobile Touch Targets */
+        @media (max-width: 768px) {
+            .btn, .task-action-btn, .category, .filter-btn, 
+            .priority-option, .category-option, .reminder-option {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 12px 16px;
+            }
+            
+            .task-checkbox input {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .theme-toggle, .settings-btn {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -3439,13 +4640,84 @@ body.dark-mode .full-view-active .section-actions .btn-select {
                     <i class="fas fa-tasks"></i>
                     <span>Tasklytic</span>
                 </div>
+
+                <!-- ADD THE SIDEBAR TOGGLE BUTTON HERE -->
+                <button class="sidebar-toggle" id="sidebarToggle" style="display: none;">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
                 <div class="header-actions">
                     <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
                         <i class="fas fa-moon"></i>
                     </button>
+                    <button class="settings-btn" id="settingsBtn" aria-label="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
                 </div>
             </div>
         </header>
+
+        <!-- Settings Panel -->
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-content">
+        <div class="settings-header">
+            <h3>Settings</h3>
+            <button class="settings-close" id="settingsClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="settings-options">
+            <div class="setting-item" id="autoSaveToggle">
+                <div class="setting-info">
+                    <i class="fas fa-save"></i>
+                    <span>Auto Save</span>
+                </div>
+                <div class="setting-toggle">
+                    <div class="toggle-switch active">
+                        <div class="toggle-switch-handle"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="setting-item" id="notificationsToggle">
+                <div class="setting-info">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </div>
+                <div class="setting-toggle">
+                    <div class="toggle-switch active">
+                        <div class="toggle-switch-handle"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="setting-item" id="compactViewToggle">
+                <div class="setting-info">
+                    <i class="fas fa-compress-alt"></i>
+                    <span>Compact View</span>
+                </div>
+                <div class="setting-toggle">
+                    <div class="toggle-switch">
+                        <div class="toggle-switch-handle"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="setting-item" id="exportData">
+                <div class="setting-info">
+                    <i class="fas fa-download"></i>
+                    <span>Export Data</span>
+                </div>
+                <div class="setting-action">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Settings Overlay -->
+<div class="settings-overlay" id="settingsOverlay"></div>
 
         <div class="container">
             <div class="main-content">
@@ -3453,6 +4725,19 @@ body.dark-mode .full-view-active .section-actions .btn-select {
                     <div class="sidebar-header">
                         <h3>Categories</h3>
                     </div>
+
+                    <!-- Add this inside the sidebar, after sidebar-header -->
+<div class="folders-section">
+    <div class="folders-header">
+        <h4>Folders</h4>
+        <button class="add-folder-btn" id="addFolderBtn" title="Create New Folder">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+    <div class="folders-container" id="foldersContainer">
+        <!-- Folders will be populated here -->
+    </div>
+</div>
                     <div class="categories-container">
                         <!-- Active Category Indicator (Sliding Highlight) -->
                         <div class="active-category-indicator" id="activeCategoryIndicator"></div>
@@ -3840,8 +5125,55 @@ body.dark-mode .full-view-active .section-actions .btn-select {
             </div>
         </div>
 
+
+             <!-- ADD FOLDER MODAL HERE -->
+        <div class="modal folder-modal" id="folderModal" aria-modal="true" role="dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="folderModalTitle">Create New Folder</h3>
+                    <button class="modal-close" id="folderModalClose" aria-label="Close modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="folderForm">
+                        <input type="hidden" id="folderId">
+                        
+                        <div class="form-group">
+                            <label for="folderName" class="form-label">Folder Name</label>
+                            <div class="input-group">
+                                <i class="fas fa-folder input-icon"></i>
+                                <input type="text" id="folderName" class="form-control input-with-icon" 
+                                       placeholder="Enter folder name..." required maxlength="20">
+                            </div>
+                            <div class="form-error" id="folderNameError">Please enter a folder name</div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="form-label">Folder Color</label>
+                            <div class="folder-color-picker" id="folderColorPicker">
+                                <div class="color-option selected" data-color="#4f46e5" style="background-color: #4f46e5;"></div>
+                                <div class="color-option" data-color="#8b5cf6" style="background-color: #8b5cf6;"></div>
+                                <div class="color-option" data-color="#06b6d4" style="background-color: #06b6d4;"></div>
+                                <div class="color-option" data-color="#10b981" style="background-color: #10b981;"></div>
+                                <div class="color-option" data-color="#f59e0b" style="background-color: #f59e0b;"></div>
+                                <div class="color-option" data-color="#ef4444" style="background-color: #ef4444;"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-cancel" id="cancelFolderBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="saveFolderBtn">Create Folder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Delete Confirmation Modal -->
         <div class="modal delete-modal" id="deleteModal" aria-modal="true" role="dialog">
+
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">Delete Task</h3>
@@ -3861,6 +5193,71 @@ body.dark-mode .full-view-active .section-actions .btn-select {
                         <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+         <!-- ADD FOLDER OVERLAY HERE -->
+        <div class="folder-overlay" id="folderOverlay">
+            <div class="folder-expanded" id="folderExpanded">
+                <div class="folder-expanded-header">
+                    <div class="folder-expanded-title">
+                        <i class="fas fa-folder-open"></i>
+                        <h3 id="expandedFolderName">Folder Name</h3>
+                    </div>
+                    <div class="folder-expanded-actions">
+                        <button class="folder-action-btn" id="addTaskToFolder" title="Add Task to Folder">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="folder-action-btn" id="editFolderBtn" title="Edit Folder">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button class="folder-action-btn" id="deleteFolderBtn" title="Delete Folder">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <button class="folder-close-btn" id="closeFolderBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                       <button class="folder-task-move-btn" title="Move to another folder">
+    <i class="fas fa-arrows-alt"></i>
+</button>
+                    </div>
+                </div>
+                <div class="folder-expanded-content" id="folderExpandedContent">
+                    <!-- Folder tasks will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+         <!-- Folders Overview Modal -->
+        <div class="folders-overview" id="foldersOverview">
+            <div class="folders-overview-content">
+                <div class="folders-overview-header">
+                    <div class="folders-overview-title">
+                        <i class="fas fa-folder-open"></i>
+                        <h3>My Folders</h3>
+                    </div>
+                    <div class="folder-expanded-actions">
+                        <button class="folder-action-btn" id="addFolderFromOverview" title="Create New Folder">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="folder-close-btn" id="closeFoldersOverview">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="folders-overview-body" id="foldersOverviewBody">
+                    <!-- Folders grid will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Folder Selection Popup -->
+        <div class="folder-selection-popup" id="folderSelectionPopup">
+            <div class="folder-selection-header">
+                <i class="fas fa-folder"></i> Choose Folder
+            </div>
+            <div class="folder-selection-list" id="folderSelectionList">
+                <!-- Folder options will be populated here -->
             </div>
         </div>
 
@@ -3917,21 +5314,778 @@ body.dark-mode .full-view-active .section-actions .btn-select {
                 }
             });
 
-            // Welcome Animation
-            const welcomeOverlay = document.getElementById('welcomeOverlay');
-            const appContainer = document.getElementById('appContainer');
+            // Settings button functionality
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsPanel = document.getElementById('settingsPanel');
+const settingsOverlay = document.getElementById('settingsOverlay');
+const settingsClose = document.getElementById('settingsClose');
+
+// Toggle settings panel
+settingsBtn.addEventListener('click', () => {
+    settingsPanel.classList.add('active');
+    settingsOverlay.classList.add('active');
+});
+
+// Close settings panel
+settingsClose.addEventListener('click', () => {
+    settingsPanel.classList.remove('active');
+    settingsOverlay.classList.remove('active');
+});
+
+// Close when clicking overlay
+settingsOverlay.addEventListener('click', () => {
+    settingsPanel.classList.remove('active');
+    settingsOverlay.classList.remove('active');
+});
+
+// Settings toggle functionality
+document.getElementById('autoSaveToggle').addEventListener('click', () => {
+    const toggle = document.querySelector('#autoSaveToggle .toggle-switch');
+    toggle.classList.toggle('active');
+    showNotification('Auto Save ' + (toggle.classList.contains('active') ? 'enabled' : 'disabled'), 'info');
+});
+
+document.getElementById('notificationsToggle').addEventListener('click', () => {
+    const toggle = document.querySelector('#notificationsToggle .toggle-switch');
+    toggle.classList.toggle('active');
+    showNotification('Notifications ' + (toggle.classList.contains('active') ? 'enabled' : 'disabled'), 'info');
+});
+
+document.getElementById('compactViewToggle').addEventListener('click', () => {
+    const toggle = document.querySelector('#compactViewToggle .toggle-switch');
+    toggle.classList.toggle('active');
+    showNotification('Compact View ' + (toggle.classList.contains('active') ? 'enabled' : 'disabled'), 'info');
+});
+
+document.getElementById('exportData').addEventListener('click', () => {
+    try {
+        // Get current date for filename
+        const now = new Date();
+        const dateStr = now.toISOString().split('T')[0]; // YYYY-MM-DD format
+        const timeStr = now.toTimeString().split(' ')[0].replace(/:/g, '-'); // HH-MM-SS format
+        
+        // Prepare export data
+        const exportData = {
+            exportDate: now.toISOString(),
+            totalTasks: tasks.length,
+            tasks: tasks,
+            metadata: {
+                version: '1.0',
+                source: 'Tasklytic App'
+            }
+        };
+        
+        // Convert to JSON with pretty formatting
+        const jsonString = JSON.stringify(exportData, null, 2);
+        
+        // Create blob and download
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        // Create temporary download link
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `tasklytic-backup-${dateStr}_${timeStr}.json`;
+        
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+        
+        // Cleanup
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        
+        // Close settings panel
+        settingsPanel.classList.remove('active');
+        settingsOverlay.classList.remove('active');
+        
+        // Show success notification
+        showNotification('Data exported successfully!', 'success');
+        
+    } catch (error) {
+        console.error('Export failed:', error);
+        showNotification('Export failed. Please try again.', 'error');
+    }
+});
+
+           // Welcome Animation - FIXED
+const welcomeOverlay = document.getElementById('welcomeOverlay');
+const appContainer = document.getElementById('appContainer');
+
             
             setTimeout(() => {
-                welcomeOverlay.style.opacity = '0';
-                welcomeOverlay.style.visibility = 'hidden';
-                appContainer.classList.add('visible');
-            }, 3500);
+    welcomeOverlay.style.opacity = '0';
+    welcomeOverlay.style.visibility = 'hidden';
+    appContainer.classList.add('visible');
+}, 3500); // Reduced from 3500 to 1000
 
             // Task data storage
             let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
             let currentFilter = 'all';
             let currentCategory = 'all';
             let reminderEnabled = false;
+
+            // Folder System Variables
+let folders = JSON.parse(localStorage.getItem('folders')) || [];
+let currentOpenFolder = null;
+let draggedTask = null;
+
+// Folder Elements
+const addFolderBtn = document.getElementById('addFolderBtn');
+const foldersContainer = document.getElementById('foldersContainer');
+const folderOverlay = document.getElementById('folderOverlay');
+const folderExpanded = document.getElementById('folderExpanded');
+const expandedFolderName = document.getElementById('expandedFolderName');
+const folderExpandedContent = document.getElementById('folderExpandedContent');
+const closeFolderBtn = document.getElementById('closeFolderBtn');
+const addTaskToFolder = document.getElementById('addTaskToFolder');
+const editFolderBtn = document.getElementById('editFolderBtn');
+const deleteFolderBtn = document.getElementById('deleteFolderBtn');
+
+// Folder Modal Elements
+const folderModal = document.getElementById('folderModal');
+const folderModalClose = document.getElementById('folderModalClose');
+const folderForm = document.getElementById('folderForm');
+const folderModalTitle = document.getElementById('folderModalTitle');
+const saveFolderBtn = document.getElementById('saveFolderBtn');
+const cancelFolderBtn = document.getElementById('cancelFolderBtn');
+const folderColorPicker = document.getElementById('folderColorPicker');
+
+// Folder System Functions
+function generateFolderId() {
+    return 'folder_' + Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+function saveFolders() {
+    localStorage.setItem('folders', JSON.stringify(folders));
+}
+
+function createFolder(name, color = '#4f46e5') {
+    const folder = {
+        id: generateFolderId(),
+        name: name.trim(),
+        color: color,
+        createdAt: new Date().toISOString(),
+        modifiedAt: new Date().toISOString()
+    };
+    
+    folders.push(folder);
+    saveFolders();
+    renderFolders();
+    showNotification('Folder created successfully!', 'success');
+    return folder;
+}
+
+function editFolder(folderId, name, color) {
+    const folderIndex = folders.findIndex(f => f.id === folderId);
+    if (folderIndex !== -1) {
+        folders[folderIndex].name = name.trim();
+        folders[folderIndex].color = color;
+        folders[folderIndex].modifiedAt = new Date().toISOString();
+        
+        saveFolders();
+        renderFolders();
+        
+        // Update expanded folder if it's currently open
+        if (currentOpenFolder && currentOpenFolder.id === folderId) {
+            expandedFolderName.textContent = name;
+        }
+        
+        showNotification('Folder updated successfully!', 'success');
+    }
+}
+
+function deleteFolder(folderId) {
+    // Move all tasks from folder back to no folder
+    tasks.forEach(task => {
+        if (task.folderId === folderId) {
+            delete task.folderId;
+        }
+    });
+    
+    // Remove folder
+    folders = folders.filter(f => f.id !== folderId);
+    
+    saveFolders();
+    saveTasks();
+    renderFolders();
+    renderTasks();
+    
+    // Close folder if it's currently open
+    if (currentOpenFolder && currentOpenFolder.id === folderId) {
+        closeFolderView();
+    }
+    
+    showNotification('Folder deleted successfully!', 'success');
+}
+
+function renderFolders() {
+    foldersContainer.innerHTML = '';
+    
+    // Calculate total tasks in all folders
+    const totalFolderTasks = tasks.filter(task => task.folderId).length;
+    
+    // Create single folders container item
+    const foldersEl = document.createElement('div');
+    foldersEl.className = 'folder-item folders-main-container';
+    foldersEl.id = 'foldersMainContainer';
+    
+    foldersEl.innerHTML = `
+        <div class="folder-icon" style="color: var(--primary);">
+            <i class="fas fa-folder-open"></i>
+        </div>
+        <div class="folder-name">My Folders</div>
+        <div class="folder-count">${totalFolderTasks || ''}</div>
+        <div class="folders-meta">${folders.length} folder${folders.length !== 1 ? 's' : ''}</div>
+    `;
+    
+    // Add click event to open folders overview
+    foldersEl.addEventListener('click', () => openFoldersOverview());
+    
+    // Add drag and drop events for the main container
+    foldersEl.addEventListener('dragover', handleMainFolderDragOver);
+    foldersEl.addEventListener('drop', handleMainFolderDrop);
+    foldersEl.addEventListener('dragleave', handleMainFolderDragLeave);
+    
+    foldersContainer.appendChild(foldersEl);
+}
+
+function openFolder(folder) {
+    currentOpenFolder = folder;
+    expandedFolderName.textContent = folder.name;
+    
+    // Set folder header color
+    const folderHeader = document.querySelector('.folder-expanded-header');
+    folderHeader.style.background = `linear-gradient(135deg, ${folder.color} 0%, ${folder.color}dd 100%)`;
+    
+    renderFolderTasks(folder.id);
+    
+    // Show overlay with animation
+    folderOverlay.classList.add('active');
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+function closeFolderView() {
+    folderOverlay.classList.remove('active');
+    currentOpenFolder = null;
+    
+    // Restore body scroll
+    document.body.style.overflow = '';
+}
+
+function renderFolderTasks(folderId) {
+    const folderTasks = tasks.filter(task => task.folderId === folderId);
+    
+    if (folderTasks.length === 0) {
+        folderExpandedContent.innerHTML = `
+            <div class="folder-empty-state">
+                <i class="fas fa-inbox"></i>
+                <h3>No tasks in this folder</h3>
+                <p>Drag tasks here or add new tasks to organize your work</p>
+            </div>
+        `;
+        return;
+    }
+    
+    folderExpandedContent.innerHTML = `
+        <div class="folder-tasks-grid" id="folderTasksGrid">
+            ${folderTasks.map(task => {
+                const dueDate = new Date(task.dueDate);
+                const formattedDate = new Intl.DateTimeFormat('en-US', {
+                    month: 'short',
+                    day: 'numeric'
+                }).format(dueDate);
+                
+                const priorityClass = task.priority === 'high' ? 'danger' : 
+                                    task.priority === 'medium' ? 'warning' : 'success';
+                
+                return `
+                    <div class="folder-task-item" data-task-id="${task.id}">
+                        <div class="folder-task-title">${task.title}</div>
+                        ${task.description ? `<p style="font-size: 0.85rem; color: var(--gray-600); margin: 0.5rem 0;">${task.description}</p>` : ''}
+                        <div class="folder-task-meta">
+                            <span style="background-color: var(--${priorityClass}-light); color: var(--${priorityClass}); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">
+                                ${task.priority}
+                            </span>
+                            <span>${formattedDate}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+    `;
+    
+    // Add click events to folder tasks
+    document.querySelectorAll('.folder-task-item').forEach(taskEl => {
+        taskEl.addEventListener('click', () => {
+            const taskId = taskEl.dataset.taskId;
+            closeFolderView();
+            viewTaskDetails(taskId);
+        });
+    });
+}
+
+function moveTaskToFolder(taskId, folderId) {
+    const taskIndex = tasks.findIndex(t => t.id === taskId);
+    if (taskIndex !== -1) {
+        if (folderId) {
+            tasks[taskIndex].folderId = folderId;
+        } else {
+            delete tasks[taskIndex].folderId;
+        }
+        
+        tasks[taskIndex].modifiedAt = new Date().toISOString();
+        saveTasks();
+        renderFolders();
+        renderTasks();
+        
+        const folderName = folderId ? folders.find(f => f.id === folderId)?.name : 'main view';
+        showNotification(`Task moved to ${folderName}!`, 'success');
+    }
+}
+
+// Drag and Drop Functions
+function handleFolderDragOver(e) {
+    e.preventDefault();
+    if (draggedTask) {
+        e.currentTarget.classList.add('drag-over');
+    }
+}
+
+function handleFolderDrop(e) {
+    e.preventDefault();
+    const folderEl = e.currentTarget;
+    folderEl.classList.remove('drag-over');
+    
+    if (draggedTask) {
+        const folderId = folderEl.dataset.folderId;
+        moveTaskToFolder(draggedTask.id, folderId);
+        draggedTask = null;
+    }
+}
+
+function handleFolderDragLeave(e) {
+    e.currentTarget.classList.remove('drag-over');
+}
+
+// Event Listeners for Folder System
+
+// Add Folder Button
+addFolderBtn.addEventListener('click', () => {
+    openFolderModal();
+});
+
+// Folder Modal Events
+folderModalClose.addEventListener('click', () => {
+    folderModal.classList.remove('active');
+});
+
+cancelFolderBtn.addEventListener('click', () => {
+    folderModal.classList.remove('active');
+});
+
+// Color Picker
+folderColorPicker.addEventListener('click', (e) => {
+    if (e.target.classList.contains('color-option')) {
+        document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+        e.target.classList.add('selected');
+    }
+});
+
+// Folder Form Submission
+folderForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const folderId = document.getElementById('folderId').value;
+    const folderName = document.getElementById('folderName').value.trim();
+    const selectedColor = document.querySelector('.color-option.selected').dataset.color;
+    
+    if (!folderName) {
+        document.getElementById('folderNameError').style.display = 'block';
+        return;
+    }
+    
+    document.getElementById('folderNameError').style.display = 'none';
+    
+    if (folderId) {
+        // Edit existing folder
+        editFolder(folderId, folderName, selectedColor);
+    } else {
+        // Create new folder
+        createFolder(folderName, selectedColor);
+    }
+    
+    folderModal.classList.remove('active');
+});
+
+// Close Folder View
+closeFolderBtn.addEventListener('click', closeFolderView);
+
+// Close folder when clicking overlay
+folderOverlay.addEventListener('click', (e) => {
+    if (e.target === folderOverlay) {
+        closeFolderView();
+    }
+});
+
+// Add Task to Current Folder
+addTaskToFolder.addEventListener('click', () => {
+    if (currentOpenFolder) {
+        closeFolderView();
+        openAddTaskModal(currentOpenFolder.id);
+    }
+});
+
+// Edit Current Folder
+editFolderBtn.addEventListener('click', () => {
+    if (currentOpenFolder) {
+        openFolderModal(currentOpenFolder);
+    }
+});
+
+// Delete Current Folder
+deleteFolderBtn.addEventListener('click', () => {
+    if (currentOpenFolder) {
+        if (confirm(`Are you sure you want to delete the folder "${currentOpenFolder.name}"? All tasks will be moved back to the main view.`)) {
+            deleteFolder(currentOpenFolder.id);
+        }
+    }
+});
+
+function openFolderModal(folder = null) {
+    // Reset form
+    folderForm.reset();
+    document.getElementById('folderId').value = folder ? folder.id : '';
+    document.getElementById('folderNameError').style.display = 'none';
+    
+    if (folder) {
+        // Edit mode
+        folderModalTitle.textContent = 'Edit Folder';
+        saveFolderBtn.textContent = 'Update Folder';
+        document.getElementById('folderName').value = folder.name;
+        
+        // Select the current color
+        document.querySelectorAll('.color-option').forEach(opt => {
+            opt.classList.remove('selected');
+            if (opt.dataset.color === folder.color) {
+                opt.classList.add('selected');
+            }
+        });
+    } else {
+        // Create mode
+        folderModalTitle.textContent = 'Create New Folder';
+        saveFolderBtn.textContent = 'Create Folder';
+        
+        // Select default color
+        document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+        document.querySelector('.color-option[data-color="#4f46e5"]').classList.add('selected');
+    }
+    
+    folderModal.classList.add('active');
+}
+
+// Open folders overview
+function openFoldersOverview() {
+    renderFoldersGrid();
+    foldersOverview.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close folders overview
+function closeFoldersOverview() {
+    foldersOverview.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Render folders grid in overview
+function renderFoldersGrid() {
+    const foldersOverviewBody = document.getElementById('foldersOverviewBody');
+    
+    if (folders.length === 0) {
+        foldersOverviewBody.innerHTML = `
+            <div class="folders-empty-state">
+                <i class="fas fa-folder-plus"></i>
+                <h3>No folders yet</h3>
+                <p>Create your first folder to organize your tasks</p>
+            </div>
+        `;
+        return;
+    }
+    
+    foldersOverviewBody.innerHTML = `
+        <div class="folders-grid" id="foldersGrid">
+            ${folders.map(folder => {
+                const folderTaskCount = tasks.filter(task => task.folderId === folder.id).length;
+                return `
+                    <div class="folder-card" data-folder-id="${folder.id}">
+                        <div class="folder-card-actions">
+                            <button class="folder-card-action edit" title="Edit Folder">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="folder-card-action delete" title="Delete Folder">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                        <div class="folder-card-icon" style="color: ${folder.color};">
+                            <i class="fas fa-folder"></i>
+                        </div>
+                        <div class="folder-card-name">${folder.name}</div>
+                        <div class="folder-card-count">${folderTaskCount} task${folderTaskCount !== 1 ? 's' : ''}</div>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+    `;
+    
+    // Add event listeners to folder cards
+    document.querySelectorAll('.folder-card').forEach(card => {
+        const folderId = card.dataset.folderId;
+        const folder = folders.find(f => f.id === folderId);
+        
+        // Click to open folder
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.folder-card-action')) return;
+            closeFoldersOverview();
+            openFolder(folder);
+        });
+        
+        // Edit folder
+        card.querySelector('.folder-card-action.edit').addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeFoldersOverview();
+            openFolderModal(folder);
+        });
+        
+        // Delete folder
+        card.querySelector('.folder-card-action.delete').addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (confirm(`Are you sure you want to delete the folder "${folder.name}"? All tasks will be moved back to the main view.`)) {
+                deleteFolder(folder.id);
+                renderFoldersGrid(); // Refresh the grid
+            }
+        });
+    });
+}
+
+// Handle drag and drop for main folders container
+function handleMainFolderDragOver(e) {
+    e.preventDefault();
+    if (draggedTask) {
+        e.currentTarget.classList.add('drag-over');
+    }
+}
+
+function handleMainFolderDrop(e) {
+    e.preventDefault();
+    const folderEl = e.currentTarget;
+    folderEl.classList.remove('drag-over');
+    
+    if (draggedTask && folders.length > 0) {
+        if (folders.length === 1) {
+            // If only one folder, move directly
+            moveTaskToFolder(draggedTask.id, folders[0].id);
+            draggedTask = null;
+        } else {
+            // Show folder selection popup at mouse position
+            showFolderSelectionPopup(e.clientX, e.clientY);
+            // Don't reset draggedTask here, let the popup handle it
+        }
+    } else {
+        draggedTask = null;
+    }
+}
+
+function handleMainFolderDragLeave(e) {
+    e.currentTarget.classList.remove('drag-over');
+}
+
+// Show folder selection popup
+function showFolderSelectionPopup(x, y) {
+    const popup = document.getElementById('folderSelectionPopup');
+    const list = document.getElementById('folderSelectionList');
+    
+    // Clear existing options
+    list.innerHTML = '';
+    
+    // Add folder options
+    folders.forEach(folder => {
+        const folderTaskCount = tasks.filter(task => task.folderId === folder.id).length;
+        
+        const item = document.createElement('div');
+        item.className = 'folder-selection-item';
+        item.dataset.folderId = folder.id; // Add folder ID to dataset
+        item.innerHTML = `
+            <i class="fas fa-folder" style="color: ${folder.color};"></i>
+            <span>${folder.name}</span>
+            <div class="folder-task-count">${folderTaskCount}</div>
+        `;
+        
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (draggedTask) {
+                moveTaskToFolder(draggedTask.id, folder.id);
+                hideFolderSelectionPopup();
+                showNotification(`Task moved to "${folder.name}"!`, 'success');
+                draggedTask = null;
+            }
+        });
+        
+        list.appendChild(item);
+    });
+    
+    // Position popup near mouse
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const popupWidth = 250;
+    const popupHeight = Math.min(300, folders.length * 50 + 100);
+    
+    let left = x + 10; // Offset from cursor
+    let top = y + 10;
+    
+    // Adjust position if popup would go off screen
+    if (left + popupWidth > windowWidth) {
+        left = x - popupWidth - 10;
+    }
+    if (top + popupHeight > windowHeight) {
+        top = y - popupHeight - 10;
+    }
+    
+    // Ensure popup doesn't go off screen
+    left = Math.max(10, left);
+    top = Math.max(10, top);
+    
+    popup.style.left = `${left}px`;
+    popup.style.top = `${top}px`;
+    popup.classList.add('active');
+    
+    // Hide popup when clicking outside
+    setTimeout(() => {
+        document.addEventListener('click', hideFolderSelectionPopupOnClick);
+    }, 100);
+}
+
+// Hide folder selection popup
+function hideFolderSelectionPopup() {
+    const popup = document.getElementById('folderSelectionPopup');
+    popup.classList.remove('active');
+    document.removeEventListener('click', hideFolderSelectionPopupOnClick);
+}
+
+// Hide popup when clicking outside
+function hideFolderSelectionPopupOnClick(e) {
+    const popup = document.getElementById('folderSelectionPopup');
+    if (!popup.contains(e.target)) {
+        hideFolderSelectionPopup();
+    }
+}
+
+// Modify openAddTaskModal to accept folderId
+function openAddTaskModal(folderId = null) {
+    // Reset the form
+    taskForm.reset();
+    document.getElementById('taskId').value = '';
+    document.getElementById('taskReminderTime').value = '';
+    document.getElementById('taskReminderMinutes').value = '';
+    
+    // Store folder ID if provided
+    if (folderId) {
+        document.getElementById('taskForm').setAttribute('data-folder-id', folderId);
+    } else {
+        document.getElementById('taskForm').removeAttribute('data-folder-id');
+    }
+    
+    // Reset reminder toggle
+    reminderEnabled = false;
+    toggleSwitch.classList.remove('active');
+    reminderOptionsContainer.classList.remove('active');
+    
+    // Set the due date to today by default
+    const today = new Date();
+    const formattedDate = today.toISOString().substr(0, 10);
+    document.getElementById('taskDueDate').value = formattedDate;
+    
+    // Reset form errors
+    document.querySelectorAll('.form-error').forEach(error => {
+        error.style.display = 'none';
+    });
+    
+    // Reset category and priority selections
+    document.querySelectorAll('.category-option, .priority-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    // Reset reminder options
+    document.querySelectorAll('.reminder-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    // Hide custom reminder form
+    customReminderForm.classList.remove('active');
+    
+    // Reset tab selection to first tab
+    taskFormTabs.forEach(tab => tab.classList.remove('active'));
+    taskFormContents.forEach(content => content.classList.remove('active'));
+    taskFormTabs[0].classList.add('active');
+    taskFormContents[0].classList.add('active');
+    
+    // Pre-select the current category if it's not 'all'
+    if (currentCategory !== 'all') {
+        const categoryInput = document.getElementById(`category${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)}`);
+        if (categoryInput) {
+            categoryInput.checked = true;
+            document.querySelector(`.category-option.${currentCategory}`).classList.add('selected');
+        }
+    }
+    
+    // Update modal header
+    document.getElementById('modalTitle').textContent = folderId ? 
+        `Add Task to ${folders.find(f => f.id === folderId)?.name || 'Folder'}` : 'Add New Task';
+    modalHeader.className = 'modal-header';
+    
+    // Show the modal
+    taskModal.classList.add('active');
+}
+
+// Initialize folder system
+function initializeFolderSystem() {
+    renderFolders();
+    
+    // Add drag and drop to existing tasks
+    setupTaskDragAndDrop();
+}
+
+// Folders overview elements
+const foldersOverview = document.getElementById('foldersOverview');
+const closeFoldersOverviewBtn = document.getElementById('closeFoldersOverview');
+const addFolderFromOverviewBtn = document.getElementById('addFolderFromOverview');
+
+// Close folders overview
+closeFoldersOverviewBtn.addEventListener('click', closeFoldersOverview);
+
+// Add folder from overview
+addFolderFromOverviewBtn.addEventListener('click', () => {
+    closeFoldersOverview();
+    openFolderModal();
+});
+
+// Close folders overview when clicking overlay
+foldersOverview.addEventListener('click', (e) => {
+    if (e.target === foldersOverview) {
+        closeFoldersOverview();
+    }
+});
+
+// Folder selection popup elements
+const folderSelectionPopup = document.getElementById('folderSelectionPopup');
+
+// Close popup when pressing Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && folderSelectionPopup.classList.contains('active')) {
+        hideFolderSelectionPopup();
+    }
+});
 
             // Elements
             const categorySlider = document.getElementById('categorySlider');
@@ -4023,23 +6177,24 @@ let isFullView = false;
                 education: '<i class="fas fa-graduation-cap"></i>'
             };
 
-            // Initialize the application
-            function init() {
-                renderTasks();
-                updateDashboard();
-                updateCategoryCounts();
-                
-                // Set active category indicator position initially
-                const activeCategory = document.querySelector('.category.active');
-                if (activeCategory) {
-                    updateActiveCategoryIndicator(activeCategory);
-                }
-                
-                checkReminders();
-                
-                // Check for reminders every minute
-                setInterval(checkReminders, 60000);
-            }
+            // Replace your existing init() function call with:
+function init() {
+    renderTasks();
+    updateDashboard();
+    updateCategoryCounts();
+    initializeFolderSystem(); // Add this line
+    
+    // Set active category indicator position initially
+    const activeCategory = document.querySelector('.category.active');
+    if (activeCategory) {
+        updateActiveCategoryIndicator(activeCategory);
+    }
+    
+    checkReminders();
+    
+    // Check for reminders every minute
+    setInterval(checkReminders, 60000);
+}
 
             // NEW: Reminder Toggle Functionality
             reminderToggle.addEventListener('click', () => {
@@ -4398,42 +6553,49 @@ if (currentCategory === 'all' && !isFullView) {
                 }
                 
                 if (taskId) {
-                    // Update existing task
-                    const taskIndex = tasks.findIndex(task => task.id === taskId);
-                    if (taskIndex !== -1) {
-                        tasks[taskIndex] = {
-                            ...tasks[taskIndex],
-                            title,
-                            description,
-                            category,
-                            priority,
-                            dueDate: dueDateObj.toISOString(),
-                            reminderTime: reminderTime ? reminderTime.toISOString() : null,
-                            reminderMinutes: reminderEnabled ? reminderMinutes : 0,
-                            modifiedAt: new Date().toISOString()
-                        };
-                        
-                        showNotification('Task updated successfully', 'success');
-                    }
-                } else {
-                    // Add new task
-                    const newTask = {
-                        id: generateId(),
-                        title,
-                        description,
-                        category,
-                        priority,
-                        completed: false,
-                        dueDate: dueDateObj.toISOString(),
-                        reminderTime: reminderTime ? reminderTime.toISOString() : null,
-                        reminderMinutes: reminderEnabled ? reminderMinutes : 0,
-                        createdAt: new Date().toISOString(),
-                        modifiedAt: new Date().toISOString()
-                    };
-                    
-                    tasks.push(newTask);
-                    showNotification('Task added successfully', 'success');
-                }
+    // Update existing task
+    const taskIndex = tasks.findIndex(task => task.id === taskId);
+    if (taskIndex !== -1) {
+        tasks[taskIndex] = {
+            ...tasks[taskIndex],
+            title,
+            description,
+            category,
+            priority,
+            dueDate: dueDateObj.toISOString(),
+            reminderTime: reminderTime ? reminderTime.toISOString() : null,
+            reminderMinutes: reminderEnabled ? reminderMinutes : 0,
+            modifiedAt: new Date().toISOString()
+        };
+        
+        showNotification('Task updated successfully', 'success');
+    }
+} else {
+    // Add new task
+    const folderId = document.getElementById('taskForm').getAttribute('data-folder-id');
+    
+    const newTask = {
+        id: generateId(),
+        title,
+        description,
+        category,
+        priority,
+        completed: false,
+        dueDate: dueDateObj.toISOString(),
+        reminderTime: reminderTime ? reminderTime.toISOString() : null,
+        reminderMinutes: reminderEnabled ? reminderMinutes : 0,
+        createdAt: new Date().toISOString(),
+        modifiedAt: new Date().toISOString()
+    };
+    
+    // Add folder ID if task is being added to a folder
+    if (folderId) {
+        newTask.folderId = folderId;
+    }
+    
+    tasks.push(newTask);
+    showNotification('Task added successfully', 'success');
+}
                 
                 // Save to localStorage
                 saveTasks();
@@ -4695,218 +6857,234 @@ if (currentCategory === 'all' && !isFullView) {
 
             // Render tasks
             function renderTasks() {
-                // Filter tasks based on current category and filter
-                let filteredTasks = tasks;
-                
-                // Filter by category
-                if (currentCategory !== 'all') {
-                    filteredTasks = filteredTasks.filter(task => task.category === currentCategory);
-                }
-                
-                // Filter by filter type
-                if (currentFilter !== 'all') {
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    
-                    switch (currentFilter) {
-                        case 'pending':
-                            filteredTasks = filteredTasks.filter(task => !task.completed);
-                            break;
-                        case 'completed':
-                            filteredTasks = filteredTasks.filter(task => task.completed);
-                            break;
-                        case 'overdue':
-                            filteredTasks = filteredTasks.filter(task => {
-                                const dueDate = new Date(task.dueDate);
-                                return !task.completed && dueDate < new Date();
-                            });
-                            break;
-                        case 'today':
-                            filteredTasks = filteredTasks.filter(task => {
-                                const dueDate = new Date(task.dueDate);
-                                dueDate.setHours(0, 0, 0, 0);
-                                return dueDate.getTime() === today.getTime();
-                            });
-                            break;
-                    }
-                }
-                
-                // Sort tasks by due date (default)
-                filteredTasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
-                
-                // Check if there are tasks to display
-                if (filteredTasks.length === 0) {
-                    // Show empty state
-                    taskList.innerHTML = '';
-                    
-                    // Category-specific empty states
-                    let emptyStateClass = '';
-                    if (currentCategory !== 'all') {
-                        emptyStateClass = currentCategory;
-                    }
-                    
-                    let emptyStateMessage = 'No tasks yet';
-                    let emptyStateDescription = 'Add your first task to get started';
-                    
-                    if (currentFilter !== 'all') {
-                        switch (currentFilter) {
-                            case 'pending':
-                                emptyStateMessage = 'No pending tasks';
-                                emptyStateDescription = 'All tasks are completed!';
-                                break;
-                            case 'completed':
-                                emptyStateMessage = 'No completed tasks';
-                                emptyStateDescription = 'Complete some tasks to see them here';
-                                break;
-                            case 'overdue':
-                                emptyStateMessage = 'No overdue tasks';
-                                emptyStateDescription = "You're on track! Keep it up!";
-                                break;
-                            case 'today':
-                                emptyStateMessage = 'No tasks due today';
-                                emptyStateDescription = 'Enjoy your day!';
-                                break;
-                        }
-                    }
-                    
-                    const emptyStateHtml = `
-                        <div class="empty-state ${emptyStateClass}" id="emptyState">
-                            <i class="fas fa-clipboard-list" aria-hidden="true"></i>
-                            <h3>${emptyStateMessage}</h3>
-                            <p>${emptyStateDescription}</p>
-                        </div>
-                    `;
-                    
-                    taskList.innerHTML = emptyStateHtml;
-                    
-                    // Add event listener to empty state
-                    document.getElementById('emptyState').addEventListener('click', () => {
-                        openAddTaskModal();
-                    });
-                    
-                    return;
-                }
-                
-                // Clear task list
-                taskList.innerHTML = '';
-                
-                // Add category-specific class to task list
-                taskList.className = 'task-list';
-                if (currentCategory !== 'all') {
-                    taskList.classList.add(currentCategory);
-                }
-                
-                // Render each task
-                filteredTasks.forEach(task => {
+    // Filter tasks based on current category and filter
+    let filteredTasks = tasks;
+    
+    // IMPORTANT: Exclude tasks that are in folders when viewing main categories
+    if (currentCategory !== 'folder-view') {
+        filteredTasks = filteredTasks.filter(task => !task.folderId);
+    }
+    
+    // Filter by category
+    if (currentCategory !== 'all' && currentCategory !== 'folder-view') {
+        filteredTasks = filteredTasks.filter(task => task.category === currentCategory);
+    }
+    
+    // Filter by filter type
+    if (currentFilter !== 'all') {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        switch (currentFilter) {
+            case 'pending':
+                filteredTasks = filteredTasks.filter(task => !task.completed);
+                break;
+            case 'completed':
+                filteredTasks = filteredTasks.filter(task => task.completed);
+                break;
+            case 'overdue':
+                filteredTasks = filteredTasks.filter(task => {
                     const dueDate = new Date(task.dueDate);
-                    const formattedDate = new Intl.DateTimeFormat('en-US', {
-                        month: 'short',
-                        day: 'numeric'
-                    }).format(dueDate);
-                    
-                    const formattedTime = new Intl.DateTimeFormat('en-US', {
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true
-                    }).format(dueDate);
-                    
-                    // Check if task is overdue
-                    const isOverdue = !task.completed && dueDate < new Date();
-                    
-                    // Priority classes
-                    let priorityClass = '';
-                    switch (task.priority) {
-                        case 'low':
-                            priorityClass = 'success';
-                            break;
-                        case 'medium':
-                            priorityClass = 'warning';
-                            break;
-                        case 'high':
-                            priorityClass = 'danger';
-                            break;
-                    }
-                    
-                    // Create task element
-                    const taskEl = document.createElement('div');
-                    taskEl.className = `task-item ${task.completed ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}`;
-                    taskEl.dataset.id = task.id;
-                    
-                    // Add reminder indicator if task has a reminder
-                    const reminderIndicator = task.reminderTime ? `
-                        <div class="task-reminder-indicator" title="Reminder set">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                    ` : '';
-                    
-                    taskEl.innerHTML = `
-                        ${reminderIndicator}
-                        <div class="task-checkbox">
-                            <input type="checkbox" ${task.completed ? 'checked' : ''} aria-label="Mark task as ${task.completed ? 'incomplete' : 'complete'}">
-                        </div>
-                        <div class="task-content">
-                            <div class="task-title">${task.title}</div>
-                            ${task.description ? `<div class="task-description">${task.description}</div>` : ''}
-                            <div class="task-meta">
-                                <div class="task-category">
-                                    ${categoryIcons[task.category]} ${task.category.charAt(0).toUpperCase() + task.category.slice(1)}
-                                </div>
-                                <div class="task-priority task-${task.priority}" style="background-color: var(--${priorityClass}-light); color: var(--${priorityClass});">
-                                    ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
-                                </div>
-                                <div class="task-date">
-                                    <i class="fas fa-calendar"></i> ${formattedDate}
-                                </div>
-                                <div class="task-time">
-                                    <i class="fas fa-clock"></i> ${formattedTime}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="task-actions">
-                            <button class="task-action-btn edit" aria-label="Edit task">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
-                            <button class="task-action-btn delete" aria-label="Delete task">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    `;
-                    
-                    // Add event listeners
-                    
-                    // Complete/uncomplete task
-                    const checkbox = taskEl.querySelector('.task-checkbox input');
-                    checkbox.addEventListener('change', () => {
-                        toggleTaskCompletion(task.id);
-                    });
-                    
-                    // Edit task
-                    const editBtn = taskEl.querySelector('.task-action-btn.edit');
-                    editBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        editTask(task.id);
-                    });
-                    
-                    // Delete task
-                    const deleteBtn = taskEl.querySelector('.task-action-btn.delete');
-                    deleteBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        confirmDeleteTask(task.id);
-                    });
-                    
-                    // View task details
-                    taskEl.addEventListener('click', (e) => {
-                        if (e.target.closest('.task-checkbox') || 
-                            e.target.closest('.task-action-btn')) {
-                            return;
-                        }
-                        viewTaskDetails(task.id);
-                    });
-                    
-                    // Add task to list
-                    taskList.appendChild(taskEl);
+                    return !task.completed && dueDate < new Date();
                 });
+                break;
+            case 'today':
+                filteredTasks = filteredTasks.filter(task => {
+                    const dueDate = new Date(task.dueDate);
+                    dueDate.setHours(0, 0, 0, 0);
+                    return dueDate.getTime() === today.getTime();
+                });
+                break;
+        }
+    }
+    
+    // Sort tasks by due date (default)
+    filteredTasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    
+    // Check if there are tasks to display
+    if (filteredTasks.length === 0) {
+        // Show empty state
+        taskList.innerHTML = '';
+        
+        // Category-specific empty states
+        let emptyStateClass = '';
+        if (currentCategory !== 'all') {
+            emptyStateClass = currentCategory;
+        }
+        
+        let emptyStateMessage = 'No tasks yet';
+        let emptyStateDescription = 'Add your first task to get started';
+        
+        if (currentFilter !== 'all') {
+            switch (currentFilter) {
+                case 'pending':
+                    emptyStateMessage = 'No pending tasks';
+                    emptyStateDescription = 'All tasks are completed!';
+                    break;
+                case 'completed':
+                    emptyStateMessage = 'No completed tasks';
+                    emptyStateDescription = 'Complete some tasks to see them here';
+                    break;
+                case 'overdue':
+                    emptyStateMessage = 'No overdue tasks';
+                    emptyStateDescription = "You're on track! Keep it up!";
+                    break;
+                case 'today':
+                    emptyStateMessage = 'No tasks due today';
+                    emptyStateDescription = 'Enjoy your day!';
+                    break;
             }
+        }
+        
+        const emptyStateHtml = `
+            <div class="empty-state ${emptyStateClass}" id="emptyState">
+                <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+                <h3>${emptyStateMessage}</h3>
+                <p>${emptyStateDescription}</p>
+            </div>
+        `;
+        
+        taskList.innerHTML = emptyStateHtml;
+        
+        // Add event listener to empty state
+        document.getElementById('emptyState').addEventListener('click', () => {
+            openAddTaskModal();
+        });
+        
+        return;
+    }
+    
+    // Clear task list
+    taskList.innerHTML = '';
+    
+    // Add category-specific class to task list
+    taskList.className = 'task-list';
+    if (currentCategory !== 'all') {
+        taskList.classList.add(currentCategory);
+    }
+    
+    // Render each task
+    filteredTasks.forEach(task => {
+        const dueDate = new Date(task.dueDate);
+        const formattedDate = new Intl.DateTimeFormat('en-US', {
+            month: 'short',
+            day: 'numeric'
+        }).format(dueDate);
+        
+        const formattedTime = new Intl.DateTimeFormat('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        }).format(dueDate);
+        
+        // Check if task is overdue
+        const isOverdue = !task.completed && dueDate < new Date();
+        
+        // Priority classes
+        let priorityClass = '';
+        switch (task.priority) {
+            case 'low':
+                priorityClass = 'success';
+                break;
+            case 'medium':
+                priorityClass = 'warning';
+                break;
+            case 'high':
+                priorityClass = 'danger';
+                break;
+        }
+        
+        // Create task element
+        const taskEl = document.createElement('div');
+        taskEl.className = `task-item ${task.completed ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}`;
+        taskEl.dataset.id = task.id;
+        taskEl.draggable = true; // Make tasks draggable
+        
+        // Add reminder indicator if task has a reminder
+        const reminderIndicator = task.reminderTime ? `
+            <div class="task-reminder-indicator" title="Reminder set">
+                <i class="fas fa-bell"></i>
+            </div>
+        ` : '';
+        
+        taskEl.innerHTML = `
+            ${reminderIndicator}
+            <div class="task-checkbox">
+                <input type="checkbox" ${task.completed ? 'checked' : ''} aria-label="Mark task as ${task.completed ? 'incomplete' : 'complete'}">
+            </div>
+            <div class="task-content">
+                <div class="task-title">${task.title}</div>
+                ${task.description ? `<div class="task-description">${task.description}</div>` : ''}
+                <div class="task-meta">
+                    <div class="task-category">
+                        ${categoryIcons[task.category]} ${task.category.charAt(0).toUpperCase() + task.category.slice(1)}
+                    </div>
+                    <div class="task-priority task-${task.priority}" style="background-color: var(--${priorityClass}-light); color: var(--${priorityClass});">
+                        ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                    </div>
+                    <div class="task-date">
+                        <i class="fas fa-calendar"></i> ${formattedDate}
+                    </div>
+                    <div class="task-time">
+                        <i class="fas fa-clock"></i> ${formattedTime}
+                    </div>
+                </div>
+            </div>
+            <div class="task-actions">
+                <button class="task-action-btn edit" aria-label="Edit task">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="task-action-btn delete" aria-label="Delete task">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+        `;
+        
+        // Add event listeners
+        
+        // Complete/uncomplete task
+        const checkbox = taskEl.querySelector('.task-checkbox input');
+        checkbox.addEventListener('change', () => {
+            toggleTaskCompletion(task.id);
+        });
+        
+        // Edit task
+        const editBtn = taskEl.querySelector('.task-action-btn.edit');
+        editBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            editTask(task.id);
+        });
+        
+        // Delete task
+        const deleteBtn = taskEl.querySelector('.task-action-btn.delete');
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            confirmDeleteTask(task.id);
+        });
+        
+        // View task details
+        taskEl.addEventListener('click', (e) => {
+            if (e.target.closest('.task-checkbox') || 
+                e.target.closest('.task-action-btn')) {
+                return;
+            }
+            viewTaskDetails(task.id);
+        });
+        
+        // Add drag and drop events
+        taskEl.addEventListener('dragstart', (e) => {
+            draggedTask = task;
+            taskEl.classList.add('dragging');
+        });
+        
+        taskEl.addEventListener('dragend', () => {
+            taskEl.classList.remove('dragging');
+        });
+        
+        // Add task to list
+        taskList.appendChild(taskEl);
+    });
+}
 
             // Update dashboard
             function updateDashboard() {
@@ -4926,25 +7104,26 @@ if (currentCategory === 'all' && !isFullView) {
                 overdueTasksValue.textContent = overdueTasks;
             }
 
-            // Update category counts
             function updateCategoryCounts() {
-                // Count tasks by category
-                const categoryCounts = {
-                    all: tasks.length,
-                    work: tasks.filter(task => task.category === 'work').length,
-                    personal: tasks.filter(task => task.category === 'personal').length,
-                    shopping: tasks.filter(task => task.category === 'shopping').length,
-                    health: tasks.filter(task => task.category === 'health').length,
-                    finance: tasks.filter(task => task.category === 'finance').length,
-                    education: tasks.filter(task => task.category === 'education').length
-                };
-                
-                // Update category count elements
-                taskCountElements.forEach(el => {
-                    const category = el.closest('.category').dataset.category;
-                    el.textContent = categoryCounts[category] || 0;
-                });
-            }
+    // Count tasks by category (excluding tasks in folders)
+    const tasksNotInFolders = tasks.filter(task => !task.folderId);
+    
+    const categoryCounts = {
+        all: tasksNotInFolders.length,
+        work: tasksNotInFolders.filter(task => task.category === 'work').length,
+        personal: tasksNotInFolders.filter(task => task.category === 'personal').length,
+        shopping: tasksNotInFolders.filter(task => task.category === 'shopping').length,
+        health: tasksNotInFolders.filter(task => task.category === 'health').length,
+        finance: tasksNotInFolders.filter(task => task.category === 'finance').length,
+        education: tasksNotInFolders.filter(task => task.category === 'education').length
+    };
+    
+    // Update category count elements
+    taskCountElements.forEach(el => {
+        const category = el.closest('.category').dataset.category;
+        el.textContent = categoryCounts[category] || 0;
+    });
+}
 
             // Check for reminders
             function checkReminders() {
@@ -5350,9 +7529,185 @@ searchInput.addEventListener('input', (e) => {
                 });
             }
 
+            // Mobile sidebar functionality
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+
+            // Create sidebar overlay
+            const sidebarOverlay = document.createElement('div');
+            sidebarOverlay.className = 'sidebar-overlay';
+            sidebarOverlay.id = 'sidebarOverlay';
+            document.body.appendChild(sidebarOverlay);
+
+            // Show/hide sidebar toggle button based on screen size
+            function updateSidebarToggle() {
+                if (window.innerWidth <= 768) {
+                    sidebarToggle.style.display = 'block';
+                } else {
+                    sidebarToggle.style.display = 'none';
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                }
+            }
+
+            // Toggle sidebar
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+            });
+
+            // Close sidebar when clicking overlay
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+
+            // Close sidebar when selecting a category (mobile)
+            document.querySelectorAll('.category').forEach(category => {
+                category.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('active');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                });
+            });
+
+            // Update on window resize
+            window.addEventListener('resize', updateSidebarToggle);
+            updateSidebarToggle();
+
+            // Simple swipe detection for task items
+            let startX, startY, startTime;
+
+            document.addEventListener('touchstart', (e) => {
+                const touch = e.touches[0];
+                startX = touch.clientX;
+                startY = touch.clientY;
+                startTime = Date.now();
+            });
+
+            document.addEventListener('touchend', (e) => {
+                if (!startX || !startY) return;
+                
+                const touch = e.changedTouches[0];
+                const diffX = startX - touch.clientX;
+                const diffY = startY - touch.clientY;
+                const diffTime = Date.now() - startTime;
+                
+                // Only consider it a swipe if it's fast and horizontal
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50 && diffTime < 300) {
+                    const taskItem = e.target.closest('.task-item');
+                    if (taskItem) {
+                        if (diffX > 0) {
+                            // Swipe left - show delete
+                            taskItem.style.backgroundColor = '#fee2e2';
+                            setTimeout(() => {
+                                taskItem.style.backgroundColor = '';
+                            }, 200);
+                        } else {
+                            // Swipe right - mark complete
+                            const checkbox = taskItem.querySelector('.task-checkbox input');
+                            if (checkbox) checkbox.click();
+                        }
+                    }
+                }
+                
+                startX = startY = null;
+            });
+
             // Initialize the app
             init();
         });
+
+// Service Worker Registration
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+                console.log('SW registered: ', registration);
+                
+                // Check for updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // New content available
+                            showNotification('App updated! Refresh to get the latest version.', 'info');
+                        }
+                    });
+                });
+            })
+            .catch((registrationError) => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}
+
+// PWA Install Prompt
+let deferredPrompt;
+const installButton = document.createElement('button');
+installButton.textContent = 'Install App';
+installButton.className = 'btn btn-secondary';
+installButton.style.display = 'none';
+installButton.style.position = 'fixed';
+installButton.style.bottom = '20px';
+installButton.style.right = '20px';
+installButton.style.zIndex = '1000';
+
+// Add install button to page
+document.body.appendChild(installButton);
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+    // Stash the event so it can be triggered later
+    deferredPrompt = e;
+    // Show install button
+    installButton.style.display = 'block';
+});
+
+installButton.addEventListener('click', async () => {
+    if (deferredPrompt) {
+        // Show the prompt
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        // Clear the deferred prompt variable
+        deferredPrompt = null;
+        // Hide the install button
+        installButton.style.display = 'none';
+        
+        if (outcome === 'accepted') {
+            showNotification('Thanks for installing Tasklytic!', 'success');
+        }
+    }
+});
+
+// Hide install button when app is installed
+window.addEventListener('appinstalled', () => {
+    console.log('PWA was installed');
+    installButton.style.display = 'none';
+    showNotification('Tasklytic installed successfully!', 'success');
+});
+
+// Handle offline/online status
+window.addEventListener('online', () => {
+    showNotification('You are back online!', 'success');
+});
+
+window.addEventListener('offline', () => {
+    showNotification('You are now offline. Some features may be limited.', 'warning');
+});
+
+// Handle app visibility changes
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        // App became visible, check for updates
+        checkReminders();
+        updateDashboard();
+    }
+});
     </script>
 </body>
 </html>
