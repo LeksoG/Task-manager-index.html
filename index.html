@@ -3,53 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#4f46e5">
-
-    <!-- PWA Enhancement Tags -->
-    <meta name="application-name" content="Tasklytic">
-    <meta name="apple-mobile-web-app-title" content="Tasklytic">
-    <meta name="description" content="Modern task management application - organize your tasks efficiently">
-    <meta name="format-detection" content="telephone=no">
-
-     <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-
-    <!-- Additional PWA Meta Tags -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-    <!-- iOS Splash Screens -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-startup-image" href="icons/splash-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/splash-1668x2224.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/splash-1536x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link rel="apple-touch-startup-image" href="icons/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-
-    <!-- App Icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="icons/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="icons/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="icons/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="icons/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-touch-icon-57x57.png">
-
-    <!-- Microsoft Tiles -->
-    <meta name="msapplication-TileColor" content="#4f46e5">
-    <meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
-    <meta name="msapplication-config" content="browserconfig.xml">
-    <!-- END OF NEW PWA TAGS ↑ -->
-
     <title>Tasklytic</title>
     <style>
         :root {
@@ -891,6 +844,334 @@ body.dark-mode .setting-info span {
         }
 
         /* End of SEARCH REDESIGN */
+
+        .ai-task-button-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto 1.5rem auto;
+    max-width: 600px;
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+    transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ai-task-button-container.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.ai-task-button {
+    background: transparent;
+    border: 2px solid rgba(102, 126, 234, 0.2);
+    color: rgba(102, 126, 234, 0.7);
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    /* No transform here */
+}
+
+.ai-task-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 25px;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    transform: translateX(-50%);
+    z-index: -1;
+}
+
+.ai-task-button.curtain-fill::before {
+    width: 100%;
+}
+
+.ai-task-button.curtain-fill {
+    color: white;
+    border-color: transparent;
+}
+
+.ai-task-button.filled {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.ai-task-button:hover {
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+    border-color: rgba(102, 126, 234, 0.6);
+    transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    /* Removed transform completely */
+}
+
+.ai-task-button.filled:hover {
+    box-shadow: 
+        0 12px 30px rgba(102, 126, 234, 0.5),
+        0 0 20px rgba(118, 75, 162, 0.3);
+    transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    /* Removed transform completely */
+}
+
+/* Professional pen icon animation */
+/* Gentle shake animation */
+@keyframes iconShake {
+    0% { transform: translateX(0px); }
+    20% { transform: translateX(-2px); }
+    40% { transform: translateX(2px); }
+    60% { transform: translateX(-1px); }
+    80% { transform: translateX(1px); }
+    100% { transform: translateX(0px); }
+}
+
+.ai-task-button:hover .btn-icon {
+    animation: iconShake 0.4s ease-in-out forwards;
+}
+/* Reset animation when not hovering */
+.ai-task-button .btn-icon {
+    transition: all 0.3s ease;
+    transform-origin: center;
+    display: inline-block;
+}
+
+.ai-task-button.filled .diamond-icon {
+    opacity: 1;
+}
+
+/* Professional spinning glow animation */
+@keyframes professionalGlow {
+    0% { 
+        box-shadow: 
+            0 0 0 rgba(102, 126, 234, 0),
+            0 0 0 rgba(118, 75, 162, 0);
+        background: transparent;
+        border-color: rgba(102, 126, 234, 0.2);
+    }
+    
+    15% {
+        box-shadow: 
+            8px 0 16px rgba(102, 126, 234, 0.3),
+            -4px 0 12px rgba(118, 75, 162, 0.2);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        border-color: rgba(102, 126, 234, 0.3);
+    }
+    
+    30% {
+        box-shadow: 
+            6px 6px 16px rgba(102, 126, 234, 0.4),
+            -6px -6px 12px rgba(118, 75, 162, 0.3);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        border-color: rgba(102, 126, 234, 0.4);
+    }
+    
+    45% {
+        box-shadow: 
+            0 8px 16px rgba(102, 126, 234, 0.4),
+            0 -4px 12px rgba(118, 75, 162, 0.3);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.15) 100%);
+        border-color: rgba(102, 126, 234, 0.5);
+    }
+    
+    60% {
+        box-shadow: 
+            -6px 6px 16px rgba(102, 126, 234, 0.4),
+            6px -6px 12px rgba(118, 75, 162, 0.3);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.25) 100%);
+        border-color: rgba(102, 126, 234, 0.6);
+    }
+    
+    75% {
+        box-shadow: 
+            -8px 0 16px rgba(102, 126, 234, 0.4),
+            4px 0 12px rgba(118, 75, 162, 0.3);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.4) 0%, rgba(118, 75, 162, 0.35) 100%);
+        border-color: rgba(102, 126, 234, 0.7);
+    }
+    
+    90% {
+        box-shadow: 
+            -6px -6px 16px rgba(102, 126, 234, 0.4),
+            6px 6px 12px rgba(118, 75, 162, 0.3);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.6) 0%, rgba(118, 75, 162, 0.5) 100%);
+        border-color: rgba(102, 126, 234, 0.8);
+    }
+    
+    100% { 
+        box-shadow: 
+            0 -8px 16px rgba(102, 126, 234, 0.4),
+            0 4px 12px rgba(118, 75, 162, 0.3);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.7) 100%);
+        border-color: rgba(102, 126, 234, 0.9);
+    }
+}
+
+.ai-task-button.professional-glow {
+    animation: professionalGlow 3s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Enhanced hover glow animation */
+@keyframes enhancedHoverGlow {
+    0% { 
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        transform: translateY(-2px);
+    }
+    50% { 
+        box-shadow: 
+            0 0 30px rgba(102, 126, 234, 0.7), 
+            0 0 60px rgba(118, 75, 162, 0.5),
+            0 12px 25px rgba(102, 126, 234, 0.4);
+        transform: translateY(-4px);
+    }
+    100% { 
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        transform: translateY(-2px);
+    }
+}
+
+.ai-task-button.hover-glow {
+    animation: none;
+}
+
+/* Realistic Diamond elements */
+.ai-task-button .diamond {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 30%, #c7d2fe 60%, #a5b4fc 100%);
+    transform: rotate(45deg);
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 
+        0 0 12px rgba(255, 255, 255, 1),
+        0 0 24px rgba(167, 139, 250, 0.8),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.9),
+        inset -2px -2px 4px rgba(167, 139, 250, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.ai-task-button .diamond::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    transform: rotate(-45deg);
+}
+
+/* Diamond shooting animations from edges */
+@keyframes shootDiamondLeft1 {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(45deg) scale(0.3);
+    }
+    30% {
+        opacity: 1;
+        transform: translate(-15px, -10px) rotate(90deg) scale(1);
+    }
+    70% {
+        opacity: 0.8;
+        transform: translate(-35px, -25px) rotate(135deg) scale(0.8);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-60px, -45px) rotate(180deg) scale(0.2);
+    }
+}
+
+@keyframes shootDiamondLeft2 {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(45deg) scale(0.3);
+    }
+    30% {
+        opacity: 1;
+        transform: translate(-20px, -15px) rotate(90deg) scale(1);
+    }
+    70% {
+        opacity: 0.8;
+        transform: translate(-40px, -30px) rotate(135deg) scale(0.8);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-70px, -55px) rotate(180deg) scale(0.2);
+    }
+}
+
+@keyframes shootDiamondRight1 {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(45deg) scale(0.3);
+    }
+    30% {
+        opacity: 1;
+        transform: translate(15px, -10px) rotate(90deg) scale(1);
+    }
+    70% {
+        opacity: 0.8;
+        transform: translate(35px, -25px) rotate(135deg) scale(0.8);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(60px, -45px) rotate(180deg) scale(0.2);
+    }
+}
+
+@keyframes shootDiamondRight2 {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(45deg) scale(0.3);
+    }
+    30% {
+        opacity: 1;
+        transform: translate(20px, -15px) rotate(90deg) scale(1);
+    }
+    70% {
+        opacity: 0.8;
+        transform: translate(40px, -30px) rotate(135deg) scale(0.8);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(70px, -55px) rotate(180deg) scale(0.2);
+    }
+}
+
+.ai-task-button .diamond:nth-child(1) {
+    top: 50%;
+    left: 5px; /* Left edge */
+    animation: shootDiamondLeft1 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.ai-task-button .diamond:nth-child(2) {
+    top: 50%;
+    right: 5px; /* Right edge */
+    animation: shootDiamondRight1 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+}
+
+.ai-task-button .diamond:nth-child(3) {
+    top: 50%;
+    left: 8px; /* Left edge, slightly offset */
+    animation: shootDiamondLeft2 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s;
+}
+
+.ai-task-button .diamond:nth-child(4) {
+    top: 50%;
+    right: 8px; /* Right edge, slightly offset */
+    animation: shootDiamondRight2 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s;
+}
 
         .section-title {
     display: flex;
@@ -3771,6 +4052,641 @@ body.dark-mode .full-view-active .section-actions .btn-select {
             }
         }
 
+        /* AI Task Creation Modal */
+.ai-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(79, 70, 229, 0.2) 100%);
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ai-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ai-modal-content {
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 0 50px rgba(79, 70, 229, 0.1);
+    transform: translateY(-30px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-modal.active .ai-modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.ai-modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    border-radius: 24px 24px 0 0;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ai-header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ai-logo {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    animation: brainPulse 2s ease-in-out infinite;
+}
+
+@keyframes brainPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.ai-title-section h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+
+.ai-subtitle {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0.25rem 0 0 0;
+}
+
+.ai-modal-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.ai-modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.ai-modal-body {
+    padding: 2rem;
+}
+
+/* AI Input Section */
+.ai-input-section {
+    margin-bottom: 2rem;
+}
+
+.ai-input-container {
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(79, 70, 229, 0.1);
+    transition: all 0.3s ease;
+}
+
+.ai-input-container:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.2);
+}
+
+.ai-input-icon {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: var(--primary);
+    font-size: 1.2rem;
+    z-index: 2;
+}
+
+.ai-input {
+    width: 100%;
+    padding: 1rem 4rem 1rem 3rem;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    resize: none;
+    outline: none;
+    background: transparent;
+    color: var(--gray-700);
+    line-height: 1.5;
+    font-family: inherit;
+}
+
+.ai-input::placeholder {
+    color: var(--gray-400);
+}
+
+.ai-generate-btn {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.ai-generate-btn:hover {
+    transform: translateY(-50%) translateY(-2px);
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4);
+}
+
+/* Suggestions Section */
+.suggestions-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--gray-800);
+}
+
+.suggestions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.suggestion-oval {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 2px solid rgba(79, 70, 229, 0.1);
+    border-radius: 25px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: left;
+}
+
+.suggestion-oval:hover {
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(79, 70, 229, 0.1) 100%);
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.2);
+}
+
+.suggestion-oval i {
+    font-size: 1.2rem;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.suggestion-oval span {
+    font-weight: 500;
+    color: var(--gray-700);
+    font-size: 0.95rem;
+}
+
+/* AI Results Section */
+.ai-results-section {
+    border-top: 1px solid var(--gray-200);
+    padding-top: 2rem;
+}
+
+.ai-thinking {
+    text-align: center;
+    padding: 2rem;
+}
+
+.thinking-animation {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.thinking-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--primary);
+    border-radius: 50%;
+    animation: thinkingPulse 1.5s infinite;
+}
+
+.thinking-dot:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.thinking-dot:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes thinkingPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.3); opacity: 1; }
+}
+
+.results-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--gray-800);
+}
+
+.generated-tasks-list {
+    margin-bottom: 2rem;
+}
+
+.generated-task-item {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.generated-task-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.generated-task-title {
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 0.5rem;
+}
+
+.generated-task-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--gray-600);
+}
+
+.ai-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Dark mode support */
+body.dark-mode .ai-modal-content {
+    background: linear-gradient(145deg, var(--gray-800) 0%, var(--gray-900) 100%);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .ai-input-container {
+    background: var(--gray-800);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .ai-input {
+    color: var(--gray-200);
+}
+
+body.dark-mode .suggestion-oval {
+    background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-700) 100%);
+    border-color: var(--gray-600);
+}
+
+body.dark-mode .suggestion-oval span {
+    color: var(--gray-200);
+}
+
+body.dark-mode .generated-task-item {
+    background: var(--gray-800);
+    border-color: var(--gray-700);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .ai-modal-content {
+        width: 95%;
+        margin: 1rem;
+        max-height: 95vh;
+    }
+    
+    .ai-modal-header {
+        padding: 1.5rem;
+    }
+    
+    .ai-modal-body {
+        padding: 1.5rem;
+    }
+    
+    .suggestions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .ai-actions {
+        flex-direction: column;
+    }
+    
+    .ai-generate-btn {
+        position: static;
+        transform: none;
+        margin-top: 1rem;
+        align-self: flex-end;
+    }
+    
+    .ai-input-container {
+        padding-bottom: 1rem;
+    }
+}
+
+        /* Feature Splash Screen */
+.feature-splash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.feature-splash-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.feature-splash-content {
+    background: white;
+    border-radius: 16px;
+    width: 450px;  /* Fixed square width */
+    height: 450px; /* ADD THIS - same as width for square */
+    max-width: 90vw;
+    max-height: 90vh; /* ADD THIS */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-20px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    display: flex; /* ADD THIS */
+    flex-direction: column; /* ADD THIS */
+}
+
+.feature-splash-overlay.active .feature-splash-content {
+    transform: translateY(0) scale(1);
+}
+
+.feature-splash-header {
+    background: var(--primary-gradient);
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    color: white;
+}
+
+.feature-splash-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+    font-size: 1.5rem;
+}
+
+.feature-splash-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+
+.feature-splash-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10; /* ADD THIS to ensure it's on top */
+}
+
+.feature-splash-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.feature-splash-body {
+    padding: 2rem;
+}
+
+.feature-highlight {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.feature-highlight-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.feature-highlight h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--gray-800);
+}
+
+.feature-highlight p {
+    color: var(--gray-600);
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.feature-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--gray-50);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.benefit-item:hover {
+    background: var(--primary-light);
+    transform: translateX(5px);
+}
+
+.benefit-item i {
+    width: 24px;
+    color: var(--primary);
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.benefit-item span {
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.feature-splash-footer {
+    padding: 1.5rem 2rem 2rem 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.feature-splash-footer .btn {
+    flex: 1;
+    max-width: 150px;
+}
+
+/* Beta Icon for AI Button */
+.ai-task-button-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto 1.5rem auto;
+    max-width: 600px;
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+    transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.beta-badge {
+    position: absolute;
+    top: 50%;
+    right: -50px; /* Position it to the right of the button */
+    transform: translateY(-50%);
+    background: #ff8c00;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.2rem 0.4rem;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 6px rgba(255, 140, 0, 0.4);
+    z-index: 10;
+    white-space: nowrap;
+}
+@keyframes betaPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(255, 107, 107, 0.6);
+    }
+}
+
+/* Dark mode support */
+body.dark-mode .feature-splash-content {
+    background: var(--gray-800);
+}
+
+body.dark-mode .feature-highlight h3 {
+    color: var(--gray-200);
+}
+
+body.dark-mode .feature-highlight p {
+    color: var(--gray-400);
+}
+
+body.dark-mode .benefit-item {
+    background: var(--gray-900);
+}
+
+body.dark-mode .benefit-item:hover {
+    background: var(--gray-700);
+}
+
+body.dark-mode .benefit-item span {
+    color: var(--gray-300);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .feature-splash-content {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .feature-splash-header {
+        padding: 1.5rem;
+    }
+    
+    .feature-splash-body {
+        padding: 1.5rem;
+    }
+    
+    .feature-splash-footer {
+        flex-direction: column;
+        padding: 1rem 1.5rem 1.5rem 1.5rem;
+    }
+    
+    .feature-splash-footer .btn {
+        max-width: none;
+    }
+}
+
         /* Update the folders section */
 .folders-section {
     margin-bottom: 1.5rem; /* Reduced from 2.5rem */
@@ -4632,6 +5548,54 @@ body.dark-mode .folders-section {
         </div>
     </div>
 
+    <!-- Updated Feature Splash Screen -->
+<div class="feature-splash-overlay" id="featureSplashOverlay">
+    <div class="feature-splash-content">
+        <button class="feature-splash-close" id="featureSplashClose">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="feature-splash-header">
+            <div class="feature-splash-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h2 class="feature-splash-title">New AI Feature!</h2>
+        </div>
+        
+        <div class="feature-splash-body">
+            <div class="feature-highlight">
+                <i class="fas fa-wand-magic-sparkles feature-highlight-icon"></i>
+                <h3 id="featureTitle">🚀 New AI Task Generator</h3>
+                <p id="featureDescription">Transform your productivity with our advanced AI! Simply describe what you want to accomplish, and get a complete task breakdown with smart suggestions.</p>
+            </div>
+            
+            <div class="feature-benefits">
+                <div class="benefit-item">
+                    <i class="fas fa-brain"></i>
+                    <span>Smart AI task breakdown from natural language</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-list-check"></i>
+                    <span>Complete project plans generated instantly</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-tags"></i>
+                    <span>Auto-categorization and priority setting</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-folder-plus"></i>
+                    <span>NEW: Task folders for better organization</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-splash-footer">
+            <button class="btn btn-cancel" id="dismissFeatureBtn">Maybe Later</button>
+            <button class="btn btn-primary" id="tryFeatureBtn">Try It Now!</button>
+        </div>
+    </div>
+</div>
+
     <!-- App Container -->
     <div class="app-container" id="appContainer">
         <header>
@@ -4805,6 +5769,14 @@ body.dark-mode .folders-section {
                             <div class="search-suggestions" id="searchSuggestions"></div>
                         </div>
                         <div class="search-overlay" id="searchOverlay"></div>
+
+                        <div class="ai-task-button-container" id="aiTaskButtonContainer">
+    <button class="ai-task-button" id="aiTaskButton">
+        <i class="fas fa-wand-magic-sparkles btn-icon"></i>
+        Create task with AI
+    </button>
+    <div class="beta-badge">Beta</div>
+</div>
 
                         <div class="search-overlay" id="searchOverlay"></div>
 <div class="full-view-search-overlay" id="fullViewSearchOverlay"></div>
@@ -5196,6 +6168,97 @@ body.dark-mode .folders-section {
             </div>
         </div>
 
+        <!-- AI Task Creation Modal -->
+<div class="ai-modal" id="aiModal" aria-modal="true" role="dialog">
+    <div class="ai-modal-content">
+        <div class="ai-modal-header">
+            <div class="ai-header-content">
+                <div class="ai-logo">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="ai-title-section">
+                    <h3 class="ai-modal-title">AI Task Creator</h3>
+                    <p class="ai-subtitle">Describe what you need to do, and I'll help organize it</p>
+                </div>
+            </div>
+            <button class="ai-modal-close" id="aiModalClose" aria-label="Close AI modal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="ai-modal-body">
+            <div class="ai-input-section">
+                <div class="ai-input-container">
+                    <div class="ai-input-icon">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <textarea id="aiTaskInput" class="ai-input" placeholder="Tell me what you want to accomplish... (e.g., 'I need to plan a birthday party for next weekend')" rows="3"></textarea>
+                    <button class="ai-generate-btn" id="aiGenerateBtn">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        Generate
+                    </button>
+                </div>
+            </div>
+            
+            <div class="ai-suggestions-section" id="aiSuggestionsSection">
+                <h4 class="suggestions-title">Quick Suggestions</h4>
+                <div class="suggestions-grid">
+                    <div class="suggestion-oval" data-suggestion="Plan a weekend trip">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Plan a weekend trip</span>
+                    </div>
+                    <div class="suggestion-oval" data-suggestion="Organize a team meeting">
+                        <i class="fas fa-users"></i>
+                        <span>Organize a team meeting</span>
+                    </div>
+                    <div class="suggestion-oval" data-suggestion="Create a workout routine">
+                        <i class="fas fa-dumbbell"></i>
+                        <span>Create a workout routine</span>
+                    </div>
+                    <div class="suggestion-oval" data-suggestion="Plan a birthday party">
+                        <i class="fas fa-birthday-cake"></i>
+                        <span>Plan a birthday party</span>
+                    </div>
+                    <div class="suggestion-oval" data-suggestion="Organize home renovation">
+                        <i class="fas fa-home"></i>
+                        <span>Organize home renovation</span>
+                    </div>
+                    <div class="suggestion-oval" data-suggestion="Prepare for job interview">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Prepare for job interview</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ai-results-section" id="aiResultsSection" style="display: none;">
+                <div class="ai-thinking" id="aiThinking">
+                    <div class="thinking-animation">
+                        <div class="thinking-dot"></div>
+                        <div class="thinking-dot"></div>
+                        <div class="thinking-dot"></div>
+                    </div>
+                    <p>AI is analyzing your request...</p>
+                </div>
+                
+                <div class="ai-generated-tasks" id="aiGeneratedTasks" style="display: none;">
+                    <h4 class="results-title">Generated Tasks</h4>
+                    <div class="generated-tasks-list" id="generatedTasksList">
+                        <!-- Generated tasks will appear here -->
+                    </div>
+                    <div class="ai-actions">
+                        <button class="btn btn-primary" id="addAllTasksBtn">
+                            <i class="fas fa-plus"></i> Add All Tasks
+                        </button>
+                        <button class="btn btn-secondary" id="regenerateBtn">
+                            <i class="fas fa-refresh"></i> Regenerate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
          <!-- ADD FOLDER OVERLAY HERE -->
         <div class="folder-overlay" id="folderOverlay">
             <div class="folder-expanded" id="folderExpanded">
@@ -5408,6 +6471,45 @@ document.getElementById('exportData').addEventListener('click', () => {
     }
 });
 
+// Feature splash event listeners - REPLACE THE EXISTING SECTION
+const featureSplashClose = document.getElementById('featureSplashClose');
+const tryFeatureBtn = document.getElementById('tryFeatureBtn');
+const dismissFeatureBtn = document.getElementById('dismissFeatureBtn');
+const featureSplashOverlay = document.getElementById('featureSplashOverlay');
+
+// X button close - ADD THIS
+if (featureSplashClose) {
+    featureSplashClose.addEventListener('click', hideFeatureSplash);
+}
+
+// Dismiss button - ADD THIS  
+if (dismissFeatureBtn) {
+    dismissFeatureBtn.addEventListener('click', hideFeatureSplash);
+}
+
+// Try feature button - ADD THIS
+if (tryFeatureBtn) {
+    tryFeatureBtn.addEventListener('click', () => {
+        hideFeatureSplash();
+        // Optional: highlight AI button
+        setTimeout(() => {
+            const aiButton = document.getElementById('aiTaskButton');
+            if (aiButton) {
+                aiButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 300);
+    });
+}
+
+// Click overlay to close - ADD THIS
+if (featureSplashOverlay) {
+    featureSplashOverlay.addEventListener('click', (e) => {
+        if (e.target === featureSplashOverlay) {
+            hideFeatureSplash();
+        }
+    });
+}
+
            // Welcome Animation - FIXED
 const welcomeOverlay = document.getElementById('welcomeOverlay');
 const appContainer = document.getElementById('appContainer');
@@ -5418,6 +6520,333 @@ const appContainer = document.getElementById('appContainer');
     welcomeOverlay.style.visibility = 'hidden';
     appContainer.classList.add('visible');
 }, 3500); // Reduced from 3500 to 1000
+
+            // AI Task Button functionality
+const aiTaskButtonContainer = document.getElementById('aiTaskButtonContainer');
+const aiTaskButton = document.getElementById('aiTaskButton');
+
+// Show AI button after welcome animation
+setTimeout(() => {
+    aiTaskButtonContainer.classList.add('show');
+    
+    // Start curtain fill after button appears
+    setTimeout(() => {
+        aiTaskButton.classList.add('curtain-fill');
+        
+        // Add diamonds and finalize after curtain fills
+        setTimeout(() => {
+            // Create diamond elements
+            for (let i = 0; i < 4; i++) {
+                const diamond = document.createElement('div');
+                diamond.className = 'diamond';
+                aiTaskButton.appendChild(diamond);
+            }
+            
+            // Remove diamonds after animation and finalize button
+            setTimeout(() => {
+                // Remove diamonds
+                const diamonds = aiTaskButton.querySelectorAll('.diamond');
+                diamonds.forEach(diamond => diamond.remove());
+                
+                // Finalize button state
+                aiTaskButton.classList.remove('curtain-fill');
+                aiTaskButton.classList.add('filled');
+            }, 2500); // Extended time for diamond animations
+        }, 800);
+    }, 600);
+}, 4200);
+
+// Hover glow effect
+let hoverTimeout;
+aiTaskButton.addEventListener('mouseenter', () => {
+    if (!aiTaskButton.classList.contains('hover-glow')) {
+        aiTaskButton.classList.add('hover-glow');
+        
+        clearTimeout(hoverTimeout);
+        hoverTimeout = setTimeout(() => {
+            aiTaskButton.classList.remove('hover-glow');
+        }, 1000);
+    }
+});
+
+// AI button click handler
+aiTaskButton.addEventListener('click', () => {
+    // Add your AI task creation logic here
+    showNotification('AI Task Creator coming soon!', 'info');
+});
+
+// Feature Management System - WORKING VERSION
+const CURRENT_FEATURE_VERSION = 'v1.7.0'; // Updated version for new AI feature
+const FEATURE_KEY = 'tasklytic_last_seen_version';
+
+// Check if new feature splash should be shown
+function shouldShowFeatureSplash() {
+    const lastSeenVersion = localStorage.getItem(FEATURE_KEY);
+    console.log('🔍 Checking versions:', {
+        lastSeen: lastSeenVersion,
+        current: CURRENT_FEATURE_VERSION,
+        shouldShow: lastSeenVersion !== CURRENT_FEATURE_VERSION
+    });
+    return lastSeenVersion !== CURRENT_FEATURE_VERSION;
+}
+
+// Show feature splash - FIXED VERSION
+function showFeatureSplash() {
+    console.log('🚀 showFeatureSplash called');
+    
+    if (!shouldShowFeatureSplash()) {
+        console.log('❌ Not showing splash - version already seen');
+        return;
+    }
+    
+    console.log('✅ Will show splash in 1 second...');
+    
+    // Show splash after 1 second
+    setTimeout(() => {
+        console.log('⏰ 1 second passed, showing splash now...');
+        const splash = document.getElementById('featureSplashOverlay');
+        
+        if (splash) {
+            splash.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            console.log('✨ Splash screen is now visible!');
+        } else {
+            console.error('❌ ERROR: Splash element not found!');
+        }
+    }, 5000);
+}
+
+// Hide feature splash - REPLACE EXISTING FUNCTION
+function hideFeatureSplash() {
+    const splash = document.getElementById('featureSplashOverlay');
+    if (splash) {
+        splash.classList.remove('active');
+        document.body.style.overflow = '';
+        localStorage.setItem(FEATURE_KEY, CURRENT_FEATURE_VERSION);
+    }
+}
+
+// Initialize when page loads
+setTimeout(() => {
+    console.log('🎯 Starting feature splash check...');
+    showFeatureSplash();
+}, 100); // Small delay to ensure DOM is ready
+    
+
+// AI Task Creation Modal
+const aiModal = document.getElementById('aiModal');
+const aiModalClose = document.getElementById('aiModalClose');
+const aiTaskInput = document.getElementById('aiTaskInput');
+const aiGenerateBtn = document.getElementById('aiGenerateBtn');
+const aiSuggestionsSection = document.getElementById('aiSuggestionsSection');
+const aiResultsSection = document.getElementById('aiResultsSection');
+const aiThinking = document.getElementById('aiThinking');
+const aiGeneratedTasks = document.getElementById('aiGeneratedTasks');
+const generatedTasksList = document.getElementById('generatedTasksList');
+const addAllTasksBtn = document.getElementById('addAllTasksBtn');
+const regenerateBtn = document.getElementById('regenerateBtn');
+
+// Open AI Modal
+aiTaskButton.addEventListener('click', () => {
+    aiModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    aiTaskInput.focus();
+});
+
+// Close AI Modal
+aiModalClose.addEventListener('click', () => {
+    aiModal.classList.remove('active');
+    document.body.style.overflow = '';
+    resetAIModal();
+});
+
+// Close modal when clicking overlay
+aiModal.addEventListener('click', (e) => {
+    if (e.target === aiModal) {
+        aiModal.classList.remove('active');
+        document.body.style.overflow = '';
+        resetAIModal();
+    }
+});
+
+// Handle suggestion clicks
+document.querySelectorAll('.suggestion-oval').forEach(oval => {
+    oval.addEventListener('click', () => {
+        const suggestion = oval.dataset.suggestion;
+        aiTaskInput.value = suggestion;
+        aiTaskInput.focus();
+        
+        // Add visual feedback
+        oval.style.background = 'linear-gradient(135deg, var(--primary-light) 0%, rgba(79, 70, 229, 0.2) 100%)';
+        setTimeout(() => {
+            oval.style.background = '';
+        }, 300);
+    });
+});
+
+// Generate AI tasks
+aiGenerateBtn.addEventListener('click', () => {
+    const input = aiTaskInput.value.trim();
+    if (!input) {
+        showNotification('Please describe what you want to accomplish', 'warning');
+        return;
+    }
+    
+    generateAITasks(input);
+});
+
+// Enter key to generate
+aiTaskInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        aiGenerateBtn.click();
+    }
+});
+
+// AI Task Generation Function
+function generateAITasks(input) {
+    // Show thinking animation
+    aiResultsSection.style.display = 'block';
+    aiThinking.style.display = 'block';
+    aiGeneratedTasks.style.display = 'none';
+    aiSuggestionsSection.style.display = 'none';
+    
+    // Simulate AI processing
+    setTimeout(() => {
+        const generatedTasks = simulateAIGeneration(input);
+        displayGeneratedTasks(generatedTasks);
+        
+        aiThinking.style.display = 'none';
+        aiGeneratedTasks.style.display = 'block';
+    }, 2000);
+}
+
+// Simulate AI task generation
+function simulateAIGeneration(input) {
+    const taskTemplates = {
+        'trip': [
+            { title: 'Research destination', category: 'personal', priority: 'medium', description: 'Look up attractions, weather, and local customs' },
+            { title: 'Book accommodation', category: 'personal', priority: 'high', description: 'Find and reserve hotel or rental' },
+            { title: 'Plan itinerary', category: 'personal', priority: 'medium', description: 'Create day-by-day schedule' },
+            { title: 'Pack luggage', category: 'personal', priority: 'low', description: 'Pack appropriate clothing and essentials' }
+        ],
+        'meeting': [
+            { title: 'Send meeting invites', category: 'work', priority: 'high', description: 'Schedule meeting with all participants' },
+            { title: 'Prepare agenda', category: 'work', priority: 'medium', description: 'Create detailed meeting agenda' },
+            { title: 'Book meeting room', category: 'work', priority: 'medium', description: 'Reserve appropriate meeting space' },
+            { title: 'Prepare presentation', category: 'work', priority: 'high', description: 'Create slides and materials' }
+        ],
+        'party': [
+            { title: 'Create guest list', category: 'personal', priority: 'high', description: 'List all people to invite' },
+            { title: 'Send invitations', category: 'personal', priority: 'high', description: 'Send invites 2 weeks in advance' },
+            { title: 'Plan menu', category: 'personal', priority: 'medium', description: 'Decide on food and drinks' },
+            { title: 'Decorate venue', category: 'personal', priority: 'low', description: 'Set up decorations and ambiance' }
+        ],
+        'workout': [
+            { title: 'Set fitness goals', category: 'health', priority: 'high', description: 'Define specific, measurable objectives' },
+            { title: 'Choose workout schedule', category: 'health', priority: 'medium', description: 'Plan weekly exercise routine' },
+            { title: 'Get gym membership', category: 'health', priority: 'medium', description: 'Sign up for local gym or fitness center' },
+            { title: 'Track progress', category: 'health', priority: 'low', description: 'Monitor workouts and improvements' }
+        ],
+        'default': [
+            { title: 'Break down the task', category: 'personal', priority: 'high', description: 'Divide into smaller, manageable steps' },
+            { title: 'Research requirements', category: 'personal', priority: 'medium', description: 'Gather necessary information and resources' },
+            { title: 'Create timeline', category: 'personal', priority: 'medium', description: 'Set deadlines for each step' },
+            { title: 'Execute plan', category: 'personal', priority: 'high', description: 'Take action on the planned steps' }
+        ]
+    };
+    
+    // Simple keyword matching
+    let selectedTasks = taskTemplates.default;
+    
+    if (input.toLowerCase().includes('trip') || input.toLowerCase().includes('travel')) {
+        selectedTasks = taskTemplates.trip;
+    } else if (input.toLowerCase().includes('meeting')) {
+        selectedTasks = taskTemplates.meeting;
+    } else if (input.toLowerCase().includes('party') || input.toLowerCase().includes('birthday')) {
+        selectedTasks = taskTemplates.party;
+    } else if (input.toLowerCase().includes('workout') || input.toLowerCase().includes('exercise')) {
+        selectedTasks = taskTemplates.workout;
+    }
+    
+    return selectedTasks;
+}
+
+// Display generated tasks
+function displayGeneratedTasks(tasks) {
+    generatedTasksList.innerHTML = '';
+    
+    tasks.forEach((task, index) => {
+        const taskEl = document.createElement('div');
+        taskEl.className = 'generated-task-item';
+        taskEl.dataset.index = index;
+        
+        taskEl.innerHTML = `
+            <div class="generated-task-title">${task.title}</div>
+            <div class="generated-task-description">${task.description}</div>
+            <div class="generated-task-meta">
+                <span><i class="fas ${categoryIcons[task.category]}"></i> ${task.category}</span>
+                <span><i class="fas fa-flag"></i> ${task.priority} priority</span>
+            </div>
+        `;
+        
+        generatedTasksList.appendChild(taskEl);
+    });
+    
+    // Store generated tasks for adding
+    aiModal.generatedTasks = tasks;
+}
+
+// Add all generated tasks
+addAllTasksBtn.addEventListener('click', () => {
+    if (aiModal.generatedTasks) {
+        aiModal.generatedTasks.forEach(taskData => {
+            const newTask = {
+                id: generateId(),
+                title: taskData.title,
+                description: taskData.description,
+                category: taskData.category,
+                priority: taskData.priority,
+                completed: false,
+                dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
+                reminderTime: null,
+                reminderMinutes: 0,
+                createdAt: new Date().toISOString(),
+                modifiedAt: new Date().toISOString()
+            };
+            
+            tasks.push(newTask);
+        });
+        
+        saveTasks();
+        renderTasks();
+        updateDashboard();
+        updateCategoryCounts();
+        
+        showNotification(`Added ${aiModal.generatedTasks.length} tasks successfully!`, 'success');
+        
+        // Close modal
+        aiModal.classList.remove('active');
+        document.body.style.overflow = '';
+        resetAIModal();
+    }
+});
+
+// Regenerate tasks
+regenerateBtn.addEventListener('click', () => {
+    const input = aiTaskInput.value.trim();
+    if (input) {
+        generateAITasks(input);
+    }
+});
+
+// Reset AI Modal
+function resetAIModal() {
+    aiTaskInput.value = '';
+    aiResultsSection.style.display = 'none';
+    aiSuggestionsSection.style.display = 'block';
+    aiModal.generatedTasks = null;
+}
 
             // Task data storage
             let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -6177,12 +7606,18 @@ let isFullView = false;
                 education: '<i class="fas fa-graduation-cap"></i>'
             };
 
-            // Replace your existing init() function call with:
-function init() {
+            function init() {
     renderTasks();
     updateDashboard();
     updateCategoryCounts();
-    initializeFolderSystem(); // Add this line
+    
+    // Only call if folders exist (since you may not have folder system)
+    if (typeof initializeFolderSystem === 'function') {
+        initializeFolderSystem();
+    }
+    
+    // Setup drag and drop
+    setupTaskDragAndDrop();
     
     // Set active category indicator position initially
     const activeCategory = document.querySelector('.category.active');
@@ -6299,6 +7734,27 @@ if (currentCategory === 'all' && !isFullView) {
                 // Update task list
                 renderTasks();
             });
+
+            // Setup drag and drop for tasks
+function setupTaskDragAndDrop() {
+    const taskItems = document.querySelectorAll('.task-item');
+    
+    taskItems.forEach(taskItem => {
+        // Make task draggable
+        taskItem.draggable = true;
+        
+        // Add drag event listeners
+        taskItem.addEventListener('dragstart', (e) => {
+            const taskId = taskItem.dataset.id;
+            draggedTask = tasks.find(t => t.id === taskId);
+            taskItem.classList.add('dragging');
+        });
+        
+        taskItem.addEventListener('dragend', () => {
+            taskItem.classList.remove('dragging');
+        });
+    });
+}
 
             // Update active category indicator position (only for desktop)
             function updateActiveCategoryIndicator(activeCategory) {
@@ -7618,96 +9074,6 @@ searchInput.addEventListener('input', (e) => {
             // Initialize the app
             init();
         });
-
-// Service Worker Registration
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-                console.log('SW registered: ', registration);
-                
-                // Check for updates
-                registration.addEventListener('updatefound', () => {
-                    const newWorker = registration.installing;
-                    newWorker.addEventListener('statechange', () => {
-                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            // New content available
-                            showNotification('App updated! Refresh to get the latest version.', 'info');
-                        }
-                    });
-                });
-            })
-            .catch((registrationError) => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-}
-
-// PWA Install Prompt
-let deferredPrompt;
-const installButton = document.createElement('button');
-installButton.textContent = 'Install App';
-installButton.className = 'btn btn-secondary';
-installButton.style.display = 'none';
-installButton.style.position = 'fixed';
-installButton.style.bottom = '20px';
-installButton.style.right = '20px';
-installButton.style.zIndex = '1000';
-
-// Add install button to page
-document.body.appendChild(installButton);
-
-window.addEventListener('beforeinstallprompt', (e) => {
-    // Prevent Chrome 67 and earlier from automatically showing the prompt
-    e.preventDefault();
-    // Stash the event so it can be triggered later
-    deferredPrompt = e;
-    // Show install button
-    installButton.style.display = 'block';
-});
-
-installButton.addEventListener('click', async () => {
-    if (deferredPrompt) {
-        // Show the prompt
-        deferredPrompt.prompt();
-        // Wait for the user to respond to the prompt
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log(`User response to the install prompt: ${outcome}`);
-        // Clear the deferred prompt variable
-        deferredPrompt = null;
-        // Hide the install button
-        installButton.style.display = 'none';
-        
-        if (outcome === 'accepted') {
-            showNotification('Thanks for installing Tasklytic!', 'success');
-        }
-    }
-});
-
-// Hide install button when app is installed
-window.addEventListener('appinstalled', () => {
-    console.log('PWA was installed');
-    installButton.style.display = 'none';
-    showNotification('Tasklytic installed successfully!', 'success');
-});
-
-// Handle offline/online status
-window.addEventListener('online', () => {
-    showNotification('You are back online!', 'success');
-});
-
-window.addEventListener('offline', () => {
-    showNotification('You are now offline. Some features may be limited.', 'warning');
-});
-
-// Handle app visibility changes
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-        // App became visible, check for updates
-        checkReminders();
-        updateDashboard();
-    }
-});
     </script>
 </body>
 </html>
