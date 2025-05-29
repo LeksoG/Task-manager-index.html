@@ -2050,9 +2050,14 @@ body.dark-mode .setting-info span {
         }
 
         .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
+    opacity: 1;
+    visibility: visible;
+    z-index: 2000 !important;
+}
+
+.folder-modal.active {
+    z-index: 2100 !important;
+}
 
         .modal-content {
             background-color: white;
@@ -4077,34 +4082,37 @@ body.dark-mode .full-view-active .section-actions .btn-select {
     visibility: visible;
 }
 
-.ai-modal-content {
-    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-    border-radius: 24px;
-    width: 90%;
-    max-width: 700px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 
-        0 25px 50px -12px rgba(0, 0, 0, 0.25),
-        0 0 50px rgba(79, 70, 229, 0.1);
-    transform: translateY(-30px) scale(0.95);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.ai-modal.active .ai-modal-content {
-    transform: translateY(0) scale(1);
-}
-
-.ai-modal-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem;
-    border-radius: 24px 24px 0 0;
-    position: relative;
-    color: white;
+/* AI Task Creation Modal */
+.ai-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(79, 70, 229, 0.2) 100%);
+    backdrop-filter: blur(15px);
     display: flex;
     align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ai-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ADD THE NEW CSS RULES HERE: */
+.ai-modal-header {
+    padding: 2rem;
+    background: var(--primary-gradient);
+    color: white;
+    display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .ai-header-content {
@@ -4117,30 +4125,22 @@ body.dark-mode .full-view-active .section-actions .btn-select {
     width: 50px;
     height: 50px;
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    animation: brainPulse 2s ease-in-out infinite;
-}
-
-@keyframes brainPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
 }
 
 .ai-title-section h3 {
+    margin: 0 0 0.25rem 0;
     font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0;
-    color: white;
 }
 
 .ai-subtitle {
+    margin: 0;
+    opacity: 0.9;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin: 0.25rem 0 0 0;
 }
 
 .ai-modal-close {
@@ -4148,110 +4148,227 @@ body.dark-mode .full-view-active .section-actions .btn-select {
     border: none;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 10px;
     color: white;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: all 0.3s ease;
-    font-size: 1.1rem;
 }
 
 .ai-modal-close:hover {
     background: rgba(255, 255, 255, 0.3);
-    transform: rotate(90deg);
+    transform: scale(1.05);
 }
 
 .ai-modal-body {
     padding: 2rem;
 }
 
-/* AI Input Section */
+/* ADD THE NEW CSS HERE - RIGHT AFTER THE EXISTING .ai-modal-body */
+.ai-modal-content {
+    overflow: hidden !important;
+}
+
+.ai-modal-body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+/* Hide scrollbars for webkit browsers */
+.ai-modal-content::-webkit-scrollbar,
+.ai-modal-body::-webkit-scrollbar {
+    display: none;
+}
+
+.ai-modal-content,
+.ai-modal-body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .ai-input-section {
     margin-bottom: 2rem;
 }
 
 .ai-input-container {
     position: relative;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    border: 2px solid rgba(79, 70, 229, 0.1);
+    background: darkgray;
+    border: 2px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 1rem;
     transition: all 0.3s ease;
 }
 
 .ai-input-container:focus-within {
-    border-color: var(--primary);
-    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.2);
-}
-
-.ai-input-icon {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    color: var(--primary);
-    font-size: 1.2rem;
-    z-index: 2;
+    border-color: var(--gray-300);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
 .ai-input {
     width: 100%;
-    padding: 1rem 4rem 1rem 3rem;
     border: none;
-    border-radius: 20px;
-    font-size: 1.1rem;
-    resize: none;
     outline: none;
-    background: transparent;
-    color: var(--gray-700);
+    font-size: 1rem;
     line-height: 1.5;
+    resize: vertical;
+    min-height: 60px;
     font-family: inherit;
-}
-
-.ai-input::placeholder {
-    color: var(--gray-400);
 }
 
 .ai-generate-btn {
     position: absolute;
-    top: 50%;
-    right: 0.5rem;
-    transform: translateY(-50%);
+    bottom: 1rem;
+    right: 1rem;
     background: var(--primary-gradient);
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
-    border-radius: 16px;
+    border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
 .ai-generate-btn:hover {
-    transform: translateY(-50%) translateY(-2px);
-    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
 }
 
-/* Suggestions Section */
+/* ADD THESE CSS RULES HERE: */
 .suggestions-title {
     font-size: 1.2rem;
-    font-weight: 600;
     margin-bottom: 1rem;
-    color: var(--gray-800);
+    color: var(--gray-700);
 }
 
 .suggestions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
-    margin-bottom: 2rem;
 }
 
+/* Enhanced AI Modal Styles */
+.ai-modal-content {
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 0 50px rgba(102, 126, 234, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(-30px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.ai-modal.active .ai-modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.ai-input-container {
+    background: linear-gradient(145deg, #ffffff 0%, #fafbfc 100%);
+    border: 2px solid var(--gray-200);
+    border-radius: 20px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    /* Remove the ::before pseudo-element that's blocking clicks */
+}
+
+.ai-input-container:focus-within {
+    transform: scale(1.02);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.2);
+}
+
+.ai-thinking-enhanced {
+    position: relative;
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 16px;
+    margin: 1rem 0;
+}
+
+.brain-animation {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: brainPulse 2s ease-in-out infinite;
+    color: white;
+    font-size: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.brain-animation::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    animation: brainShine 3s ease-in-out infinite;
+}
+
+.neural-network {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+}
+
+.neural-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(102, 126, 234, 0.6);
+    border-radius: 50%;
+    animation: neuralPulse 3s ease-in-out infinite;
+}
+
+.neural-dot:nth-child(1) {
+    top: 20%;
+    left: 15%;
+    animation-delay: 0s;
+}
+
+.neural-dot:nth-child(2) {
+    top: 60%;
+    left: 25%;
+    animation-delay: 0.5s;
+}
+
+.neural-dot:nth-child(3) {
+    top: 40%;
+    right: 20%;
+    animation-delay: 1s;
+}
+
+.neural-dot:nth-child(4) {
+    bottom: 30%;
+    right: 15%;
+    animation-delay: 1.5s;
+}
+
+.neural-dot:nth-child(5) {
+    top: 25%;
+    left: 50%;
+    animation-delay: 2s;
+}
+
+/* Enhanced suggestion ovals */
 .suggestion-oval {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     border: 2px solid rgba(79, 70, 229, 0.1);
@@ -4261,21 +4378,43 @@ body.dark-mode .full-view-active .section-actions .btn-select {
     align-items: center;
     gap: 0.75rem;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.suggestion-oval::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    transition: left 0.6s ease;
 }
 
 .suggestion-oval:hover {
-    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(79, 70, 229, 0.1) 100%);
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(79, 70, 229, 0.15) 100%);
     border-color: var(--primary);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.2);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 35px rgba(79, 70, 229, 0.2);
+}
+
+.suggestion-oval:hover::before {
+    left: 100%;
 }
 
 .suggestion-oval i {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--primary);
     flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.suggestion-oval:hover i {
+    transform: scale(1.1) rotate(5deg);
 }
 
 .suggestion-oval span {
@@ -4284,104 +4423,130 @@ body.dark-mode .full-view-active .section-actions .btn-select {
     font-size: 0.95rem;
 }
 
-/* AI Results Section */
-.ai-results-section {
-    border-top: 1px solid var(--gray-200);
-    padding-top: 2rem;
+/* Enhanced AI progress indicator */
+.ai-progress-container {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border: 1px solid rgba(102, 126, 234, 0.1);
 }
 
-.ai-thinking {
+.progress-header h4 {
+    color: var(--gray-800);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
     text-align: center;
-    padding: 2rem;
 }
 
-.thinking-animation {
+.progress-steps {
     display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
 }
 
-.thinking-dot {
-    width: 12px;
-    height: 12px;
-    background: var(--primary);
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: var(--gray-300);
+    z-index: 1;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    max-width: 100px;
+}
+
+.progress-step i {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    animation: thinkingPulse 1.5s infinite;
-}
-
-.thinking-dot:nth-child(2) {
-    animation-delay: 0.3s;
-}
-
-.thinking-dot:nth-child(3) {
-    animation-delay: 0.6s;
-}
-
-@keyframes thinkingPulse {
-    0%, 100% { transform: scale(1); opacity: 0.7; }
-    50% { transform: scale(1.3); opacity: 1; }
-}
-
-.results-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--gray-800);
-}
-
-.generated-tasks-list {
-    margin-bottom: 2rem;
-}
-
-.generated-task-item {
-    background: white;
-    border: 1px solid var(--gray-200);
-    border-radius: 12px;
-    padding: 1rem;
-    margin-bottom: 0.75rem;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.generated-task-item:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-    border-color: var(--primary);
-}
-
-.generated-task-title {
-    font-weight: 600;
-    color: var(--gray-800);
-    margin-bottom: 0.5rem;
-}
-
-.generated-task-meta {
+    background: var(--gray-300);
+    color: white;
     display: flex;
-    gap: 1rem;
-    font-size: 0.85rem;
-    color: var(--gray-600);
-}
-
-.ai-actions {
-    display: flex;
-    gap: 1rem;
+    align-items: center;
     justify-content: center;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+    font-size: 1rem;
 }
 
-/* Dark mode support */
+.progress-step.active i {
+    background: var(--primary-gradient);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.progress-step.completed i {
+    background: var(--success);
+    transform: scale(1.05);
+}
+
+.progress-step span {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.progress-step.active span {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Animation Keyframes */
+@keyframes brainPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+    }
+}
+
+@keyframes brainShine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+}
+
+@keyframes neuralPulse {
+    0%, 100% { 
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
+/* Dark mode support for enhanced styles */
 body.dark-mode .ai-modal-content {
     background: linear-gradient(145deg, var(--gray-800) 0%, var(--gray-900) 100%);
     border-color: var(--gray-700);
 }
 
 body.dark-mode .ai-input-container {
-    background: var(--gray-800);
+    background: linear-gradient(145deg, var(--gray-800) 0%, var(--gray-900) 100%);
     border-color: var(--gray-700);
 }
 
-body.dark-mode .ai-input {
-    color: var(--gray-200);
+body.dark-mode .ai-thinking-enhanced {
+    background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
 }
 
 body.dark-mode .suggestion-oval {
@@ -4393,9 +4558,35 @@ body.dark-mode .suggestion-oval span {
     color: var(--gray-200);
 }
 
-body.dark-mode .generated-task-item {
-    background: var(--gray-800);
+body.dark-mode .ai-progress-container {
+    background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
     border-color: var(--gray-700);
+}
+
+body.dark-mode .progress-header h4 {
+    color: var(--gray-200);
+}
+
+/* Mobile responsiveness for enhanced styles */
+@media (max-width: 768px) {
+    .progress-steps {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .progress-step {
+        max-width: 80px;
+    }
+    
+    .suggestion-oval {
+        padding: 0.75rem 1rem;
+    }
+    
+    .brain-animation {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
 }
 
 /* Mobile responsiveness */
@@ -4432,6 +4623,112 @@ body.dark-mode .generated-task-item {
     .ai-input-container {
         padding-bottom: 1rem;
     }
+}
+
+/* Enhanced AI Generated Tasks Styling */
+.generated-task-item {
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.generated-task-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.generated-task-item:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.generated-task-item:hover::before {
+    opacity: 1;
+}
+
+.generated-task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    gap: 1rem;
+}
+
+.generated-task-title {
+    font-weight: 600;
+    color: var(--gray-800);
+    font-size: 1.1rem;
+    flex: 1;
+    line-height: 1.4;
+}
+
+.generated-task-priority {
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.generated-task-description {
+    color: var(--gray-600);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.generated-task-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--gray-500);
+    flex-wrap: wrap;
+}
+
+.generated-task-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.ai-badge {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white !important;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Dark mode support */
+body.dark-mode .generated-task-item {
+    background: linear-gradient(145deg, var(--gray-800) 0%, var(--gray-900) 100%);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .generated-task-title {
+    color: var(--gray-200);
+}
+
+body.dark-mode .generated-task-description {
+    color: var(--gray-400);
 }
 
         /* Feature Splash Screen */
@@ -4680,6 +4977,44 @@ body.dark-mode .benefit-item span {
     .feature-splash-footer .btn {
         max-width: none;
     }
+}
+
+/* Version Badge for Splash Screen */
+.version-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-splash-header {
+    position: relative; /* Ensure proper positioning for version badge */
+}
+
+/* Update the close button to avoid overlap */
+.feature-splash-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
 }
 
         /* Update the folders section */
@@ -5132,11 +5467,15 @@ body.dark-mode .folder-task-item p {
     border: 2px solid var(--primary-light);
     min-height: 60px; /* Reduced from 90px */
     padding: 0.5rem; /* Reduced padding */
+    cursor: pointer !important;
+    pointer-events: auto !important;
 }
 
 .folders-main-container:hover {
     background: linear-gradient(135deg, var(--primary-light) 0%, rgba(79, 70, 229, 0.2) 100%);
     border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
 }
 
 .folders-main-container .folder-icon {
@@ -5515,6 +5854,276 @@ body.dark-mode .folders-section {
             }
         }
 
+        /* View Toggle Section */
+.view-toggle-section {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(79, 70, 229, 0.1) 100%);
+    border: 1px solid var(--primary-light);
+    border-radius: 12px;
+}
+
+.view-toggle-header {
+    margin-bottom: 1rem;
+}
+
+.view-toggle-header h4 {
+    font-size: 1.1rem;
+    color: var(--gray-800);
+    font-weight: 600;
+    margin: 0;
+}
+
+.view-toggle-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.view-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 2px solid var(--gray-200);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: var(--gray-700);
+    width: 100%;
+    text-align: left;
+}
+
+.view-toggle-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    transform: translateX(3px);
+}
+
+.view-toggle-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.view-toggle-btn i {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Grid View Styles */
+.task-list.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.task-list.grid-view .task-item {
+    display: flex;
+    flex-direction: column;
+    min-height: 180px;
+    padding: 1.25rem;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.task-list.grid-view .task-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
+}
+
+.task-list.grid-view .task-checkbox {
+    align-self: flex-start;
+    margin-bottom: 1rem;
+    margin-right: 0;
+}
+
+.task-list.grid-view .task-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.task-list.grid-view .task-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.task-list.grid-view .task-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--gray-600);
+    flex: 1;
+}
+
+.task-list.grid-view .task-meta {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+.task-list.grid-view .task-actions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.task-list.grid-view .task-item:hover .task-actions {
+    opacity: 1;
+}
+
+/* Dark mode support */
+body.dark-mode .view-toggle-section {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(79, 70, 229, 0.1) 100%);
+    border-color: var(--gray-600);
+}
+
+body.dark-mode .view-toggle-header h4 {
+    color: var(--gray-200);
+}
+
+body.dark-mode .view-toggle-btn {
+    background: var(--gray-800);
+    border-color: var(--gray-700);
+    color: var(--gray-200);
+}
+
+body.dark-mode .view-toggle-btn:hover {
+    background: var(--gray-700);
+    border-color: var(--primary-light);
+}
+
+body.dark-mode .task-list.grid-view .task-item {
+    background: linear-gradient(145deg, var(--gray-800) 0%, var(--gray-900) 100%);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .task-list.grid-view .task-item:hover {
+    background: linear-gradient(145deg, var(--gray-700) 0%, var(--gray-800) 100%);
+    border-color: var(--primary-light);
+}
+
+/* Enhanced Splash Screen */
+.feature-splash-content {
+    background: white;
+    border-radius: 20px;
+    width: 500px;
+    height: 600px;
+    max-width: 90vw;
+    max-height: 85vh;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-20px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-splash-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.feature-splash-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.feature-splash-body::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: 3px;
+}
+
+.feature-splash-body::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+.changelog-section {
+    margin-top: 1.5rem;
+}
+
+.changelog-title {
+    font-size: 1.2rem;
+    color: var(--gray-800);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-light);
+}
+
+.changelog-category {
+    margin-bottom: 1.5rem;
+}
+
+.changelog-category h5 {
+    font-size: 1rem;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.changelog-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.changelog-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--gray-50);
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-light);
+}
+
+.changelog-item i {
+    color: var(--primary);
+    font-size: 1.1rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.changelog-item strong {
+    color: var(--gray-800);
+    font-size: 0.95rem;
+}
+
+.changelog-item p {
+    color: var(--gray-600);
+    font-size: 0.85rem;
+    margin: 0.25rem 0 0 0;
+    line-height: 1.4;
+}
+
+/* ADD THIS RIGHT HERE */
+.view-toggle-btn {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto !important;
+}
+
+.category {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto !important;
+}
+
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -5543,8 +6152,7 @@ body.dark-mode .folders-section {
         </div>
     </div>
 
-    <!-- Updated Feature Splash Screen -->
-<div class="feature-splash-overlay" id="featureSplashOverlay">
+    <div class="feature-splash-overlay" id="featureSplashOverlay">
     <div class="feature-splash-content">
         <button class="feature-splash-close" id="featureSplashClose">
             <i class="fas fa-times"></i>
@@ -5552,41 +6160,101 @@ body.dark-mode .folders-section {
         
         <div class="feature-splash-header">
             <div class="feature-splash-icon">
-                <i class="fas fa-robot"></i>
+                <i class="fas fa-rocket"></i>
             </div>
-            <h2 class="feature-splash-title">New AI Feature!</h2>
+            <h2 class="feature-splash-title">Major Update v2.0.0!</h2>
+            <div class="version-badge">Version 2.0.0</div>
         </div>
         
         <div class="feature-splash-body">
             <div class="feature-highlight">
-                <i class="fas fa-wand-magic-sparkles feature-highlight-icon"></i>
-                <h3 id="featureTitle">🚀 New AI Task Generator</h3>
-                <p id="featureDescription">Transform your productivity with our advanced AI! Simply describe what you want to accomplish, and get a complete task breakdown with smart suggestions.</p>
+                <i class="fas fa-th-large feature-highlight-icon"></i>
+                <h3>🎯 New View System & Enhanced UI</h3>
+                <p>Experience tasks in a whole new way! Switch between List and Grid views for optimal productivity and workflow management.</p>
             </div>
             
-            <div class="feature-benefits">
-                <div class="benefit-item">
-                    <i class="fas fa-brain"></i>
-                    <span>Smart AI task breakdown from natural language</span>
+            <div class="changelog-section">
+                <h4 class="changelog-title">✨ What's New in v2.0.0</h4>
+                
+                <div class="changelog-category">
+                    <h5><i class="fas fa-plus-circle"></i> New Features</h5>
+                    <div class="changelog-items">
+                        <div class="changelog-item">
+                            <i class="fas fa-th-large"></i>
+                            <div>
+                                <strong>Grid View</strong>
+                                <p>Beautiful card-based layout for visual task management</p>
+                            </div>
+                        </div>
+                        <div class="changelog-item">
+                            <i class="fas fa-list"></i>
+                            <div>
+                                <strong>List View Toggle</strong>
+                                <p>Switch between list and grid views instantly</p>
+                            </div>
+                        </div>
+                        <div class="changelog-item">
+                            <i class="fas fa-robot"></i>
+                            <div>
+                                <strong>Enhanced AI Integration</strong>
+                                <p>Improved AI task generation with better UX</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="benefit-item">
-                    <i class="fas fa-list-check"></i>
-                    <span>Complete project plans generated instantly</span>
+                
+                <div class="changelog-category">
+                    <h5><i class="fas fa-wrench"></i> Improvements</h5>
+                    <div class="changelog-items">
+                        <div class="changelog-item">
+                            <i class="fas fa-palette"></i>
+                            <div>
+                                <strong>Modern UI Design</strong>
+                                <p>Cleaner, more professional interface</p>
+                            </div>
+                        </div>
+                        <div class="changelog-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <div>
+                                <strong>Performance Boost</strong>
+                                <p>Faster loading and smoother animations</p>
+                            </div>
+                        </div>
+                        <div class="changelog-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <div>
+                                <strong>Better Mobile Experience</strong>
+                                <p>Optimized touch interactions and responsive design</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="benefit-item">
-                    <i class="fas fa-tags"></i>
-                    <span>Auto-categorization and priority setting</span>
-                </div>
-                <div class="benefit-item">
-                    <i class="fas fa-folder-plus"></i>
-                    <span>NEW: Task folders for better organization</span>
+                
+                <div class="changelog-category">
+                    <h5><i class="fas fa-bug"></i> Bug Fixes</h5>
+                    <div class="changelog-items">
+                        <div class="changelog-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Search Functionality</strong>
+                                <p>Fixed search highlighting and navigation</p>
+                            </div>
+                        </div>
+                        <div class="changelog-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Data Persistence</strong>
+                                <p>Improved task saving and loading reliability</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="feature-splash-footer">
             <button class="btn btn-cancel" id="dismissFeatureBtn">Maybe Later</button>
-            <button class="btn btn-primary" id="tryFeatureBtn">Try It Now!</button>
+            <button class="btn btn-primary" id="tryFeatureBtn">Try New Views!</button>
         </div>
     </div>
 </div>
@@ -5685,18 +6353,23 @@ body.dark-mode .folders-section {
                         <h3>Categories</h3>
                     </div>
 
-                    <!-- Add this inside the sidebar, after sidebar-header -->
-<div class="folders-section">
-    <div class="folders-header">
-        <h4>Folders</h4>
-        <button class="add-folder-btn" id="addFolderBtn" title="Create New Folder">
-            <i class="fas fa-plus"></i>
+                    <!-- Add this where the folders section was -->
+<div class="view-toggle-section">
+    <div class="view-toggle-header">
+        <h4>View Options</h4>
+    </div>
+    <div class="view-toggle-container">
+        <button class="view-toggle-btn active" id="listViewBtn" data-view="list">
+            <i class="fas fa-list"></i>
+            <span>List View</span>
+        </button>
+        <button class="view-toggle-btn" id="gridViewBtn" data-view="grid">
+            <i class="fas fa-th-large"></i>
+            <span>Grid View</span>
         </button>
     </div>
-    <div class="folders-container" id="foldersContainer">
-        <!-- Folders will be populated here -->
-    </div>
 </div>
+
                     <div class="categories-container">
                         <!-- Active Category Indicator (Sliding Highlight) -->
                         <div class="active-category-indicator" id="activeCategoryIndicator"></div>
@@ -6166,20 +6839,20 @@ body.dark-mode .folders-section {
         <!-- AI Task Creation Modal -->
 <div class="ai-modal" id="aiModal" aria-modal="true" role="dialog">
     <div class="ai-modal-content">
-        <div class="ai-modal-header">
-            <div class="ai-header-content">
-                <div class="ai-logo">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <div class="ai-title-section">
-                    <h3 class="ai-modal-title">AI Task Creator</h3>
-                    <p class="ai-subtitle">Describe what you need to do, and I'll help organize it</p>
-                </div>
+    <div class="ai-modal-header">
+        <div class="ai-header-content">
+            <div class="ai-logo">
+                <i class="fas fa-brain"></i>
             </div>
-            <button class="ai-modal-close" id="aiModalClose" aria-label="Close AI modal">
-                <i class="fas fa-times"></i>
-            </button>
+            <div class="ai-title-section">
+                <h3 class="ai-modal-title">AI Task Creator</h3>
+                <p class="ai-subtitle">Describe what you need to do, and I'll help organize it</p>
+            </div>
         </div>
+        <button class="ai-modal-close" id="aiModalClose">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
         
         <div class="ai-modal-body">
             <div class="ai-input-section">
@@ -6226,30 +6899,81 @@ body.dark-mode .folders-section {
             </div>
             
             <div class="ai-results-section" id="aiResultsSection" style="display: none;">
-                <div class="ai-thinking" id="aiThinking">
-                    <div class="thinking-animation">
-                        <div class="thinking-dot"></div>
-                        <div class="thinking-dot"></div>
-                        <div class="thinking-dot"></div>
-                    </div>
-                    <p>AI is analyzing your request...</p>
-                </div>
-                
-                <div class="ai-generated-tasks" id="aiGeneratedTasks" style="display: none;">
-                    <h4 class="results-title">Generated Tasks</h4>
-                    <div class="generated-tasks-list" id="generatedTasksList">
-                        <!-- Generated tasks will appear here -->
-                    </div>
-                    <div class="ai-actions">
-                        <button class="btn btn-primary" id="addAllTasksBtn">
-                            <i class="fas fa-plus"></i> Add All Tasks
-                        </button>
-                        <button class="btn btn-secondary" id="regenerateBtn">
-                            <i class="fas fa-refresh"></i> Regenerate
-                        </button>
-                    </div>
-                </div>
+    <!-- Enhanced AI Thinking Animation -->
+    <div class="ai-thinking-enhanced" id="aiThinking">
+        <div class="brain-animation">
+            <i class="fas fa-brain"></i>
+            <div class="neural-network">
+                <div class="neural-dot"></div>
+                <div class="neural-dot"></div>
+                <div class="neural-dot"></div>
+                <div class="neural-dot"></div>
+                <div class="neural-dot"></div>
             </div>
+        </div>
+        <h4 style="color: var(--gray-800); margin-bottom: 0.5rem;">AI is analyzing your request...</h4>
+        <p style="color: var(--gray-600); margin: 0;">Processing natural language and generating intelligent task breakdown</p>
+    </div>
+    
+    <!-- Smart Progress Indicator -->
+    <div class="ai-progress-container" id="aiProgressContainer" style="display: none;">
+        <div class="progress-header">
+            <h4>🧠 AI Analysis Progress</h4>
+        </div>
+        <div class="progress-steps">
+            <div class="progress-step active" data-step="1">
+                <i class="fas fa-search"></i>
+                <span>Analyzing input</span>
+            </div>
+            <div class="progress-step" data-step="2">
+                <i class="fas fa-brain"></i>
+                <span>Processing context</span>
+            </div>
+            <div class="progress-step" data-step="3">
+                <i class="fas fa-magic"></i>
+                <span>Generating tasks</span>
+            </div>
+            <div class="progress-step" data-step="4">
+                <i class="fas fa-check-circle"></i>
+                <span>Optimizing results</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Generated Tasks Display -->
+    <div class="ai-generated-tasks" id="aiGeneratedTasks" style="display: none;">
+        <div class="results-header">
+            <h4 class="results-title">✨ AI Generated Task Breakdown</h4>
+            <div class="results-stats" id="resultsStats">
+                <span class="stat-item">
+                    <i class="fas fa-tasks"></i>
+                    <span id="taskCountStat">0 tasks</span>
+                </span>
+                <span class="stat-item">
+                    <i class="fas fa-calendar"></i>
+                    <span id="timeframeStat">Over 1 week</span>
+                </span>
+                <span class="stat-item">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Optimized</span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="generated-tasks-list" id="generatedTasksList">
+            <!-- Generated tasks will appear here -->
+        </div>
+        
+        <div class="ai-actions">
+            <button class="btn btn-primary" id="addAllTasksBtn">
+                <i class="fas fa-plus"></i> Add All Tasks
+            </button>
+            <button class="btn btn-secondary" id="regenerateBtn">
+                <i class="fas fa-refresh"></i> Regenerate
+            </button>
+            <button class="btn btn-cancel" id="customizeTasksBtn">
+                <i class="fas fa-edit"></i> Customize
+            </button>
         </div>
     </div>
 </div>
@@ -6482,15 +7206,29 @@ if (dismissFeatureBtn) {
     dismissFeatureBtn.addEventListener('click', hideFeatureSplash);
 }
 
-// Try feature button - ADD THIS
+// Try feature button - UPDATE THIS
 if (tryFeatureBtn) {
     tryFeatureBtn.addEventListener('click', () => {
         hideFeatureSplash();
-        // Optional: highlight AI button
+        // Show folders first, then AI button
         setTimeout(() => {
-            const aiButton = document.getElementById('aiTaskButton');
-            if (aiButton) {
-                aiButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Scroll to sidebar to show folders
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Highlight the folders section briefly
+                const foldersSection = document.querySelector('.folders-section');
+                if (foldersSection) {
+                    foldersSection.style.background = 'rgba(79, 70, 229, 0.1)';
+                    foldersSection.style.border = '2px solid var(--primary)';
+                    foldersSection.style.borderRadius = '12px';
+                    
+                    setTimeout(() => {
+                        foldersSection.style.background = '';
+                        foldersSection.style.border = '';
+                    }, 2000);
+                }
             }
         }, 300);
     });
@@ -6571,7 +7309,7 @@ aiTaskButton.addEventListener('click', () => {
 });
 
 // Feature Management System - WORKING VERSION
-const CURRENT_FEATURE_VERSION = 'v1.7.0'; // Updated version for new AI feature
+const CURRENT_FEATURE_VERSION = 'v2.0.0'; // Updated version for new AI feature
 const FEATURE_KEY = 'tasklytic_last_seen_version';
 
 // Check if new feature splash should be shown
@@ -6608,7 +7346,7 @@ function showFeatureSplash() {
         } else {
             console.error('❌ ERROR: Splash element not found!');
         }
-    }, 5000);
+    }, 500);
 }
 
 // Hide feature splash - REPLACE EXISTING FUNCTION
@@ -6625,7 +7363,7 @@ function hideFeatureSplash() {
 setTimeout(() => {
     console.log('🎯 Starting feature splash check...');
     showFeatureSplash();
-}, 100); // Small delay to ensure DOM is ready
+}, 6000); // Small delay to ensure DOM is ready
     
 
 // AI Task Creation Modal
@@ -6708,7 +7446,7 @@ function generateAITasks(input) {
     
     // Simulate AI processing
     setTimeout(() => {
-        const generatedTasks = simulateAIGeneration(input);
+        const generatedTasks = simulateAdvancedAIGeneration(input);
         displayGeneratedTasks(generatedTasks);
         
         aiThinking.style.display = 'none';
@@ -6716,58 +7454,124 @@ function generateAITasks(input) {
     }, 2000);
 }
 
-// Simulate AI task generation
-function simulateAIGeneration(input) {
-    const taskTemplates = {
-        'trip': [
-            { title: 'Research destination', category: 'personal', priority: 'medium', description: 'Look up attractions, weather, and local customs' },
-            { title: 'Book accommodation', category: 'personal', priority: 'high', description: 'Find and reserve hotel or rental' },
-            { title: 'Plan itinerary', category: 'personal', priority: 'medium', description: 'Create day-by-day schedule' },
-            { title: 'Pack luggage', category: 'personal', priority: 'low', description: 'Pack appropriate clothing and essentials' }
+// Enhanced AI generation function
+function simulateAdvancedAIGeneration(input) {
+    const intelligence = {
+        // Detect task complexity
+        detectComplexity: (text) => {
+            const complexWords = ['project', 'campaign', 'launch', 'organize', 'plan', 'develop', 'create', 'build'];
+            const complexity = complexWords.filter(word => text.toLowerCase().includes(word)).length;
+            return complexity > 2 ? 'complex' : complexity > 0 ? 'medium' : 'simple';
+        },
+        
+        // Smart due date suggestions
+        suggestDueDate: (text) => {
+            const urgentWords = ['urgent', 'asap', 'immediately', 'today'];
+            const timeframes = {
+                'today': 0, 'tomorrow': 1, 'this week': 7, 'next week': 14,
+                'this month': 30, 'next month': 60
+            };
+            
+            for (let [phrase, days] of Object.entries(timeframes)) {
+                if (text.toLowerCase().includes(phrase)) {
+                    return new Date(Date.now() + days * 24 * 60 * 60 * 1000);
+                }
+            }
+            return new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // Default: 1 week
+        },
+        
+        // Smart categorization
+        categorizeTask: (text) => {
+            const categories = {
+                work: ['meeting', 'project', 'report', 'presentation', 'client', 'deadline'],
+                health: ['exercise', 'doctor', 'gym', 'medicine', 'workout', 'appointment'],
+                personal: ['family', 'friend', 'hobby', 'personal', 'self'],
+                shopping: ['buy', 'purchase', 'shop', 'store', 'groceries'],
+                finance: ['budget', 'money', 'pay', 'bill', 'bank', 'investment'],
+                education: ['learn', 'study', 'course', 'book', 'skill', 'training']
+            };
+            
+            for (let [category, keywords] of Object.entries(categories)) {
+                if (keywords.some(keyword => text.toLowerCase().includes(keyword))) {
+                    return category;
+                }
+            }
+            return 'personal';
+        }
+    };
+    
+    // Process input with AI intelligence
+    const complexity = intelligence.detectComplexity(input);
+    const suggestedDueDate = intelligence.suggestDueDate(input);
+    const category = intelligence.categorizeTask(input);
+    
+    return generateContextualTasks(input, complexity, category, suggestedDueDate);
+}
+
+// Add this new function for complex project breakdown
+function generateContextualTasks(input, complexity, category, dueDate) {
+    const projectTemplates = {
+        'website': [
+            { title: 'Research and planning', priority: 'high', description: 'Define requirements and scope' },
+            { title: 'Design wireframes', priority: 'medium', description: 'Create layout and user flow' },
+            { title: 'Develop frontend', priority: 'high', description: 'Build user interface' },
+            { title: 'Backend development', priority: 'high', description: 'Set up server and database' },
+            { title: 'Testing and deployment', priority: 'medium', description: 'Test functionality and go live' }
         ],
-        'meeting': [
-            { title: 'Send meeting invites', category: 'work', priority: 'high', description: 'Schedule meeting with all participants' },
-            { title: 'Prepare agenda', category: 'work', priority: 'medium', description: 'Create detailed meeting agenda' },
-            { title: 'Book meeting room', category: 'work', priority: 'medium', description: 'Reserve appropriate meeting space' },
-            { title: 'Prepare presentation', category: 'work', priority: 'high', description: 'Create slides and materials' }
+        'event': [
+            { title: 'Set event date and venue', priority: 'high', description: 'Book location and confirm date' },
+            { title: 'Create guest list', priority: 'medium', description: 'Compile attendee information' },
+            { title: 'Send invitations', priority: 'high', description: 'Distribute invites 3 weeks prior' },
+            { title: 'Plan catering and menu', priority: 'medium', description: 'Arrange food and beverages' },
+            { title: 'Event setup and coordination', priority: 'high', description: 'Day-of event management' }
         ],
-        'party': [
-            { title: 'Create guest list', category: 'personal', priority: 'high', description: 'List all people to invite' },
-            { title: 'Send invitations', category: 'personal', priority: 'high', description: 'Send invites 2 weeks in advance' },
-            { title: 'Plan menu', category: 'personal', priority: 'medium', description: 'Decide on food and drinks' },
-            { title: 'Decorate venue', category: 'personal', priority: 'low', description: 'Set up decorations and ambiance' }
-        ],
-        'workout': [
-            { title: 'Set fitness goals', category: 'health', priority: 'high', description: 'Define specific, measurable objectives' },
-            { title: 'Choose workout schedule', category: 'health', priority: 'medium', description: 'Plan weekly exercise routine' },
-            { title: 'Get gym membership', category: 'health', priority: 'medium', description: 'Sign up for local gym or fitness center' },
-            { title: 'Track progress', category: 'health', priority: 'low', description: 'Monitor workouts and improvements' }
-        ],
-        'default': [
-            { title: 'Break down the task', category: 'personal', priority: 'high', description: 'Divide into smaller, manageable steps' },
-            { title: 'Research requirements', category: 'personal', priority: 'medium', description: 'Gather necessary information and resources' },
-            { title: 'Create timeline', category: 'personal', priority: 'medium', description: 'Set deadlines for each step' },
-            { title: 'Execute plan', category: 'personal', priority: 'high', description: 'Take action on the planned steps' }
+        'course': [
+            { title: 'Research course content', priority: 'high', description: 'Outline learning objectives' },
+            { title: 'Gather study materials', priority: 'medium', description: 'Collect books, videos, resources' },
+            { title: 'Create study schedule', priority: 'high', description: 'Plan daily/weekly study time' },
+            { title: 'Practice and exercises', priority: 'medium', description: 'Complete assignments and practice' },
+            { title: 'Final review and assessment', priority: 'high', description: 'Prepare for final evaluation' }
         ]
     };
     
-    // Simple keyword matching
-    let selectedTasks = taskTemplates.default;
-    
-    if (input.toLowerCase().includes('trip') || input.toLowerCase().includes('travel')) {
-        selectedTasks = taskTemplates.trip;
-    } else if (input.toLowerCase().includes('meeting')) {
-        selectedTasks = taskTemplates.meeting;
-    } else if (input.toLowerCase().includes('party') || input.toLowerCase().includes('birthday')) {
-        selectedTasks = taskTemplates.party;
-    } else if (input.toLowerCase().includes('workout') || input.toLowerCase().includes('exercise')) {
-        selectedTasks = taskTemplates.workout;
+    // Detect project type
+    let template = null;
+    for (let [type, tasks] of Object.entries(projectTemplates)) {
+        if (input.toLowerCase().includes(type) || 
+            input.toLowerCase().includes(type.slice(0, -1))) {
+            template = tasks;
+            break;
+        }
     }
     
-    return selectedTasks;
+    // If no specific template, generate based on complexity
+    if (!template) {
+        if (complexity === 'complex') {
+            template = [
+                { title: 'Initial planning and research', priority: 'high' },
+                { title: 'Break down into smaller tasks', priority: 'medium' },
+                { title: 'Execute main components', priority: 'high' },
+                { title: 'Review and refinement', priority: 'medium' },
+                { title: 'Final completion and delivery', priority: 'high' }
+            ];
+        } else {
+            template = [
+                { title: `Complete: ${input}`, priority: 'medium' },
+                { title: 'Review and follow-up', priority: 'low' }
+            ];
+        }
+    }
+    
+    // Apply smart due dates and categories
+    return template.map((task, index) => ({
+        ...task,
+        category: category,
+        description: task.description || `Step ${index + 1} for: ${input}`,
+        dueOffset: index * 2 // Spread tasks over time
+    }));
 }
 
-// Display generated tasks
+// Enhanced display generated tasks with better styling
 function displayGeneratedTasks(tasks) {
     generatedTasksList.innerHTML = '';
     
@@ -6776,12 +7580,33 @@ function displayGeneratedTasks(tasks) {
         taskEl.className = 'generated-task-item';
         taskEl.dataset.index = index;
         
+        // Format due date nicely
+        const dueDate = new Date(task.dueDate || Date.now());
+        const formattedDate = new Intl.DateTimeFormat('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: dueDate.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+        }).format(dueDate);
+        
+        // Priority styling
+        const priorityColors = {
+            high: '#ef4444',
+            medium: '#f59e0b', 
+            low: '#10b981'
+        };
+        
         taskEl.innerHTML = `
-            <div class="generated-task-title">${task.title}</div>
+            <div class="generated-task-header">
+                <div class="generated-task-title">${task.title}</div>
+                <div class="generated-task-priority" style="background-color: ${priorityColors[task.priority]}20; color: ${priorityColors[task.priority]}; border: 1px solid ${priorityColors[task.priority]}40;">
+                    ${task.priority.toUpperCase()}
+                </div>
+            </div>
             <div class="generated-task-description">${task.description}</div>
             <div class="generated-task-meta">
                 <span><i class="fas ${categoryIcons[task.category]}"></i> ${task.category}</span>
-                <span><i class="fas fa-flag"></i> ${task.priority} priority</span>
+                <span><i class="fas fa-calendar"></i> ${formattedDate}</span>
+                ${task.aiGenerated ? '<span class="ai-badge"><i class="fas fa-robot"></i> AI Generated</span>' : ''}
             </div>
         `;
         
@@ -6844,15 +7669,30 @@ function resetAIModal() {
 }
 
             // Task data storage
-            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            let currentFilter = 'all';
-            let currentCategory = 'all';
-            let reminderEnabled = false;
+let tasks = [];
+let currentFilter = 'all';
+let currentCategory = 'all';
+let reminderEnabled = false;
 
-            // Folder System Variables
-let folders = JSON.parse(localStorage.getItem('folders')) || [];
+// Folder System Variables
+let folders = [];
 let currentOpenFolder = null;
 let draggedTask = null;
+
+// Load data with error handling
+try {
+    tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+} catch (error) {
+    console.error('Failed to load tasks:', error);
+    tasks = [];
+}
+
+try {
+    folders = JSON.parse(localStorage.getItem('folders')) || [];
+} catch (error) {
+    console.error('Failed to load folders:', error);
+    folders = [];
+}
 
 // Folder Elements
 const addFolderBtn = document.getElementById('addFolderBtn');
@@ -6881,7 +7721,12 @@ function generateFolderId() {
 }
 
 function saveFolders() {
-    localStorage.setItem('folders', JSON.stringify(folders));
+    try {
+        localStorage.setItem('folders', JSON.stringify(folders));
+    } catch (error) {
+        console.error('Failed to save folders:', error);
+        showNotification('Failed to save folders', 'error');
+    }
 }
 
 function createFolder(name, color = '#4f46e5') {
@@ -6963,8 +7808,22 @@ function renderFolders() {
         <div class="folders-meta">${folders.length} folder${folders.length !== 1 ? 's' : ''}</div>
     `;
     
-    // Add click event to open folders overview
-    foldersEl.addEventListener('click', () => openFoldersOverview());
+    // Add click event to open folders overview - WITH DEBUGGING
+foldersEl.addEventListener('click', (e) => {
+    console.log('Folder container clicked!'); // Debug line
+    e.preventDefault();
+    e.stopPropagation();
+    
+    try {
+        openFoldersOverview();
+        console.log('openFoldersOverview called successfully'); // Debug line
+    } catch (error) {
+        console.error('Error opening folders overview:', error); // Debug line
+    }
+});
+
+// Also add this right after the click event:
+console.log('Folder element created:', foldersEl); // Debug line
     
     // Add drag and drop events for the main container
     foldersEl.addEventListener('dragover', handleMainFolderDragOver);
@@ -7094,20 +7953,24 @@ function handleFolderDragLeave(e) {
     e.currentTarget.classList.remove('drag-over');
 }
 
-// Event Listeners for Folder System
-
-// Add Folder Button
-addFolderBtn.addEventListener('click', () => {
-    openFolderModal();
-});
-
-// Folder Modal Events
+// Update folderModalClose event listener:
 folderModalClose.addEventListener('click', () => {
     folderModal.classList.remove('active');
+    document.body.style.overflow = '';
+    // Add small delay to prevent interference
+    setTimeout(() => {
+        document.body.style.pointerEvents = '';
+    }, 100);
 });
 
+
+// Update cancelFolderBtn event listener:
 cancelFolderBtn.addEventListener('click', () => {
     folderModal.classList.remove('active');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+        document.body.style.pointerEvents = '';
+    }, 100);
 });
 
 // Color Picker
@@ -7210,11 +8073,23 @@ function openFolderModal(folder = null) {
     folderModal.classList.add('active');
 }
 
-// Open folders overview
 function openFoldersOverview() {
-    renderFoldersGrid();
-    foldersOverview.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    console.log('Opening folders overview...');
+    
+    try {
+        renderFoldersGrid();
+        const foldersOverview = document.getElementById('foldersOverview');
+        
+        if (foldersOverview) {
+            foldersOverview.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            console.log('Folders overview modal opened successfully');
+        } else {
+            console.error('foldersOverview element not found');
+        }
+    } catch (error) {
+        console.error('Error in openFoldersOverview:', error);
+    }
 }
 
 // Close folders overview
@@ -7223,9 +8098,23 @@ function closeFoldersOverview() {
     document.body.style.overflow = '';
 }
 
-// Render folders grid in overview
 function renderFoldersGrid() {
+    console.log('renderFoldersGrid called');
+    
     const foldersOverviewBody = document.getElementById('foldersOverviewBody');
+    
+    if (!foldersOverviewBody) {
+        console.error('foldersOverviewBody element not found');
+        return;
+    }
+    
+    // Ensure folders array exists and is valid
+    if (!folders || !Array.isArray(folders)) {
+        console.log('No folders array, initializing empty');
+        folders = [];
+    }
+    
+    console.log('Folders count:', folders.length);
     
     if (folders.length === 0) {
         foldersOverviewBody.innerHTML = `
@@ -7238,59 +8127,88 @@ function renderFoldersGrid() {
         return;
     }
     
+    // Create HTML with safety checks
+    const folderCards = folders.map(folder => {
+        // Skip if folder is null or missing required properties
+        if (!folder || !folder.id || !folder.name) {
+            console.warn('Skipping invalid folder:', folder);
+            return '';
+        }
+        
+        const folderTaskCount = tasks.filter(task => task && task.folderId === folder.id).length;
+        
+        return `
+            <div class="folder-card" data-folder-id="${folder.id}">
+                <div class="folder-card-actions">
+                    <button class="folder-card-action edit" title="Edit Folder">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="folder-card-action delete" title="Delete Folder">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+                <div class="folder-card-icon" style="color: ${folder.color || '#4f46e5'};">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <div class="folder-card-name">${folder.name}</div>
+                <div class="folder-card-count">${folderTaskCount} task${folderTaskCount !== 1 ? 's' : ''}</div>
+            </div>
+        `;
+    }).filter(html => html !== '').join(''); // Remove empty strings
+    
     foldersOverviewBody.innerHTML = `
         <div class="folders-grid" id="foldersGrid">
-            ${folders.map(folder => {
-                const folderTaskCount = tasks.filter(task => task.folderId === folder.id).length;
-                return `
-                    <div class="folder-card" data-folder-id="${folder.id}">
-                        <div class="folder-card-actions">
-                            <button class="folder-card-action edit" title="Edit Folder">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
-                            <button class="folder-card-action delete" title="Delete Folder">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                        <div class="folder-card-icon" style="color: ${folder.color};">
-                            <i class="fas fa-folder"></i>
-                        </div>
-                        <div class="folder-card-name">${folder.name}</div>
-                        <div class="folder-card-count">${folderTaskCount} task${folderTaskCount !== 1 ? 's' : ''}</div>
-                    </div>
-                `;
-            }).join('')}
+            ${folderCards}
         </div>
     `;
     
-    // Add event listeners to folder cards
+    console.log('Folder cards created, adding event listeners');
+    
+    // Add event listeners with comprehensive null checks
     document.querySelectorAll('.folder-card').forEach(card => {
+        if (!card || !card.dataset) return;
+        
         const folderId = card.dataset.folderId;
-        const folder = folders.find(f => f.id === folderId);
+        if (!folderId) return;
+        
+        const folder = folders.find(f => f && f.id === folderId);
+        if (!folder) {
+            console.warn('Folder not found for ID:', folderId);
+            return;
+        }
         
         // Click to open folder
         card.addEventListener('click', (e) => {
             if (e.target.closest('.folder-card-action')) return;
+            console.log('Opening folder:', folder.name);
             closeFoldersOverview();
             openFolder(folder);
         });
         
         // Edit folder
-        card.querySelector('.folder-card-action.edit').addEventListener('click', (e) => {
-            e.stopPropagation();
-            closeFoldersOverview();
-            openFolderModal(folder);
-        });
+        const editBtn = card.querySelector('.folder-card-action.edit');
+        if (editBtn) {
+            editBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeFoldersOverview();
+                openFolderModal(folder);
+            });
+        }
         
         // Delete folder
-        card.querySelector('.folder-card-action.delete').addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (confirm(`Are you sure you want to delete the folder "${folder.name}"? All tasks will be moved back to the main view.`)) {
-                deleteFolder(folder.id);
-                renderFoldersGrid(); // Refresh the grid
-            }
-        });
+        const deleteBtn = card.querySelector('.folder-card-action.delete');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (confirm(`Are you sure you want to delete the folder "${folder.name}"? All tasks will be moved back to the main view.`)) {
+                    deleteFolder(folder.id);
+                    renderFoldersGrid(); // Refresh the grid
+                }
+            });
+        }
     });
+    
+    console.log('Event listeners added successfully');
 }
 
 // Handle drag and drop for main folders container
@@ -7602,17 +8520,16 @@ let isFullView = false;
             };
 
             function init() {
+    console.log('Initializing app...'); // Debug
+    
     renderTasks();
     updateDashboard();
     updateCategoryCounts();
     
-    // Only call if folders exist (since you may not have folder system)
-    if (typeof initializeFolderSystem === 'function') {
-        initializeFolderSystem();
-    }
-    
-    // Setup drag and drop
-    setupTaskDragAndDrop();
+    // Initialize view toggle AFTER other elements are ready
+    setTimeout(() => {
+        initializeViewToggle();
+    }, 500);
     
     // Set active category indicator position initially
     const activeCategory = document.querySelector('.category.active');
@@ -7624,6 +8541,8 @@ let isFullView = false;
     
     // Check for reminders every minute
     setInterval(checkReminders, 60000);
+    
+    console.log('App initialized successfully'); // Debug
 }
 
             // NEW: Reminder Toggle Functionality
@@ -7696,39 +8615,43 @@ let isFullView = false;
         showNotification('Full view deactivated', 'info');
     }
 });
-            // Category selection and sliding indicator
-            categorySlider.addEventListener('click', (e) => {
-                const categoryEl = e.target.closest('.category');
-                if (!categoryEl) return;
-                
-                // Remove active class from all categories
-                document.querySelectorAll('.category').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Add active class to clicked category
-                categoryEl.classList.add('active');
-                
-                // Update the sliding indicator position (only on desktop)
-                if (window.innerWidth > 768) {
-                    updateActiveCategoryIndicator(categoryEl);
-                }
-                
-                // Update current category and tasks
-                currentCategory = categoryEl.dataset.category;
-                currentCategoryEl.innerHTML = `${categoryIcons[currentCategory]} ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} Tasks`;
-                categoryDescriptionEl.textContent = categoryDescriptions[currentCategory];
-                
-                // Show/hide dashboard based on category and full view mode
-if (currentCategory === 'all' && !isFullView) {
-    dashboard.classList.remove('hidden');
-} else {
-    dashboard.classList.add('hidden');
-}
-                
-                // Update task list
-                renderTasks();
-            });
+            // Category selection and sliding indicator - FIXED VERSION
+categorySlider.addEventListener('click', (e) => {
+    const categoryEl = e.target.closest('.category');
+    if (!categoryEl) return;
+    
+    console.log('Category clicked:', categoryEl.dataset.category); // Debug line
+    
+    // Remove active class from all categories
+    document.querySelectorAll('.category').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Add active class to clicked category
+    categoryEl.classList.add('active');
+    
+    // Update the sliding indicator position (only on desktop)
+    if (window.innerWidth > 768) {
+        updateActiveCategoryIndicator(categoryEl);
+    }
+    
+    // Update current category and tasks
+    currentCategory = categoryEl.dataset.category;
+    currentCategoryEl.innerHTML = `${categoryIcons[currentCategory]} ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} Tasks`;
+    categoryDescriptionEl.textContent = categoryDescriptions[currentCategory];
+    
+    // Show/hide dashboard based on category and full view mode
+    if (currentCategory === 'all' && !isFullView) {
+        dashboard.classList.remove('hidden');
+    } else {
+        dashboard.classList.add('hidden');
+    }
+    
+    // Update task list
+    renderTasks();
+    
+    console.log('Category switched successfully to:', currentCategory); // Debug line
+});
 
             // Setup drag and drop for tasks
 function setupTaskDragAndDrop() {
@@ -8302,9 +9225,14 @@ function setupTaskDragAndDrop() {
             }
 
             // Save tasks to localStorage
-            function saveTasks() {
-                localStorage.setItem('tasks', JSON.stringify(tasks));
-            }
+function saveTasks() {
+    try {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    } catch (error) {
+        console.error('Failed to save tasks:', error);
+        showNotification('Failed to save tasks', 'error');
+    }
+}
 
             // Render tasks
             function renderTasks() {
@@ -9066,8 +9994,91 @@ searchInput.addEventListener('input', (e) => {
                 startX = startY = null;
             });
 
-            // Initialize the app
-            init();
+// Initialize the app
+init();
+
+// View Toggle Functionality - WORKING VERSION
+let currentView = 'list';
+
+function initializeViewToggle() {
+    console.log('Initializing view toggle...'); // Debug
+    
+    const listViewBtn = document.getElementById('listViewBtn');
+    const gridViewBtn = document.getElementById('gridViewBtn');
+    
+    console.log('List button found:', !!listViewBtn); // Debug
+    console.log('Grid button found:', !!gridViewBtn); // Debug
+    
+    if (listViewBtn && gridViewBtn) {
+        // Remove any existing event listeners
+        listViewBtn.replaceWith(listViewBtn.cloneNode(true));
+        gridViewBtn.replaceWith(gridViewBtn.cloneNode(true));
+        
+        // Get fresh references
+        const newListBtn = document.getElementById('listViewBtn');
+        const newGridBtn = document.getElementById('gridViewBtn');
+        
+        // Add new event listeners
+        newListBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('List view clicked'); // Debug
+            switchView('list');
+        });
+        
+        newGridBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Grid view clicked'); // Debug
+            switchView('grid');
+        });
+        
+        console.log('Event listeners added successfully'); // Debug
+    } else {
+        console.error('View toggle buttons not found!'); // Debug
+    }
+    
+    // Load saved preference
+    const savedView = localStorage.getItem('taskView') || 'list';
+    switchView(savedView);
+}
+
+function switchView(view) {
+    console.log('Switching to view:', view); // Debug
+    
+    currentView = view;
+    
+    const listViewBtn = document.getElementById('listViewBtn');
+    const gridViewBtn = document.getElementById('gridViewBtn');
+    const taskList = document.getElementById('taskList');
+    
+    if (!listViewBtn || !gridViewBtn || !taskList) {
+        console.error('Required elements not found for view switch'); // Debug
+        return;
+    }
+    
+    // Update button states
+    listViewBtn.classList.remove('active');
+    gridViewBtn.classList.remove('active');
+    
+    if (view === 'list') {
+        listViewBtn.classList.add('active');
+        taskList.classList.remove('grid-view');
+        console.log('Switched to list view'); // Debug
+    } else {
+        gridViewBtn.classList.add('active');
+        taskList.classList.add('grid-view');
+        console.log('Switched to grid view'); // Debug
+    }
+    
+    // Save preference
+    localStorage.setItem('taskView', view);
+    
+    // Show notification
+    if (typeof showNotification === 'function') {
+        showNotification(`Switched to ${view} view`, 'success');
+    }
+}
         });
     </script>
 </body>
