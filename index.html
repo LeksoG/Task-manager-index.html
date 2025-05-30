@@ -1500,19 +1500,40 @@ body.dark-mode .setting-info span {
             margin-right: 0.25rem;
         }
 
-        /* Task List */
         .task-list-wrapper {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 0.5rem;
-            opacity: 1;
-            transform: translateY(0);
-            transition: transform 0.3s ease, opacity 0.3s ease, padding-top 0.3s ease;
-        }
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform 0.3s ease, opacity 0.3s ease, padding-top 0.3s ease;
+    /* ADD THESE LINES: */
+    height: calc(100vh - 400px); /* Fixed height to make it scrollable */
+    max-height: 600px; /* Maximum height */
+}
 
         .task-list-wrapper.expanded {
             padding-top: 0;
         }
+
+        /* ADD THE SCROLLBAR STYLES HERE: */
+.task-list-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list-wrapper::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: 3px;
+}
+
+.task-list-wrapper::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+.task-list-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
 
         .task-list {
             background-color: white;
@@ -2868,6 +2889,258 @@ body.dark-mode .full-view-active .section-actions .btn-select {
     background: var(--gray-700);
     border-color: var(--gray-600);
     color: var(--gray-200);
+}
+
+/* Immersive Task View - Enhanced */
+.immersive-task-view {
+    position: relative;
+}
+
+.immersive-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gray-50);
+    z-index: 500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.immersive-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.immersive-content {
+    padding: 6rem 2rem 2rem 2rem; /* More top padding for close button */
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--gray-50);
+}
+
+/* Smaller task cards in immersive view */
+.immersive-content .task-item {
+    padding: 0.75rem; /* Reduced from 1.25rem */
+    margin-bottom: 0.75rem; /* Reduced spacing */
+    font-size: 0.9rem; /* Slightly smaller text */
+}
+
+.immersive-content .task-title {
+    font-size: 1rem; /* Reduced from 1.1rem */
+    margin-bottom: 0.25rem;
+}
+
+.immersive-content .task-description {
+    font-size: 0.85rem; /* Reduced from 0.95rem */
+    margin-bottom: 0.5rem;
+}
+
+.immersive-content .task-meta {
+    gap: 0.5rem; /* Reduced gap */
+}
+
+.immersive-content .task-category,
+.immersive-content .task-date,
+.immersive-content .task-time {
+    padding: 0.25rem 0.5rem; /* Reduced padding */
+    font-size: 0.8rem; /* Smaller font */
+}
+
+.immersive-content .task-priority {
+    padding: 0.25rem 0.5rem; /* Reduced padding */
+    font-size: 0.75rem; /* Smaller font */
+}
+
+.immersive-content .task-action-btn {
+    width: 32px; /* Reduced from 40px */
+    height: 32px;
+    font-size: 0.9rem;
+}
+
+/* Enhanced close button */
+.immersive-close-btn {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--card-shadow-hover);
+    backdrop-filter: blur(10px);
+}
+
+.immersive-close-btn:hover {
+    transform: scale(1.1);
+    background: var(--primary-dark);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+}
+
+/* Remove sticky positioning from immersive header */
+.immersive-header {
+    /* Remove: position: sticky; */
+    /* Remove: top: 0; */
+    /* Remove: z-index: 10; */
+    background: var(--gray-50);
+    padding: 1.5rem 0 1rem 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary-light);
+    /* Make it scroll with content instead of staying fixed */
+}
+
+.immersive-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    text-align: center;
+    margin: 0;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Enhanced Dark Mode Support for Immersive View */
+body.dark-mode .immersive-overlay {
+    background: var(--gray-900);
+}
+
+body.dark-mode .immersive-content {
+    background: var(--gray-900);
+}
+
+body.dark-mode .immersive-header {
+    background: var(--gray-900);
+    border-bottom-color: var(--primary-light);
+}
+
+body.dark-mode .immersive-title {
+    color: var(--gray-200);
+}
+
+/* Dark mode for task list in immersive view */
+body.dark-mode .immersive-content .task-list {
+    background-color: var(--gray-900);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .immersive-content .task-item {
+    background-color: var(--gray-800);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .immersive-content .task-item:hover {
+    background-color: var(--gray-700);
+    border-color: var(--primary-light);
+}
+
+body.dark-mode .immersive-content .task-title {
+    color: var(--gray-200);
+}
+
+body.dark-mode .immersive-content .task-description {
+    color: var(--gray-400);
+}
+
+body.dark-mode .immersive-content .task-category,
+body.dark-mode .immersive-content .task-date,
+body.dark-mode .immersive-content .task-time {
+    background-color: var(--gray-700);
+    color: var(--gray-200);
+}
+
+body.dark-mode .immersive-content .task-action-btn {
+    background-color: var(--gray-700);
+    border-color: var(--gray-600);
+    color: var(--gray-200);
+}
+
+body.dark-mode .immersive-content .task-action-btn:hover {
+    background-color: var(--gray-600);
+}
+
+body.dark-mode .immersive-content .empty-state {
+    background-color: var(--gray-800);
+    border-color: var(--gray-700);
+    color: var(--gray-400);
+}
+
+/* Dark mode scrollbar for immersive view */
+body.dark-mode .immersive-content::-webkit-scrollbar-thumb {
+    background: var(--primary-light);
+}
+
+body.dark-mode .immersive-content::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+/* Enhanced Dark Mode Task Title Visibility */
+body.dark-mode .immersive-content .task-title {
+    color: #ffffff !important; /* Force white color */
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for better readability */
+}
+
+body.dark-mode .immersive-content .task-description {
+    color: var(--gray-300) !important; /* Lighter gray for descriptions */
+}
+
+/* Also fix other text elements in dark mode */
+body.dark-mode .immersive-content .task-category span,
+body.dark-mode .immersive-content .task-date span,
+body.dark-mode .immersive-content .task-time span {
+    color: var(--gray-200) !important;
+}
+
+/* Fix priority badges in dark mode */
+body.dark-mode .immersive-content .task-priority {
+    color: inherit !important; /* Keep priority colors but ensure visibility */
+    font-weight: 600;
+}
+
+/* Fix empty state text in dark mode */
+body.dark-mode .immersive-content .empty-state h3 {
+    color: var(--gray-200) !important;
+}
+
+body.dark-mode .immersive-content .empty-state p {
+    color: var(--gray-400) !important;
+}
+
+/* Dark Mode Task Title Visibility for Regular View */
+body.dark-mode .task-title {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+body.dark-mode .task-description {
+    color: var(--gray-300) !important;
+}
+
+body.dark-mode .task-category,
+body.dark-mode .task-date,
+body.dark-mode .task-time {
+    color: var(--gray-200) !important;
+}
+
+body.dark-mode .task-item {
+    background-color: var(--gray-800);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .task-item:hover {
+    background-color: var(--gray-700);
 }
 
         /* Notification System */
@@ -4589,6 +4862,997 @@ body.dark-mode .progress-header h4 {
     }
 }
 
+/* Enhanced AI Task Wave Animation */
+.ai-task-wave-container {
+    position: relative;
+    max-height: 280px; /* Reduced from 400px */
+    overflow-y: auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* Remove background waves after generation */
+.ai-task-wave-container.generated {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 2px solid var(--primary-light);
+}
+
+.ai-task-wave-container.generated .ai-background-waves {
+    display: none;
+}
+
+.ai-task-wave-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ai-task-wave-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.ai-task-wave-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.ai-task-wave-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.ai-task-item {
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transform: translateY(30px);
+    opacity: 0;
+    animation: taskSlideIn 0.8s ease forwards;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ai-task-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 1);
+}
+
+/* Individual add button on hover */
+.ai-task-add-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    z-index: 10;
+}
+
+.ai-task-item:hover .ai-task-add-btn {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.ai-task-add-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+}
+
+/* Remove the wave animation after generation */
+.ai-task-item.generated::before {
+    display: none;
+}
+
+.ai-task-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent,
+        rgba(147, 51, 234, 0.2),
+        rgba(79, 70, 229, 0.2),
+        transparent
+    );
+    animation: taskWavePass 2s ease-in-out infinite;
+}
+
+.ai-task-item:nth-child(1) { animation-delay: 0.1s; }
+.ai-task-item:nth-child(2) { animation-delay: 0.3s; }
+.ai-task-item:nth-child(3) { animation-delay: 0.5s; }
+.ai-task-item:nth-child(4) { animation-delay: 0.7s; }
+.ai-task-item:nth-child(5) { animation-delay: 0.9s; }
+.ai-task-item:nth-child(6) { animation-delay: 1.1s; }
+
+@keyframes taskSlideIn {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes taskWavePass {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: -100%; }
+}
+
+.ai-task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.ai-task-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.ai-task-priority {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ai-task-priority.priority-high {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+}
+
+.ai-task-priority.priority-medium {
+    background: #fefbf2;
+    color: #d97706;
+    border: 1px solid #fdba74;
+}
+
+.ai-task-priority.priority-low {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #86efac;
+}
+
+.ai-task-description {
+    color: var(--gray-600);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.ai-task-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--gray-500);
+}
+
+.ai-task-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.ai-controls {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem; /* Reduced from 2rem */
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ai-control-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.ai-control-btn.primary {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.ai-control-btn.secondary {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--gray-700);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.ai-control-btn.tertiary {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.ai-control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.ai-task-counter {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Purple wave background animation */
+.ai-background-waves {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.ai-bg-wave {
+    position: absolute;
+    width: 200%;
+    height: 20px;
+    background: linear-gradient(90deg, 
+        transparent,
+        rgba(147, 51, 234, 0.3),
+        rgba(79, 70, 229, 0.3),
+        transparent
+    );
+    animation: bgWaveMove 4s linear infinite;
+}
+
+.ai-bg-wave:nth-child(1) {
+    top: 20%;
+    animation-delay: 0s;
+}
+
+.ai-bg-wave:nth-child(2) {
+    top: 40%;
+    animation-delay: -1s;
+}
+
+.ai-bg-wave:nth-child(3) {
+    top: 60%;
+    animation-delay: -2s;
+}
+
+.ai-bg-wave:nth-child(4) {
+    top: 80%;
+    animation-delay: -3s;
+}
+
+@keyframes bgWaveMove {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Dark Mode Support for AI Interface */
+body.dark-mode .ai-modal-content {
+    background: linear-gradient(145deg, var(--gray-800) 0%, var(--gray-900) 100%);
+    border-color: var(--gray-700);
+    color: var(--gray-200);
+}
+
+body.dark-mode .ai-modal-header {
+    background: var(--primary-gradient);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .ai-input-container {
+    background: linear-gradient(145deg, var(--gray-800) 0%, var(--gray-900) 100%);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .ai-input {
+    background: transparent;
+    color: var(--gray-200);
+}
+
+body.dark-mode .ai-input::placeholder {
+    color: var(--gray-500);
+}
+
+body.dark-mode .ai-input-container:focus-within {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+}
+
+body.dark-mode .suggestion-oval {
+    background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-700) 100%);
+    border-color: var(--gray-600);
+    color: var(--gray-200);
+}
+
+body.dark-mode .suggestion-oval:hover {
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(129, 140, 248, 0.3) 100%);
+    border-color: var(--primary-light);
+}
+
+body.dark-mode .suggestion-oval span {
+    color: var(--gray-200);
+}
+
+/* Dark mode for AI task wave container */
+body.dark-mode .ai-task-wave-container {
+    background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
+}
+
+body.dark-mode .ai-task-wave-container.generated {
+    background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+    border-color: var(--primary-light);
+}
+
+body.dark-mode .ai-task-counter {
+    color: var(--gray-200);
+}
+
+/* Dark mode for AI task items */
+body.dark-mode .ai-task-item {
+    background: var(--gray-800);
+    border: 1px solid var(--gray-700);
+}
+
+body.dark-mode .ai-task-item:hover {
+    background: var(--gray-700);
+    border-color: var(--primary-light);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .ai-task-title {
+    color: var(--gray-100);
+}
+
+body.dark-mode .ai-task-description {
+    color: var(--gray-300);
+}
+
+body.dark-mode .ai-task-meta {
+    color: var(--gray-400);
+}
+
+body.dark-mode .ai-task-meta span {
+    color: var(--gray-400);
+}
+
+/* Dark mode for priority badges */
+body.dark-mode .ai-task-priority.priority-high {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+body.dark-mode .ai-task-priority.priority-medium {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+body.dark-mode .ai-task-priority.priority-low {
+    background: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+    border-color: rgba(34, 197, 94, 0.4);
+}
+
+/* Dark mode for AI controls */
+body.dark-mode .ai-controls {
+    background: rgba(31, 41, 55, 0.95);
+    border-color: var(--gray-700);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .ai-control-btn.primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+}
+
+body.dark-mode .ai-control-btn.secondary {
+    background: var(--gray-700);
+    color: var(--gray-200);
+    border-color: var(--gray-600);
+}
+
+body.dark-mode .ai-control-btn.secondary:hover {
+    background: var(--gray-600);
+    color: white;
+}
+
+body.dark-mode .ai-control-btn.tertiary {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+body.dark-mode .ai-control-btn.tertiary:hover {
+    background: rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+/* Dark mode for individual add button */
+body.dark-mode .ai-task-add-btn {
+    background: var(--primary);
+    color: white;
+}
+
+body.dark-mode .ai-task-add-btn:hover {
+    background: var(--primary-light);
+    box-shadow: 0 4px 12px rgba(129, 140, 248, 0.4);
+}
+
+/* Dark mode for background waves */
+body.dark-mode .ai-bg-wave {
+    background: linear-gradient(90deg, 
+        transparent,
+        rgba(129, 140, 248, 0.2),
+        rgba(79, 70, 229, 0.2),
+        transparent
+    );
+}
+
+/* Dark mode for wave animation during creation */
+body.dark-mode .ai-task-item::before {
+    background: linear-gradient(90deg, 
+        transparent,
+        rgba(129, 140, 248, 0.3),
+        rgba(79, 70, 229, 0.3),
+        transparent
+    );
+}
+
+/* Dark mode for AI generate button */
+body.dark-mode .ai-generate-btn {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+body.dark-mode .ai-generate-btn:hover {
+    box-shadow: 0 8px 25px rgba(129, 140, 248, 0.3);
+}
+
+/* Dark mode for scrollbar in AI container */
+body.dark-mode .ai-task-wave-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .ai-task-wave-container::-webkit-scrollbar-thumb {
+    background: rgba(129, 140, 248, 0.3);
+}
+
+body.dark-mode .ai-task-wave-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(129, 140, 248, 0.5);
+}
+
+/* Dark mode for success feedback when task is added */
+body.dark-mode .ai-task-item[style*="linear-gradient(135deg, #d1fae5"] {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.3) 0%, rgba(34, 197, 94, 0.2) 100%) !important;
+    border-color: #4ade80 !important;
+}
+
+/* Dark mode for processing state */
+body.dark-mode .ai-task-item[style*="rgba(255, 255, 255, 0.3)"] {
+    background: rgba(75, 85, 99, 0.6) !important;
+}
+
+body.dark-mode .ai-task-item[style*="rgba(255, 255, 255, 0.2)"] {
+    background: rgba(75, 85, 99, 0.4) !important;
+}
+
+body.dark-mode .ai-task-item[style*="rgba(255, 255, 255, 0.1)"] {
+    background: rgba(75, 85, 99, 0.2) !important;
+}
+
+/* Dark mode for AI thinking animation */
+body.dark-mode .ai-thinking-enhanced {
+    background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
+    color: var(--gray-200);
+}
+
+body.dark-mode .ai-progress-container {
+    background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .progress-header h4 {
+    color: var(--gray-200);
+}
+
+/* Dark mode for AI results section */
+body.dark-mode .results-title {
+    color: var(--gray-200);
+}
+
+body.dark-mode .results-stats {
+    color: var(--gray-300);
+}
+
+body.dark-mode .stat-item {
+    color: var(--gray-300);
+}
+
+/* Mobile Hamburger Menu - Phone Only */
+.ai-mobile-hamburger {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    cursor: pointer;
+    z-index: 2000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.ai-mobile-hamburger:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+}
+
+.hamburger-line {
+    width: 20px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.ai-mobile-hamburger.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.ai-mobile-hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.ai-mobile-hamburger.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Mobile Full-Screen Sidebar */
+.ai-mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    z-index: 1900;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    padding: 6rem 2rem 2rem 2rem;
+    overflow-y: auto;
+}
+
+.ai-mobile-sidebar.active {
+    transform: translateX(0);
+}
+
+.ai-mobile-sidebar-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.ai-mobile-sidebar-title {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.ai-mobile-sidebar-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+}
+
+.ai-mobile-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ai-mobile-option {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ai-mobile-option:hover,
+.ai-mobile-option:active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.ai-mobile-option-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.ai-mobile-option-content {
+    flex: 1;
+}
+
+.ai-mobile-option-title {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.ai-mobile-option-desc {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Mobile AI Modal Optimizations */
+@media (max-width: 768px) {
+    .ai-mobile-hamburger {
+        display: flex;
+    }
+    
+    /* Hide desktop AI interface elements on mobile */
+    .ai-modal .ai-modal-header .ai-modal-close {
+        display: none;
+    }
+    
+    /* Full screen AI modal on mobile */
+    .ai-modal-content {
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .ai-modal-header {
+        padding: 1rem;
+        flex-shrink: 0;
+        position: relative;
+    }
+    
+    .ai-modal-body {
+        flex: 1;
+        padding: 1rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Mobile input optimization */
+    .ai-input-container {
+        margin-bottom: 1rem;
+        border-radius: 16px;
+        padding: 1.25rem;
+    }
+    
+    .ai-input {
+        font-size: 16px; /* Prevent zoom on iOS */
+        min-height: 80px;
+        line-height: 1.5;
+    }
+    
+    .ai-generate-btn {
+        position: static;
+        width: 100%;
+        margin-top: 1rem;
+        padding: 1rem;
+        font-size: 1.1rem;
+        border-radius: 12px;
+    }
+    
+    /* Mobile suggestions grid */
+    .suggestions-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    .suggestion-oval {
+        padding: 1rem;
+        border-radius: 16px;
+        min-height: 60px;
+    }
+    
+    .suggestion-oval i {
+        font-size: 1.5rem;
+    }
+    
+    .suggestion-oval span {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    
+    /* Mobile task container */
+    .ai-task-wave-container {
+        max-height: 50vh;
+        border-radius: 16px;
+        margin: 1rem 0;
+    }
+    
+    .ai-task-item {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        border-radius: 12px;
+    }
+    
+    .ai-task-title {
+        font-size: 1.1rem;
+        line-height: 1.3;
+    }
+    
+    .ai-task-description {
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+    
+    .ai-task-meta {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1rem;
+    }
+    
+    .ai-task-meta span {
+        font-size: 0.9rem;
+    }
+    
+    .ai-task-add-btn {
+        width: 40px;
+        height: 40px;
+        bottom: 1rem;
+        right: 1rem;
+        font-size: 1.1rem;
+    }
+    
+    /* Mobile controls */
+    .ai-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        position: sticky;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.98);
+        padding: 1rem;
+        border-radius: 16px 16px 0 0;
+    }
+    
+    .ai-control-btn {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+        border-radius: 12px;
+        min-height: 56px;
+    }
+    
+    /* Mobile counter */
+    .ai-task-counter {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+    }
+}
+
+/* Dark mode mobile optimizations */
+body.dark-mode .ai-mobile-hamburger {
+    background: var(--primary);
+    box-shadow: 0 4px 12px rgba(129, 140, 248, 0.3);
+}
+
+body.dark-mode .ai-mobile-sidebar {
+    background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
+}
+
+body.dark-mode .ai-mobile-option {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .ai-mobile-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .ai-controls {
+    background: rgba(31, 41, 55, 0.98);
+    border-color: var(--gray-700);
+}
+
+/* Touch improvements */
+@media (max-width: 768px) {
+    .ai-task-item,
+    .ai-control-btn,
+    .ai-mobile-option,
+    .suggestion-oval {
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+    }
+    
+    /* Larger touch targets */
+    .ai-task-add-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    /* Smooth scrolling */
+    .ai-task-wave-container,
+    .ai-modal-body {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+}
+
+/* AI Wave Animation */
+.ai-wave-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.ai-wave {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 50px,
+        rgba(255, 255, 255, 0.1) 50px,
+        rgba(255, 255, 255, 0.1) 100px
+    );
+    animation: waveMove 2s linear infinite;
+}
+
+.ai-wave:nth-child(2) {
+    animation-delay: -0.5s;
+    opacity: 0.7;
+}
+
+.ai-wave:nth-child(3) {
+    animation-delay: -1s;
+    opacity: 0.5;
+}
+
+@keyframes waveMove {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0%); }
+}
+
+.ai-wave-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: white;
+}
+
+.ai-wave-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.ai-wave-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.ai-wave-subtext {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Task reveal animation */
+.task-reveal-container {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.task-reveal-container.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.task-reveal-item {
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: slideInReveal 0.6s ease forwards;
+}
+
+.task-reveal-item:nth-child(1) { animation-delay: 0.1s; }
+.task-reveal-item:nth-child(2) { animation-delay: 0.2s; }
+.task-reveal-item:nth-child(3) { animation-delay: 0.3s; }
+.task-reveal-item:nth-child(4) { animation-delay: 0.4s; }
+.task-reveal-item:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes slideInReveal {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
     .ai-modal-content {
@@ -6160,44 +7424,44 @@ body.dark-mode .task-list.grid-view .task-item:hover {
         
         <div class="feature-splash-header">
             <div class="feature-splash-icon">
-                <i class="fas fa-rocket"></i>
+                <i class="fas fa-robot"></i>
             </div>
-            <h2 class="feature-splash-title">Major Update v2.0.0!</h2>
-            <div class="version-badge">Version 2.0.0</div>
+            <h2 class="feature-splash-title">New Tasklytic! 🤖 AI Enhanced v2.2.0!</h2>
+            <div class="version-badge">Version 2.2.0</div>
         </div>
         
         <div class="feature-splash-body">
             <div class="feature-highlight">
-                <i class="fas fa-th-large feature-highlight-icon"></i>
-                <h3>🎯 New View System & Enhanced UI</h3>
-                <p>Experience tasks in a whole new way! Switch between List and Grid views for optimal productivity and workflow management.</p>
+                <i class="fas fa-robot feature-highlight-icon"></i>
+                <h3>🤖 Enhanced AI & Smart Improvements</h3>
+                <p>Experience our most intelligent AI assistant yet! With smarter responses, enhanced mobile optimization, and a completely redesigned interface for seamless task management.</p>
             </div>
             
             <div class="changelog-section">
-                <h4 class="changelog-title">✨ What's New in v2.0.0</h4>
+                <h4 class="changelog-title">✨ What's New in v2.2.0</h4>
                 
                 <div class="changelog-category">
                     <h5><i class="fas fa-plus-circle"></i> New Features</h5>
                     <div class="changelog-items">
                         <div class="changelog-item">
-                            <i class="fas fa-th-large"></i>
+                            <i class="fas fa-brain"></i>
                             <div>
-                                <strong>Grid View</strong>
-                                <p>Beautiful card-based layout for visual task management</p>
+                                <strong>Enhanced AI Interface</strong>
+                                <p>More intuitive and responsive AI task creation experience</p>
                             </div>
                         </div>
                         <div class="changelog-item">
-                            <i class="fas fa-list"></i>
+                            <i class="fas fa-magic"></i>
                             <div>
-                                <strong>List View Toggle</strong>
-                                <p>Switch between list and grid views instantly</p>
+                                <strong>Smarter AI Responses</strong>
+                                <p>Improved context understanding and better task suggestions</p>
                             </div>
                         </div>
                         <div class="changelog-item">
-                            <i class="fas fa-robot"></i>
+                            <i class="fas fa-mobile-alt"></i>
                             <div>
-                                <strong>Enhanced AI Integration</strong>
-                                <p>Improved AI task generation with better UX</p>
+                                <strong>Advanced Mobile Controls</strong>
+                                <p>Better touch interactions and mobile-optimized interface</p>
                             </div>
                         </div>
                     </div>
@@ -6207,24 +7471,24 @@ body.dark-mode .task-list.grid-view .task-item:hover {
                     <h5><i class="fas fa-wrench"></i> Improvements</h5>
                     <div class="changelog-items">
                         <div class="changelog-item">
+                            <i class="fas fa-bolt"></i>
+                            <div>
+                                <strong>AI Response Speed</strong>
+                                <p>Faster AI processing and real-time feedback</p>
+                            </div>
+                        </div>
+                        <div class="changelog-item">
+                            <i class="fas fa-hand-pointer"></i>
+                            <div>
+                                <strong>Mobile Optimization</strong>
+                                <p>Enhanced touch targets and smoother mobile navigation</p>
+                            </div>
+                        </div>
+                        <div class="changelog-item">
                             <i class="fas fa-palette"></i>
                             <div>
-                                <strong>Modern UI Design</strong>
-                                <p>Cleaner, more professional interface</p>
-                            </div>
-                        </div>
-                        <div class="changelog-item">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <div>
-                                <strong>Performance Boost</strong>
-                                <p>Faster loading and smoother animations</p>
-                            </div>
-                        </div>
-                        <div class="changelog-item">
-                            <i class="fas fa-mobile-alt"></i>
-                            <div>
-                                <strong>Better Mobile Experience</strong>
-                                <p>Optimized touch interactions and responsive design</p>
+                                <strong>UI Polish</strong>
+                                <p>Cleaner design elements and improved visual hierarchy</p>
                             </div>
                         </div>
                     </div>
@@ -6234,17 +7498,24 @@ body.dark-mode .task-list.grid-view .task-item:hover {
                     <h5><i class="fas fa-bug"></i> Bug Fixes</h5>
                     <div class="changelog-items">
                         <div class="changelog-item">
-                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-cogs"></i>
                             <div>
-                                <strong>Search Functionality</strong>
-                                <p>Fixed search highlighting and navigation</p>
+                                <strong>AI Generation Stability</strong>
+                                <p>Fixed AI task creation errors and improved reliability</p>
+                            </div>
+                        </div>
+                        <div class="changelog-item">
+                            <i class="fas fa-touch"></i>
+                            <div>
+                                <strong>Mobile Touch Issues</strong>
+                                <p>Resolved touch responsiveness and gesture recognition problems</p>
                             </div>
                         </div>
                         <div class="changelog-item">
                             <i class="fas fa-shield-alt"></i>
                             <div>
-                                <strong>Data Persistence</strong>
-                                <p>Improved task saving and loading reliability</p>
+                                <strong>Interface Consistency</strong>
+                                <p>Fixed layout issues and improved cross-device compatibility</p>
                             </div>
                         </div>
                     </div>
@@ -6254,7 +7525,7 @@ body.dark-mode .task-list.grid-view .task-item:hover {
         
         <div class="feature-splash-footer">
             <button class="btn btn-cancel" id="dismissFeatureBtn">Maybe Later</button>
-            <button class="btn btn-primary" id="tryFeatureBtn">Try New Views!</button>
+            <button class="btn btn-primary" id="tryFeatureBtn">Try new version!</button>
         </div>
     </div>
 </div>
@@ -6543,6 +7814,16 @@ body.dark-mode .task-list.grid-view .task-item:hover {
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- ADD THE IMMERSIVE OVERLAY HERE -->
+        <div class="immersive-overlay" id="immersiveOverlay">
+            <button class="immersive-close-btn" id="immersiveCloseBtn" aria-label="Exit immersive view">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="immersive-content" id="immersiveContent">
+                <!-- Tasks will be cloned here -->
             </div>
         </div>
 
@@ -7234,14 +8515,6 @@ if (tryFeatureBtn) {
     });
 }
 
-// Click overlay to close - ADD THIS
-if (featureSplashOverlay) {
-    featureSplashOverlay.addEventListener('click', (e) => {
-        if (e.target === featureSplashOverlay) {
-            hideFeatureSplash();
-        }
-    });
-}
 
            // Welcome Animation - FIXED
 const welcomeOverlay = document.getElementById('welcomeOverlay');
@@ -7309,7 +8582,7 @@ aiTaskButton.addEventListener('click', () => {
 });
 
 // Feature Management System - WORKING VERSION
-const CURRENT_FEATURE_VERSION = 'v2.0.0'; // Updated version for new AI feature
+const CURRENT_FEATURE_VERSION = 'v2.2.0'; 
 const FEATURE_KEY = 'tasklytic_last_seen_version';
 
 // Check if new feature splash should be shown
@@ -7379,11 +8652,17 @@ const generatedTasksList = document.getElementById('generatedTasksList');
 const addAllTasksBtn = document.getElementById('addAllTasksBtn');
 const regenerateBtn = document.getElementById('regenerateBtn');
 
-// Open AI Modal
+// Update your existing AI button click handler
 aiTaskButton.addEventListener('click', () => {
     aiModal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    aiTaskInput.focus();
+    
+    // Initialize mobile interface if on mobile
+    if (window.innerWidth <= 768) {
+        initializeMobileAI();
+    } else {
+        aiTaskInput.focus();
+    }
 });
 
 // Close AI Modal
@@ -7402,10 +8681,13 @@ aiModal.addEventListener('click', (e) => {
     }
 });
 
-// Handle suggestion clicks
-document.querySelectorAll('.suggestion-oval').forEach(oval => {
-    oval.addEventListener('click', () => {
+// Handle suggestion clicks - REPLACE EXISTING
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.suggestion-oval')) {
+        const oval = e.target.closest('.suggestion-oval');
         const suggestion = oval.dataset.suggestion;
+        console.log('Suggestion clicked:', suggestion); // Debug
+        
         aiTaskInput.value = suggestion;
         aiTaskInput.focus();
         
@@ -7414,7 +8696,12 @@ document.querySelectorAll('.suggestion-oval').forEach(oval => {
         setTimeout(() => {
             oval.style.background = '';
         }, 300);
-    });
+        
+        // Auto-generate after selection
+        setTimeout(() => {
+            generateAITasks(suggestion);
+        }, 500);
+    }
 });
 
 // Generate AI tasks
@@ -7436,48 +8723,129 @@ aiTaskInput.addEventListener('keydown', (e) => {
     }
 });
 
-// AI Task Generation Function
 function generateAITasks(input) {
-    // Show thinking animation
+    console.log('generateAITasks called with:', input); // Debug
+    
+    // Show results section immediately with wave animation
     aiResultsSection.style.display = 'block';
-    aiThinking.style.display = 'block';
-    aiGeneratedTasks.style.display = 'none';
     aiSuggestionsSection.style.display = 'none';
     
-    // Simulate AI processing
-    setTimeout(() => {
-        const generatedTasks = simulateAdvancedAIGeneration(input);
-        displayGeneratedTasks(generatedTasks);
+    // Create wave animation HTML with task placeholders
+    aiResultsSection.innerHTML = `
+        <div class="ai-task-counter">
+            🧠 AI is generating your tasks...
+        </div>
         
-        aiThinking.style.display = 'none';
-        aiGeneratedTasks.style.display = 'block';
-    }, 2000);
+        <div class="ai-task-wave-container" id="aiTaskContainer">
+            <div class="ai-background-waves">
+                <div class="ai-bg-wave"></div>
+                <div class="ai-bg-wave"></div>
+                <div class="ai-bg-wave"></div>
+                <div class="ai-bg-wave"></div>
+            </div>
+            <div class="ai-tasks-list" id="aiTasksList">
+                <div class="ai-task-item" style="background: rgba(255, 255, 255, 0.3);">
+                    <div class="ai-task-header">
+                        <div class="ai-task-title">Analyzing your request...</div>
+                        <div class="ai-task-priority priority-medium">Processing</div>
+                    </div>
+                    <div class="ai-task-description">AI is breaking down your task into manageable steps</div>
+                </div>
+                <div class="ai-task-item" style="background: rgba(255, 255, 255, 0.2); animation-delay: 0.3s;">
+                    <div class="ai-task-header">
+                        <div class="ai-task-title">Optimizing workflow...</div>
+                        <div class="ai-task-priority priority-high">Processing</div>
+                    </div>
+                    <div class="ai-task-description">Creating intelligent task prioritization</div>
+                </div>
+                <div class="ai-task-item" style="background: rgba(255, 255, 255, 0.1); animation-delay: 0.5s;">
+                    <div class="ai-task-header">
+                        <div class="ai-task-title">Finalizing details...</div>
+                        <div class="ai-task-priority priority-low">Processing</div>
+                    </div>
+                    <div class="ai-task-description">Adding smart scheduling and categories</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ai-controls">
+            <button class="ai-control-btn primary" disabled style="opacity: 0.5;">
+                <i class="fas fa-plus"></i>
+                Processing...
+            </button>
+            <button class="ai-control-btn secondary" disabled style="opacity: 0.5;">
+                <i class="fas fa-refresh"></i>
+                Please Wait
+            </button>
+            <button class="ai-control-btn tertiary" id="goBackBtnTemp">
+                <i class="fas fa-arrow-left"></i>
+                Go Back
+            </button>
+        </div>
+    `;
+    
+    // Add temporary go back functionality
+    const tempGoBack = document.getElementById('goBackBtnTemp');
+    if (tempGoBack) {
+        tempGoBack.addEventListener('click', () => {
+            aiResultsSection.style.display = 'none';
+            aiSuggestionsSection.style.display = 'block';
+            aiTaskInput.focus();
+        });
+    }
+    
+    // Simulate AI processing for 5 seconds, then show real tasks
+    setTimeout(() => {
+        console.log('Timeout reached, generating tasks...'); // Debug
+        try {
+            const generatedTasks = simulateAdvancedAIGeneration(input);
+            // Limit to 3 tasks only
+            const limitedTasks = generatedTasks.slice(0, 3);
+            console.log('Generated tasks:', limitedTasks); // Debug
+            displayGeneratedTasksWithReveal(limitedTasks);
+        } catch (error) {
+            console.error('Error generating tasks:', error); // Debug
+            // Fallback to simple task generation (3 tasks only)
+            const fallbackTasks = [
+                {
+                    title: `Plan and organize: ${input}`,
+                    description: `AI-generated primary task for: ${input}`,
+                    category: 'personal',
+                    priority: 'high',
+                    dueOffset: 0,
+                    aiGenerated: true
+                },
+                {
+                    title: 'Research and prepare requirements',
+                    description: `Gather information and resources for: ${input}`,
+                    category: 'personal',
+                    priority: 'medium',
+                    dueOffset: 1,
+                    aiGenerated: true
+                },
+                {
+                    title: 'Execute and complete',
+                    description: `Final implementation phase for: ${input}`,
+                    category: 'personal',
+                    priority: 'high',
+                    dueOffset: 3,
+                    aiGenerated: true
+                }
+            ];
+            displayGeneratedTasksWithReveal(fallbackTasks);
+        }
+    }, 5000);
 }
 
-// Enhanced AI generation function
-function simulateAdvancedAIGeneration(input) {
+        function simulateAdvancedAIGeneration(input) {
+    console.log('simulateAdvancedAIGeneration called with:', input); // Debug
+    
     const intelligence = {
         // Detect task complexity
         detectComplexity: (text) => {
             const complexWords = ['project', 'campaign', 'launch', 'organize', 'plan', 'develop', 'create', 'build'];
             const complexity = complexWords.filter(word => text.toLowerCase().includes(word)).length;
             return complexity > 2 ? 'complex' : complexity > 0 ? 'medium' : 'simple';
-        },
-        
-        // Smart due date suggestions
-        suggestDueDate: (text) => {
-            const urgentWords = ['urgent', 'asap', 'immediately', 'today'];
-            const timeframes = {
-                'today': 0, 'tomorrow': 1, 'this week': 7, 'next week': 14,
-                'this month': 30, 'next month': 60
-            };
-            
-            for (let [phrase, days] of Object.entries(timeframes)) {
-                if (text.toLowerCase().includes(phrase)) {
-                    return new Date(Date.now() + days * 24 * 60 * 60 * 1000);
-                }
-            }
-            return new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // Default: 1 week
         },
         
         // Smart categorization
@@ -7497,15 +8865,104 @@ function simulateAdvancedAIGeneration(input) {
                 }
             }
             return 'personal';
+        },
+        
+        // Enhanced project detection
+        detectProjectType: (text) => {
+            const projectTypes = {
+                'event planning': ['party', 'wedding', 'conference', 'meeting', 'celebration', 'gathering', 'birthday', 'anniversary'],
+                'travel': ['trip', 'vacation', 'travel', 'visit', 'journey', 'flight', 'hotel', 'tour', 'explore'],
+                'home improvement': ['renovation', 'repair', 'painting', 'decorating', 'organizing', 'cleaning', 'remodel', 'fix'],
+                'career': ['interview', 'resume', 'job', 'career', 'networking', 'portfolio', 'promotion', 'skills'],
+                'health fitness': ['workout', 'exercise', 'diet', 'fitness', 'gym', 'health', 'lose weight', 'muscle'],
+                'learning': ['course', 'study', 'learn', 'skill', 'training', 'education', 'book', 'tutorial'],
+                'business': ['launch', 'startup', 'marketing', 'sales', 'product', 'strategy', 'business', 'company'],
+                'shopping': ['buy', 'purchase', 'shop', 'store', 'groceries', 'shopping', 'order', 'get'],
+                'work project': ['project', 'deadline', 'presentation', 'report', 'client', 'team', 'develop', 'create']
+            };
+            
+            for (let [type, keywords] of Object.entries(projectTypes)) {
+                if (keywords.some(keyword => text.toLowerCase().includes(keyword))) {
+                    return type;
+                }
+            }
+            return 'general';
+        },
+
+        // Smart task breakdown based on complexity
+        generateSmartTasks: (input, projectType) => {
+            const templates = {
+                'event planning': [
+                    { title: `Set date and budget for ${input}`, priority: 'high', days: 0 },
+                    { title: 'Create guest list and send invitations', priority: 'high', days: 2 },
+                    { title: 'Finalize venue, catering and entertainment', priority: 'medium', days: 7 }
+                ],
+                'travel': [
+                    { title: `Research destinations and plan itinerary for ${input}`, priority: 'high', days: 0 },
+                    { title: 'Book flights, hotels and travel insurance', priority: 'high', days: 1 },
+                    { title: 'Pack essentials and confirm all bookings', priority: 'medium', days: 7 }
+                ],
+                'home improvement': [
+                    { title: `Plan scope and budget for ${input}`, priority: 'high', days: 0 },
+                    { title: 'Research contractors and purchase materials', priority: 'medium', days: 2 },
+                    { title: 'Execute project and complete finishing touches', priority: 'high', days: 7 }
+                ],
+                'career': [
+                    { title: `Update resume and portfolio for ${input}`, priority: 'high', days: 0 },
+                    { title: 'Research companies and submit applications', priority: 'high', days: 1 },
+                    { title: 'Prepare for interviews and follow up', priority: 'medium', days: 5 }
+                ],
+                'health fitness': [
+                    { title: `Create workout plan for ${input}`, priority: 'high', days: 0 },
+                    { title: 'Set nutrition goals and meal prep schedule', priority: 'medium', days: 1 },
+                    { title: 'Track progress and adjust routine', priority: 'low', days: 7 }
+                ],
+                'learning': [
+                    { title: `Research and enroll in ${input} course`, priority: 'high', days: 0 },
+                    { title: 'Create study schedule and gather materials', priority: 'medium', days: 1 },
+                    { title: 'Complete assignments and practice regularly', priority: 'high', days: 3 }
+                ],
+                'business': [
+                    { title: `Develop business plan for ${input}`, priority: 'high', days: 0 },
+                    { title: 'Research market and create marketing strategy', priority: 'medium', days: 3 },
+                    { title: 'Launch product and monitor performance', priority: 'high', days: 14 }
+                ],
+                'shopping': [
+                    { title: `Create shopping list for ${input}`, priority: 'medium', days: 0 },
+                    { title: 'Compare prices and find best deals', priority: 'low', days: 1 },
+                    { title: 'Make purchases and organize items', priority: 'medium', days: 2 }
+                ],
+                'work project': [
+                    { title: `Define project requirements for ${input}`, priority: 'high', days: 0 },
+                    { title: 'Create timeline and assign responsibilities', priority: 'high', days: 1 },
+                    { title: 'Execute project phases and deliver results', priority: 'high', days: 5 }
+                ],
+                'general': [
+                    { title: `Plan and organize: ${input}`, priority: 'high', days: 0 },
+                    { title: `Research requirements and gather resources`, priority: 'medium', days: 1 },
+                    { title: `Execute main tasks and review completion`, priority: 'high', days: 3 }
+                ]
+            };
+            
+            return templates[projectType] || templates['general'];
         }
     };
     
-    // Process input with AI intelligence
-    const complexity = intelligence.detectComplexity(input);
-    const suggestedDueDate = intelligence.suggestDueDate(input);
+    const projectType = intelligence.detectProjectType(input);
+    const smartTasks = intelligence.generateSmartTasks(input, projectType);
     const category = intelligence.categorizeTask(input);
     
-    return generateContextualTasks(input, complexity, category, suggestedDueDate);
+    console.log('Project type:', projectType, 'Category:', category); // Debug
+    
+    return smartTasks.map((task, index) => ({
+        title: task.title,
+        description: `AI-generated task for: ${input}`,
+        category: category,
+        priority: task.priority,
+        dueOffset: task.days,
+        aiGenerated: true,
+        projectType: projectType
+    }));
 }
 
 // Add this new function for complex project breakdown
@@ -7571,94 +9028,94 @@ function generateContextualTasks(input, complexity, category, dueDate) {
     }));
 }
 
-// Enhanced display generated tasks with better styling
-function displayGeneratedTasks(tasks) {
-    generatedTasksList.innerHTML = '';
+function displayGeneratedTasksWithReveal(tasks) {
+    // Ensure only 3 tasks maximum
+    const limitedTasks = tasks.slice(0, 3);
     
-    tasks.forEach((task, index) => {
-        const taskEl = document.createElement('div');
-        taskEl.className = 'generated-task-item';
-        taskEl.dataset.index = index;
+    // Create the new task interface with wave animations
+    aiResultsSection.innerHTML = `
+        <div class="ai-task-counter">
+            ✨ ${limitedTasks.length} Tasks Generated Successfully
+        </div>
         
-        // Format due date nicely
-        const dueDate = new Date(task.dueDate || Date.now());
+        <div class="ai-task-wave-container generated" id="aiTaskContainer">
+            <div class="ai-tasks-list" id="aiTasksList"></div>
+        </div>
+        
+        <div class="ai-controls">
+            <button class="ai-control-btn primary" id="addAllTasksBtn">
+                <i class="fas fa-plus"></i>
+                Add All Tasks
+            </button>
+            <button class="ai-control-btn secondary" id="regenerateBtn">
+                <i class="fas fa-refresh"></i>
+                Regenerate
+            </button>
+            <button class="ai-control-btn tertiary" id="goBackBtn">
+                <i class="fas fa-arrow-left"></i>
+                Go Back
+            </button>
+        </div>
+    `;
+    
+    // Populate tasks with wave animations
+    const tasksList = document.getElementById('aiTasksList');
+    limitedTasks.forEach((task, index) => {
+        const taskEl = document.createElement('div');
+        taskEl.className = 'ai-task-item generated';
+        taskEl.style.animationDelay = `${index * 0.2}s`;
+        taskEl.dataset.taskIndex = index;
+        
+        // Format due date
+        const dueDate = new Date(Date.now() + (task.dueOffset * 24 * 60 * 60 * 1000));
         const formattedDate = new Intl.DateTimeFormat('en-US', {
             month: 'short',
-            day: 'numeric',
-            year: dueDate.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+            day: 'numeric'
         }).format(dueDate);
         
-        // Priority styling
-        const priorityColors = {
-            high: '#ef4444',
-            medium: '#f59e0b', 
-            low: '#10b981'
-        };
-        
         taskEl.innerHTML = `
-            <div class="generated-task-header">
-                <div class="generated-task-title">${task.title}</div>
-                <div class="generated-task-priority" style="background-color: ${priorityColors[task.priority]}20; color: ${priorityColors[task.priority]}; border: 1px solid ${priorityColors[task.priority]}40;">
-                    ${task.priority.toUpperCase()}
+            <button class="ai-task-add-btn" title="Add this task">
+                <i class="fas fa-plus"></i>
+            </button>
+            <div class="ai-task-header">
+                <div class="ai-task-title">${task.title}</div>
+                <div class="ai-task-priority priority-${task.priority}">
+                    ${task.priority}
                 </div>
             </div>
-            <div class="generated-task-description">${task.description}</div>
-            <div class="generated-task-meta">
-                <span><i class="fas ${categoryIcons[task.category]}"></i> ${task.category}</span>
-                <span><i class="fas fa-calendar"></i> ${formattedDate}</span>
-                ${task.aiGenerated ? '<span class="ai-badge"><i class="fas fa-robot"></i> AI Generated</span>' : ''}
+            <div class="ai-task-description">${task.description}</div>
+            <div class="ai-task-meta">
+                <span>
+                    <i class="fas ${categoryIcons[task.category]}"></i>
+                    ${task.category.charAt(0).toUpperCase() + task.category.slice(1)}
+                </span>
+                <span>
+                    <i class="fas fa-calendar"></i>
+                    Due ${formattedDate}
+                </span>
+                <span>
+                    <i class="fas fa-robot"></i>
+                    AI Generated
+                </span>
             </div>
         `;
         
-        generatedTasksList.appendChild(taskEl);
-    });
-    
-    // Store generated tasks for adding
-    aiModal.generatedTasks = tasks;
-}
-
-// Add all generated tasks
-addAllTasksBtn.addEventListener('click', () => {
-    if (aiModal.generatedTasks) {
-        aiModal.generatedTasks.forEach(taskData => {
-            const newTask = {
-                id: generateId(),
-                title: taskData.title,
-                description: taskData.description,
-                category: taskData.category,
-                priority: taskData.priority,
-                completed: false,
-                dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
-                reminderTime: null,
-                reminderMinutes: 0,
-                createdAt: new Date().toISOString(),
-                modifiedAt: new Date().toISOString()
-            };
-            
-            tasks.push(newTask);
+        // Add individual task button functionality
+        const addBtn = taskEl.querySelector('.ai-task-add-btn');
+        addBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            addIndividualTask(task, index);
         });
         
-        saveTasks();
-        renderTasks();
-        updateDashboard();
-        updateCategoryCounts();
-        
-        showNotification(`Added ${aiModal.generatedTasks.length} tasks successfully!`, 'success');
-        
-        // Close modal
-        aiModal.classList.remove('active');
-        document.body.style.overflow = '';
-        resetAIModal();
-    }
-});
-
-// Regenerate tasks
-regenerateBtn.addEventListener('click', () => {
-    const input = aiTaskInput.value.trim();
-    if (input) {
-        generateAITasks(input);
-    }
-});
+        tasksList.appendChild(taskEl);
+    });
+    
+    // Store generated tasks
+    aiModal.generatedTasks = limitedTasks;
+    
+    // Attach event listeners
+    attachEnhancedAIListeners();
+}
 
 // Reset AI Modal
 function resetAIModal() {
@@ -7666,6 +9123,313 @@ function resetAIModal() {
     aiResultsSection.style.display = 'none';
     aiSuggestionsSection.style.display = 'block';
     aiModal.generatedTasks = null;
+}
+
+function attachGeneratedTaskListeners() {
+    console.log('Attaching generated task listeners...'); // Debug
+    
+    const addAllBtn = document.getElementById('addAllTasksBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+    
+    if (addAllBtn) {
+        addAllBtn.addEventListener('click', () => {
+            console.log('Add all tasks clicked'); // Debug
+            if (aiModal.generatedTasks) {
+                aiModal.generatedTasks.forEach(taskData => {
+                    const newTask = {
+                        id: generateId(),
+                        title: taskData.title,
+                        description: taskData.description,
+                        category: taskData.category,
+                        priority: taskData.priority,
+                        completed: false,
+                        dueDate: new Date(Date.now() + (taskData.dueOffset * 24 * 60 * 60 * 1000)).toISOString(),
+                        reminderTime: null,
+                        reminderMinutes: 0,
+                        createdAt: new Date().toISOString(),
+                        modifiedAt: new Date().toISOString()
+                    };
+                    tasks.push(newTask);
+                });
+                
+                saveTasks();
+                renderTasks();
+                updateDashboard();
+                updateCategoryCounts();
+                
+                showNotification(`Added ${aiModal.generatedTasks.length} AI-generated tasks!`, 'success');
+                
+                aiModal.classList.remove('active');
+                document.body.style.overflow = '';
+                resetAIModal();
+            }
+        });
+    }
+    
+    if (regenerateBtn) {
+        regenerateBtn.addEventListener('click', () => {
+            console.log('Regenerate clicked'); // Debug
+            const input = aiTaskInput.value.trim();
+            if (input) {
+                generateAITasks(input);
+            }
+        });
+    }
+}
+
+// ADD THIS NEW FUNCTION HERE:
+function attachEnhancedAIListeners() {
+    const addAllBtn = document.getElementById('addAllTasksBtn');
+    const regenerateBtn = document.getElementById('regenerateBtn');
+    const goBackBtn = document.getElementById('goBackBtn');
+    
+    if (addAllBtn) {
+        addAllBtn.addEventListener('click', () => {
+            if (aiModal.generatedTasks) {
+                aiModal.generatedTasks.forEach(taskData => {
+                    const newTask = {
+                        id: generateId(),
+                        title: taskData.title,
+                        description: taskData.description,
+                        category: taskData.category,
+                        priority: taskData.priority,
+                        completed: false,
+                        dueDate: new Date(Date.now() + (taskData.dueOffset * 24 * 60 * 60 * 1000)).toISOString(),
+                        reminderTime: null,
+                        reminderMinutes: 0,
+                        createdAt: new Date().toISOString(),
+                        modifiedAt: new Date().toISOString()
+                    };
+                    tasks.push(newTask);
+                });
+                
+                saveTasks();
+                renderTasks();
+                updateDashboard();
+                updateCategoryCounts();
+                
+                showNotification(`Added ${aiModal.generatedTasks.length} AI-generated tasks!`, 'success');
+                
+                aiModal.classList.remove('active');
+                document.body.style.overflow = '';
+                resetAIModal();
+            }
+        });
+    }
+    
+    if (regenerateBtn) {
+        regenerateBtn.addEventListener('click', () => {
+            const input = aiTaskInput.value.trim();
+            if (input) {
+                generateAITasks(input);
+            }
+        });
+    }
+    
+    if (goBackBtn) {
+        goBackBtn.addEventListener('click', () => {
+            // Go back to original AI interface
+            aiResultsSection.style.display = 'none';
+            aiSuggestionsSection.style.display = 'block';
+            aiTaskInput.focus();
+        });
+    }
+}
+
+// ADD THIS NEW FUNCTION HERE:
+function addIndividualTask(taskData, index) {
+    const newTask = {
+        id: generateId(),
+        title: taskData.title,
+        description: taskData.description,
+        category: taskData.category,
+        priority: taskData.priority,
+        completed: false,
+        dueDate: new Date(Date.now() + (taskData.dueOffset * 24 * 60 * 60 * 1000)).toISOString(),
+        reminderTime: null,
+        reminderMinutes: 0,
+        createdAt: new Date().toISOString(),
+        modifiedAt: new Date().toISOString()
+    };
+    
+    tasks.push(newTask);
+    saveTasks();
+    renderTasks();
+    updateDashboard();
+    updateCategoryCounts();
+    
+    // Visual feedback
+    const taskElement = document.querySelector(`[data-task-index="${index}"]`);
+    if (taskElement) {
+        taskElement.style.background = 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)';
+        taskElement.style.border = '2px solid #10b981';
+        
+        const addBtn = taskElement.querySelector('.ai-task-add-btn');
+        addBtn.innerHTML = '<i class="fas fa-check"></i>';
+        addBtn.style.background = '#10b981';
+        addBtn.disabled = true;
+        
+        setTimeout(() => {
+            taskElement.style.opacity = '0.7';
+        }, 1000);
+    }
+    
+    showNotification(`Added "${taskData.title}" to your tasks!`, 'success');
+}
+
+// ADD THE NEW MOBILE FUNCTIONS HERE:
+function createMobileHamburgerMenu() {
+    // Create mobile hamburger button
+    const hamburgerBtn = document.createElement('button');
+    hamburgerBtn.className = 'ai-mobile-hamburger';
+    hamburgerBtn.id = 'aiMobileHamburger';
+    hamburgerBtn.innerHTML = `
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+    `;
+    
+    // Create mobile sidebar
+    const mobileSidebar = document.createElement('div');
+    mobileSidebar.className = 'ai-mobile-sidebar';
+    mobileSidebar.id = 'aiMobileSidebar';
+    mobileSidebar.innerHTML = `
+        <div class="ai-mobile-sidebar-header">
+            <h2 class="ai-mobile-sidebar-title">AI Task Creator</h2>
+            <p class="ai-mobile-sidebar-subtitle">Choose how you want to create tasks</p>
+        </div>
+        <div class="ai-mobile-options">
+            <div class="ai-mobile-option" data-action="type">
+                <div class="ai-mobile-option-icon">
+                    <i class="fas fa-keyboard"></i>
+                </div>
+                <div class="ai-mobile-option-content">
+                    <div class="ai-mobile-option-title">Type Your Task</div>
+                    <div class="ai-mobile-option-desc">Describe what you want to accomplish</div>
+                </div>
+            </div>
+            <div class="ai-mobile-option" data-action="suggest">
+                <div class="ai-mobile-option-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="ai-mobile-option-content">
+                    <div class="ai-mobile-option-title">Quick Suggestions</div>
+                    <div class="ai-mobile-option-desc">Choose from preset task templates</div>
+                </div>
+            </div>
+            <div class="ai-mobile-option" data-action="close">
+                <div class="ai-mobile-option-icon">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="ai-mobile-option-content">
+                    <div class="ai-mobile-option-title">Close AI Creator</div>
+                    <div class="ai-mobile-option-desc">Return to main task list</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add to AI modal
+    const aiModal = document.getElementById('aiModal');
+    aiModal.appendChild(hamburgerBtn);
+    aiModal.appendChild(mobileSidebar);
+    
+    // Add event listeners
+    setupMobileHamburgerListeners();
+}
+
+function setupMobileHamburgerListeners() {
+    const hamburgerBtn = document.getElementById('aiMobileHamburger');
+    const mobileSidebar = document.getElementById('aiMobileSidebar');
+    const mobileOptions = document.querySelectorAll('.ai-mobile-option');
+    
+    // Toggle hamburger menu
+    hamburgerBtn.addEventListener('click', () => {
+        hamburgerBtn.classList.toggle('active');
+        mobileSidebar.classList.toggle('active');
+    });
+    
+    // Handle mobile option clicks
+    mobileOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const action = option.dataset.action;
+            
+            // Add click feedback
+            option.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                option.style.transform = '';
+            }, 150);
+            
+            // Handle different actions
+            switch(action) {
+                case 'type':
+                    closeMobileSidebar();
+                    showAIInput();
+                    break;
+                case 'suggest':
+                    closeMobileSidebar();
+                    showAISuggestions();
+                    break;
+                case 'close':
+                    closeMobileSidebar();
+                    closeAIModal();
+                    break;
+            }
+        });
+    });
+    
+    // Close sidebar when clicking outside (mobile)
+    mobileSidebar.addEventListener('click', (e) => {
+        if (e.target === mobileSidebar) {
+            closeMobileSidebar();
+        }
+    });
+}
+
+function closeMobileSidebar() {
+    const hamburgerBtn = document.getElementById('aiMobileHamburger');
+    const mobileSidebar = document.getElementById('aiMobileSidebar');
+    
+    if (hamburgerBtn) hamburgerBtn.classList.remove('active');
+    if (mobileSidebar) mobileSidebar.classList.remove('active');
+}
+
+function showAIInput() {
+    const aiResultsSection = document.getElementById('aiResultsSection');
+    const aiSuggestionsSection = document.getElementById('aiSuggestionsSection');
+    const aiTaskInput = document.getElementById('aiTaskInput');
+    
+    aiResultsSection.style.display = 'none';
+    aiSuggestionsSection.style.display = 'none';
+    
+    // Show input interface
+    aiTaskInput.focus();
+    aiTaskInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function showAISuggestions() {
+    const aiResultsSection = document.getElementById('aiResultsSection');
+    const aiSuggestionsSection = document.getElementById('aiSuggestionsSection');
+    
+    aiResultsSection.style.display = 'none';
+    aiSuggestionsSection.style.display = 'block';
+    
+    // Scroll to suggestions
+    aiSuggestionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeAIModal() {
+    const aiModal = document.getElementById('aiModal');
+    aiModal.classList.remove('active');
+    document.body.style.overflow = '';
+    resetAIModal();
+}
+
+// Call this when opening AI modal
+function initializeMobileAI() {
+    if (window.innerWidth <= 768) {
+        createMobileHamburgerMenu();
+    }
 }
 
             // Task data storage
@@ -7678,6 +9442,11 @@ let reminderEnabled = false;
 let folders = [];
 let currentOpenFolder = null;
 let draggedTask = null;
+
+ // ADD THE IMMERSIVE VIEW VARIABLES HERE:
+            let isImmersiveView = false;
+            let scrollThreshold = 200; // pixels to scroll before triggering
+            let lastScrollY = 0;
 
 // Load data with error handling
 try {
@@ -8429,6 +10198,184 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+function handleTaskContainerScroll(e) {
+    if (currentCategory !== 'all' || isFullView || isImmersiveView) return;
+    
+    const container = e.target;
+    const scrollY = container.scrollTop;
+    const dashboard = document.getElementById('dashboard');
+    
+    // Calculate scroll direction and speed
+    const scrollDirection = scrollY > lastScrollY ? 'down' : 'up';
+    const scrollSpeed = Math.abs(scrollY - lastScrollY);
+    
+    console.log('Task container scroll:', {
+        scrollY,
+        lastScrollY,
+        scrollDirection,
+        scrollSpeed,
+        scrollThreshold,
+        dashboardHidden: dashboard?.classList.contains('hidden')
+    });
+    
+    // ONLY trigger if:
+    // 1. Scrolling DOWN
+    // 2. Past the threshold
+    // 3. Actually scrolled (not at top)
+    // 4. Dashboard is visible
+    // 5. Minimum scroll speed to prevent accidental triggers
+    if (scrollDirection === 'down' && 
+        scrollY > scrollThreshold && 
+        scrollY > 50 && // Must be at least 50px from top
+        scrollSpeed > 5 && // Minimum scroll speed
+        !dashboard.classList.contains('hidden')) {
+        
+        console.log('Triggering immersive view - conditions met');
+        enterImmersiveView();
+    }
+    
+    lastScrollY = scrollY;
+}
+
+function enterImmersiveView() {
+    if (isImmersiveView) return;
+    
+    isImmersiveView = true;
+    const immersiveOverlay = document.getElementById('immersiveOverlay');
+    const immersiveContent = document.getElementById('immersiveContent');
+    const taskList = document.getElementById('taskList');
+    
+    // Create enhanced immersive content
+    immersiveContent.innerHTML = `
+        <div class="immersive-header">
+            <h1 class="immersive-title">🎯 Focus Mode - All Tasks</h1>
+        </div>
+        ${taskList.outerHTML}
+    `;
+    
+    // Re-attach event listeners to cloned elements
+    attachImmersiveEventListeners();
+    
+    // Force dark mode classes and text colors if dark mode is active
+    if (document.body.classList.contains('dark-mode')) {
+        const immersiveTaskList = immersiveContent.querySelector('.task-list');
+        const immersiveTaskItems = immersiveContent.querySelectorAll('.task-item');
+        const immersiveTaskTitles = immersiveContent.querySelectorAll('.task-title');
+        const immersiveTaskDescriptions = immersiveContent.querySelectorAll('.task-description');
+        
+        if (immersiveTaskList) {
+            immersiveTaskList.style.backgroundColor = 'var(--gray-900)';
+            immersiveTaskList.style.borderColor = 'var(--gray-700)';
+        }
+        
+        immersiveTaskItems.forEach(item => {
+            item.style.backgroundColor = 'var(--gray-800)';
+            item.style.borderColor = 'var(--gray-700)';
+        });
+        
+        // Force white color for task titles
+        immersiveTaskTitles.forEach(title => {
+            title.style.color = '#ffffff';
+            title.style.fontWeight = '600';
+        });
+        
+        // Force lighter color for descriptions
+        immersiveTaskDescriptions.forEach(desc => {
+            desc.style.color = 'var(--gray-300)';
+        });
+    }
+    
+    // Show overlay
+    immersiveOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    showNotification('🚀 Immersive task view activated - Press ESC or click × to exit', 'info');
+}
+
+function attachImmersiveEventListeners() {
+    const immersiveContent = document.getElementById('immersiveContent');
+    const immersiveTaskItems = immersiveContent.querySelectorAll('.task-item');
+    
+    immersiveTaskItems.forEach(taskEl => {
+        const taskId = taskEl.dataset.id;
+        const task = tasks.find(t => t.id === taskId);
+        
+        if (!task) return;
+        
+        // Complete/uncomplete task
+        const checkbox = taskEl.querySelector('.task-checkbox input');
+        if (checkbox) {
+            checkbox.addEventListener('change', () => {
+                toggleTaskCompletion(task.id);
+            });
+        }
+        
+        // Edit task
+        const editBtn = taskEl.querySelector('.task-action-btn.edit');
+        if (editBtn) {
+            editBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Exit immersive view first, then edit
+                exitImmersiveView();
+                setTimeout(() => {
+                    editTask(task.id);
+                }, 300);
+            });
+        }
+        
+        // Delete task
+        const deleteBtn = taskEl.querySelector('.task-action-btn.delete');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Exit immersive view first, then delete
+                exitImmersiveView();
+                setTimeout(() => {
+                    confirmDeleteTask(task.id);
+                }, 300);
+            });
+        }
+        
+        // View task details
+        taskEl.addEventListener('click', (e) => {
+            if (e.target.closest('.task-checkbox') || 
+                e.target.closest('.task-action-btn')) {
+                return;
+            }
+            // Exit immersive view first, then view details
+            exitImmersiveView();
+            setTimeout(() => {
+                viewTaskDetails(task.id);
+            }, 300);
+        });
+    });
+}
+
+function exitImmersiveView() {
+    if (!isImmersiveView) return;
+    
+    isImmersiveView = false;
+    const immersiveOverlay = document.getElementById('immersiveOverlay');
+    const immersiveContent = document.getElementById('immersiveContent');
+    const taskListWrapper = document.getElementById('taskListWrapper');
+    
+    // Hide overlay
+    immersiveOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    // Clear content
+    immersiveContent.innerHTML = '';
+    
+    // Reset scroll position to prevent immediate re-trigger
+    if (taskListWrapper) {
+        taskListWrapper.scrollTop = 0;
+    }
+    lastScrollY = 0;
+    
+    showNotification('✅ Exited immersive view', 'success');
+}
+
+
             // Elements
             const categorySlider = document.getElementById('categorySlider');
             const activeCategoryIndicator = document.getElementById('activeCategoryIndicator');
@@ -8494,7 +10441,6 @@ let isFullView = false;
             
             // Task Filters Sticky Behavior
             const taskFiltersWrapper = document.getElementById('taskFiltersWrapper');
-            const taskListWrapper = document.getElementById('taskListWrapper');
             const tasksHeader = document.getElementById('tasksHeader');
             
             // Category descriptions
@@ -8525,6 +10471,14 @@ let isFullView = false;
     renderTasks();
     updateDashboard();
     updateCategoryCounts();
+
+    // DEBUG: Check initial state
+    console.log('Initial state:', {
+        currentCategory,
+        isFullView,
+        isImmersiveView,
+        dashboardExists: !!document.getElementById('dashboard')
+    });
     
     // Initialize view toggle AFTER other elements are ready
     setTimeout(() => {
@@ -8634,6 +10588,9 @@ categorySlider.addEventListener('click', (e) => {
     if (window.innerWidth > 768) {
         updateActiveCategoryIndicator(categoryEl);
     }
+
+    // ADD THIS LINE HERE:
+    lastScrollY = 0; // Reset scroll tracking when changing categories
     
     // Update current category and tasks
     currentCategory = categoryEl.dataset.category;
@@ -9463,6 +11420,13 @@ function saveTasks() {
         // Add task to list
         taskList.appendChild(taskEl);
     });
+
+// Update immersive view if active
+            if (isImmersiveView) {
+                const immersiveContent = document.getElementById('immersiveContent');
+                const taskList = document.getElementById('taskList');
+                immersiveContent.innerHTML = taskList.outerHTML;
+            }
 }
 
             // Update dashboard
@@ -9992,6 +11956,33 @@ searchInput.addEventListener('input', (e) => {
                 }
                 
                 startX = startY = null;
+            });
+
+             // Scroll detection for immersive view - attach to task container
+const taskListWrapper = document.getElementById('taskListWrapper');
+if (taskListWrapper) {
+    taskListWrapper.addEventListener('scroll', handleTaskContainerScroll);
+    console.log('Scroll listener attached to task container');
+} else {
+    console.error('Task list wrapper not found!');
+}
+
+
+            // ESC key to exit immersive view
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isImmersiveView) {
+                    exitImmersiveView();
+                }
+            });
+
+            // Close button for immersive view
+            document.getElementById('immersiveCloseBtn').addEventListener('click', exitImmersiveView);
+
+            // Click overlay to exit (optional)
+            document.getElementById('immersiveOverlay').addEventListener('click', (e) => {
+                if (e.target.id === 'immersiveOverlay') {
+                    exitImmersiveView();
+                }
             });
 
 // Initialize the app
