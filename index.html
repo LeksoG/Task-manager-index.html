@@ -98,92 +98,334 @@
             padding: 0 1rem;
         }
 
-        /* Improved Welcome Animation with Typing Effect */
-        .welcome-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--gray-50);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-            overflow: hidden;
-        }
+        /* Professional Welcome Animation Styles - Replace existing welcome styles */
+.welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    overflow: hidden;
+}
 
-        /* Ring animation container */
-        .welcome-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.professional-welcome-container {
+    text-align: center;
+    color: white;
+    position: relative;
+    animation: containerFadeIn 1s ease-out;
+}
 
-        /* Task cards animation */
-        .task-card {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--primary);
-            animation: float-animation 3s ease-in-out infinite;
-            opacity: 0;
-        }
+/* Logo Animation */
+.logo-animation-container {
+    margin-bottom: 3rem;
+    position: relative;
+}
 
-        .task-card:nth-child(1) {
-            background-color: var(--work-light);
-            animation-delay: 0s;
-            transform: translate(-80px, -80px);
-        }
+.animated-logo {
+    position: relative;
+    display: inline-block;
+}
 
-        .task-card:nth-child(2) {
-            background-color: var(--personal-light);
-            animation-delay: 0.7s;
-            transform: translate(80px, -80px);
-        }
+.logo-circle {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    animation: logoReveal 2s ease-out, logoPulse 3s ease-in-out infinite 2s;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
 
-        .task-card:nth-child(3) {
-            background-color: var(--shopping-light);
-            animation-delay: 1.4s;
-            transform: translate(-80px, 80px);
-        }
+.logo-circle i {
+    font-size: 3rem;
+    color: white;
+    animation: iconRotate 2s ease-out;
+}
 
-        .task-card:nth-child(4) {
-            background-color: var(--health-light);
-            animation-delay: 2.1s;
-            transform: translate(80px, 80px);
-        }
+.logo-particles {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
 
-        @keyframes float-animation {
-            0% {
-                opacity: 0;
-                transform: translate(var(--x, 0), var(--y, 0)) scale(0.5);
-            }
-            20% {
-                opacity: 1;
-                transform: translate(var(--x, 0), var(--y, 0)) scale(1);
-            }
-            80% {
-                opacity: 1;
-                transform: translate(var(--x, 0), var(--y, 0)) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(var(--x, 0), var(--y, 0)) scale(0.5);
-            }
-        }
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: particleFloat 4s ease-in-out infinite;
+}
+
+.particle:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0.5s;
+}
+
+.particle:nth-child(2) {
+    top: 80%;
+    right: 10%;
+    animation-delay: 1s;
+}
+
+.particle:nth-child(3) {
+    top: 10%;
+    right: 30%;
+    animation-delay: 1.5s;
+}
+
+.particle:nth-child(4) {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 2s;
+}
+
+.particle:nth-child(5) {
+    top: 50%;
+    left: 5%;
+    animation-delay: 2.5s;
+}
+
+.particle:nth-child(6) {
+    top: 30%;
+    right: 5%;
+    animation-delay: 3s;
+}
+
+/* Company Branding */
+.company-branding {
+    margin-bottom: 3rem;
+}
+
+.company-name {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    gap: 0.1em;
+}
+
+.letter {
+    display: inline-block;
+    opacity: 0;
+    animation: letterDrop 0.8s ease-out forwards;
+}
+
+.letter:nth-child(1) { animation-delay: 0.1s; }
+.letter:nth-child(2) { animation-delay: 0.2s; }
+.letter:nth-child(3) { animation-delay: 0.3s; }
+.letter:nth-child(4) { animation-delay: 0.4s; }
+.letter:nth-child(5) { animation-delay: 0.5s; }
+.letter:nth-child(6) { animation-delay: 0.6s; }
+.letter:nth-child(7) { animation-delay: 0.7s; }
+.letter:nth-child(8) { animation-delay: 0.8s; }
+.letter:nth-child(9) { animation-delay: 0.9s; }
+
+.company-tagline {
+    font-size: 1.2rem;
+    font-weight: 300;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-out 1.5s forwards;
+    opacity: 0;
+    letter-spacing: 0.05em;
+}
+
+/* Loading Animation */
+.loading-container {
+    margin-top: 2rem;
+    animation: fadeInUp 1s ease-out 2s forwards;
+    opacity: 0;
+}
+
+.loading-bar {
+    width: 300px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    margin: 0 auto 1rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.loading-progress {
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 1));
+    border-radius: 2px;
+    width: 0;
+    animation: loadingProgress 3s ease-out 2.5s forwards;
+    position: relative;
+}
+
+.loading-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8));
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.loading-text {
+    font-size: 0.9rem;
+    font-weight: 300;
+    opacity: 0.8;
+    animation: textPulse 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes logoReveal {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(-180deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1) rotate(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes logoPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+}
+
+@keyframes iconRotate {
+    0% {
+        transform: rotate(-180deg) scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: rotate(0deg) scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes particleFloat {
+    0%, 100% {
+        transform: translateY(0px);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translateY(-20px);
+        opacity: 1;
+    }
+}
+
+@keyframes letterDrop {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px) rotateX(90deg);
+    }
+    50% {
+        transform: translateY(10px) rotateX(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px) rotateX(0deg);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes loadingProgress {
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-20px);
+    }
+    100% {
+        transform: translateX(300px);
+    }
+}
+
+@keyframes textPulse {
+    0%, 100% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .company-name {
+        font-size: 2.5rem;
+    }
+    
+    .logo-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .logo-circle i {
+        font-size: 2rem;
+    }
+    
+    .loading-bar {
+        width: 250px;
+    }
+}
 
         /* Typing animation for the app title */
         .app-title {
@@ -7388,6 +7630,603 @@ body.dark-mode .task-list.grid-view .task-item:hover {
     pointer-events: auto !important;
 }
 
+/* Authentication Forms Styles */
+.auth-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 1rem;
+}
+
+.auth-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.auth-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 450px;
+    max-height: 90vh;
+    overflow: hidden;
+    position: relative;
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-overlay.active .auth-container {
+    transform: scale(1) translateY(0);
+}
+
+.auth-form-container {
+    padding: 2.5rem 2rem 2rem;
+    transition: all 0.4s ease;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.auth-form-container.hidden {
+    opacity: 0;
+    transform: translateX(20px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-logo {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.5rem;
+    color: white;
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+}
+
+.auth-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 0.5rem;
+}
+
+.auth-header p {
+    color: var(--gray-600);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.auth-form {
+    width: 100%;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border: 2px solid var(--gray-200);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: var(--gray-50);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.input-wrapper input:focus {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.input-wrapper input:valid {
+    border-color: var(--success);
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    color: var(--gray-500);
+    font-size: 1.1rem;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+.input-wrapper input:focus + .input-icon,
+.input-wrapper:focus-within .input-icon {
+    color: var(--primary);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--gray-500);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.password-toggle:hover {
+    color: var(--primary);
+    background: rgba(79, 70, 229, 0.1);
+}
+
+.validation-icon {
+    position: absolute;
+    right: 1rem;
+    color: var(--success);
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.input-wrapper.valid .validation-icon {
+    opacity: 1;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+    margin-top: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.password-strength.active {
+    opacity: 1;
+}
+
+.strength-bar {
+    height: 4px;
+    background: var(--gray-200);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.strength-fill.weak {
+    width: 25%;
+    background: var(--danger);
+}
+
+.strength-fill.fair {
+    width: 50%;
+    background: var(--warning);
+}
+
+.strength-fill.good {
+    width: 75%;
+    background: var(--secondary);
+}
+
+.strength-fill.strong {
+    width: 100%;
+    background: var(--success);
+}
+
+.strength-text {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.remember-me,
+.terms-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--gray-700);
+}
+
+.remember-me input,
+.terms-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    background: var(--gray-100);
+    border: 2px solid var(--gray-300);
+    border-radius: 4px;
+    margin-right: 0.75rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.checkmark::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.remember-me input:checked ~ .checkmark,
+.terms-checkbox input:checked ~ .checkmark {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.remember-me input:checked ~ .checkmark::after,
+.terms-checkbox input:checked ~ .checkmark::after {
+    opacity: 1;
+}
+
+.forgot-password {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.terms-link {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.terms-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Auth Buttons */
+.auth-btn {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    margin-bottom: 1rem;
+}
+
+.auth-btn.primary {
+    background: var(--primary-gradient);
+    color: white;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+}
+
+.auth-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+}
+
+.auth-btn.google {
+    background: white;
+    color: var(--gray-700);
+    border: 2px solid var(--gray-200);
+    margin-bottom: 0;
+}
+
+.auth-btn.google:hover {
+    border-color: var(--gray-300);
+    background: var(--gray-50);
+    transform: translateY(-1px);
+}
+
+.auth-btn.google i {
+    margin-right: 0.75rem;
+    color: #4285f4;
+    font-size: 1.1rem;
+}
+
+.btn-text {
+    transition: opacity 0.3s ease;
+}
+
+.btn-loader {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.auth-btn.loading .btn-text {
+    opacity: 0;
+}
+
+.auth-btn.loading .btn-loader {
+    opacity: 1;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.auth-divider {
+    position: relative;
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gray-200);
+}
+
+.auth-divider span {
+    background: white;
+    color: var(--gray-500);
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.auth-footer p {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.switch-auth {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.switch-auth:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Dark Mode Support */
+body.dark-mode .auth-container {
+    background: var(--gray-800);
+    color: var(--gray-200);
+}
+
+body.dark-mode .auth-header h2 {
+    color: var(--gray-200);
+}
+
+body.dark-mode .auth-header p {
+    color: var(--gray-400);
+}
+
+body.dark-mode .input-wrapper input {
+    background: var(--gray-900);
+    border-color: var(--gray-700);
+    color: var(--gray-200);
+}
+
+body.dark-mode .input-wrapper input:focus {
+    background: var(--gray-800);
+    border-color: var(--primary-light);
+}
+
+body.dark-mode .input-icon {
+    color: var(--gray-400);
+}
+
+body.dark-mode .checkmark {
+    background: var(--gray-900);
+    border-color: var(--gray-600);
+}
+
+body.dark-mode .auth-btn.google {
+    background: var(--gray-900);
+    border-color: var(--gray-700);
+    color: var(--gray-200);
+}
+
+body.dark-mode .auth-divider::before {
+    background: var(--gray-700);
+}
+
+body.dark-mode .auth-divider span {
+    background: var(--gray-800);
+    color: var(--gray-400);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .auth-overlay {
+        padding: 0.5rem;
+    }
+    
+    .auth-container {
+        max-width: 100%;
+        border-radius: 16px;
+    }
+    
+    .auth-form-container {
+        padding: 2rem 1.5rem;
+    }
+    
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .auth-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .input-wrapper input {
+        padding: 0.875rem 0.875rem 0.875rem 2.75rem;
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+    
+    .terms-checkbox {
+        line-height: 1.4;
+    }
+}
+
+/* User Profile Button Styles - Add this to your existing CSS */
+.user-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+}
+
+.user-profile-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.user-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Dark mode support */
+body.dark-mode .user-profile-btn {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .user-profile-btn:hover {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .user-profile-btn {
+        padding: 0.5rem;
+        margin-right: 0.5rem;
+    }
+    
+    .user-name {
+        display: none;
+    }
+    
+    .user-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+}
+
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -7395,26 +8234,219 @@ body.dark-mode .task-list.grid-view .task-item:hover {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 </head>
 <body>
-    <!-- Welcome Animation Overlay with Typing Effect -->
-    <div class="welcome-overlay" id="welcomeOverlay">
-        <div class="welcome-container">
-            <div class="task-card">
-                <i class="fas fa-briefcase"></i>
-            </div>
-            <div class="task-card">
-                <i class="fas fa-user"></i>
-            </div>
-            <div class="task-card">
-                <i class="fas fa-shopping-cart"></i>
-            </div>
-            <div class="task-card">
-                <i class="fas fa-heartbeat"></i>
+    <!-- Replace the existing welcome animation HTML with this more professional version -->
+<div class="welcome-overlay" id="welcomeOverlay">
+    <div class="professional-welcome-container">
+        <!-- Logo Animation -->
+        <div class="logo-animation-container">
+            <div class="animated-logo">
+                <div class="logo-circle">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="logo-particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
             </div>
         </div>
-        <div class="app-title">
-            Tasklytic<span class="exclamation">!</span>
+        
+        <!-- Company Name with Professional Typography -->
+        <div class="company-branding">
+            <h1 class="company-name">
+                <span class="letter">T</span>
+                <span class="letter">a</span>
+                <span class="letter">s</span>
+                <span class="letter">k</span>
+                <span class="letter">l</span>
+                <span class="letter">y</span>
+                <span class="letter">t</span>
+                <span class="letter">i</span>
+                <span class="letter">c</span>
+            </h1>
+            <p class="company-tagline">Professional Task Management</p>
+        </div>
+        
+        <!-- Loading Progress Bar -->
+        <div class="loading-container">
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p class="loading-text">Initializing your workspace...</p>
         </div>
     </div>
+</div>
+
+<!-- Add these authentication forms after the welcome overlay and before the app container -->
+
+<!-- Authentication Overlay -->
+<div class="auth-overlay" id="authOverlay">
+    <div class="auth-container">
+        <!-- Login Form -->
+        <div class="auth-form-container" id="loginForm">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h2>Welcome Back</h2>
+                <p>Sign in to your Tasklytic account</p>
+            </div>
+            
+            <form class="auth-form" id="loginFormElement">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="loginEmail" placeholder="Email address" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                        <button type="button" class="password-toggle" id="loginPasswordToggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span class="checkmark"></span>
+                        Remember me
+                    </label>
+                    <button type="button" class="forgot-password" id="forgotPasswordBtn">
+                        Forgot password?
+                    </button>
+                </div>
+                
+                <button type="submit" class="auth-btn primary" id="loginBtn">
+                    <span class="btn-text">Sign In</span>
+                    <div class="btn-loader">
+                        <div class="spinner"></div>
+                    </div>
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Don't have an account? 
+                        <button type="button" class="switch-auth" id="showSignupBtn">Sign up</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Signup Form -->
+        <div class="auth-form-container hidden" id="signupForm">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h2>Create Account</h2>
+                <p>Join Tasklytic and boost your productivity</p>
+            </div>
+            
+            <form class="auth-form" id="signupFormElement">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="signupName" placeholder="Full name" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="signupEmail" placeholder="Email address" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="signupPassword" placeholder="Password" required>
+                        <button type="button" class="password-toggle" id="signupPasswordToggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="strength-bar">
+                            <div class="strength-fill"></div>
+                        </div>
+                        <span class="strength-text">Password strength</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                        <div class="validation-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-options">
+                    <label class="terms-checkbox">
+                        <input type="checkbox" id="acceptTerms" required>
+                        <span class="checkmark"></span>
+                        I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="auth-btn primary" id="signupBtn">
+                    <span class="btn-text">Create Account</span>
+                    <div class="btn-loader">
+                        <div class="spinner"></div>
+                    </div>
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? 
+                        <button type="button" class="switch-auth" id="showLoginBtn">Sign in</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Forgot Password Form -->
+        <div class="auth-form-container hidden" id="forgotPasswordForm">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h2>Reset Password</h2>
+                <p>Enter your email address and we'll send you a reset link</p>
+            </div>
+            
+            <form class="auth-form" id="forgotPasswordFormElement">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="resetEmail" placeholder="Email address" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="auth-btn primary" id="resetPasswordBtn">
+                    <span class="btn-text">Send Reset Link</span>
+                    <div class="btn-loader">
+                        <div class="spinner"></div>
+                    </div>
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Remember your password? 
+                        <button type="button" class="switch-auth" id="backToLoginBtn">Sign in</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
     <div class="feature-splash-overlay" id="featureSplashOverlay">
     <div class="feature-splash-content">
@@ -8352,8 +9384,390 @@ body.dark-mode .task-list.grid-view .task-item:hover {
 
     <!-- JAVASCRIPT -->
     <script>
+
         document.addEventListener('DOMContentLoaded', function() {
             'use strict';
+
+            // Add this to your existing script section
+
+// Authentication state management
+let isAuthenticated = false;
+let currentUser = null;
+
+// Check if user is already logged in
+function checkAuthStatus() {
+    const savedUser = localStorage.getItem('currentUser');
+    const authToken = localStorage.getItem('authToken');
+    
+    if (savedUser && authToken) {
+        isAuthenticated = true;
+        currentUser = JSON.parse(savedUser);
+        return true;
+    }
+    return false;
+}
+
+// Initialize authentication
+function initializeAuth() {
+    // Check if user is already authenticated
+    if (checkAuthStatus()) {
+        // User is already logged in, skip auth and go directly to app
+        setTimeout(() => {
+            hideWelcomeAnimation();
+            showApp();
+        }, 3500);
+    } else {
+        // Show auth forms after welcome animation
+        setTimeout(() => {
+            hideWelcomeAnimation();
+            showAuthForms();
+        }, 5500); // Show auth after welcome animation
+    }
+}
+
+// Welcome animation control
+function hideWelcomeAnimation() {
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    welcomeOverlay.style.opacity = '0';
+    welcomeOverlay.style.visibility = 'hidden';
+}
+
+// Show authentication forms
+function showAuthForms() {
+    const authOverlay = document.getElementById('authOverlay');
+    authOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Hide authentication forms and show app
+function hideAuthForms() {
+    const authOverlay = document.getElementById('authOverlay');
+    authOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Show the main app
+function showApp() {
+    const appContainer = document.getElementById('appContainer');
+    appContainer.classList.add('visible');
+    
+    // Update header to show user info if authenticated
+    if (currentUser) {
+        updateHeaderWithUserInfo();
+    }
+}
+
+// Update header with user information
+function updateHeaderWithUserInfo() {
+    const headerActions = document.querySelector('.header-actions');
+    
+    // Add user profile button before existing buttons
+    const userProfileBtn = document.createElement('button');
+    userProfileBtn.className = 'user-profile-btn';
+    userProfileBtn.innerHTML = `
+        <div class="user-avatar">
+            ${currentUser.name.charAt(0).toUpperCase()}
+        </div>
+        <span class="user-name">${currentUser.name}</span>
+    `;
+    userProfileBtn.onclick = showUserMenu;
+    
+    headerActions.insertBefore(userProfileBtn, headerActions.firstChild);
+}
+
+// Authentication form switching
+function switchAuthForm(fromForm, toForm) {
+    const fromElement = document.getElementById(fromForm);
+    const toElement = document.getElementById(toForm);
+    
+    fromElement.classList.add('hidden');
+    setTimeout(() => {
+        toElement.classList.remove('hidden');
+    }, 200);
+}
+
+// Password strength checker
+function checkPasswordStrength(password) {
+    const strengthIndicator = document.getElementById('passwordStrength');
+    const strengthFill = strengthIndicator.querySelector('.strength-fill');
+    const strengthText = strengthIndicator.querySelector('.strength-text');
+    
+    let strength = 0;
+    let strengthClass = '';
+    let strengthLabel = '';
+    
+    // Check password criteria
+    if (password.length >= 8) strength += 1;
+    if (/[a-z]/.test(password)) strength += 1;
+    if (/[A-Z]/.test(password)) strength += 1;
+    if (/[0-9]/.test(password)) strength += 1;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+    
+    // Set strength level
+    switch (strength) {
+        case 0:
+        case 1:
+            strengthClass = 'weak';
+            strengthLabel = 'Weak password';
+            break;
+        case 2:
+            strengthClass = 'fair';
+            strengthLabel = 'Fair password';
+            break;
+        case 3:
+        case 4:
+            strengthClass = 'good';
+            strengthLabel = 'Good password';
+            break;
+        case 5:
+            strengthClass = 'strong';
+            strengthLabel = 'Strong password';
+            break;
+    }
+    
+    strengthFill.className = `strength-fill ${strengthClass}`;
+    strengthText.textContent = strengthLabel;
+    strengthIndicator.classList.add('active');
+}
+
+// Validate passwords match
+function validatePasswordMatch() {
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const confirmWrapper = document.getElementById('confirmPassword').closest('.input-wrapper');
+    
+    if (confirmPassword && password === confirmPassword) {
+        confirmWrapper.classList.add('valid');
+    } else {
+        confirmWrapper.classList.remove('valid');
+    }
+}
+
+// Simulate login
+function simulateLogin(email, password, remember = false) {
+    return new Promise((resolve, reject) => {
+        // Simulate API call delay
+        setTimeout(() => {
+            // Simple validation (replace with real API call)
+            if (email && password.length >= 6) {
+                const user = {
+                    id: Date.now(),
+                    name: email.split('@')[0],
+                    email: email,
+                    avatar: null
+                };
+                
+                // Save user data
+                currentUser = user;
+                isAuthenticated = true;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('authToken', 'demo-token-' + Date.now());
+                
+                if (remember) {
+                    localStorage.setItem('rememberUser', 'true');
+                }
+                
+                resolve(user);
+            } else {
+                reject(new Error('Invalid email or password'));
+            }
+        }, 1500);
+    });
+}
+
+// Simulate signup
+function simulateSignup(name, email, password) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            // Simple validation (replace with real API call)
+            if (name && email && password.length >= 6) {
+                const user = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    avatar: null
+                };
+                
+                // Save user data
+                currentUser = user;
+                isAuthenticated = true;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('authToken', 'demo-token-' + Date.now());
+                
+                resolve(user);
+            } else {
+                reject(new Error('Please fill all fields correctly'));
+            }
+        }, 1500);
+    });
+}
+
+// Setup authentication event listeners
+function setupAuthListeners() {
+    // Form switching
+    document.getElementById('showSignupBtn').addEventListener('click', () => {
+        switchAuthForm('loginForm', 'signupForm');
+    });
+    
+    document.getElementById('showLoginBtn').addEventListener('click', () => {
+        switchAuthForm('signupForm', 'loginForm');
+    });
+    
+    document.getElementById('forgotPasswordBtn').addEventListener('click', () => {
+        switchAuthForm('loginForm', 'forgotPasswordForm');
+    });
+    
+    document.getElementById('backToLoginBtn').addEventListener('click', () => {
+        switchAuthForm('forgotPasswordForm', 'loginForm');
+    });
+    
+    // Password toggles
+    document.getElementById('loginPasswordToggle').addEventListener('click', function() {
+        const passwordInput = document.getElementById('loginPassword');
+        const icon = this.querySelector('i');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            passwordInput.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    });
+    
+    document.getElementById('signupPasswordToggle').addEventListener('click', function() {
+        const passwordInput = document.getElementById('signupPassword');
+        const icon = this.querySelector('i');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            passwordInput.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    });
+    
+    // Password strength checking
+    document.getElementById('signupPassword').addEventListener('input', function() {
+        checkPasswordStrength(this.value);
+        validatePasswordMatch();
+    });
+    
+    document.getElementById('confirmPassword').addEventListener('input', validatePasswordMatch);
+    
+    // Login form submission
+    document.getElementById('loginFormElement').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        const remember = document.getElementById('rememberMe').checked;
+        const loginBtn = document.getElementById('loginBtn');
+        
+        // Show loading state
+        loginBtn.classList.add('loading');
+        
+        try {
+            await simulateLogin(email, password, remember);
+            showNotification('Welcome back! Logging you in...', 'success');
+            
+            setTimeout(() => {
+                hideAuthForms();
+                showApp();
+            }, 1000);
+            
+        } catch (error) {
+            showNotification(error.message, 'error');
+        } finally {
+            loginBtn.classList.remove('loading');
+        }
+    });
+    
+    // Signup form submission
+    document.getElementById('signupFormElement').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('signupName').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const acceptTerms = document.getElementById('acceptTerms').checked;
+        const signupBtn = document.getElementById('signupBtn');
+        
+        // Validate passwords match
+        if (password !== confirmPassword) {
+            showNotification('Passwords do not match', 'error');
+            return;
+        }
+        
+        // Validate terms acceptance
+        if (!acceptTerms) {
+            showNotification('Please accept the terms of service', 'error');
+            return;
+        }
+        
+        // Show loading state
+        signupBtn.classList.add('loading');
+        
+        try {
+            await simulateSignup(name, email, password);
+            showNotification('Account created successfully! Welcome to Tasklytic!', 'success');
+            
+            setTimeout(() => {
+                hideAuthForms();
+                showApp();
+            }, 1000);
+            
+        } catch (error) {
+            showNotification(error.message, 'error');
+        } finally {
+            signupBtn.classList.remove('loading');
+        }
+    });
+    
+    // Forgot password form
+    document.getElementById('forgotPasswordFormElement').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('resetEmail').value;
+        showNotification(`Password reset link sent to ${email}`, 'success');
+        switchAuthForm('forgotPasswordForm', 'loginForm');
+    });
+}
+
+// User menu functionality
+function showUserMenu() {
+    // Simple logout for demo
+    if (confirm('Do you want to log out?')) {
+        logout();
+    }
+}
+
+// Logout function
+function logout() {
+    isAuthenticated = false;
+    currentUser = null;
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('rememberUser');
+    
+    // Reload page to restart the flow
+    window.location.reload();
+}
+
+// Update the main init function to include authentication
+function initWithAuth() {
+    // Setup auth listeners first
+    setupAuthListeners();
+    
+    // Initialize authentication flow
+    initializeAuth();
+    
+    // Only initialize the main app if user is already authenticated
+    if (isAuthenticated) {
+        init();
+    }
+}
 
             // Theme toggle functionality
             const themeToggle = document.getElementById('themeToggle');
@@ -8520,12 +9934,6 @@ if (tryFeatureBtn) {
 const welcomeOverlay = document.getElementById('welcomeOverlay');
 const appContainer = document.getElementById('appContainer');
 
-            
-            setTimeout(() => {
-    welcomeOverlay.style.opacity = '0';
-    welcomeOverlay.style.visibility = 'hidden';
-    appContainer.classList.add('visible');
-}, 3500); // Reduced from 3500 to 1000
 
             // AI Task Button functionality
 const aiTaskButtonContainer = document.getElementById('aiTaskButtonContainer');
@@ -10472,18 +11880,12 @@ let isFullView = false;
     updateDashboard();
     updateCategoryCounts();
 
-    // DEBUG: Check initial state
-    console.log('Initial state:', {
-        currentCategory,
-        isFullView,
-        isImmersiveView,
-        dashboardExists: !!document.getElementById('dashboard')
-    });
-    
-    // Initialize view toggle AFTER other elements are ready
-    setTimeout(() => {
-        initializeViewToggle();
-    }, 500);
+    // Only show the app if authenticated
+    if (isAuthenticated) {
+        setTimeout(() => {
+            initializeViewToggle();
+        }, 500);
+    }
     
     // Set active category indicator position initially
     const activeCategory = document.querySelector('.category.active');
@@ -12070,6 +13472,7 @@ function switchView(view) {
         showNotification(`Switched to ${view} view`, 'success');
     }
 }
+initWithAuth();
         });
     </script>
 </body>
