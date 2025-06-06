@@ -3385,39 +3385,215 @@ body.dark-mode .task-item:hover {
     background-color: var(--gray-700);
 }
 
+/* Immersive View Controls */
+.immersive-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid var(--primary-light);
+    background: var(--gray-50);
+    margin-bottom: 1.5rem;
+}
+
+.immersive-title-section {
+    flex: 1;
+}
+
+.immersive-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.immersive-btn {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.select-all-btn {
+    background: var(--secondary);
+    color: white;
+}
+
+.select-all-btn:hover {
+    background: var(--secondary-dark);
+    transform: translateY(-2px);
+}
+
+.select-all-btn.active {
+    background: var(--warning);
+    color: white;
+}
+
+.delete-selected-btn {
+    background: var(--warning);
+    color: white;
+}
+
+.delete-selected-btn:hover:not(:disabled) {
+    background: var(--warning-dark);
+    transform: translateY(-2px);
+}
+
+.delete-selected-btn:disabled {
+    background: var(--gray-300);
+    color: var(--gray-500);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.delete-all-btn {
+    background: var(--danger);
+    color: white;
+}
+
+.delete-all-btn:hover {
+    background: var(--danger-dark);
+    transform: translateY(-2px);
+}
+
+/* Task Selection States - Enhanced Visual Feedback */
+.immersive-content .task-item.selectable {
+    cursor: pointer;
+    filter: saturate(0.7);
+    border: 2px solid var(--gray-300);
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.immersive-content .task-item.selectable:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+
+.immersive-content .task-item.selectable::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gray-400);
+    border-radius: 4px;
+    background: white;
+    z-index: 5;
+    transition: all 0.2s ease;
+}
+
+.immersive-content .task-item.selected {
+    filter: saturate(1);
+    border-color: var(--primary);
+    background: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    transform: translateY(-2px);
+}
+
+.immersive-content .task-item.selected::before {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: scale(1.1);
+}
+
+.immersive-content .task-item.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 16px;
+    height: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 6;
+}
+
+/* Dark mode selection states */
+body.dark-mode .immersive-content .task-item.selectable {
+    border-color: var(--gray-600);
+}
+
+body.dark-mode .immersive-content .task-item.selectable:hover {
+    border-color: var(--primary-light);
+}
+
+body.dark-mode .immersive-content .task-item.selected {
+    background: rgba(79, 70, 229, 0.3);
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3);
+}
+
+body.dark-mode .immersive-content .task-item.selectable::before {
+    background: var(--gray-700);
+    border-color: var(--gray-500);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .immersive-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .immersive-controls {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .immersive-btn {
+        flex: 1;
+        min-width: 120px;
+        justify-content: center;
+    }
+}
+
         /* Notification System */
-        .notification-container {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1500;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
+.notification-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1500;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    width: auto;
+}
 
-        .notification {
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            background-color: white;
-            color: var(--gray-800);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            max-width: 400px;
-            width: 100%;
-        }
+.notification {
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    background-color: white;
+    color: var(--gray-800);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-width: 400px;
+    width: auto;
+    min-width: 200px;
+}
 
-        .notification.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
 
         .notification-icon {
             margin-right: 0.75rem;
@@ -8227,6 +8403,175 @@ body.dark-mode .user-profile-btn:hover {
     }
 }
 
+/* User Account Popup */
+.user-account-popup {
+    position: fixed;
+    top: 70px;
+    right: -400px;
+    width: 320px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+    z-index: 1200;
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+}
+
+.user-account-popup.active {
+    right: 20px;
+}
+
+.user-account-popup-content {
+    padding: 0;
+}
+
+.user-account-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.user-account-avatar {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.user-account-info {
+    flex: 1;
+}
+
+.user-account-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: white;
+}
+
+.user-account-email {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.user-account-divider {
+    height: 1px;
+    background: var(--gray-200);
+}
+
+.user-account-options {
+    padding: 0.5rem 0;
+}
+
+.user-account-option {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--gray-700);
+    font-size: 0.95rem;
+}
+
+.user-account-option:hover {
+    background: var(--gray-100);
+    color: var(--primary);
+    transform: translateX(5px);
+}
+
+.user-account-option.logout:hover {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.user-account-option i:first-child {
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.user-account-option i:last-child {
+    margin-left: auto;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    transition: transform 0.3s ease;
+}
+
+.user-account-option:hover i:last-child {
+    transform: translateX(3px);
+}
+
+.user-account-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    z-index: 1150;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.user-account-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Dark mode support */
+body.dark-mode .user-account-popup {
+    background: var(--gray-800);
+    border-color: var(--gray-700);
+}
+
+body.dark-mode .user-account-divider {
+    background: var(--gray-700);
+}
+
+body.dark-mode .user-account-option {
+    color: var(--gray-200);
+}
+
+body.dark-mode .user-account-option:hover {
+    background: var(--gray-700);
+    color: var(--primary-light);
+}
+
+body.dark-mode .user-account-option.logout:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .user-account-popup {
+        right: -100%;
+        width: calc(100vw - 2rem);
+        top: 60px;
+    }
+    
+    .user-account-popup.active {
+        right: 1rem;
+    }
+}
+
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -8590,6 +8935,33 @@ body.dark-mode .user-profile-btn:hover {
             </div>
         </header>
 
+        <!-- User Account Popup -->
+        <div class="user-account-popup" id="userAccountPopup">
+            <div class="user-account-popup-content">
+                <div class="user-account-header">
+                    <div class="user-account-avatar" id="popupUserAvatar">U</div>
+                    <div class="user-account-info">
+                        <div class="user-account-name" id="popupUserName">User Name</div>
+                        <div class="user-account-email" id="popupUserEmail">user@example.com</div>
+                    </div>
+                </div>
+                <div class="user-account-divider"></div>
+                <div class="user-account-options">
+                    <button class="user-account-option" id="accountManagementBtn">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Account Management</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="user-account-option logout" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Log Out</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="user-account-overlay" id="userAccountOverlay"></div>
+
         <!-- Settings Panel -->
 <div class="settings-panel" id="settingsPanel">
     <div class="settings-content">
@@ -8747,7 +9119,7 @@ body.dark-mode .user-profile-btn:hover {
                         <div class="ai-task-button-container" id="aiTaskButtonContainer">
     <button class="ai-task-button" id="aiTaskButton">
         <i class="fas fa-wand-magic-sparkles btn-icon"></i>
-        Create task with AI
+        Intelligent Prioritization
     </button>
     <div class="beta-badge">Beta</div>
 </div>
@@ -8906,7 +9278,9 @@ body.dark-mode .user-profile-btn:hover {
                     <form id="taskForm">
                         <input type="hidden" id="taskId">
                         <input type="hidden" id="taskReminderTime" value="">
-                        <input type="hidden" id="taskReminderMinutes" value="30"> <!-- Store minutes before due time -->
+                        <input type="hidden" id="taskReminderMinutes" value="30">
+                        <input type="hidden" id="taskRemindOnTime" value="false"> <!-- NEW -->
+                        <input type="hidden" id="taskOnTimeReminderTime" value=""> <!-- NEW -->
 
                         <!-- Task Details Tab Content -->
                         <div class="task-form-content active" id="task-details-content">
@@ -9002,21 +9376,34 @@ body.dark-mode .user-profile-btn:hover {
                             </div>
                         </div>
 
-                        <!-- Reminders Tab Content with NEW TOGGLE DESIGN -->
-                        <div class="task-form-content" id="reminders-content">
-                            <div class="form-group">
-                                <!-- Reminder Toggle -->
-                                <div class="reminder-toggle-container">
-                                    <div class="reminder-toggle" id="reminderToggle">
-                                        <div class="reminder-toggle-label">
-                                            <i class="fas fa-bell"></i>
-                                            Set Reminder
-                                        </div>
-                                        <div class="toggle-switch" id="toggleSwitch">
-                                            <div class="toggle-switch-handle"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Replace the existing reminders-content div -->
+<div class="task-form-content" id="reminders-content">
+    <div class="form-group">
+        <!-- Reminder Toggle -->
+        <div class="reminder-toggle-container">
+            <div class="reminder-toggle" id="reminderToggle">
+                <div class="reminder-toggle-label">
+                    <i class="fas fa-bell"></i>
+                    Set Reminder Before Due Time
+                </div>
+                <div class="toggle-switch" id="toggleSwitch">
+                    <div class="toggle-switch-handle"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Remind on Time Toggle -->
+        <div class="reminder-toggle-container" style="margin-top: 1rem;">
+            <div class="reminder-toggle" id="remindOnTimeToggle">
+                <div class="reminder-toggle-label">
+                    <i class="fas fa-clock"></i>
+                    Remind Exactly on Due Time
+                </div>
+                <div class="toggle-switch" id="onTimeToggleSwitch">
+                    <div class="toggle-switch-handle"></div>
+                </div>
+            </div>
+        </div>
 
                                 <!-- Reminder Options (Hidden by default) -->
                                 <div class="reminder-options-container" id="reminderOptionsContainer">
@@ -9556,35 +9943,45 @@ body.dark-mode .user-profile-btn:hover {
 
     // Authentication Functions
     function checkAuthStatus() {
-        const savedUser = localStorage.getItem('currentUser');
-        const authToken = localStorage.getItem('authToken');
-        
-        if (savedUser && authToken) {
-            isAuthenticated = true;
-            currentUser = JSON.parse(savedUser);
-            return true;
-        }
-        return false;
+    const savedUser = localStorage.getItem('currentUser');
+    const authToken = localStorage.getItem('authToken');
+    const rememberedEmail = localStorage.getItem('rememberedEmail');
+    
+    if (savedUser && authToken) {
+        isAuthenticated = true;
+        currentUser = JSON.parse(savedUser);
+        return { isAuthenticated: true, user: currentUser };
+    } else if (rememberedEmail) {
+        return { isAuthenticated: false, rememberedEmail: rememberedEmail };
     }
+    return { isAuthenticated: false };
+}
 
     function initializeAuth() {
-        console.log('🔍 initializeAuth() called');
-        
-        if (checkAuthStatus()) {
-            console.log('✅ User is authenticated, showing app');
-            setTimeout(() => {
-                hideWelcomeAnimation();
-                showApp();
-            }, 3500);
-        } else {
-            console.log('❌ User not authenticated, will show auth forms');
-            setTimeout(() => {
-                console.log('⏰ Timeout reached, hiding welcome and showing auth');
-                hideWelcomeAnimation();
-                showAuthForms();
-            }, 4500);
-        }
+    console.log('🔍 initializeAuth() called');
+    
+    const authResult = checkAuthStatus();
+    
+    if (authResult.isAuthenticated) {
+        console.log('✅ User is authenticated, showing app');
+        setTimeout(() => {
+            hideWelcomeAnimation();
+            showApp();
+        }, 3500);
+    } else if (authResult.rememberedEmail) {
+        console.log('📧 Found remembered email, showing quick login');
+        setTimeout(() => {
+            hideWelcomeAnimation();
+            showQuickLoginForm(authResult.rememberedEmail);
+        }, 4500);
+    } else {
+        console.log('❌ No remembered email, showing full auth forms');
+        setTimeout(() => {
+            hideWelcomeAnimation();
+            showAuthForms();
+        }, 4500);
     }
+}
 
     function hideWelcomeAnimation() {
         const welcomeOverlay = document.getElementById('welcomeOverlay');
@@ -9627,21 +10024,78 @@ body.dark-mode .user-profile-btn:hover {
     }
 
     function updateHeaderWithUserInfo() {
-        const headerActions = document.querySelector('.header-actions');
-        if (!headerActions) return;
-        
-        const userProfileBtn = document.createElement('button');
-        userProfileBtn.className = 'user-profile-btn';
-        userProfileBtn.innerHTML = `
-            <div class="user-avatar">
-                ${currentUser.name.charAt(0).toUpperCase()}
-            </div>
-            <span class="user-name">${currentUser.name}</span>
-        `;
-        userProfileBtn.onclick = showUserMenu;
-        
-        headerActions.insertBefore(userProfileBtn, headerActions.firstChild);
+    const headerActions = document.querySelector('.header-actions');
+    if (!headerActions) return;
+    
+    const userProfileBtn = document.createElement('button');
+    userProfileBtn.className = 'user-profile-btn';
+    userProfileBtn.innerHTML = `
+        <div class="user-avatar">
+            ${currentUser.name.charAt(0).toUpperCase()}
+        </div>
+        <span class="user-name">${currentUser.name}</span>
+    `;
+    userProfileBtn.onclick = showUserAccountPopup;
+    
+    headerActions.insertBefore(userProfileBtn, headerActions.firstChild);
+}
+
+function showUserAccountPopup() {
+    const popup = document.getElementById('userAccountPopup');
+    const overlay = document.getElementById('userAccountOverlay');
+    const popupUserName = document.getElementById('popupUserName');
+    const popupUserEmail = document.getElementById('popupUserEmail');
+    const popupUserAvatar = document.getElementById('popupUserAvatar');
+    
+    if (!popup || !currentUser) return;
+    
+    // Update popup content
+    if (popupUserName) popupUserName.textContent = currentUser.name;
+    if (popupUserEmail) popupUserEmail.textContent = currentUser.email;
+    if (popupUserAvatar) popupUserAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
+    
+    // Show popup
+    popup.classList.add('active');
+    overlay.classList.add('active');
+    
+    // Add click listeners
+    setupUserAccountListeners();
+}
+
+function hideUserAccountPopup() {
+    const popup = document.getElementById('userAccountPopup');
+    const overlay = document.getElementById('userAccountOverlay');
+    
+    if (popup) popup.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+}
+
+function setupUserAccountListeners() {
+    const overlay = document.getElementById('userAccountOverlay');
+    const accountManagementBtn = document.getElementById('accountManagementBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    // Close on overlay click
+    if (overlay) {
+        overlay.onclick = hideUserAccountPopup;
     }
+    
+    // Account management (placeholder)
+    if (accountManagementBtn) {
+        accountManagementBtn.onclick = () => {
+            hideUserAccountPopup();
+            showNotification('Account management coming soon!', 'info');
+        };
+    }
+    
+    // Logout
+    if (logoutBtn) {
+        logoutBtn.onclick = () => {
+            hideUserAccountPopup();
+            logout();
+        };
+    }
+}
 
     function showUserMenu() {
         if (confirm('Do you want to log out?')) {
@@ -9650,13 +10104,16 @@ body.dark-mode .user-profile-btn:hover {
     }
 
     function logout() {
+    if (confirm('Are you sure you want to log out?')) {
         isAuthenticated = false;
         currentUser = null;
         localStorage.removeItem('currentUser');
         localStorage.removeItem('authToken');
         localStorage.removeItem('rememberUser');
+        // Keep rememberedEmail for quick login next time
         window.location.reload();
     }
+}
 
     function switchAuthForm(fromForm, toForm) {
         const fromElement = document.getElementById(fromForm);
@@ -11513,54 +11970,68 @@ body.dark-mode .user-profile-btn:hover {
     }
 
     function enterImmersiveView() {
-        if (isImmersiveView || !taskList) return;
-        
-        isImmersiveView = true;
-        const immersiveOverlay = document.getElementById('immersiveOverlay');
-        const immersiveContent = document.getElementById('immersiveContent');
-        
-        if (!immersiveOverlay || !immersiveContent) return;
-        
-        immersiveContent.innerHTML = `
-            <div class="immersive-header">
+    if (isImmersiveView || !taskList) return;
+    
+    isImmersiveView = true;
+    const immersiveOverlay = document.getElementById('immersiveOverlay');
+    const immersiveContent = document.getElementById('immersiveContent');
+    
+    if (!immersiveOverlay || !immersiveContent) return;
+    
+    immersiveContent.innerHTML = `
+        <div class="immersive-header">
+            <div class="immersive-title-section">
                 <h1 class="immersive-title">🎯 Focus Mode - All Tasks</h1>
             </div>
-            ${taskList.outerHTML}
-        `;
+            <div class="immersive-controls">
+                <button class="immersive-btn select-all-btn" id="selectAllBtn">
+                    <i class="fas fa-check-square"></i> Select All
+                </button>
+                <button class="immersive-btn delete-selected-btn" id="deleteSelectedBtn" disabled>
+                    <i class="fas fa-trash-alt"></i> Delete Selected
+                </button>
+                <button class="immersive-btn delete-all-btn" id="deleteAllBtn">
+                    <i class="fas fa-trash"></i> Delete All
+                </button>
+            </div>
+        </div>
+        ${taskList.outerHTML}
+    `;
+    
+    attachImmersiveEventListeners();
+    setupImmersiveControls();
+    
+    if (document.body.classList.contains('dark-mode')) {
+        const immersiveTaskList = immersiveContent.querySelector('.task-list');
+        const immersiveTaskItems = immersiveContent.querySelectorAll('.task-item');
+        const immersiveTaskTitles = immersiveContent.querySelectorAll('.task-title');
+        const immersiveTaskDescriptions = immersiveContent.querySelectorAll('.task-description');
         
-        attachImmersiveEventListeners();
-        
-        if (document.body.classList.contains('dark-mode')) {
-            const immersiveTaskList = immersiveContent.querySelector('.task-list');
-            const immersiveTaskItems = immersiveContent.querySelectorAll('.task-item');
-            const immersiveTaskTitles = immersiveContent.querySelectorAll('.task-title');
-            const immersiveTaskDescriptions = immersiveContent.querySelectorAll('.task-description');
-            
-            if (immersiveTaskList) {
-                immersiveTaskList.style.backgroundColor = 'var(--gray-900)';
-                immersiveTaskList.style.borderColor = 'var(--gray-700)';
-            }
-            
-            immersiveTaskItems.forEach(item => {
-                item.style.backgroundColor = 'var(--gray-800)';
-                item.style.borderColor = 'var(--gray-700)';
-            });
-            
-            immersiveTaskTitles.forEach(title => {
-                title.style.color = '#ffffff';
-                title.style.fontWeight = '600';
-            });
-            
-            immersiveTaskDescriptions.forEach(desc => {
-                desc.style.color = 'var(--gray-300)';
-            });
+        if (immersiveTaskList) {
+            immersiveTaskList.style.backgroundColor = 'var(--gray-900)';
+            immersiveTaskList.style.borderColor = 'var(--gray-700)';
         }
         
-        immersiveOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        immersiveTaskItems.forEach(item => {
+            item.style.backgroundColor = 'var(--gray-800)';
+            item.style.borderColor = 'var(--gray-700)';
+        });
         
-        showNotification('🚀 Immersive task view activated - Press ESC or click × to exit', 'info');
+        immersiveTaskTitles.forEach(title => {
+            title.style.color = '#ffffff';
+            title.style.fontWeight = '600';
+        });
+        
+        immersiveTaskDescriptions.forEach(desc => {
+            desc.style.color = 'var(--gray-300)';
+        });
     }
+    
+    immersiveOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    showNotification('🚀 Immersive task view activated - Press ESC or click × to exit', 'info');
+}
 
     function attachImmersiveEventListeners() {
         const immersiveContent = document.getElementById('immersiveContent');
@@ -11615,6 +12086,350 @@ body.dark-mode .user-profile-btn:hover {
             });
         });
     }
+
+    function setupImmersiveControls() {
+    const selectAllBtn = document.getElementById('selectAllBtn');
+    const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+    const deleteAllBtn = document.getElementById('deleteAllBtn');
+    
+    let isSelectMode = false;
+    let selectedTasks = new Set();
+    
+    // Update delete selected button state
+    function updateDeleteSelectedButton() {
+        if (deleteSelectedBtn) {
+            if (selectedTasks.size > 0) {
+                deleteSelectedBtn.disabled = false;
+                deleteSelectedBtn.innerHTML = `<i class="fas fa-trash-alt"></i> Delete Selected (${selectedTasks.size})`;
+            } else {
+                deleteSelectedBtn.disabled = true;
+                deleteSelectedBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete Selected';
+            }
+        }
+    }
+    
+    // Handle task selection - NO SOUND, ONLY VISUAL FEEDBACK
+    function handleTaskSelection(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (e.target.closest('.task-checkbox') || e.target.closest('.task-action-btn')) {
+            return;
+        }
+        
+        const taskItem = e.currentTarget;
+        const taskId = taskItem.dataset.id;
+        
+        if (selectedTasks.has(taskId)) {
+            selectedTasks.delete(taskId);
+            taskItem.classList.remove('selected');
+        } else {
+            selectedTasks.add(taskId);
+            taskItem.classList.add('selected');
+        }
+        
+        updateDeleteSelectedButton();
+    }
+    
+    // Exit selection mode and restore normal behavior
+    function exitSelectionMode() {
+        isSelectMode = false;
+        selectedTasks.clear();
+        
+        if (selectAllBtn) {
+            selectAllBtn.innerHTML = '<i class="fas fa-check-square"></i> Select All';
+            selectAllBtn.classList.remove('active');
+        }
+        
+        const immersiveTaskItems = document.querySelectorAll('.immersive-content .task-item');
+        immersiveTaskItems.forEach(item => {
+            item.classList.remove('selectable', 'selected');
+            
+            const newItem = item.cloneNode(true);
+            item.parentNode.replaceChild(newItem, item);
+            
+            const taskId = newItem.dataset.id;
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                newItem.addEventListener('click', (e) => {
+                    if (e.target.closest('.task-checkbox') || e.target.closest('.task-action-btn')) {
+                        return;
+                    }
+                    exitImmersiveView();
+                    setTimeout(() => {
+                        viewTaskDetails(task.id);
+                    }, 300);
+                });
+            }
+            
+            const checkbox = newItem.querySelector('.task-checkbox input');
+            if (checkbox) {
+                checkbox.addEventListener('change', () => {
+                    toggleTaskCompletion(task.id);
+                });
+            }
+            
+            const editBtn = newItem.querySelector('.task-action-btn.edit');
+            if (editBtn) {
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    exitImmersiveView();
+                    setTimeout(() => {
+                        editTask(task.id);
+                    }, 300);
+                });
+            }
+            
+            const deleteBtn = newItem.querySelector('.task-action-btn.delete');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    exitImmersiveView();
+                    setTimeout(() => {
+                        confirmDeleteTask(task.id);
+                    }, 300);
+                });
+            }
+        });
+        
+        updateDeleteSelectedButton();
+    }
+    
+    // Select All functionality
+    if (selectAllBtn) {
+        selectAllBtn.addEventListener('click', () => {
+            isSelectMode = !isSelectMode;
+            const immersiveTaskItems = document.querySelectorAll('.immersive-content .task-item');
+            
+            if (isSelectMode) {
+                selectAllBtn.innerHTML = '<i class="fas fa-times"></i> Cancel Select';
+                selectAllBtn.classList.add('active');
+                
+                immersiveTaskItems.forEach(item => {
+                    item.classList.add('selectable');
+                    
+                    const newItem = item.cloneNode(true);
+                    item.parentNode.replaceChild(newItem, item);
+                    
+                    newItem.addEventListener('click', handleTaskSelection);
+                    
+                    const checkbox = newItem.querySelector('.task-checkbox input');
+                    if (checkbox) {
+                        checkbox.addEventListener('change', (e) => {
+                            e.stopPropagation();
+                            const taskId = newItem.dataset.id;
+                            toggleTaskCompletion(taskId);
+                        });
+                    }
+                    
+                    const editBtn = newItem.querySelector('.task-action-btn.edit');
+                    if (editBtn) {
+                        editBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const taskId = newItem.dataset.id;
+                            exitImmersiveView();
+                            setTimeout(() => {
+                                editTask(taskId);
+                            }, 300);
+                        });
+                    }
+                    
+                    const deleteBtn = newItem.querySelector('.task-action-btn.delete');
+                    if (deleteBtn) {
+                        deleteBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const taskId = newItem.dataset.id;
+                            exitImmersiveView();
+                            setTimeout(() => {
+                                confirmDeleteTask(taskId);
+                            }, 300);
+                        });
+                    }
+                });
+                
+                showNotification('Selection mode activated - Click tasks to select them', 'info');
+            } else {
+                exitSelectionMode();
+                showNotification('Selection mode deactivated', 'info');
+            }
+        });
+    }
+    
+    // Delete selected tasks
+    if (deleteSelectedBtn) {
+        deleteSelectedBtn.addEventListener('click', () => {
+            if (selectedTasks.size === 0) return;
+            
+            const selectedTaskTitles = Array.from(selectedTasks).map(id => {
+                const task = tasks.find(t => t.id === id);
+                return task ? task.title : '';
+            }).filter(title => title !== '');
+            
+            const confirmMessage = 'Are you sure you want to delete ' + selectedTasks.size + ' selected task(s)?\n\n' + selectedTaskTitles.slice(0, 3).join('\n') + (selectedTasks.size > 3 ? '\n... and ' + (selectedTasks.size - 3) + ' more' : '');
+            
+            if (confirm(confirmMessage)) {
+                tasks = tasks.filter(task => !selectedTasks.has(task.id));
+                
+                saveTasks();
+                exitSelectionMode();
+                
+                const immersiveContent = document.getElementById('immersiveContent');
+                if (immersiveContent && taskList) {
+                    renderTasks();
+                    const newTaskListHtml = taskList.outerHTML;
+                    const headerHtml = immersiveContent.querySelector('.immersive-header').outerHTML;
+                    immersiveContent.innerHTML = headerHtml + newTaskListHtml;
+                    setupImmersiveControls();
+                    attachImmersiveEventListeners();
+                }
+                
+                updateDashboard();
+                updateCategoryCounts();
+                
+                showNotification('Deleted ' + selectedTaskTitles.length + ' selected tasks', 'success');
+            }
+        });
+    }
+    
+    // Delete all tasks
+    if (deleteAllBtn) {
+        deleteAllBtn.addEventListener('click', () => {
+            const totalTasks = tasks.filter(task => !task.folderId).length;
+            
+            if (totalTasks === 0) {
+                showNotification('No tasks to delete', 'warning');
+                return;
+            }
+            
+            const confirmMessage = '⚠️ WARNING: This will permanently delete ALL ' + totalTasks + ' tasks!\n\nThis action cannot be undone. Are you absolutely sure?';
+            
+            if (confirm(confirmMessage)) {
+                const doubleConfirm = confirm('🚨 FINAL CONFIRMATION\n\nYou are about to delete ' + totalTasks + ' tasks permanently.\n\nClick OK to proceed or Cancel to abort.');
+                
+                if (doubleConfirm) {
+                    tasks = tasks.filter(task => task.folderId);
+                    
+                    saveTasks();
+                    exitImmersiveView();
+                    renderTasks();
+                    updateDashboard();
+                    updateCategoryCounts();
+                    
+                    showNotification('🗑️ Deleted all ' + totalTasks + ' tasks', 'success');
+                }
+            }
+        });
+    }
+}
+    
+    // Handle task selection
+    function handleTaskSelection(e) {
+        if (e.target.closest('.task-checkbox') || 
+            e.target.closest('.task-action-btn')) {
+            return;
+        }
+        
+        e.stopPropagation();
+        const taskItem = e.currentTarget;
+        const taskId = taskItem.dataset.id;
+        
+        if (selectedTasks.has(taskId)) {
+            selectedTasks.delete(taskId);
+            taskItem.classList.remove('selected');
+        } else {
+            selectedTasks.add(taskId);
+            taskItem.classList.add('selected');
+        }
+        
+        updateDeleteSelectedButton();
+    }
+    
+    // Update delete selected button state
+    function updateDeleteSelectedButton() {
+        if (deleteSelectedBtn) {
+            if (selectedTasks.size > 0) {
+                deleteSelectedBtn.disabled = false;
+                deleteSelectedBtn.innerHTML = `<i class="fas fa-trash-alt"></i> Delete Selected (${selectedTasks.size})`;
+            } else {
+                deleteSelectedBtn.disabled = true;
+                deleteSelectedBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete Selected';
+            }
+        }
+    
+    // Delete selected tasks
+    if (deleteSelectedBtn) {
+        deleteSelectedBtn.addEventListener('click', () => {
+            if (selectedTasks.size === 0) return;
+            
+            const selectedTaskTitles = Array.from(selectedTasks).map(id => {
+                const task = tasks.find(t => t.id === id);
+                return task ? task.title : '';
+            }).filter(title => title !== '');
+            
+            const confirmMessage = `Are you sure you want to delete ${selectedTasks.size} selected task(s)?\n\n${selectedTaskTitles.slice(0, 3).join('\n')}${selectedTasks.size > 3 ? `\n... and ${selectedTasks.size - 3} more` : ''}`;
+            
+            if (confirm(confirmMessage)) {
+                // Delete selected tasks
+                tasks = tasks.filter(task => !selectedTasks.has(task.id));
+                selectedTasks.clear();
+                
+                saveTasks();
+                updateDeleteSelectedButton();
+                
+                // Update immersive view
+                const immersiveContent = document.getElementById('immersiveContent');
+                if (immersiveContent && taskList) {
+                    renderTasks();
+                    const newTaskListHtml = taskList.outerHTML;
+                    const headerHtml = immersiveContent.querySelector('.immersive-header').outerHTML;
+                    immersiveContent.innerHTML = headerHtml + newTaskListHtml;
+                    setupImmersiveControls();
+                    attachImmersiveEventListeners();
+                }
+                
+                updateDashboard();
+                updateCategoryCounts();
+                
+                showNotification(`Deleted ${selectedTaskTitles.length} selected tasks`, 'success');
+            }
+        });
+    }
+    
+    // Delete all tasks
+    if (deleteAllBtn) {
+        deleteAllBtn.addEventListener('click', () => {
+            const totalTasks = tasks.filter(task => !task.folderId).length;
+            
+            if (totalTasks === 0) {
+                showNotification('No tasks to delete', 'warning');
+                return;
+            }
+            
+            const confirmMessage = `⚠️ WARNING: This will permanently delete ALL ${totalTasks} tasks!\n\nThis action cannot be undone. Are you absolutely sure?`;
+            
+            if (confirm(confirmMessage)) {
+                // Show second confirmation
+                const doubleConfirm = confirm(`🚨 FINAL CONFIRMATION\n\nYou are about to delete ${totalTasks} tasks permanently.\n\nClick OK to proceed or Cancel to abort.`);
+                
+                if (doubleConfirm) {
+                    // Delete all tasks not in folders
+                    tasks = tasks.filter(task => task.folderId);
+                    
+                    saveTasks();
+                    
+                    // Exit immersive view and refresh
+                    exitImmersiveView();
+                    renderTasks();
+                    updateDashboard();
+                    updateCategoryCounts();
+                    
+                    showNotification(`🗑️ Deleted all ${totalTasks} tasks`, 'success');
+                }
+            }
+        });
+    }
+}
+
 
     function exitImmersiveView() {
         if (!isImmersiveView) return;
@@ -11892,24 +12707,40 @@ body.dark-mode .user-profile-btn:hover {
     }
 
     function toggleTaskCompletion(taskId) {
-        const taskIndex = tasks.findIndex(task => task.id === taskId);
-        if (taskIndex !== -1) {
-            tasks[taskIndex].completed = !tasks[taskIndex].completed;
-            tasks[taskIndex].modifiedAt = new Date().toISOString();
+    const taskIndex = tasks.findIndex(task => task.id === taskId);
+    if (taskIndex !== -1) {
+        const wasCompleted = tasks[taskIndex].completed;
+        tasks[taskIndex].completed = !tasks[taskIndex].completed;
+        tasks[taskIndex].modifiedAt = new Date().toISOString();
+        
+        if (tasks[taskIndex].completed) {
+            tasks[taskIndex].completedAt = new Date().toISOString();
             
-            if (tasks[taskIndex].completed) {
-                tasks[taskIndex].completedAt = new Date().toISOString();
-                showNotification('Task completed!', 'success');
-            } else {
-                tasks[taskIndex].completedAt = null;
+            // Play completion sound
+            if (window.Audio) {
+                try {
+                    const audio = new Audio('sounds/mixkit-software-interface-start-2574.wav');
+                    audio.volume = 0.5;
+                    audio.play().catch(e => {
+                        console.log('Task completion sound not available:', e);
+                    });
+                } catch (e) {
+                    console.log('Task completion sound file not found - place your sound file at: sounds/task-complete.mp3');
+                }
             }
             
-            saveTasks();
-            renderTasks();
-            updateDashboard();
-            updateCategoryCounts();
+            showNotification('Task completed! 🎉', 'success');
+        } else {
+            tasks[taskIndex].completedAt = null;
+            showNotification('Task marked as incomplete', 'info');
         }
+        
+        saveTasks();
+        renderTasks();
+        updateDashboard();
+        updateCategoryCounts();
     }
+}
 
     function viewTaskDetails(taskId) {
         const task = tasks.find(t => t.id === taskId);
@@ -12257,112 +13088,114 @@ body.dark-mode .user-profile-btn:hover {
     }
 
     function checkReminders() {
-        const now = new Date();
+    const now = new Date();
+    
+    tasks.forEach(task => {
+        if (task.completed) return;
         
-        tasks.forEach(task => {
-            if (task.completed) return;
+        // Check reminder before due time
+        if (task.reminderTime && !task.reminded) {
+            const reminderTime = new Date(task.reminderTime);
+            const timeDiff = Math.abs(reminderTime - now);
             
-            if (task.reminderTime) {
-                const reminderTime = new Date(task.reminderTime);
-                const timeDiff = Math.abs(reminderTime - now);
+            // Check if it's within 1 minute of reminder time
+            if (timeDiff <= 60 * 1000) {
+                showTaskReminder(task, 'before');
                 
-                if (timeDiff <= 2 * 60 * 1000 && !task.reminded) {
-                    showTaskReminder(task);
-                    
-                    const taskIndex = tasks.findIndex(t => t.id === task.id);
-                    if (taskIndex !== -1) {
-                        tasks[taskIndex].reminded = true;
-                        saveTasks();
-                    }
+                const taskIndex = tasks.findIndex(t => t.id === task.id);
+                if (taskIndex !== -1) {
+                    tasks[taskIndex].reminded = true;
+                    saveTasks();
                 }
             }
-        });
-    }
-
-    function showTaskReminder(task) {
-        if (!reminderContainer) return;
-        
-        const reminderTaskTitle = document.getElementById('reminderTaskTitle');
-        const reminderMessage = document.getElementById('reminderMessage');
-        
-        if (reminderTaskTitle) {
-            reminderTaskTitle.textContent = task.title;
         }
         
-        if (reminderMessage) {
-            const dueDate = new Date(task.dueDate);
-            const formattedDate = new Intl.DateTimeFormat('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric'
-            }).format(dueDate);
+        // Check remind on time
+        if (task.onTimeReminderTime && !task.onTimeReminded) {
+            const onTimeReminder = new Date(task.onTimeReminderTime);
+            const timeDiff = Math.abs(onTimeReminder - now);
             
-            const formattedTime = new Intl.DateTimeFormat('en-US', {
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
-            }).format(dueDate);
-            
-            reminderMessage.textContent = `Due on ${formattedDate} at ${formattedTime}`;
-        }
-        
-        reminderContainer.classList.add('show');
-        
-        if (viewReminderTaskBtn) {
-            viewReminderTaskBtn.onclick = () => {
-                reminderContainer.classList.remove('show');
-                viewTaskDetails(task.id);
-            };
-        }
-        
-        if (window.Audio) {
-            try {
-                const audio = new Audio('sounds/success-notification.wav');
-                audio.volume = 0.3;
-                audio.play();
-            } catch (e) {
-                console.log('Notification sound not available');
+            // Check if it's within 1 minute of due time
+            if (timeDiff <= 60 * 1000) {
+                showTaskReminder(task, 'ontime');
+                
+                const taskIndex = tasks.findIndex(t => t.id === task.id);
+                if (taskIndex !== -1) {
+                    tasks[taskIndex].onTimeReminded = true;
+                    saveTasks();
+                }
             }
         }
-    }
+    });
+}
 
     function showNotification(message, type = 'info') {
-        if (!notificationContainer) return;
-        
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        
-        let icon = 'info-circle';
-        switch (type) {
-            case 'success':
-                icon = 'check-circle';
-                break;
-            case 'warning':
-                icon = 'exclamation-circle';
-                break;
-            case 'error':
-                icon = 'times-circle';
-                break;
-        }
-        
-        notification.innerHTML = `
-            <i class="fas fa-${icon} notification-icon"></i> ${message}
-        `;
-        
-        notificationContainer.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 100);
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 300);
-        }, 3000);
+    if (!notificationContainer) return;
+    
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    
+    let icon = 'info-circle';
+    switch (type) {
+        case 'success':
+            icon = 'check-circle';
+            break;
+        case 'warning':
+            icon = 'exclamation-circle';
+            break;
+        case 'error':
+            icon = 'times-circle';
+            break;
     }
+    
+    notification.innerHTML = `
+        <i class="fas fa-${icon} notification-icon"></i> ${message}
+    `;
+    
+    notificationContainer.appendChild(notification);
+    
+    // Play notification sound
+    if (window.Audio && isSoundEnabled()) {
+        try {
+            const audio = new Audio('sounds/notification-smooth-modern-stereo-332449.mp3');
+            audio.volume = 0.4;
+            audio.play().catch(e => {
+                console.log('Notification sound not available:', e);
+            });
+        } catch (e) {
+            console.log('Notification sound file not found - place your sound file at: sounds/notification.mp3');
+        }
+    }
+    
+    // Force reflow to ensure element is rendered before animation
+    notification.offsetHeight;
+    
+    // Show immediately
+    requestAnimationFrame(() => {
+        notification.classList.add('show');
+    });
+    
+    // Auto hide after 3 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 400);
+    }, 3000);
+    
+    // Allow manual dismissal by clicking
+    notification.addEventListener('click', () => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 400);
+    });
+}
 
     // Search Functionality
     function initializeSearch() {
