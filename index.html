@@ -10247,7 +10247,7 @@ body:not(.dark-mode) .chart-type-tab:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1.25rem; /* Offset for label */
+    margin-top: 0.1rem; /* Offset for label */
 }
 
 .field-hint {
@@ -11617,16 +11617,6 @@ function handleProfileSave(e) {
         if (accountName) {
             accountName.textContent = currentUser.name;
         }
-
-        // Add this inside the handleProfileSave function, after updating the user data
-
-// Update user data (add this after the existing user updates)
-if (currentUser.profileImage) {
-    users[userIndex].profileImage = currentUser.profileImage;
-}
-
-// Update account button display with avatar
-updateAccountButtonAvatar();
         
         closeProfileEditor();
         showNotification('✅ Profile updated successfully!', 'success');
