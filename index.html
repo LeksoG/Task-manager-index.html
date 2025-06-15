@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="google-site-verification" content="AMZoqsTzLZrsMNw4MZZHE3Jq0yZQLPNMDVTgJN0fW4s" />
     <title>Tasklytic</title>
+
+    <meta name="description" content="A simple task and reminder app designed for people with ADHD or anyone who forgets things easily. Stay organized, focused, and get things done with ease." />
+    <meta name="keywords" content="ADHD task manager, reminders for ADHD, simple to-do list, task planner, forgetfulness tool, productivity for ADHD, organize tasks" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- ADD THESE ICON LINES HERE -->
     <link rel="icon" type="image/x-icon" href="data:image/Screenshot 2025-06-09 171415.png">
@@ -536,11 +541,24 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+        /* Account Button Positioning */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.account-btn-container {
+    order: 1; /* Comes first */
+}
+
+.theme-toggle {
+    order: 2; /* Comes second */
+}
+
+.settings-btn {
+    order: 3; /* Comes third */
+}
 
         .theme-toggle, .settings-btn {
             background: rgba(255, 255, 255, 0.2);
@@ -9279,6 +9297,1131 @@ body:not(.dark-mode) .chart-type-tab:hover {
     color: var(--gray-800);
     background: rgba(79, 70, 229, 0.08);
 }
+
+/* Enhanced Oval Bar Animations */
+@keyframes barGrow {
+    from { 
+        height: 0%; 
+        transform: scaleY(0);
+        opacity: 0;
+    }
+    to { 
+        height: var(--final-height, 50%); 
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+@keyframes labelFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
+
+/* Oval Bar Hover Effects */
+.trends-chart-container:hover .oval-bar {
+    transform: scaleX(1.05);
+    transition: transform 0.3s ease;
+}
+
+/* Mobile responsive for oval bars */
+@media (max-width: 768px) {
+    .oval-bar {
+        max-width: 35px !important;
+    }
+    
+    .trends-chart-container {
+        gap: 0.5rem !important;
+    }
+}
+
+/* Landing Page Styles */
+.landing-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 1500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.8s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.landing-page.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.landing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.landing-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.landing-logo i {
+    font-size: 1.8rem;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.auth-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: transparent;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.auth-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.signup-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.signup-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.landing-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.hero-section {
+    text-align: center;
+    color: white;
+    max-width: 800px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+.feature-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.preview-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.preview-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.preview-card i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.preview-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    color: white;
+}
+
+.preview-card p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    line-height: 1.4;
+}
+
+/* Auth Modal Styles */
+.auth-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.auth-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.auth-modal-content {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transform: translateY(50px) scale(0.9);
+    transition: all 0.3s ease;
+}
+
+.auth-modal.active .auth-modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.auth-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.auth-modal-header h2 {
+    color: #1f2937;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.auth-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.auth-modal-close:hover {
+    color: #374151;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.auth-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.auth-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #374151;
+    font-weight: 600;
+}
+
+.auth-form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+    box-sizing: border-box;
+}
+
+.auth-form-group input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.auth-error {
+    color: #ef4444;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 6px;
+    display: none;
+}
+
+.auth-submit-btn {
+    width: 100%;
+    padding: 0.875rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.auth-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+}
+
+.auth-switch {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.auth-link {
+    background: none;
+    border: none;
+    color: #4f46e5;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.auth-link:hover {
+    color: #3730a3;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .landing-header {
+        padding: 1rem;
+    }
+    
+    .auth-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .feature-preview {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .preview-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Remember Me Checkbox */
+.password-input-container {
+    position: relative;
+}
+
+.remember-me-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.remember-checkbox {
+    width: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.remember-label {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Login Spinner */
+.auth-submit-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.login-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.auth-submit-btn.loading .btn-text {
+    opacity: 0;
+}
+
+.auth-submit-btn.loading .login-spinner {
+    opacity: 1;
+}
+
+.auth-submit-btn.loading {
+    pointer-events: none;
+}
+
+/* Account Button (Oval) */
+.account-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    width: 80px;
+    height: 36px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    gap: 0.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.account-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.account-btn i {
+    font-size: 1rem;
+}
+
+/* Account Dropdown */
+.account-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--gray-50);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow-hover);
+    border: 1px solid var(--gray-200);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    min-width: 200px;
+    margin-top: 0.5rem;
+}
+
+.account-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.account-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--gray-700);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.account-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.account-dropdown-item:hover {
+    background: var(--gray-100);
+}
+
+.account-dropdown-item.logout:hover {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.account-info {
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray-200);
+    background: var(--gray-100);
+}
+
+.account-name {
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 0.25rem;
+}
+
+.account-email {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+}
+
+/* Profile Editor Full Screen */
+.profile-editor-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.profile-editor-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.profile-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-editor-title {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.profile-editor-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.profile-editor-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1) rotate(90deg);
+}
+
+.profile-editor-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    /* Remove the centering that pushes content off-screen */
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+.profile-editor-form {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 600px;
+    /* Center horizontally only */
+    margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    /* Ensure it doesn't get cut off */
+    min-height: fit-content;
+}
+
+.profile-form-group {
+    margin-bottom: 2rem;
+}
+
+.profile-form-group label {
+    display: block;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.profile-form-group input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.profile-form-group input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.profile-form-group:focus-within .input-icon {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.profile-toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.profile-toggle-info {
+    color: white;
+    flex: 1;
+}
+
+.profile-toggle-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    font-size: 1.1rem;
+}
+
+.profile-toggle-description {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.profile-toggle-switch {
+    width: 60px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-toggle-switch.active {
+    background-color: rgba(16, 185, 129, 0.8);
+    border-color: rgba(16, 185, 129, 0.9);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+.profile-toggle-handle {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.profile-toggle-switch.active .profile-toggle-handle {
+    transform: translateX(30px);
+}
+
+.profile-form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.profile-btn {
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    min-width: 120px;
+}
+
+.profile-btn-cancel {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.profile-btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.profile-btn-save {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.profile-btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+}
+
+.profile-error {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    display: none;
+    background: rgba(255, 107, 107, 0.1);
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+/* Also add this to ensure better mobile handling */
+@media (max-width: 768px) {
+    .profile-editor-content {
+        padding: 1rem;
+    }
+    
+    .profile-editor-form {
+        padding: 2rem 1.5rem;
+        margin: 0;
+        width: 100%;
+        max-width: none;
+    }
+    
+    .profile-header-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-form-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .profile-btn {
+        width: 100%;
+    }
+}
+
+/* Enhanced Profile Editor Styles */
+.profile-header-section {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.profile-avatar {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+    border: 3px solid rgba(255,255,255,0.2);
+}
+
+.avatar-initials {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.avatar-change-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.avatar-change-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+}
+
+.profile-header-info h3 {
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.profile-header-info p {
+    color: rgba(255,255,255,0.8);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.account-badge {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.account-badge::before {
+    content: '●';
+    color: #34d399;
+    animation: pulse 2s infinite;
+}
+
+.form-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-section {
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.section-header i {
+    font-size: 1.5rem;
+    color: #4f46e5;
+}
+
+.section-header h4 {
+    font-size: 1.3rem;
+    color: white;
+    font-weight: 600;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.profile-form-group {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.profile-form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.profile-form-group label {
+    display: block;
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.profile-form-group input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem; /* Adjusted left padding for icon */
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.profile-form-group input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+.profile-form-group input:read-only {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: rgba(255,255,255,0.05);
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+    z-index: 2;
+    font-size: 1.1rem;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.25rem; /* Offset for label */
+}
+
+.field-hint {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.preferences-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.preference-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+}
+
+.preference-item:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+}
+
+.preference-title {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.preference-description {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+}
+
+.preference-toggle {
+    width: 60px;
+    height: 32px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 32px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+.preference-toggle.active {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    border-color: rgba(79, 70, 229, 0.5);
+    box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
+}
+
+.preference-toggle-handle {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.preference-toggle.active .preference-toggle-handle {
+    transform: translateX(28px);
+}
+
+.profile-form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.profile-btn {
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.profile-btn-cancel {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.9);
+    border-color: rgba(255,255,255,0.3);
+}
+
+.profile-btn-cancel:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+}
+
+.profile-btn-save {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.profile-btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+}
+
+@media (max-width: 768px) {
+    .profile-header-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-form-actions {
+        flex-direction: column;
+    }
+}
+
+.avatar-circle {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.avatar-circle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.5);
+}
+
+.avatar-circle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-circle:hover::after {
+    opacity: 1;
+    content: '📷';
+    font-size: 1.5rem;
+}
+
+.avatar-change-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.7);
+}
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -9331,6 +10474,127 @@ body:not(.dark-mode) .chart-type-tab:hover {
             </div>
         </div>
     </div>
+
+    <!-- Landing Page -->
+<div class="landing-page" id="landingPage">
+    <header class="landing-header">
+        <div class="landing-logo">
+            <i class="fas fa-tasks"></i>
+            <span>Tasklytic</span>
+        </div>
+        <div class="auth-buttons">
+            <button class="auth-btn login-btn" id="loginBtn">Log In</button>
+            <button class="auth-btn signup-btn" id="signupBtn">Sign Up</button>
+        </div>
+    </header>
+
+    <main class="landing-main">
+        <div class="hero-section">
+            <h1 class="hero-title">Master Your Tasks with Intelligence</h1>
+            <p class="hero-subtitle">AI-powered task management that adapts to your workflow</p>
+            
+            <div class="feature-preview">
+                <div class="preview-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>AI Prioritization</h3>
+                    <p>Smart task prioritization based on your patterns</p>
+                </div>
+                <div class="preview-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Track your productivity with detailed insights</p>
+                </div>
+                <div class="preview-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Smart Scheduling</h3>
+                    <p>Schedule tasks to be added automatically</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Login Modal -->
+<div class="auth-modal" id="loginModal">
+    <div class="auth-modal-content">
+        <div class="auth-modal-header">
+            <h2>Welcome Back</h2>
+            <button class="auth-modal-close" id="loginModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form class="auth-form" id="loginForm">
+            <div class="auth-form-group">
+                <label for="loginEmail">Username or Email</label>
+                <input type="text" id="loginEmail" required placeholder="Enter your username or email">
+            </div>
+            <div class="auth-form-group">
+                <label for="loginPassword">Password</label>
+                <div class="password-input-container">
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                    <div class="remember-me-container">
+                        <input type="checkbox" id="rememberMe" class="remember-checkbox">
+                        <label for="rememberMe" class="remember-label">Remember me</label>
+                    </div>
+                </div>
+            </div>
+            <div class="auth-error" id="loginError"></div>
+            
+            <!-- Login Button with Spinner -->
+            <button type="submit" class="auth-submit-btn" id="loginSubmitBtn">
+                <span class="btn-text">Log In</span>
+                <div class="login-spinner" id="loginSpinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+            </button>
+            
+            <p class="auth-switch">
+                Don't have an account? 
+                <button type="button" class="auth-link" id="switchToSignup">Sign up here</button>
+            </p>
+        </form>
+    </div>
+</div>
+
+<!-- Signup Modal -->
+<div class="auth-modal" id="signupModal">
+    <div class="auth-modal-content">
+        <div class="auth-modal-header">
+            <h2>Create Account</h2>
+            <button class="auth-modal-close" id="signupModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form class="auth-form" id="signupForm">
+            <div class="auth-form-group">
+                <label for="signupName">Full Name</label>
+                <input type="text" id="signupName" required placeholder="Enter your full name">
+            </div>
+            <div class="auth-form-group">
+                <label for="signupUsername">Username</label>
+                <input type="text" id="signupUsername" required placeholder="Choose a username">
+            </div>
+            <div class="auth-form-group">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" required placeholder="Enter your email">
+            </div>
+            <div class="auth-form-group">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" required placeholder="Create a password" minlength="6">
+            </div>
+            <div class="auth-form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" required placeholder="Confirm your password">
+            </div>
+            <div class="auth-error" id="signupError"></div>
+            <button type="submit" class="auth-submit-btn">Sign Up</button>
+            <p class="auth-switch">
+                Already have an account? 
+                <button type="button" class="auth-link" id="switchToLogin">Log in here</button>
+            </p>
+        </form>
+    </div>
+</div>
 
     <!-- App Container -->
     <div class="app-container" id="appContainer">
@@ -10017,6 +11281,366 @@ const VERSION_FEATURES = {
     }
 };
 
+function openProfileEditor() {
+    const overlay = document.createElement('div');
+    overlay.className = 'profile-editor-overlay';
+    overlay.id = 'profileEditorOverlay';
+    
+    const rememberLogin = localStorage.getItem('tasklytic_remembered_user') ? true : false;
+    
+    overlay.innerHTML = `
+        <div class="profile-editor-header">
+            <h2 class="profile-editor-title">
+                <i class="fas fa-user-cog"></i>
+                Account Settings
+            </h2>
+            <button class="profile-editor-close" id="profileEditorClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="profile-editor-content">
+            <div class="profile-editor-form" id="profileEditorForm">
+                <!-- Profile Header Section -->
+                <div class="profile-header-section">
+                    <div class="profile-avatar">
+                        <div class="avatar-circle">
+                            <span class="avatar-initials">${currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase()}</span>
+                        </div>
+                        <button class="avatar-change-btn" type="button">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <div class="profile-header-info">
+                        <h3>${currentUser.name}</h3>
+                        <p>@${currentUser.username}</p>
+                        <span class="account-badge">Active Account</span>
+                    </div>
+                </div>
+
+                <!-- Form Sections -->
+                <form class="profile-form" id="profileForm">
+                    <div class="form-sections">
+                        <!-- Personal Information -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-user"></i>
+                                <h4>Personal Information</h4>
+                            </div>
+                            <div class="form-grid">
+                                <div class="profile-form-group">
+                                    <label for="profileName">Full Name</label>
+                                    <input type="text" id="profileName" value="${currentUser.name}" required>
+                                    <div class="input-icon"><i class="fas fa-user"></i></div>
+                                    <div class="profile-error" id="nameError"></div>
+                                </div>
+                                
+                                <div class="profile-form-group">
+                                    <label for="profileUsername">Username</label>
+                                    <input type="text" id="profileUsername" value="${currentUser.username}" readonly>
+                                    <div class="input-icon"><i class="fas fa-at"></i></div>
+                                    <div class="field-hint">Username cannot be changed</div>
+                                </div>
+                                
+                                <div class="profile-form-group full-width">
+                                    <label for="profileEmail">Email Address</label>
+                                    <input type="email" id="profileEmail" value="${currentUser.email}" readonly>
+                                    <div class="input-icon"><i class="fas fa-envelope"></i></div>
+                                    <div class="field-hint">Email cannot be changed for security reasons</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-shield-alt"></i>
+                                <h4>Security & Privacy</h4>
+                            </div>
+                            <div class="form-grid">
+                                <div class="profile-form-group">
+                                    <label for="profileCurrentPassword">Current Password</label>
+                                    <input type="password" id="profileCurrentPassword" placeholder="Enter current password">
+                                    <div class="input-icon"><i class="fas fa-lock"></i></div>
+                                    <div class="profile-error" id="currentPasswordError"></div>
+                                </div>
+                                
+                                <div class="profile-form-group">
+                                    <label for="profileNewPassword">New Password</label>
+                                    <input type="password" id="profileNewPassword" placeholder="Enter new password">
+                                    <div class="input-icon"><i class="fas fa-key"></i></div>
+                                    <div class="profile-error" id="newPasswordError"></div>
+                                </div>
+                                
+                                <div class="profile-form-group full-width">
+                                    <label for="profileConfirmPassword">Confirm New Password</label>
+                                    <input type="password" id="profileConfirmPassword" placeholder="Confirm new password">
+                                    <div class="input-icon"><i class="fas fa-check-circle"></i></div>
+                                    <div class="profile-error" id="confirmPasswordError"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preferences Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-cog"></i>
+                                <h4>Preferences</h4>
+                            </div>
+                            <div class="preferences-grid">
+                                <div class="preference-item">
+                                    <div class="preference-info">
+                                        <div class="preference-title">Remember Login</div>
+                                        <div class="preference-description">Stay signed in on this device</div>
+                                    </div>
+                                    <div class="preference-toggle ${rememberLogin ? 'active' : ''}" id="rememberToggle">
+                                        <div class="preference-toggle-handle"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="preference-item">
+                                    <div class="preference-info">
+                                        <div class="preference-title">Email Notifications</div>
+                                        <div class="preference-description">Receive task reminders via email</div>
+                                    </div>
+                                    <div class="preference-toggle active" id="emailToggle">
+                                        <div class="preference-toggle-handle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-form-actions">
+                        <button type="button" class="profile-btn profile-btn-cancel" id="profileCancelBtn">
+                            <i class="fas fa-times"></i>
+                            Cancel
+                        </button>
+                        <button type="submit" class="profile-btn profile-btn-save">
+                            <i class="fas fa-save"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    setTimeout(() => overlay.classList.add('show'), 100);
+    
+    // Event listeners
+    document.getElementById('profileEditorClose').addEventListener('click', closeProfileEditor);
+    document.getElementById('profileCancelBtn').addEventListener('click', closeProfileEditor);
+    document.getElementById('profileForm').addEventListener('submit', handleProfileSave);
+    
+    // Toggle handlers
+    document.getElementById('rememberToggle').addEventListener('click', function() {
+        this.classList.toggle('active');
+    });
+    document.getElementById('emailToggle').addEventListener('click', function() {
+        this.classList.toggle('active');
+    });
+    
+    document.getElementById('accountDropdown').classList.remove('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Avatar upload functionality
+const avatarChangeBtn = document.querySelector('.avatar-change-btn');
+const avatarCircle = document.querySelector('.avatar-circle');
+
+// Make both avatar circle and camera button clickable
+[avatarChangeBtn, avatarCircle].forEach(element => {
+    if (element) {
+        element.addEventListener('click', handleAvatarUpload);
+        element.style.cursor = 'pointer';
+    }
+});
+
+function handleAvatarUpload() {
+    // Create hidden file input
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    
+    fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification('⚠️ Image must be smaller than 5MB', 'warning');
+                return;
+            }
+            
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                showNotification('⚠️ Please select a valid image file', 'warning');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageDataUrl = e.target.result;
+                
+                // Update avatar display
+                updateAvatarDisplay(imageDataUrl);
+                
+                // Store in user data
+                currentUser.profileImage = imageDataUrl;
+                
+                showNotification('✅ Profile photo updated!', 'success');
+            };
+            
+            reader.onerror = function() {
+                showNotification('❌ Failed to read image file', 'error');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // Clean up
+        document.body.removeChild(fileInput);
+    });
+    
+    // Trigger file selection
+    document.body.appendChild(fileInput);
+    fileInput.click();
+}
+
+function updateAvatarDisplay(imageDataUrl) {
+    const avatarCircle = document.querySelector('.avatar-circle');
+    const avatarInitials = document.querySelector('.avatar-initials');
+    
+    if (avatarCircle && avatarInitials) {
+        if (imageDataUrl) {
+            // Show image
+            avatarCircle.style.backgroundImage = `url(${imageDataUrl})`;
+            avatarCircle.style.backgroundSize = 'cover';
+            avatarCircle.style.backgroundPosition = 'center';
+            avatarInitials.style.display = 'none';
+        } else {
+            // Show initials
+            avatarCircle.style.backgroundImage = 'none';
+            avatarInitials.style.display = 'block';
+        }
+    }
+}
+
+function closeProfileEditor() {
+    const overlay = document.getElementById('profileEditorOverlay');
+    if (overlay) {
+        overlay.classList.remove('show');
+        setTimeout(() => {
+            overlay.remove();
+            document.body.style.overflow = '';
+        }, 600);
+    }
+}
+
+function handleProfileSave(e) {
+    e.preventDefault();
+    
+    // Clear previous errors
+    document.querySelectorAll('.profile-error').forEach(error => {
+        error.style.display = 'none';
+    });
+    
+    const newName = document.getElementById('profileName').value.trim();
+    const currentPassword = document.getElementById('profileCurrentPassword').value;
+    const newPassword = document.getElementById('profileNewPassword').value;
+    const confirmPassword = document.getElementById('profileConfirmPassword').value;
+    const rememberEnabled = document.getElementById('rememberToggle').classList.contains('active');
+    
+    let hasError = false;
+    
+    // Validate name
+    if (!newName) {
+        showProfileError('nameError', 'Please enter your full name');
+        hasError = true;
+    }
+    
+    // If changing password, validate current password
+    if (newPassword || confirmPassword) {
+        if (!currentPassword) {
+            showProfileError('currentPasswordError', 'Please enter your current password');
+            hasError = true;
+        } else if (currentPassword !== currentUser.password) {
+            showProfileError('currentPasswordError', 'Current password is incorrect');
+            hasError = true;
+        } else if (newPassword.length < 6) {
+            showProfileError('newPasswordError', 'New password must be at least 6 characters');
+            hasError = true;
+        } else if (newPassword !== confirmPassword) {
+            showProfileError('confirmPasswordError', 'Passwords do not match');
+            hasError = true;
+        }
+    }
+    
+    if (hasError) return;
+    
+    // Update user data
+    const userIndex = users.findIndex(u => u.id === currentUser.id);
+    if (userIndex !== -1) {
+        users[userIndex].name = newName;
+        if (newPassword) {
+            users[userIndex].password = newPassword;
+        }
+        
+        // Update current user
+        currentUser.name = newName;
+        if (newPassword) {
+            currentUser.password = newPassword;
+        }
+        
+        // Save to localStorage
+        saveUsers();
+        localStorage.setItem('tasklytic_current_user', JSON.stringify(currentUser));
+        
+        // Handle remember login setting
+        if (rememberEnabled) {
+            localStorage.setItem('tasklytic_remembered_user', JSON.stringify(currentUser));
+            localStorage.setItem('tasklytic_remembered_email', currentUser.email);
+        } else {
+            localStorage.removeItem('tasklytic_remembered_user');
+            localStorage.removeItem('tasklytic_remembered_email');
+        }
+        
+        // Update account button display
+        const accountBtn = document.querySelector('.account-btn span');
+        if (accountBtn) {
+            accountBtn.textContent = currentUser.username || currentUser.name.split(' ')[0];
+        }
+        
+        const accountName = document.querySelector('.account-name');
+        if (accountName) {
+            accountName.textContent = currentUser.name;
+        }
+
+        // Add this inside the handleProfileSave function, after updating the user data
+
+// Update user data (add this after the existing user updates)
+if (currentUser.profileImage) {
+    users[userIndex].profileImage = currentUser.profileImage;
+}
+
+// Update account button display with avatar
+updateAccountButtonAvatar();
+        
+        closeProfileEditor();
+        showNotification('✅ Profile updated successfully!', 'success');
+    }
+}
+
+function showProfileError(elementId, message) {
+    const errorElement = document.getElementById(elementId);
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+}
+
             // Global Variables
 let currentDetectionPopup = null; // Add this line
             let tasks = [];
@@ -10048,6 +11672,353 @@ let completionSoundUrl = 'sounds/mixkit-software-interface-start-2574.wav';
     finance: { bg: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', icon: '<i class="fas fa-dollar-sign"></i>' },
     education: { bg: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', icon: '<i class="fas fa-graduation-cap"></i>' }
 };
+
+// Authentication System
+let currentUser = null;
+let users = [];
+let rememberLogin = false;
+
+// Load users from localStorage
+function loadUsers() {
+    try {
+        const savedUsers = localStorage.getItem('tasklytic_users');
+        users = savedUsers ? JSON.parse(savedUsers) : [];
+    } catch (error) {
+        console.error('Failed to load users:', error);
+        users = [];
+    }
+}
+
+// Save users to localStorage
+function saveUsers() {
+    try {
+        localStorage.setItem('tasklytic_users', JSON.stringify(users));
+    } catch (error) {
+        console.error('Failed to save users:', error);
+    }
+}
+
+function checkAuthStatus() {
+    try {
+        // Only check for remembered user if remember me was actually enabled
+        const rememberedUser = localStorage.getItem('tasklytic_remembered_user');
+        const rememberEnabled = localStorage.getItem('tasklytic_remember_enabled') === 'true';
+        
+        if (rememberedUser && rememberEnabled) {
+            currentUser = JSON.parse(rememberedUser);
+            // Set current session but don't make it permanent
+            sessionStorage.setItem('tasklytic_current_session', JSON.stringify(currentUser));
+            return true;
+        }
+        
+        // Check for current session (temporary)
+        const currentSession = sessionStorage.getItem('tasklytic_current_session');
+        if (currentSession) {
+            currentUser = JSON.parse(currentSession);
+            return true;
+        }
+    } catch (error) {
+        console.error('Failed to check auth status:', error);
+    }
+    return false;
+}
+
+// Initialize authentication
+function initializeAuth() {
+    loadUsers();
+    
+    const landingPage = document.getElementById('landingPage');
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const loginModal = document.getElementById('loginModal');
+    const signupModal = document.getElementById('signupModal');
+    
+    // Check if user is already logged in
+    if (checkAuthStatus()) {
+        setTimeout(() => {
+            showApp();
+        }, 4000);
+    } else {
+        setTimeout(() => {
+            landingPage.classList.add('visible');
+        }, 4000);
+    }
+    
+    // Event listeners
+    if (loginBtn) loginBtn.addEventListener('click', () => openLoginModal());
+    if (signupBtn) signupBtn.addEventListener('click', () => openSignupModal());
+    
+    // Modal close handlers
+    const loginClose = document.getElementById('loginModalClose');
+    const signupClose = document.getElementById('signupModalClose');
+    if (loginClose) loginClose.addEventListener('click', () => closeAuthModals());
+    if (signupClose) signupClose.addEventListener('click', () => closeAuthModals());
+    
+    // Form switch handlers
+    const switchToSignup = document.getElementById('switchToSignup');
+    const switchToLogin = document.getElementById('switchToLogin');
+    if (switchToSignup) {
+        switchToSignup.addEventListener('click', () => {
+            closeAuthModals();
+            setTimeout(() => openSignupModal(), 100);
+        });
+    }
+    if (switchToLogin) {
+        switchToLogin.addEventListener('click', () => {
+            closeAuthModals();
+            setTimeout(() => openLoginModal(), 100);
+        });
+    }
+    
+    // Form submit handlers
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    if (loginForm) loginForm.addEventListener('submit', handleLogin);
+    if (signupForm) signupForm.addEventListener('submit', handleSignup);
+    
+    // Close modals on outside click
+    [loginModal, signupModal].forEach(modal => {
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeAuthModals();
+                }
+            });
+        }
+    });
+}
+
+function openLoginModal() {
+    document.getElementById('loginModal').classList.add('active');
+    clearAuthErrors();
+    
+    // Load remembered credentials if available
+    const rememberedEmail = localStorage.getItem('tasklytic_remembered_email');
+    if (rememberedEmail) {
+        document.getElementById('loginEmail').value = rememberedEmail;
+        document.getElementById('rememberMe').checked = true;
+    }
+}
+
+function openSignupModal() {
+    document.getElementById('signupModal').classList.add('active');
+    clearAuthErrors();
+}
+
+function closeAuthModals() {
+    document.getElementById('loginModal').classList.remove('active');
+    document.getElementById('signupModal').classList.remove('active');
+    clearAuthForms();
+    clearAuthErrors();
+    
+    // Reset login button state
+    const loginBtn = document.getElementById('loginSubmitBtn');
+    if (loginBtn) {
+        loginBtn.classList.remove('loading');
+    }
+}
+
+function clearAuthForms() {
+    document.getElementById('loginForm').reset();
+    document.getElementById('signupForm').reset();
+}
+
+function clearAuthErrors() {
+    const loginError = document.getElementById('loginError');
+    const signupError = document.getElementById('signupError');
+    if (loginError) loginError.style.display = 'none';
+    if (signupError) signupError.style.display = 'none';
+}
+
+function showAuthError(type, message) {
+    const errorElement = document.getElementById(`${type}Error`);
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+}
+
+function handleLogin(e) {
+    e.preventDefault();
+    
+    const loginInput = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const rememberMe = document.getElementById('rememberMe').checked;
+    const loginBtn = document.getElementById('loginSubmitBtn');
+    
+    loginBtn.classList.add('loading');
+    
+    setTimeout(() => {
+        const user = users.find(u => 
+            u.email.toLowerCase() === loginInput.toLowerCase() || 
+            u.username.toLowerCase() === loginInput.toLowerCase()
+        );
+
+        if (!user || user.password !== password) {
+            showAuthError('login', 'Enter correct details or sign up to continue.');
+            loginBtn.classList.remove('loading');
+            return;
+        }
+        
+        // Login successful
+        currentUser = user;
+        
+        if (rememberMe) {
+            // Save to localStorage for persistence
+            localStorage.setItem('tasklytic_remembered_user', JSON.stringify(currentUser));
+            localStorage.setItem('tasklytic_remember_enabled', 'true');
+        } else {
+            // Only save to sessionStorage (will be cleared on browser close/refresh)
+            sessionStorage.setItem('tasklytic_current_session', JSON.stringify(currentUser));
+            localStorage.removeItem('tasklytic_remembered_user');
+            localStorage.removeItem('tasklytic_remember_enabled');
+        }
+        
+        loginBtn.classList.remove('loading');
+        closeAuthModals();
+        document.getElementById('landingPage').style.display = 'none';
+        showApp();
+        
+        showNotification(`Welcome back, ${user.name}!`, 'success');
+    }, 2000);
+}
+
+function handleSignup(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('signupName').value.trim();
+const username = document.getElementById('signupUsername').value.trim().toLowerCase();
+const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+    
+    // Validation
+    if (password !== confirmPassword) {
+        showAuthError('signup', 'Passwords do not match.');
+        return;
+    }
+    
+    if (password.length < 6) {
+        showAuthError('signup', 'Password must be at least 6 characters long.');
+        return;
+    }
+    
+    // Check if username already exists
+if (users.find(u => u.username.toLowerCase() === username.toLowerCase())) {
+    showAuthError('signup', 'Username already taken. Please choose another.');
+    return;
+}
+
+// Check if email already exists
+if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
+    showAuthError('signup', 'Account with this email already exists. Please log in.');
+    return;
+}
+    
+    // Create new user
+    const newUser = {
+        id: generateId(),
+        name,
+        username,
+        email,
+        password,
+        createdAt: new Date().toISOString()
+    };
+    
+    users.push(newUser);
+    saveUsers();
+    
+    closeAuthModals();
+    
+    showNotification('Account created successfully! Please log in.', 'success');
+    setTimeout(() => {
+        openLoginModal();
+    }, 1000);
+}
+
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('tasklytic_current_user');
+    
+    // Keep remembered user if it exists
+    // localStorage.removeItem('tasklytic_remembered_user'); // Don't remove this
+    
+    // Hide app and show landing page
+    document.getElementById('appContainer').classList.remove('visible');
+    document.getElementById('landingPage').classList.add('visible');
+    document.getElementById('landingPage').style.display = 'flex';
+    
+    // Remove account button
+    const accountBtn = document.querySelector('.account-btn');
+    if (accountBtn) {
+        accountBtn.remove();
+    }
+    
+    showNotification('Logged out successfully', 'info');
+}
+
+function addAccountButton() {
+    const headerActions = document.querySelector('.header-actions');
+    if (headerActions && currentUser && !document.querySelector('.account-btn')) {
+        const accountBtn = document.createElement('div');
+        accountBtn.className = 'account-btn-container';
+        accountBtn.style.position = 'relative';
+        
+        accountBtn.innerHTML = `
+            <button class="account-btn" id="accountBtn">
+                <i class="fas fa-user"></i>
+                <span>${currentUser.username || currentUser.name.split(' ')[0]}</span>
+            </button>
+            <div class="account-dropdown" id="accountDropdown">
+                <div class="account-info">
+                    <div class="account-name">${currentUser.name}</div>
+                    <div class="account-email">${currentUser.email}</div>
+                </div>
+                <div class="account-dropdown-item" id="editProfileBtn">
+                    <i class="fas fa-user-edit"></i>
+                    <span>Edit Profile</span>
+                </div>
+                <div class="account-dropdown-item logout" id="accountLogout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </div>
+            </div>
+        `;
+        
+        // Insert BEFORE the theme toggle (first child)
+        headerActions.insertBefore(accountBtn, headerActions.firstChild);
+        
+        // Add event listeners
+        const accountBtnElement = document.getElementById('accountBtn');
+        const accountDropdown = document.getElementById('accountDropdown');
+        const logoutBtn = document.getElementById('accountLogout');
+        const editProfileBtn = document.getElementById('editProfileBtn');
+        
+        accountBtnElement.addEventListener('click', (e) => {
+            e.stopPropagation();
+            accountDropdown.classList.toggle('active');
+        });
+        
+        logoutBtn.addEventListener('click', logout);
+        editProfileBtn.addEventListener('click', openProfileEditor);
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            accountDropdown.classList.remove('active');
+
+            // Load existing avatar if available
+setTimeout(() => {
+    if (currentUser.profileImage) {
+        updateAccountButtonAvatar();
+        
+        // Also update the profile editor avatar if it's open
+        const avatarCircle = document.querySelector('.avatar-circle');
+        if (avatarCircle) {
+            updateAvatarDisplay(currentUser.profileImage);
+        }
+    }
+}, 100);
+        });
+    }
+}
 
             // Load data with error handling
             try {
@@ -10257,8 +12228,8 @@ function testCompletionSound() {
 
             // Initialize App
             function initializeApp() {
+                initializeAuth(); // ADD THIS LINE FIRST
     hideWelcomeAnimation();
-    showApp();
     showVersionSplashScreen();
     initializeAIButton();
     initializeIntelligentPrio();
@@ -10275,6 +12246,11 @@ function testCompletionSound() {
     renderTasks();
     updateDashboard();
     updateCategoryCounts();
+
+     // Add logout button if user is logged in
+    if (currentUser) {
+        addLogoutButton();
+    }
 
     // Animate mini chart after everything loads
     setTimeout(() => {
@@ -10294,13 +12270,24 @@ function testCompletionSound() {
             }
 
             function showApp() {
-                setTimeout(() => {
-                    const appContainer = document.getElementById('appContainer');
-                    if (appContainer) {
-                        appContainer.classList.add('visible');
-                    }
-                }, 4000);
-            }
+    const appContainer = document.getElementById('appContainer');
+    const landingPage = document.getElementById('landingPage');
+    
+    if (landingPage) {
+        landingPage.classList.remove('visible');
+        setTimeout(() => {
+            landingPage.style.display = 'none';
+        }, 800);
+    }
+    
+    if (appContainer) {
+        appContainer.classList.add('visible');
+        // Add account button after showing app
+        setTimeout(() => {
+            addAccountButton(); // Changed from addLogoutButton to addAccountButton
+        }, 500);
+    }
+}
 
             // AI Button Initialization
             function initializeAIButton() {
@@ -14125,65 +16112,24 @@ function updateTrendsChart(period) {
             </div>
         `}
         
-        <!-- Enhanced Legend with oval indicators -->
+       <!-- Enhanced Legend with FATTER oval indicators -->
         <div style="display: flex; justify-content: center; gap: 2.5rem; margin-top: 1.5rem; padding: 1rem;
                    background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <div style="width: 16px; height: 24px; 
+                <div style="width: 20px; height: 28px; 
                            background: linear-gradient(180deg, rgba(79, 70, 229, 0.4) 0%, rgba(79, 70, 229, 0.2) 100%); 
-                           border-radius: 12px; border: 2px solid rgba(79, 70, 229, 0.3);
+                           border-radius: 15px; border: 2px solid rgba(79, 70, 229, 0.3);
                            box-shadow: 0 2px 6px rgba(79, 70, 229, 0.2);"></div>
                 <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem; font-weight: 600;">Total Tasks</span>
             </div>
             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <div style="width: 16px; height: 24px; 
+                <div style="width: 20px; height: 28px; 
                            background: linear-gradient(180deg, var(--success) 0%, var(--success-dark) 100%); 
-                           border-radius: 12px; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);"></div>
+                           border-radius: 15px; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);"></div>
                 <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem; font-weight: 600;">Completed</span>
             </div>
         </div>
     `;
-}
-
-
-
-// Add this function after your existing updateTrendsChart function
-function initializeTrendsChartTabs() {
-    const chartTypeTabs = document.querySelectorAll('.chart-type-tab');
-    let currentChartType = 'bar';
-    let currentPeriod = 'week';
-    
-    chartTypeTabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // Remove active class from all tabs
-            chartTypeTabs.forEach(t => t.classList.remove('active'));
-            
-            // Add active class to clicked tab
-            e.target.closest('.chart-type-tab').classList.add('active');
-            
-            // Get chart type
-            currentChartType = e.target.closest('.chart-type-tab').dataset.chartType;
-            
-            // Update chart
-            updateTrendsChart(currentPeriod, currentChartType);
-        });
-    });
-    
-    // Update period controls to use current chart type
-    const periodBtns = document.querySelectorAll('.chart-control-btn');
-    periodBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            periodBtns.forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            
-            currentPeriod = e.target.dataset.period;
-            updateTrendsChart(currentPeriod, currentChartType);
-        });
-    });
 }
 
 
@@ -14863,29 +16809,17 @@ if ('serviceWorker' in navigator) {
         <!-- 1. TRENDS CHART (Bar/Line Toggle) -->
 <div class="interactive-chart-container">
     <div class="chart-header">
-        <h3 class="chart-title">Task Completion Trends</h3>
-        <div class="chart-subtitle" style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 0.25rem;">
-            Dynamic visualization of task creation and completion patterns
-        </div>
+    <h3 class="chart-title">Task Completion Trends</h3>
+    <div class="chart-subtitle" style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 0.25rem;">
+        Visual overview of your task creation and completion patterns
+    </div>
         <div class="chart-controls-row">
-            <!-- Chart Type Tabs -->
-            <div class="chart-type-tabs">
-                <button class="chart-type-tab active" data-chart-type="bar">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Bar Chart</span>
-                </button>
-                <button class="chart-type-tab" data-chart-type="line">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Line Graph</span>
-                </button>
-            </div>
-            <!-- Period Controls -->
             <div class="chart-controls">
-                <button class="chart-control-btn active" data-period="week">Week</button>
-                <button class="chart-control-btn" data-period="month">Month</button>
-                <button class="chart-control-btn" data-period="year">Year</button>
-            </div>
-        </div>
+        <button class="chart-control-btn active" data-period="week">Week</button>
+        <button class="chart-control-btn" data-period="month">Month</button>
+        <button class="chart-control-btn" data-period="year">Year</button>
+    </div>
+</div>
     </div>
     <div id="trendsChart" style="height: 350px; overflow: hidden;"></div>
 </div>
