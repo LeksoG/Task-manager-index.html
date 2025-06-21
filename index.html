@@ -1017,10 +1017,11 @@
             transition: all 0.3s ease-in-out;
         }
 
-        .sidebar {
+        /* Enhanced sidebar layout to accommodate streak */
+.sidebar {
     width: fit-content;
-    min-width: 260px;
-    max-width: 320px;
+    min-width: 240px; /* Increased slightly for better fit */
+    max-width: 280px;
     background: 
         linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%);
     backdrop-filter: blur(15px) saturate(180%);
@@ -1031,14 +1032,16 @@
         0 2px 16px rgba(0, 0, 0, 0.05),
         inset 0 1px 0 rgba(255, 255, 255, 0.4),
         inset 0 -1px 0 rgba(0, 0, 0, 0.05);
-    padding: 1.5rem 1rem;
+    padding: 1rem; /* Reduced padding for more space */
     position: sticky;
     top: 90px;
     height: fit-content;
     max-height: calc(100vh - 120px);
-    overflow: hidden; /* Changed from overflow-y: auto to hidden to contain categories */
+    overflow: hidden;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar::before {
@@ -1074,8 +1077,8 @@
 }
 
         .sidebar-header {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
+    margin-bottom: 1.25rem; /* Reduced from 1.5rem */
+    padding-bottom: 0.75rem; /* Reduced from 1rem */
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     justify-content: space-between;
@@ -1085,7 +1088,7 @@
 }
 
 .sidebar-header h3 {
-    font-size: 1.25rem;
+    font-size: 1.1rem; /* Reduced from 1.25rem */
     color: var(--gray-800);
     font-weight: 600;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -1099,16 +1102,18 @@ body.dark-mode .sidebar-header {
     border-bottom-color: rgba(75, 85, 99, 0.3);
 }
 
-        /* Improved Category Selection with Sliding Indicator */
-        .categories-container {
-            position: relative;
-            overflow: hidden;
-        }
+        /* Categories container spacing */
+.categories-container {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0; /* Remove bottom margin */
+    flex: 1;
+}
 
         .category-slider {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0.5rem;
+    gap: 0.4rem; /* Reduced from 0.5rem */
     width: 100%;
     max-width: 100%;
     overflow: hidden;
@@ -1119,24 +1124,26 @@ body.dark-mode .sidebar-header {
     margin-bottom: 0; /* Remove margin since we're using gap */
 }
 
-        .category {
+        /* Adjust category spacing to match streak */
+.category {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.875rem 1rem; /* Slightly reduced padding */
-    border-radius: 12px;
-    margin-bottom: 0.5rem; /* Reduced margin */
+    padding: 0.75rem 1rem; /* Consistent with streak padding */
+    border-radius: 12px; /* Match streak border radius */
+    margin-bottom: 0.5rem;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--gray-700);
     font-weight: 500;
+    font-size: 0.9rem;
     position: relative;
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 100%; /* Ensure full width usage */
-    max-width: 100%; /* Prevent overflow */
-    box-sizing: border-box; /* Include padding and border in width */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .category::before {
@@ -1271,13 +1278,14 @@ body.dark-mode .sidebar-header {
     }
 }
 
-        .task-count {
+        /* Make task count badges smaller */
+.task-count {
     background: rgba(255, 255, 255, 0.2);
     color: var(--gray-700);
-    font-size: 0.75rem;
+    font-size: 0.7rem; /* Reduced from 0.75rem */
     font-weight: 600;
-    width: 24px;
-    height: 24px;
+    width: 22px; /* Reduced from 24px */
+    height: 22px; /* Reduced from 24px */
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1405,9 +1413,9 @@ body.dark-mode .category.active::before {
 
 /* Analytics Container */
 .analytics-container {
-    width: 260px;
-    min-width: 260px;
-    margin-top: 1.5rem;
+    width: 220px; /* Reduced from 260px */
+    min-width: 220px; /* Reduced from 260px */
+    margin-top: 1.25rem; /* Reduced from 1.5rem */
     display: flex;
     justify-content: center;
     opacity: 0;
@@ -1423,8 +1431,8 @@ body.dark-mode .category.active::before {
 }
 
 .analytics-square {
-    width: 200px;
-    height: 200px;
+    width: 180px; /* Reduced from 200px */
+    height: 180px; /* Reduced from 200px */
     background: 
         linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%);
     backdrop-filter: blur(15px) saturate(180%);
@@ -1434,7 +1442,7 @@ body.dark-mode .category.active::before {
         0 8px 25px rgba(0, 0, 0, 0.15),
         0 2px 16px rgba(0, 0, 0, 0.05),
         inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    padding: 1.5rem;
+    padding: 1.25rem; /* Reduced from 1.5rem */
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -9410,19 +9418,30 @@ body.dark-mode .search-suggestions {
     }
 }
 
-/* Horizontal Oval Streak Container */
+/* Ensure streak container has enough width */
 .streak-container {
-    margin-bottom: 1.5rem;
-    padding: 0.8rem 1.2rem;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
-    border-radius: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
+    margin: 1.5rem 0;
+    padding: 0.8rem 1rem; /* Reduced padding */
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.12) 0%, 
+        rgba(255, 255, 255, 0.06) 50%,
+        rgba(255, 255, 255, 0.08) 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px) saturate(180%);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        0 2px 16px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
     opacity: 0;
     transform: translateY(-20px);
     animation: slideInFromTop 1s ease-out 1.5s forwards;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 220px; /* Ensure minimum width matches sidebar */
 }
 
 .streak-container::before {
@@ -9445,9 +9464,11 @@ body.dark-mode .search-suggestions {
     opacity: 1;
 }
 
+/* Center the streak header */
 .streak-header {
     text-align: center;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
 }
 
 .streak-count {
@@ -9463,36 +9484,51 @@ body.dark-mode .search-suggestions {
     text-transform: uppercase;
 }
 
-/* Horizontal Days Layout */
+/* Fixed Streak Oval with Proper Sizing */
 .streak-oval {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px; /* Reduced gap */
+    justify-items: center;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.2rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    padding: 0.4rem 0.6rem; /* Reduced padding */
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
+/* Smaller Streak Days to Fit All 7 */
 .streak-day {
     position: relative;
-    width: 28px;
-    height: 28px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    width: 24px; /* Reduced from 28px */
+    height: 24px; /* Reduced from 28px */
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.12) 0%, 
+        rgba(255, 255, 255, 0.06) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.25);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    flex-shrink: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 3px 8px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    justify-self: center;
+    box-sizing: border-box;
 }
 
+/* Adjust text size for smaller circles */
 .day-letter {
-    font-size: 0.7rem;
-    font-weight: 700;
+    font-size: 0.65rem; /* Reduced font size */
+    font-weight: 800;
     color: rgba(255, 255, 255, 0.7);
     z-index: 3;
     position: relative;
@@ -9500,28 +9536,38 @@ body.dark-mode .search-suggestions {
     transition: all 0.3s ease;
 }
 
+/* Fixed Fire Indicator - No Overlap */
 .fire-indicator {
     position: absolute;
-    top: -6px;
-    right: -6px;
+    top: -8px; /* Moved further out */
+    right: -8px; /* Moved further out */
     width: 16px;
     height: 16px;
-    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    background: linear-gradient(135deg, 
+        #ff6b35 0%, 
+        #f7931e 50%, 
+        #ff4500 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     transform: scale(0);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 4;
-    box-shadow: 0 3px 8px rgba(255, 107, 53, 0.4);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 10; /* Higher z-index */
+    box-shadow: 
+        0 4px 12px rgba(255, 107, 53, 0.8),
+        0 0 20px rgba(255, 107, 53, 0.4), /* Added glow */
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.9);
 }
 
 .fire-indicator i {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     color: white;
     animation: flicker 1.5s ease-in-out infinite alternate;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    z-index: 11;
 }
 
 .streak-day.completed .fire-indicator {
@@ -9641,6 +9687,229 @@ body.dark-mode .streak-container:hover {
 
 body.dark-mode .streak-container:hover .streak-oval {
     background: rgba(255, 255, 255, 0.06);
+}
+
+/* Streak Celebration Overlay */
+.streak-celebration-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(255, 107, 53, 0.95) 0%, 
+        rgba(247, 147, 30, 0.98) 50%,
+        rgba(255, 107, 53, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    overflow: hidden;
+}
+
+.streak-celebration-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Celebration Content */
+.celebration-content {
+    text-align: center;
+    color: white;
+    transform: scale(0.8) translateY(50px);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+
+.streak-celebration-overlay.show .celebration-content {
+    transform: scale(1) translateY(0);
+}
+
+/* Animated Fire Icon */
+.celebration-fire {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    animation: celebrationFire 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    position: relative;
+}
+
+@keyframes celebrationFire {
+    0%, 100% { 
+        transform: scale(1) rotate(-3deg);
+        filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8)) brightness(1);
+    }
+    25% { 
+        transform: scale(1.1) rotate(2deg);
+        filter: drop-shadow(0 0 30px rgba(255, 255, 255, 1)) brightness(1.2);
+    }
+    50% { 
+        transform: scale(1.15) rotate(-1deg);
+        filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.9)) brightness(1.1);
+    }
+    75% { 
+        transform: scale(1.05) rotate(3deg);
+        filter: drop-shadow(0 0 35px rgba(255, 255, 255, 1)) brightness(1.3);
+    }
+}
+
+/* Streak Count Display */
+.celebration-streak-count {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: countPulse 2s ease-in-out infinite;
+}
+
+@keyframes countPulse {
+    0%, 100% { 
+        transform: scale(1);
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    50% { 
+        transform: scale(1.05);
+        text-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Day Name Display */
+.celebration-day-name {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: dayNameReveal 1s ease-out 0.5s forwards;
+}
+
+@keyframes dayNameReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Celebration Message */
+.celebration-message {
+    font-size: 1.2rem;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: messageSlide 1s ease-out 0.8s forwards;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+}
+
+/* Floating Fire Particles */
+.fire-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.fire-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #ff6b35 0%, #f7931e 100%);
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatUp 3s ease-out infinite;
+}
+
+.fire-particle:nth-child(1) { 
+    left: 10%; 
+    animation-delay: 0s;
+    animation-duration: 2.5s;
+}
+.fire-particle:nth-child(2) { 
+    left: 25%; 
+    animation-delay: 0.5s;
+    animation-duration: 3s;
+}
+.fire-particle:nth-child(3) { 
+    left: 40%; 
+    animation-delay: 1s;
+    animation-duration: 2.8s;
+}
+.fire-particle:nth-child(4) { 
+    left: 60%; 
+    animation-delay: 0.3s;
+    animation-duration: 3.2s;
+}
+.fire-particle:nth-child(5) { 
+    left: 75%; 
+    animation-delay: 0.8s;
+    animation-duration: 2.7s;
+}
+.fire-particle:nth-child(6) { 
+    left: 90%; 
+    animation-delay: 1.2s;
+    animation-duration: 3.1s;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(90vh) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(10vh) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(0vh) scale(0);
+    }
+}
+
+/* Hide streak container during celebration */
+.streak-container.celebrating {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Smooth return animation */
+.streak-container.celebration-complete {
+    animation: streakReturn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes streakReturn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 body.dark-mode .streak-container::before {
@@ -9851,6 +10120,149 @@ body.dark-mode .streak-popup-header {
 
 body.dark-mode .streak-popup-header h3 {
     color: var(--gray-200);
+}
+
+/* Enhanced Streak Count Badge */
+.streak-count {
+    background: linear-gradient(135deg, 
+        #ff6b35 0%, 
+        #f7931e 50%, 
+        #ff6b35 100%);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-block;
+    box-shadow: 
+        0 4px 12px rgba(255, 107, 53, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.streak-count::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 100%);
+    animation: badgeShimmer 3s ease-in-out infinite;
+}
+
+@keyframes badgeShimmer {
+    0%, 100% { left: -100%; }
+    50% { left: 100%; }
+}
+
+/* Enhanced Completed Day State */
+.streak-day.completed {
+    background: linear-gradient(135deg, 
+        rgba(255, 107, 53, 0.4) 0%, 
+        rgba(247, 147, 30, 0.3) 50%,
+        rgba(255, 107, 53, 0.4) 100%);
+    border-color: #ff6b35;
+    box-shadow: 
+        0 0 20px rgba(255, 107, 53, 0.5),
+        0 4px 15px rgba(255, 107, 53, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    transform: scale(1.08);
+    position: relative;
+}
+
+.streak-day.completed::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, 
+        rgba(255, 107, 53, 0.2) 0%, 
+        transparent 70%);
+    animation: completedGlow 2s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes completedGlow {
+    0%, 100% { 
+        opacity: 0.5; 
+        transform: scale(1); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1); 
+    }
+}
+
+/* Enhanced Fire Indicator */
+.fire-indicator {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, 
+        #ff6b35 0%, 
+        #f7931e 50%, 
+        #ff4500 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 4;
+    box-shadow: 
+        0 4px 12px rgba(255, 107, 53, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.fire-indicator i {
+    font-size: 0.7rem;
+    color: white;
+    animation: flicker 1.5s ease-in-out infinite alternate;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced Hover Effects */
+.streak-day:hover:not(.completed) {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.18) 0%, 
+        rgba(255, 255, 255, 0.12) 100%);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Enhanced Container Hover Effect */
+.streak-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        0 12px 40px rgba(255, 107, 53, 0.2),
+        0 8px 25px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 107, 53, 0.4);
+}
+
+.streak-container:hover .streak-oval {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.08),
+        0 2px 8px rgba(255, 107, 53, 0.1);
 }
 
 .enhanced-ai-popup {
@@ -10349,6 +10761,1161 @@ body.dark-mode .full-view-meta-item {
         font-size: 1.5rem;
     }
 }
+
+/* Survey Overlay Styles */
+.survey-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+    backdrop-filter: blur(20px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 2rem;
+}
+
+.survey-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.survey-container {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
+    border-radius: 24px;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    max-width: 680px;
+    width: 100%;
+    max-height: 90vh;
+    overflow: hidden;
+    transform: scale(0.8) translateY(40px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.survey-overlay.show .survey-container {
+    transform: scale(1) translateY(0);
+}
+
+/* Survey Header */
+.survey-header {
+    padding: 2.5rem 2.5rem 1.5rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.survey-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: headerShimmer 8s ease-in-out infinite;
+}
+
+@keyframes headerShimmer {
+    0%, 100% { transform: translate(-20%, -20%) rotate(0deg); }
+    50% { transform: translate(20%, 20%) rotate(180deg); }
+}
+
+.survey-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    position: relative;
+    z-index: 1;
+}
+
+.survey-title i {
+    font-size: 2.2rem;
+    opacity: 0.9;
+}
+
+.survey-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Progress Bar */
+.survey-progress {
+    position: relative;
+    z-index: 1;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 1) 100%);
+    border-radius: 3px;
+    width: 20%;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -10px;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 100%);
+    animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+    0% { transform: translateX(-20px); }
+    100% { transform: translateX(20px); }
+}
+
+.progress-text {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* Survey Content */
+.survey-content {
+    flex: 1;
+    padding: 0 2.5rem;
+    overflow-y: auto;
+    max-height: 50vh;
+}
+
+.survey-question {
+    display: none;
+    animation: slideInQuestion 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.survey-question.active {
+    display: block;
+}
+
+@keyframes slideInQuestion {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.question-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.question-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.question-optional {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Choice Options */
+.choice-options {
+    display: grid;
+    gap: 1rem;
+}
+
+.choice-options.multiple {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.choice-option {
+    background: linear-gradient(135deg, rgba(248, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.9) 100%);
+    border: 2px solid rgba(226, 232, 240, 0.8);
+    border-radius: 16px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.choice-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(79, 70, 229, 0.1) 50%, transparent 100%);
+    transition: left 0.6s ease;
+}
+
+.choice-option:hover::before {
+    left: 100%;
+}
+
+.choice-option:hover {
+    border-color: rgba(79, 70, 229, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.15);
+}
+
+.choice-option.selected {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.08) 100%);
+    border-color: #4f46e5;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.2);
+}
+
+.choice-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.choice-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.choice-description {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.4;
+    margin-top: 0.5rem;
+}
+
+/* Radio and Checkbox Styling */
+.choice-radio input,
+.choice-checkbox input {
+    display: none;
+}
+
+.choice-radio label,
+.choice-checkbox label {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #cbd5e1;
+    border-radius: 50%;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.choice-checkbox label {
+    border-radius: 6px;
+}
+
+.choice-radio label::after,
+.choice-checkbox label::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    background: #4f46e5;
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.choice-checkbox label::after {
+    width: 6px;
+    height: 10px;
+    border: 2px solid #4f46e5;
+    border-top: 0;
+    border-left: 0;
+    border-radius: 0;
+    background: transparent;
+    transform: translate(-50%, -60%) rotate(45deg) scale(0);
+}
+
+.choice-option.selected .choice-radio label,
+.choice-option.selected .choice-checkbox label {
+    border-color: #4f46e5;
+    background: rgba(79, 70, 229, 0.1);
+}
+
+.choice-option.selected .choice-radio label::after,
+.choice-option.selected .choice-checkbox label::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.choice-option.selected .choice-checkbox label::after {
+    transform: translate(-50%, -60%) rotate(45deg) scale(1);
+}
+
+/* Text Input */
+.text-input-container {
+    max-width: 100%;
+}
+
+.survey-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 1.5rem;
+    border: 2px solid rgba(226, 232, 240, 0.8);
+    border-radius: 16px;
+    font-size: 1rem;
+    font-family: inherit;
+    line-height: 1.6;
+    resize: vertical;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, rgba(248, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.9) 100%);
+}
+
+.survey-textarea:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.input-hint {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: #64748b;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Survey Footer */
+.survey-footer {
+    padding: 1.5rem 2.5rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, rgba(248, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.9) 100%);
+    border-top: 1px solid rgba(226, 232, 240, 0.5);
+}
+
+.survey-nav-right {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.survey-btn {
+    padding: 0.875rem 1.75rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.survey-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.6s ease;
+    transform: translate(-50%, -50%);
+}
+
+.survey-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.survey-btn-back {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    color: white;
+}
+
+.survey-btn-skip {
+    background: transparent;
+    color: #64748b;
+    border: 2px solid rgba(100, 116, 139, 0.3);
+}
+
+.survey-btn-skip:hover {
+    background: rgba(100, 116, 139, 0.1);
+    border-color: rgba(100, 116, 139, 0.5);
+}
+
+.survey-btn-next {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.survey-btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+}
+
+.survey-btn-next.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.survey-btn-next.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Accessibility Optimization Classes */
+.adhd-optimized {
+    --notification-duration: 2s; /* Shorter notifications */
+}
+
+.adhd-optimized .notification {
+    animation-duration: 0.3s;
+}
+
+.adhd-optimized .task-item {
+    border-left: 4px solid var(--primary); /* More visual cues */
+}
+
+.anxiety-optimized {
+    --primary: #10b981; /* Calming green instead of purple */
+}
+
+.anxiety-optimized .notification.error {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); /* Warning instead of error red */
+}
+
+.dyslexia-optimized {
+    font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif;
+    line-height: 1.8;
+    letter-spacing: 0.5px;
+}
+
+.dyslexia-optimized .task-title {
+    font-size: 1.2em;
+}
+
+.visual-optimized {
+    --contrast-ratio: 1.5;
+}
+
+.visual-optimized * {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.visual-optimized *:focus {
+    outline-color: #4f46e5;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .survey-overlay {
+        padding: 1rem;
+    }
+    
+    .survey-container {
+        max-height: 95vh;
+        border-radius: 16px;
+    }
+    
+    .survey-header {
+        padding: 2rem 1.5rem 1rem;
+    }
+    
+    .survey-title {
+        font-size: 1.75rem;
+    }
+    
+    .survey-subtitle {
+        font-size: 1rem;
+    }
+    
+    .survey-content {
+        padding: 0 1.5rem;
+    }
+    
+    .question-title {
+        font-size: 1.3rem;
+    }
+    
+    .choice-options.multiple {
+        grid-template-columns: 1fr;
+    }
+    
+    .choice-option {
+        padding: 1.25rem;
+    }
+    
+    .survey-footer {
+        padding: 1rem 1.5rem 2rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .survey-nav-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .survey-btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+/* ========== SCROLLABLE TASK LIST ========== */
+.task-list-wrapper {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-list-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 280px); /* Adjust based on your header/dashboard height */
+    padding-right: 8px; /* Space for scrollbar */
+    margin-right: -8px; /* Hide scrollbar track */
+}
+
+/* Custom Scrollbar Styling */
+.task-list-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.task-list-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.6) 0%, rgba(118, 75, 162, 0.6) 100%);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.task-list-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+}
+
+/* Firefox Scrollbar */
+.task-list-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(79, 70, 229, 0.6) rgba(255, 255, 255, 0.05);
+}
+
+/* Scroll Indicators */
+.scroll-indicator {
+    position: absolute;
+    right: 12px;
+    background: rgba(79, 70, 229, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.scroll-indicator.top {
+    top: 10px;
+}
+
+.scroll-indicator.bottom {
+    bottom: 10px;
+}
+
+.scroll-indicator.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========== RESPONSIVE DESIGN FOR SMALLER SCREENS ========== */
+@media (max-height: 800px) {
+    /* Compact dashboard for shorter screens */
+    .dashboard {
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .dashboard-card {
+        padding: 1rem;
+        min-height: auto;
+    }
+    
+    .dashboard-value {
+        font-size: 1.8rem;
+    }
+    
+    .dashboard-label {
+        font-size: 0.8rem;
+    }
+    
+    .task-list-container {
+        max-height: calc(100vh - 220px);
+    }
+}
+
+@media (max-height: 700px) {
+    /* Extra compact for very short screens */
+    .app-header {
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .dashboard {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+    
+    .dashboard-card {
+        padding: 0.75rem;
+    }
+    
+    .dashboard-value {
+        font-size: 1.5rem;
+    }
+    
+    .task-list-container {
+        max-height: calc(100vh - 180px);
+    }
+    
+    .task-item {
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .category {
+        padding: 0.75rem 1rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    /* Tablet and smaller laptop screens */
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .task-list-container {
+        max-height: calc(100vh - 240px);
+    }
+}
+
+@media (max-width: 768px) {
+    /* Mobile screens */
+    body {
+        overflow-x: hidden;
+    }
+    
+    .app-container {
+        height: 100vh;
+        overflow: hidden;
+    }
+    
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 1000;
+        height: 100vh;
+    }
+    
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 0.5rem;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .dashboard-card {
+        padding: 0.75rem;
+    }
+    
+    .task-list-wrapper {
+        flex: 1;
+        overflow: hidden;
+    }
+    
+    .task-list-container {
+        max-height: calc(100vh - 160px);
+    }
+    
+    .task-item {
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Mobile hamburger menu */
+    .mobile-menu-toggle {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 8px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-menu-toggle {
+        display: none;
+    }
+}
+
+/* ========== TASK COUNT DISPLAY ========== */
+.task-count-display {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.75rem 1rem;
+    margin: -1rem -1rem 1rem -1rem;
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    text-align: center;
+    z-index: 10;
+}
+
+.dark-mode .task-count-display {
+    background: rgba(30, 30, 30, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Hide sidebar on mobile and add hamburger menu */
+@media (max-width: 768px) {
+    /* Hide default sidebar on mobile */
+    .sidebar {
+        display: none;
+    }
+    
+    /* Remove sidebar from main content layout */
+    .main-content {
+        flex-direction: column;
+        margin-left: 0;
+        padding-top: 60px; /* Space for hamburger button */
+    }
+    
+    /* Hamburger Menu Button */
+    .mobile-hamburger {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 2000;
+        background: var(--primary-gradient);
+        color: white;
+        border: none;
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-hamburger:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+    }
+    
+    .mobile-hamburger:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Mobile Sidebar Overlay */
+.mobile-sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 1500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.mobile-sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Mobile Sidebar Container */
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
+    backdrop-filter: blur(20px);
+    z-index: 1600;
+    transform: translateX(-100%);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    overflow-y: auto;
+    padding: 80px 20px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-sidebar.active {
+    transform: translateX(0);
+}
+
+/* Dark mode mobile sidebar */
+body.dark-mode .mobile-sidebar {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+}
+
+/* Mobile Sidebar Header */
+.mobile-sidebar-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: var(--primary-gradient);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1700;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-sidebar-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-sidebar-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+}
+
+.mobile-sidebar-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+/* Mobile Categories Container */
+.mobile-categories-container {
+    flex: 1;
+    padding-top: 20px;
+}
+
+.mobile-categories-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 20px;
+    padding-left: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+body.dark-mode .mobile-categories-title {
+    color: var(--gray-200);
+}
+
+/* Mobile Category Items */
+.mobile-category {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 15px;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(79, 70, 229, 0.1);
+    border-radius: 16px;
+    color: var(--gray-700);
+    font-weight: 500;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: slideInCategory 0.6s ease-out forwards;
+}
+
+/* Staggered animation delays */
+.mobile-category:nth-child(1) { animation-delay: 0.1s; }
+.mobile-category:nth-child(2) { animation-delay: 0.2s; }
+.mobile-category:nth-child(3) { animation-delay: 0.3s; }
+.mobile-category:nth-child(4) { animation-delay: 0.4s; }
+.mobile-category:nth-child(5) { animation-delay: 0.5s; }
+.mobile-category:nth-child(6) { animation-delay: 0.6s; }
+.mobile-category:nth-child(7) { animation-delay: 0.7s; }
+
+@keyframes slideInCategory {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.mobile-category::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.mobile-category:hover::before {
+    left: 100%;
+}
+
+.mobile-category:hover {
+    background: rgba(79, 70, 229, 0.1);
+    transform: translateX(8px);
+    border-color: rgba(79, 70, 229, 0.3);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.15);
+}
+
+.mobile-category.active {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    transform: translateX(12px);
+    box-shadow: 0 12px 30px rgba(79, 70, 229, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.mobile-category.active::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+/* Dark mode mobile categories */
+body.dark-mode .mobile-category {
+    background: rgba(55, 65, 81, 0.8);
+    border-color: rgba(75, 85, 99, 0.3);
+    color: var(--gray-300);
+}
+
+body.dark-mode .mobile-category:hover {
+    background: rgba(79, 70, 229, 0.2);
+}
+
+/* Mobile Category Content */
+.mobile-category-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.mobile-category-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    background: var(--primary);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.mobile-category.active .mobile-category-icon {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-category-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.mobile-task-count {
+    background: rgba(79, 70, 229, 0.2);
+    color: var(--primary);
+    font-size: 0.9rem;
+    font-weight: 700;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(79, 70, 229, 0.3);
+    transition: all 0.3s ease;
+}
+
+.mobile-category.active .mobile-task-count {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+/* Mobile Analytics Preview */
+.mobile-analytics-preview {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(79, 70, 229, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(79, 70, 229, 0.1);
+}
+
+.mobile-analytics-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.mobile-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.mobile-stat-item {
+    text-align: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    border: 1px solid rgba(79, 70, 229, 0.1);
+}
+
+.mobile-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.mobile-stat-label {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Hide hamburger on desktop */
+@media (min-width: 769px) {
+    .mobile-hamburger,
+    .mobile-sidebar-overlay,
+    .mobile-sidebar {
+        display: none;
+    }
+}
+
+/* Prevent body scroll when mobile sidebar is open */
+body.mobile-sidebar-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -10356,6 +11923,12 @@ body.dark-mode .full-view-meta-item {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 </head>
 <body>
+
+    <!-- ADD THIS HAMBURGER BUTTON HERE -->
+    <button class="mobile-hamburger">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <!-- Professional Welcome Animation -->
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="professional-welcome-container">
@@ -10706,6 +12279,116 @@ body.dark-mode .full-view-meta-item {
                 </div>
             </div>
         </div>
+
+         <!-- ADD THE MOBILE SIDEBAR STRUCTURE HERE -->
+    <div class="mobile-sidebar-overlay"></div>
+    <div class="mobile-sidebar">
+        <div class="mobile-sidebar-header">
+            <div class="mobile-sidebar-title">
+                <i class="fas fa-tasks"></i>
+                Categories
+            </div>
+            <button class="mobile-sidebar-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-categories-container">
+            <h4 class="mobile-categories-title">Select Category</h4>
+            
+            <div class="mobile-category active" data-category="all">
+                <div class="mobile-category-content">
+                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <span class="mobile-category-name">All Tasks</span>
+                </div>
+                <div class="mobile-task-count">0</div>
+            </div>
+            
+            <div class="mobile-category" data-category="work">
+                <div class="mobile-category-content">
+                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <span class="mobile-category-name">Work</span>
+                </div>
+                <div class="mobile-task-count">0</div>
+            </div>
+            
+            <div class="mobile-category" data-category="personal">
+                <div class="mobile-category-content">
+                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="mobile-category-name">Personal</span>
+                </div>
+                <div class="mobile-task-count">0</div>
+            </div>
+            
+            <div class="mobile-category" data-category="shopping">
+                <div class="mobile-category-content">
+                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <span class="mobile-category-name">Shopping</span>
+                </div>
+                <div class="mobile-task-count">0</div>
+            </div>
+            
+            <div class="mobile-category" data-category="health">
+                <div class="mobile-category-content">
+                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <span class="mobile-category-name">Health</span>
+                </div>
+                <div class="mobile-task-count">0</div>
+            </div>
+            
+            <div class="mobile-category" data-category="finance">
+                <div class="mobile-category-content">
+                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <span class="mobile-category-name">Finance</span>
+                </div>
+                <div class="mobile-task-count">0</div>
+            </div>
+            
+            <div class="mobile-category" data-category="education">
+                <div class="mobile-category-content">
+                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <span class="mobile-category-name">Education</span>
+                </div>
+                <div class="mobile-task-count">0</div>
+            </div>
+            
+            <div class="mobile-analytics-preview">
+                <h4 class="mobile-analytics-title">Quick Stats</h4>
+                <div class="mobile-stats-grid">
+                    <div class="mobile-stat-item">
+                        <span class="mobile-stat-value" id="mobileTotalTasks">0</span>
+                        <span class="mobile-stat-label">Total</span>
+                    </div>
+                    <div class="mobile-stat-item">
+                        <span class="mobile-stat-value" id="mobileCompletedTasks">0</span>
+                        <span class="mobile-stat-label">Completed</span>
+                    </div>
+                    <div class="mobile-stat-item">
+                        <span class="mobile-stat-value" id="mobilePendingTasks">0</span>
+                        <span class="mobile-stat-label">Pending</span>
+                    </div>
+                    <div class="mobile-stat-item">
+                        <span class="mobile-stat-value" id="mobileOverdueTasks">0</span>
+                        <span class="mobile-stat-label">Overdue</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <!-- Add/Edit Task Modal -->
         <div class="modal" id="taskModal" aria-modal="true" role="dialog">
@@ -11518,6 +13201,9 @@ let currentRescheduleTaskId = null;
 // ADD THE NEW ANALYTICS VARIABLES HERE:
     let completionSoundEnabled = true;
 let completionSoundUrl = 'sounds/mixkit-software-interface-start-2574.wav';
+let surveyCompleted = false;
+let userProfile = {};
+let personalizedSuggestions = [];
 
 // ADD STREAK VARIABLES HERE:
 let streakData = {
@@ -11543,6 +13229,942 @@ let streakData = {
     finance: { bg: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', icon: '<i class="fas fa-dollar-sign"></i>' },
     education: { bg: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', icon: '<i class="fas fa-graduation-cap"></i>' }
 };
+
+const surveyQuestions = [
+    {
+        id: 'role',
+        type: 'multiple-choice',
+        question: 'What best describes your primary role?',
+        options: [
+            { value: 'student', label: '🎓 Student', description: 'Currently studying or in education' },
+            { value: 'professional', label: '💼 Working Professional', description: 'Full-time or part-time employed' },
+            { value: 'freelancer', label: '🚀 Freelancer/Entrepreneur', description: 'Self-employed or running own business' },
+            { value: 'homemaker', label: '🏠 Homemaker/Parent', description: 'Managing household and family' },
+            { value: 'retired', label: '🌅 Retired', description: 'Enjoying retirement life' },
+            { value: 'other', label: '🔹 Other', description: 'Something else entirely' }
+        ]
+    },
+    {
+        id: 'productivity_style',
+        type: 'multiple-choice',
+        question: 'How do you prefer to work on tasks?',
+        options: [
+            { value: 'focused_blocks', label: '🎯 Long focused sessions', description: 'I like to work on one task for extended periods' },
+            { value: 'short_bursts', label: '⚡ Short bursts with breaks', description: 'I work better in 15-30 minute chunks' },
+            { value: 'multitasking', label: '🔄 Switching between tasks', description: 'I like to juggle multiple tasks throughout the day' },
+            { value: 'depends_mood', label: '🌊 Depends on my mood/energy', description: 'My work style varies day to day' }
+        ]
+    },
+    {
+        id: 'main_challenges',
+        type: 'multiple-choice-multiple',
+        question: 'What are your biggest productivity challenges? (Select all that apply)',
+        options: [
+            { value: 'procrastination', label: '⏰ Procrastination' },
+            { value: 'overwhelm', label: '😵 Feeling overwhelmed by too many tasks' },
+            { value: 'focus', label: '🎯 Difficulty focusing/staying on task' },
+            { value: 'time_management', label: '⏱️ Poor time management' },
+            { value: 'prioritization', label: '🚦 Trouble prioritizing what\'s important' },
+            { value: 'memory', label: '🧠 Forgetting tasks or deadlines' },
+            { value: 'motivation', label: '💪 Lack of motivation' },
+            { value: 'perfectionism', label: '✨ Perfectionism holding me back' }
+        ]
+    },
+    {
+        id: 'accessibility_needs',
+        type: 'text',
+        question: 'Do you have any specific needs that might help us optimize your experience?',
+        placeholder: 'e.g., ADHD, dyslexia, visual impairments, anxiety, or any other conditions that affect how you work best...',
+        optional: true
+    },
+    {
+        id: 'goals',
+        type: 'text',
+        question: 'What do you hope to achieve with Tasklytic?',
+        placeholder: 'e.g., better work-life balance, increased productivity, managing school assignments, organizing family life...'
+    }
+];
+
+// Also add this verification right after the array:
+console.log('✅ surveyQuestions loaded:', surveyQuestions.length, 'questions');
+
+// QUICK TEST - add this simple version of checkSurveyStatus if you haven't added it yet:
+function checkSurveyStatus() {
+    console.log('🔍 Checking survey status...');
+    
+    try {
+        const completed = localStorage.getItem('tasklytic_survey_completed');
+        const profileData = localStorage.getItem('tasklytic_user_profile');
+        
+        console.log('📊 Survey data check:', {
+            completed: completed,
+            hasProfile: !!profileData
+        });
+    } catch (error) {  // ← Make sure this exists
+        console.error('Survey check failed:', error);
+        return false;
+    }
+}
+
+// SIMPLE createSurveyHTML function if you haven't added it:
+function createSurveyHTML() {
+    console.log('📋 Creating survey HTML...');
+    return surveyQuestions.map((question, index) => {
+        const isActive = index === 0 ? 'active' : '';
+        
+        return `
+            <div class="survey-question ${isActive}" data-question-id="${question.id}" data-index="${index}">
+                <div class="question-header">
+                    <h3 class="question-title">${question.question}</h3>
+                    ${question.optional ? '<span class="question-optional">(Optional)</span>' : ''}
+                </div>
+                
+                <div class="question-content">
+                    ${createQuestionContent(question)}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// SIMPLE createQuestionContent function if you haven't added it:
+function createQuestionContent(question) {
+    switch (question.type) {
+        case 'multiple-choice':
+            return `
+                <div class="choice-options">
+                    ${question.options.map(option => `
+                        <div class="choice-option" data-value="${option.value}">
+                            <div class="choice-header">
+                                <div class="choice-label">${option.label}</div>
+                                <div class="choice-radio">
+                                    <input type="radio" name="${question.id}" value="${option.value}" id="${question.id}_${option.value}">
+                                    <label for="${question.id}_${option.value}"></label>
+                                </div>
+                            </div>
+                            ${option.description ? `<div class="choice-description">${option.description}</div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+        case 'multiple-choice-multiple':
+            return `
+                <div class="choice-options multiple">
+                    ${question.options.map(option => `
+                        <div class="choice-option checkbox" data-value="${option.value}">
+                            <div class="choice-header">
+                                <div class="choice-label">${option.label}</div>
+                                <div class="choice-checkbox">
+                                    <input type="checkbox" name="${question.id}" value="${option.value}" id="${question.id}_${option.value}">
+                                    <label for="${question.id}_${option.value}"></label>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+        case 'text':
+            return `
+                <div class="text-input-container">
+                    <textarea 
+                        class="survey-textarea" 
+                        name="${question.id}" 
+                        placeholder="${question.placeholder || ''}"
+                        rows="4"
+                        ${question.optional ? '' : 'required'}
+                    ></textarea>
+                    <div class="input-hint">Feel free to be as detailed as you'd like - this helps us personalize your experience!</div>
+                </div>
+            `;
+            
+        default:
+            return '<p>Unknown question type</p>';
+    }
+}
+
+// ADD THESE FUNCTIONS RIGHT AFTER YOUR surveyQuestions array
+// ENHANCED showUserSurvey with full screen support:
+function showUserSurvey() {
+    console.log('🎯 showUserSurvey called!');
+    
+    try {
+        const existingSurvey = document.getElementById('userSurveyOverlay');
+        if (existingSurvey) {
+            existingSurvey.remove();
+        }
+        
+        const surveyOverlay = document.createElement('div');
+        surveyOverlay.className = 'survey-overlay fullscreen-survey';
+        surveyOverlay.id = 'userSurveyOverlay';
+        
+        surveyOverlay.innerHTML = `
+            <div class="survey-container fullscreen-container">
+                <div class="survey-header">
+                    <div class="survey-title">
+                        <i class="fas fa-user-circle"></i>
+                        Tell us about yourself
+                    </div>
+                    <div class="survey-subtitle">
+                        So we can optimize the best experience and options for you
+                    </div>
+                    <div class="survey-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="surveyProgress"></div>
+                        </div>
+                        <span class="progress-text" id="surveyProgressText">Question 1 of ${surveyQuestions.length}</span>
+                    </div>
+                </div>
+                
+                <div class="survey-content fullscreen-content" id="surveyContent">
+                    ${createSurveyHTML()}
+                </div>
+                
+                <div class="survey-footer">
+                    <button class="survey-btn survey-btn-back" id="surveyBackBtn" style="display: none;">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <div class="survey-nav-right">
+                        <button class="survey-btn survey-btn-skip" id="surveySkipBtn">
+                            Skip Survey
+                        </button>
+                        <button class="survey-btn survey-btn-next" id="surveyNextBtn">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(surveyOverlay);
+        
+        // Show survey with animation
+        setTimeout(() => {
+            surveyOverlay.classList.add('show');
+        }, 100);
+        
+        initializeSurveyHandlers();
+        
+    } catch (error) {
+        console.error('💥 Error in showUserSurvey:', error);
+        alert('Survey failed to load. Please refresh the page.');
+    }
+}
+
+function initializeSurveyHandlers() {
+    console.log('⚙️ Initializing survey handlers...');
+    
+    let currentQuestionIndex = 0;
+    let surveyResponses = {};
+    
+    const surveyContent = document.getElementById('surveyContent');
+    const backBtn = document.getElementById('surveyBackBtn');
+    const nextBtn = document.getElementById('surveyNextBtn');
+    const skipBtn = document.getElementById('surveySkipBtn');
+    const progressFill = document.getElementById('surveyProgress');
+    const progressText = document.getElementById('surveyProgressText');
+    
+    if (!surveyContent || !nextBtn || !skipBtn) {
+        console.error('❌ Survey elements not found!');
+        return;
+    }
+    
+    // Choice option click handlers
+    surveyContent.addEventListener('click', (e) => {
+        const choiceOption = e.target.closest('.choice-option');
+        if (!choiceOption) return;
+        
+        const question = choiceOption.closest('.survey-question');
+        const isMultiple = choiceOption.classList.contains('checkbox');
+        
+        if (isMultiple) {
+            // Multiple choice - toggle selection
+            choiceOption.classList.toggle('selected');
+            const checkbox = choiceOption.querySelector('input[type="checkbox"]');
+            if (checkbox) checkbox.checked = choiceOption.classList.contains('selected');
+        } else {
+            // Single choice - clear others and select this one
+            question.querySelectorAll('.choice-option').forEach(opt => opt.classList.remove('selected'));
+            choiceOption.classList.add('selected');
+            const radio = choiceOption.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
+        }
+        
+        updateNextButtonState();
+    });
+    
+    // Text input handlers
+    surveyContent.addEventListener('input', updateNextButtonState);
+    
+    // Navigation handlers
+    nextBtn.addEventListener('click', () => {
+        if (validateCurrentQuestion()) {
+            saveCurrentResponse();
+            
+            if (currentQuestionIndex < surveyQuestions.length - 1) {
+                showNextQuestion();
+            } else {
+                completeSurvey();
+            }
+        }
+    });
+    
+    if (backBtn) {
+        backBtn.addEventListener('click', showPreviousQuestion);
+    }
+    
+    skipBtn.addEventListener('click', skipSurvey);
+    
+    function validateCurrentQuestion() {
+        const currentQuestion = surveyQuestions[currentQuestionIndex];
+        const questionEl = document.querySelector(`[data-question-id="${currentQuestion.id}"]`);
+        
+        if (currentQuestion.optional) return true;
+        
+        switch (currentQuestion.type) {
+            case 'multiple-choice':
+                return questionEl.querySelector('input[type="radio"]:checked') !== null;
+            case 'multiple-choice-multiple':
+                return questionEl.querySelectorAll('input[type="checkbox"]:checked').length > 0;
+            case 'text':
+                const textarea = questionEl.querySelector('textarea');
+                return textarea && textarea.value.trim().length > 0;
+            default:
+                return true;
+        }
+    }
+    
+    function saveCurrentResponse() {
+        const currentQuestion = surveyQuestions[currentQuestionIndex];
+        const questionEl = document.querySelector(`[data-question-id="${currentQuestion.id}"]`);
+        
+        switch (currentQuestion.type) {
+            case 'multiple-choice':
+                const radio = questionEl.querySelector('input[type="radio"]:checked');
+                if (radio) {
+                    surveyResponses[currentQuestion.id] = radio.value;
+                }
+                break;
+                
+            case 'multiple-choice-multiple':
+                const checkboxes = questionEl.querySelectorAll('input[type="checkbox"]:checked');
+                surveyResponses[currentQuestion.id] = Array.from(checkboxes).map(cb => cb.value);
+                break;
+                
+            case 'text':
+                const textarea = questionEl.querySelector('textarea');
+                if (textarea) {
+                    surveyResponses[currentQuestion.id] = textarea.value.trim();
+                }
+                break;
+        }
+    }
+    
+    function showNextQuestion() {
+        const currentQuestionEl = document.querySelector('.survey-question.active');
+        if (currentQuestionEl) {
+            currentQuestionEl.classList.remove('active');
+            currentQuestionEl.classList.add('completed');
+        }
+        
+        currentQuestionIndex++;
+        
+        const nextQuestionEl = document.querySelector(`[data-index="${currentQuestionIndex}"]`);
+        if (nextQuestionEl) {
+            nextQuestionEl.classList.add('active');
+        }
+        
+        updateProgress();
+        updateNavigationButtons();
+        updateNextButtonState();
+    }
+    
+    function showPreviousQuestion() {
+        const currentQuestionEl = document.querySelector('.survey-question.active');
+        if (currentQuestionEl) {
+            currentQuestionEl.classList.remove('active');
+        }
+        
+        currentQuestionIndex--;
+        
+        const prevQuestionEl = document.querySelector(`[data-index="${currentQuestionIndex}"]`);
+        if (prevQuestionEl) {
+            prevQuestionEl.classList.remove('completed');
+            prevQuestionEl.classList.add('active');
+        }
+        
+        updateProgress();
+        updateNavigationButtons();
+        updateNextButtonState();
+    }
+    
+    function updateProgress() {
+        const progress = ((currentQuestionIndex + 1) / surveyQuestions.length) * 100;
+        if (progressFill) progressFill.style.width = `${progress}%`;
+        if (progressText) progressText.textContent = `Question ${currentQuestionIndex + 1} of ${surveyQuestions.length}`;
+    }
+    
+    function updateNavigationButtons() {
+        if (backBtn) {
+            backBtn.style.display = currentQuestionIndex > 0 ? 'block' : 'none';
+        }
+        if (nextBtn) {
+            nextBtn.innerHTML = currentQuestionIndex === surveyQuestions.length - 1 ? 
+                'Complete Survey <i class="fas fa-check"></i>' : 
+                'Next <i class="fas fa-arrow-right"></i>';
+        }
+    }
+    
+    function updateNextButtonState() {
+        const isValid = validateCurrentQuestion();
+        if (nextBtn) {
+            nextBtn.disabled = !isValid;
+            nextBtn.classList.toggle('disabled', !isValid);
+        }
+    }
+    
+    function completeSurvey() {
+        console.log('✅ Survey completed!', surveyResponses);
+        
+        // Process survey responses (simplified for now)
+        processSurveyResponses(surveyResponses);
+        
+        // Mark survey as completed
+        localStorage.setItem('tasklytic_survey_completed', 'true');
+        localStorage.setItem('tasklytic_user_profile', JSON.stringify(userProfile));
+        
+        // Close survey
+        closeSurvey(() => {
+            showPersonalizationComplete();
+        });
+    }
+    
+    function skipSurvey() {
+        console.log('⏭️ Survey skipped');
+        localStorage.setItem('tasklytic_survey_completed', 'true');
+        closeSurvey();
+    }
+    
+    function closeSurvey(callback) {
+        const surveyOverlay = document.getElementById('userSurveyOverlay');
+        if (surveyOverlay) {
+            surveyOverlay.classList.remove('show');
+            setTimeout(() => {
+                surveyOverlay.remove();
+                if (callback) callback();
+            }, 600);
+        }
+    }
+    
+    // Initialize
+    updateProgress();
+    updateNavigationButtons();
+    updateNextButtonState();
+    
+    console.log('✅ Survey handlers initialized');
+}
+
+// ENHANCED processSurveyResponses with detailed optimization detection:
+function processSurveyResponses(responses) {
+    console.log('📊 Processing survey responses:', responses);
+    
+    userProfile = {
+        role: responses.role || 'other',
+        productivityStyle: responses.productivity_style || 'depends_mood',
+        challenges: responses.main_challenges || [],
+        accessibilityNeeds: responses.accessibility_needs || '',
+        goals: responses.goals || '',
+        createdAt: new Date().toISOString(),
+        optimizations: [] // Track what optimizations were applied
+    };
+    
+    // Detect and apply optimizations
+    detectAndApplyOptimizations(userProfile);
+    
+    console.log('✅ User profile created with optimizations:', userProfile);
+}
+
+function detectAndApplyOptimizations(profile) {
+    const accessibilityText = profile.accessibilityNeeds.toLowerCase();
+    const challenges = profile.challenges;
+    
+    // ADHD optimizations
+    if (accessibilityText.includes('adhd') || accessibilityText.includes('attention deficit') || 
+        challenges.includes('focus') || challenges.includes('procrastination')) {
+        enableADHDOptimizations();
+        profile.optimizations.push({
+            type: 'ADHD',
+            name: 'Focus & Attention Support',
+            features: ['Shorter notifications', 'Visual task highlighting', 'Break reminders', 'Quick priority actions']
+        });
+    }
+    
+    // Anxiety optimizations
+    if (accessibilityText.includes('anxiety') || accessibilityText.includes('stress') || 
+        challenges.includes('overwhelm') || challenges.includes('perfectionism')) {
+        enableAnxietyOptimizations();
+        profile.optimizations.push({
+            type: 'Anxiety',
+            name: 'Stress & Overwhelm Support',
+            features: ['Calming colors', 'Gentle reminders', 'Task breakdown suggestions', 'Progress celebration']
+        });
+    }
+    
+    // Dyslexia optimizations
+    if (accessibilityText.includes('dyslexia') || accessibilityText.includes('reading') || 
+        accessibilityText.includes('text')) {
+        enableDyslexiaOptimizations();
+        profile.optimizations.push({
+            type: 'Dyslexia',
+            name: 'Reading & Text Support',
+            features: ['Dyslexia-friendly fonts', 'Increased line spacing', 'Better contrast', 'Larger text options']
+        });
+    }
+    
+    // Visual impairment optimizations
+    if (accessibilityText.includes('visual') || accessibilityText.includes('sight') || 
+        accessibilityText.includes('blind') || accessibilityText.includes('low vision')) {
+        enableVisualOptimizations();
+        profile.optimizations.push({
+            type: 'Visual',
+            name: 'Visual Accessibility Support',
+            features: ['High contrast mode', 'Screen reader support', 'Keyboard navigation', 'Large text']
+        });
+    }
+    
+    // Productivity style optimizations
+    if (profile.productivityStyle === 'short_bursts') {
+        enableShortBurstOptimizations();
+        profile.optimizations.push({
+            type: 'Productivity',
+            name: 'Short Burst Work Style',
+            features: ['25-minute timers', 'Break notifications', 'Quick task creation', 'Progress tracking']
+        });
+    }
+    
+    // Memory optimizations
+    if (challenges.includes('memory')) {
+        enableMemoryOptimizations();
+        profile.optimizations.push({
+            type: 'Memory',
+            name: 'Memory & Reminder Support',
+            features: ['Frequent reminders', 'Visual cues', 'Task summaries', 'Priority highlighting']
+        });
+    }
+}
+
+// 3. PLACE ALL THE enableXXXOptimizations FUNCTIONS AFTER detectAndApplyOptimizations:
+
+function enableADHDOptimizations() {
+    console.log('🧠 Enabling ADHD optimizations...');
+    
+    userProfile.adhdOptimizations = {
+        shorterNotifications: true,
+        frequentReminders: true,
+        visualCues: true,
+        breakReminders: true,
+        priorityHighlighting: true
+    };
+    
+    // Apply ADHD-specific styles
+    document.body.classList.add('adhd-optimized');
+    
+    // Add ADHD-specific task suggestions
+    personalizedSuggestions.push(
+        { title: "5-minute focus break", category: "health", priority: "medium", time: "10:00" },
+        { title: "Review top 3 priorities", category: "personal", priority: "high", time: "09:00" },
+        { title: "Set 25-minute work timer", category: "personal", priority: "medium", time: "09:30" }
+    );
+    
+    // REAL WORKING FEATURE: Enable shorter notification duration
+    if (typeof showNotification === 'function') {
+        // Store original function
+        if (!window.originalShowNotification) {
+            window.originalShowNotification = showNotification;
+        }
+        
+        // Override with ADHD-optimized version
+        window.showNotification = function(message, type) {
+            window.originalShowNotification(message, type);
+            // Auto-dismiss faster for ADHD users
+            setTimeout(() => {
+                const notifications = document.querySelectorAll('.notification.show');
+                notifications.forEach(n => n.classList.remove('show'));
+            }, 1500); // Shorter duration: 1.5s instead of default
+        };
+    }
+    
+    // REAL WORKING FEATURE: Add visual highlighting to tasks
+    setTimeout(() => {
+        const taskItems = document.querySelectorAll('.task-item');
+        taskItems.forEach(task => {
+            task.style.borderLeft = '4px solid var(--primary)';
+            task.style.transition = 'all 0.2s ease';
+        });
+    }, 1000);
+}
+
+function enableAnxietyOptimizations() {
+    console.log('😌 Enabling anxiety optimizations...');
+    
+    userProfile.anxietyOptimizations = {
+        gentleReminders: true,
+        calmingColors: true,
+        positiveLanguage: true,
+        progressCelebration: true,
+        breakdownLargeTasks: true
+    };
+    
+    // Apply anxiety-specific styles
+    document.body.classList.add('anxiety-optimized');
+    
+    // REAL WORKING FEATURE: Change to calming colors
+    document.documentElement.style.setProperty('--primary', '#10b981');
+    document.documentElement.style.setProperty('--primary-light', '#34d399');
+    
+    // REAL WORKING FEATURE: Override error notifications to be less harsh
+    if (typeof showNotification === 'function') {
+        if (!window.originalShowNotification) {
+            window.originalShowNotification = showNotification;
+        }
+        
+        window.showNotification = function(message, type) {
+            // Change 'error' to 'warning' for anxiety users
+            if (type === 'error') {
+                type = 'warning';
+                message = '💙 ' + message; // Add calming emoji
+            }
+            window.originalShowNotification(message, type);
+        };
+    }
+    
+    personalizedSuggestions.push(
+        { title: "Morning mindfulness (2 min)", category: "health", priority: "medium", time: "08:00" },
+        { title: "Celebrate today's progress", category: "personal", priority: "low", time: "18:00" },
+        { title: "Deep breathing exercise", category: "health", priority: "low", time: "12:00" }
+    );
+}
+
+function enableDyslexiaOptimizations() {
+    console.log('📖 Enabling dyslexia optimizations...');
+    
+    userProfile.dyslexiaOptimizations = {
+        increasedFontSize: true,
+        dyslexiaFriendlyFont: true,
+        increasedLineSpacing: true,
+        highContrast: true
+    };
+    
+    document.body.classList.add('dyslexia-optimized');
+    
+    // REAL WORKING FEATURE: Apply dyslexia-friendly formatting
+    const style = document.createElement('style');
+    style.textContent = `
+        .dyslexia-optimized {
+            font-family: 'OpenDyslexic', 'Comic Sans MS', Arial, sans-serif !important;
+            line-height: 1.8 !important;
+            letter-spacing: 0.5px !important;
+        }
+        .dyslexia-optimized .task-title {
+            font-size: 1.2em !important;
+            font-weight: 600 !important;
+        }
+        .dyslexia-optimized p, .dyslexia-optimized span {
+            line-height: 1.8 !important;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function enableVisualOptimizations() {
+    console.log('👁️ Enabling visual optimizations...');
+    
+    userProfile.visualOptimizations = {
+        highContrast: true,
+        largerText: true,
+        screenReaderFriendly: true,
+        keyboardNavigation: true
+    };
+    
+    document.body.classList.add('visual-optimized');
+    
+    // REAL WORKING FEATURE: Increase overall font size
+    document.documentElement.style.fontSize = '120%';
+    
+    // REAL WORKING FEATURE: Enable high contrast
+    const style = document.createElement('style');
+    style.textContent = `
+        .visual-optimized {
+            --contrast-ratio: 1.5 !important;
+        }
+        .visual-optimized * {
+            outline: 2px solid transparent !important;
+            outline-offset: 2px !important;
+        }
+        .visual-optimized *:focus {
+            outline-color: #4f46e5 !important;
+            outline-width: 3px !important;
+        }
+        .visual-optimized .task-item {
+            border: 2px solid rgba(0, 0, 0, 0.3) !important;
+            font-size: 1.1em !important;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function enableShortBurstOptimizations() {
+    console.log('⚡ Enabling short burst optimizations...');
+    
+    userProfile.shortBurstOptimizations = {
+        pomodoroTimers: true,
+        breakNotifications: true,
+        quickActions: true
+    };
+    
+    personalizedSuggestions.push(
+        { title: "Start 25-min focus session", category: "personal", priority: "high", time: "09:00" },
+        { title: "Take 5-minute break", category: "health", priority: "medium", time: "09:30" }
+    );
+    
+    // REAL WORKING FEATURE: Add break reminders every 25 minutes
+    if (!window.shortBurstInterval) {
+        window.shortBurstInterval = setInterval(() => {
+            if (typeof showNotification === 'function') {
+                showNotification('⏰ Time for a 5-minute break!', 'info');
+            }
+        }, 25 * 60 * 1000); // 25 minutes
+    }
+}
+
+function enableMemoryOptimizations() {
+    console.log('🧠 Enabling memory optimizations...');
+    
+    userProfile.memoryOptimizations = {
+        frequentReminders: true,
+        visualCues: true,
+        summaryViews: true
+    };
+    
+    // REAL WORKING FEATURE: More frequent reminder checks
+    if (typeof checkAddLaterTasks === 'function') {
+        // Clear existing interval and set more frequent one
+        if (window.addLaterCheckInterval) {
+            clearInterval(window.addLaterCheckInterval);
+        }
+        window.addLaterCheckInterval = setInterval(checkAddLaterTasks, 30000); // 30 seconds instead of 60
+    }
+    
+    // REAL WORKING FEATURE: Add visual priority indicators
+    setTimeout(() => {
+        const highPriorityTasks = document.querySelectorAll('.task-item[data-priority="high"]');
+        highPriorityTasks.forEach(task => {
+            task.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+            task.style.borderLeft = '5px solid #ef4444';
+        });
+    }, 1000);
+}
+
+// Simple showPersonalizationComplete function
+function showPersonalizationComplete() {
+    console.log('🎉 Personalization complete!');
+    if (typeof showNotification === 'function') {
+        showNotification('🎉 Your experience has been personalized!', 'success');
+    } else {
+        alert('🎉 Your experience has been personalized!');
+    }
+
+    showOptimizingAnimation(() => {
+        showOptimizationResults();
+    });
+}
+
+
+// 8. ===== ADD YOUR ANIMATION FUNCTIONS RIGHT HERE =====
+
+function showOptimizingAnimation(callback) {
+    const overlay = document.createElement('div');
+    overlay.className = 'optimizing-overlay';
+    overlay.innerHTML = `
+        <div class="optimizing-container">
+            <div class="optimizing-icon">
+                <i class="fas fa-cog fa-spin"></i>
+                <i class="fas fa-brain"></i>
+            </div>
+            <div class="optimizing-text">
+                <h2>Optimizing your experience...</h2>
+                <p>Personalizing Tasklytic based on your responses</p>
+            </div>
+            <div class="optimizing-progress">
+                <div class="optimizing-bar">
+                    <div class="optimizing-fill"></div>
+                </div>
+                <div class="optimizing-steps">
+                    <span class="step active">Analyzing responses</span>
+                    <span class="step">Applying optimizations</span>
+                    <span class="step">Personalizing interface</span>
+                    <span class="step">Ready!</span>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    // Show with animation
+    setTimeout(() => overlay.classList.add('show'), 100);
+    
+    // Animate progress steps
+    let stepIndex = 0;
+    const steps = overlay.querySelectorAll('.step');
+    const progressFill = overlay.querySelector('.optimizing-fill');
+    
+    const stepInterval = setInterval(() => {
+        if (stepIndex < steps.length) {
+            steps[stepIndex].classList.add('active');
+            progressFill.style.width = `${((stepIndex + 1) / steps.length) * 100}%`;
+            stepIndex++;
+        } else {
+            clearInterval(stepInterval);
+            // Complete after 2 seconds
+            setTimeout(() => {
+                overlay.classList.remove('show');
+                setTimeout(() => {
+                    overlay.remove();
+                    if (callback) callback();
+                }, 600);
+            }, 200);
+        }
+    }, 500); // 500ms per step = 2 seconds total
+}
+
+function showOptimizationResults() {
+    const optimizations = userProfile.optimizations || [];
+    
+    if (optimizations.length === 0) {
+        if (typeof showNotification === 'function') {
+            showNotification('🎉 Your experience has been personalized!', 'success');
+        } else {
+            alert('🎉 Your experience has been personalized!');
+        }
+        return;
+    }
+    
+    const overlay = document.createElement('div');
+    overlay.className = 'optimization-results-overlay';
+    overlay.innerHTML = `
+        <div class="optimization-results-container">
+            <div class="results-header">
+                <div class="results-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Your Experience Has Been Optimized!</h2>
+                <p>Based on your responses, we've personalized Tasklytic with these features:</p>
+            </div>
+            
+            <div class="optimization-list">
+                ${optimizations.map(opt => `
+                    <div class="optimization-item">
+                        <div class="optimization-header">
+                            <i class="fas fa-${getOptimizationIcon(opt.type)}"></i>
+                            <h3>${opt.name}</h3>
+                        </div>
+                        <div class="optimization-features">
+                            ${opt.features.map(feature => `
+                                <div class="feature-item">
+                                    <i class="fas fa-check"></i>
+                                    <span>${feature}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div class="results-footer">
+                <button class="results-btn" id="continueBtn">
+                    <i class="fas fa-rocket"></i>
+                    Start Using Tasklytic
+                </button>
+                <p class="results-note">You can adjust these settings anytime in your profile</p>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    // Show with animation
+    setTimeout(() => overlay.classList.add('show'), 100);
+    
+    // Continue button handler
+    overlay.querySelector('#continueBtn').addEventListener('click', () => {
+        overlay.classList.remove('show');
+        setTimeout(() => {
+            overlay.remove();
+            if (typeof showNotification === 'function') {
+                showNotification('🎉 Welcome to your personalized Tasklytic!', 'success');
+            }
+            
+            // Update smart suggestions with personalized ones
+            if (personalizedSuggestions.length > 0) {
+                smartSuggestions = [...personalizedSuggestions, ...smartSuggestions].slice(0, 6);
+                
+                // Re-render smart suggestions if visible
+                setTimeout(() => {
+                    if (typeof renderSmartSuggestions === 'function') {
+                        renderSmartSuggestions();
+                    }
+                }, 1000);
+            }
+        }, 600);
+    });
+}
+
+function getOptimizationIcon(type) {
+    const icons = {
+        'ADHD': 'brain',
+        'Anxiety': 'heart',
+        'Dyslexia': 'font',
+        'Visual': 'eye',
+        'Productivity': 'clock',
+        'Memory': 'memory'
+    };
+    return icons[type] || 'cog';
+}
+
+// Test function
+function testShowSurvey() {
+    console.log('🧪 Manual survey test triggered!');
+    showUserSurvey();
+}
+
+// Test button function
+function addSurveyTestButton() {
+    const testBtn = document.createElement('button');
+    testBtn.textContent = 'TEST SURVEY';
+    testBtn.style.cssText = `
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 99999;
+        padding: 10px;
+        background: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    `;
+    testBtn.onclick = () => {
+        console.log('🧪 Test button clicked!');
+        // Force clear storage and show survey
+        localStorage.removeItem('tasklytic_survey_completed');
+        localStorage.removeItem('tasklytic_user_profile');
+        testShowSurvey();
+    };
+    document.body.appendChild(testBtn);
+    console.log('🔴 Test button added - click it to test survey!');
+}
 
 // Authentication System
 let currentUser = null;
@@ -12039,6 +14661,67 @@ function showStreakCelebration() {
     }
 }
 
+// ADD YOUR NEW FUNCTION HERE:
+function triggerStreakCelebration(dayName, streakCount) {
+    // Hide streak container
+    const streakContainer = document.querySelector('.streak-container');
+    if (streakContainer) {
+        streakContainer.classList.add('celebrating');
+    }
+    
+    // Create celebration overlay
+    const celebrationHTML = `
+        <div class="streak-celebration-overlay">
+            <div class="celebration-content">
+                <div class="celebration-fire">🔥</div>
+                <div class="celebration-streak-count">${streakCount} Day Streak!</div>
+                <div class="celebration-day-name">${dayName}</div>
+                <div class="celebration-message">Keep the momentum going!</div>
+            </div>
+            <div class="fire-particles">
+                <div class="fire-particle"></div>
+                <div class="fire-particle"></div>
+                <div class="fire-particle"></div>
+                <div class="fire-particle"></div>
+                <div class="fire-particle"></div>
+                <div class="fire-particle"></div>
+            </div>
+        </div>
+    `;
+    
+    // Add to body
+    document.body.insertAdjacentHTML('beforeend', celebrationHTML);
+    
+    // Show celebration
+    setTimeout(() => {
+        const overlay = document.querySelector('.streak-celebration-overlay');
+        if (overlay) {
+            overlay.classList.add('show');
+        }
+    }, 100);
+    
+    // Hide after 2 seconds
+    setTimeout(() => {
+        const overlay = document.querySelector('.streak-celebration-overlay');
+        if (overlay) {
+            overlay.classList.remove('show');
+            
+            setTimeout(() => {
+                overlay.remove();
+                if (streakContainer) {
+                    streakContainer.classList.remove('celebrating');
+                    streakContainer.classList.add('celebration-complete');
+                    
+                    // Remove completion class after animation
+                    setTimeout(() => {
+                        streakContainer.classList.remove('celebration-complete');
+                    }, 800);
+                }
+            }, 600);
+        }
+    }, 2000);
+}
+
 function checkAndShowStreakFailed() {
     if (streakData.streakFailedShown) return;
     
@@ -12195,6 +14878,176 @@ function getWeekStart(date) {
     return new Date(d.setDate(diff));
 }
 
+// ========== SCROLLABLE TASK LIST FUNCTIONALITY ==========
+function initializeScrollableTaskList() {
+    const taskListContainer = document.getElementById('taskListContainer');
+    const scrollTopIndicator = document.getElementById('scrollTopIndicator');
+    const scrollBottomIndicator = document.getElementById('scrollBottomIndicator');
+    const taskCountDisplay = document.getElementById('taskCountDisplay');
+    const visibleTaskCount = document.getElementById('visibleTaskCount');
+    const totalTaskCount = document.getElementById('totalTaskCount');
+    
+    if (!taskListContainer) return;
+    
+    // Handle scroll indicators
+    taskListContainer.addEventListener('scroll', () => {
+        const { scrollTop, scrollHeight, clientHeight } = taskListContainer;
+        
+        // Show/hide top indicator
+        if (scrollTopIndicator) {
+            if (scrollTop > 50) {
+                scrollTopIndicator.classList.add('show');
+            } else {
+                scrollTopIndicator.classList.remove('show');
+            }
+        }
+        
+        // Show/hide bottom indicator
+        if (scrollBottomIndicator) {
+            if (scrollTop + clientHeight < scrollHeight - 50) {
+                scrollBottomIndicator.classList.add('show');
+            } else {
+                scrollBottomIndicator.classList.remove('show');
+            }
+        }
+    });
+    
+    // Update task count display
+    function updateTaskCountDisplay() {
+        if (!taskCountDisplay || !visibleTaskCount || !totalTaskCount) return;
+        
+        const taskItems = document.querySelectorAll('.task-item');
+        const total = tasks.length;
+        const visible = taskItems.length;
+        
+        if (visible > 5) { // Only show count when there are many tasks
+            taskCountDisplay.style.display = 'block';
+            visibleTaskCount.textContent = visible;
+            totalTaskCount.textContent = total;
+        } else {
+            taskCountDisplay.style.display = 'none';
+        }
+    }
+    
+    // Call this function whenever tasks are rendered
+    window.updateTaskCountDisplay = updateTaskCountDisplay;
+}
+
+// ========== ENHANCED MOBILE MENU FUNCTIONALITY ==========
+function initializeMobileMenu() {
+    const hamburger = document.querySelector('.mobile-hamburger');
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const overlay = document.querySelector('.mobile-sidebar-overlay');
+    const sidebar = document.querySelector('.sidebar'); // Use existing sidebar
+    const mobileSidebar = document.querySelector('.mobile-sidebar');
+    const closeBtn = document.querySelector('.mobile-sidebar-close');
+    const body = document.body;
+    
+    // Support both hamburger and toggle button
+    const toggleButton = hamburger || mobileMenuToggle;
+    const activeSidebar = mobileSidebar || sidebar;
+    
+    function openSidebar() {
+        if (overlay) overlay.classList.add('active');
+        if (activeSidebar) activeSidebar.classList.add('mobile-open');
+        body.classList.add('mobile-sidebar-open');
+        
+        // Update toggle button icon if it exists
+        const icon = toggleButton?.querySelector('i');
+        if (icon) icon.className = 'fas fa-times';
+    }
+    
+    function closeSidebar() {
+        if (overlay) overlay.classList.remove('active');
+        if (activeSidebar) activeSidebar.classList.remove('mobile-open');
+        body.classList.remove('mobile-sidebar-open');
+        
+        // Reset toggle button icon if it exists
+        const icon = toggleButton?.querySelector('i');
+        if (icon) icon.className = 'fas fa-bars';
+    }
+    
+    // Event listeners
+    if (toggleButton) toggleButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (activeSidebar?.classList.contains('mobile-open')) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    });
+    
+    if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+    if (overlay) overlay.addEventListener('click', closeSidebar);
+    
+    // Close when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
+            if (!activeSidebar?.contains(e.target) && !toggleButton?.contains(e.target)) {
+                closeSidebar();
+            }
+        }
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && activeSidebar?.classList.contains('mobile-open')) {
+            closeSidebar();
+        }
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            closeSidebar();
+        }
+    });
+    
+    // Enhanced category selection for mobile
+    const categories = document.querySelectorAll('.category');
+    const mobileCategories = document.querySelectorAll('.mobile-category');
+    const allCategories = [...categories, ...mobileCategories];
+    
+    allCategories.forEach(category => {
+        category.addEventListener('click', (e) => {
+            const categoryType = category.dataset.category;
+            
+            // Only close sidebar on mobile and if category actually changed
+            if (window.innerWidth <= 768 && categoryType !== currentCategory) {
+                setTimeout(closeSidebar, 300);
+            }
+        });
+    });
+    
+    console.log('✅ Enhanced mobile menu initialized');
+}
+
+// ========== DYNAMIC HEIGHT ADJUSTMENT ==========
+function adjustLayoutForScreenSize() {
+    const viewportHeight = window.innerHeight;
+    const taskListContainer = document.getElementById('taskListContainer');
+    const dashboard = document.querySelector('.dashboard');
+    
+    if (!taskListContainer) return;
+    
+    // Calculate available height
+    let headerHeight = 80; // Approximate header height
+    let dashboardHeight = dashboard ? dashboard.offsetHeight : 200;
+    let padding = 40; // Account for padding
+    
+    if (viewportHeight < 700) {
+        headerHeight = 60;
+        padding = 20;
+    }
+    
+    const availableHeight = viewportHeight - headerHeight - dashboardHeight - padding;
+    
+    // Set dynamic max height
+    taskListContainer.style.maxHeight = `${Math.max(300, availableHeight)}px`;
+    
+    console.log(`📏 Screen height: ${viewportHeight}px, Task list height: ${availableHeight}px`);
+}
+
             // Initialize App
             function initializeApp() {
     hideWelcomeAnimation();
@@ -12223,21 +15076,37 @@ function getWeekStart(date) {
     }, 2000);
 }
 
-            function hideWelcomeAnimation() {
+            
+// REPLACE your hideWelcomeAnimation function with this faster version:
+function hideWelcomeAnimation() {
+    console.log('🎬 Starting hideWelcomeAnimation...');
+    
     setTimeout(() => {
         const welcomeOverlay = document.getElementById('welcomeOverlay');
-        const appContainer = document.getElementById('appContainer'); // Add this line
+        const appContainer = document.getElementById('appContainer');
         
         if (welcomeOverlay) {
             welcomeOverlay.style.opacity = '0';
             welcomeOverlay.style.visibility = 'hidden';
         }
         
-        // Add this block to show the app container
         if (appContainer) {
             appContainer.classList.add('visible');
         }
-    }, 3500);
+        
+        // FASTER SURVEY CHECK - reduced from 500ms to 200ms
+        setTimeout(() => {
+            const needsSurvey = checkSurveyStatus();
+            if (needsSurvey) {
+                console.log('🔍 New user detected, showing survey...');
+                showUserSurvey();
+            } else {
+                console.log('✅ Survey already completed, loading personalized settings...');
+                loadPersonalizedSettings();
+            }
+        }, 200); // Much faster!
+        
+    }, 2800); // Reduced from 3500ms to 2800ms
 }
 
 
@@ -13110,58 +15979,6 @@ function toggleReasoning() {
     }
 }
 
-function showPartialOptions() {
-    // Create partial selection popup
-    const analysis = currentDetectionPopup.aiAnalysis;
-    const partialPopup = document.createElement('div');
-    partialPopup.className = 'partial-selection-popup';
-    
-    partialPopup.innerHTML = `
-        <div class="partial-popup-content">
-            <h4>Choose which suggestions to apply:</h4>
-            <div class="partial-options">
-                ${analysis.priority ? `
-                    <label class="partial-option">
-                        <input type="checkbox" data-type="priority" checked>
-                        <span>Priority: ${analysis.priority}</span>
-                    </label>
-                ` : ''}
-                ${analysis.category ? `
-                    <label class="partial-option">
-                        <input type="checkbox" data-type="category" checked>
-                        <span>Category: ${analysis.category}</span>
-                    </label>
-                ` : ''}
-                ${analysis.suggestedTime ? `
-                    <label class="partial-option">
-                        <input type="checkbox" data-type="time" checked>
-                        <span>Time: ${analysis.suggestedTime}</span>
-                    </label>
-                ` : ''}
-            </div>
-            <div class="partial-actions">
-                <button onclick="applyPartialSuggestions()">Apply Selected</button>
-                <button onclick="closePartialPopup()">Cancel</button>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(partialPopup);
-    setTimeout(() => partialPopup.classList.add('show'), 50);
-}
-
-function toggleReasoning() {
-    const content = document.querySelector('.reasoning-content');
-    const icon = document.querySelector('.toggle-icon');
-    
-    if (content.style.display === 'none') {
-        content.style.display = 'block';
-        icon.style.transform = 'rotate(180deg)';
-    } else {
-        content.style.display = 'none';
-        icon.style.transform = 'rotate(0deg)';
-    }
-}
 
 // ADD THE NEW FUNCTION HERE - RIGHT AFTER showAIDetectionPopup
         function checkForKeywordsInText(inputElement) {
@@ -13306,19 +16123,66 @@ function setSuggestedCategory(category) {
     }
 }
 
+// 🔍 Function to detect if this is a first-time user
+function isFirstTimeUser() {
+    // Check multiple indicators to determine if user is new
+    const hasTaskData = localStorage.getItem('tasks');
+    const hasUserData = localStorage.getItem('tasklytic_users');
+    const hasCurrentUser = localStorage.getItem('tasklytic_current_user');
+    const hasSeenVersions = localStorage.getItem('seenVersions');
+    const hasAnyAppData = localStorage.getItem('tasklytic_survey_completed');
+    
+    // If any of these exist, user has used the app before
+    const hasUsedAppBefore = !!(
+        hasTaskData || 
+        hasUserData || 
+        hasCurrentUser || 
+        hasSeenVersions || 
+        hasAnyAppData
+    );
+    
+    console.log('🔍 User detection:', {
+        hasTaskData: !!hasTaskData,
+        hasUserData: !!hasUserData,
+        hasCurrentUser: !!hasCurrentUser,
+        hasSeenVersions: !!hasSeenVersions,
+        hasAnyAppData: !!hasAnyAppData,
+        isNewUser: !hasUsedAppBefore
+    });
+    
+    return !hasUsedAppBefore;
+}
+
 function showVersionSplashScreen() {
     console.log('🎬 Checking version splash screen...');
     
     const seenVersions = JSON.parse(localStorage.getItem('seenVersions') || '[]');
     
+    // 🔍 Check if this is a new user (no previous app data)
+    const isNewUser = isFirstTimeUser();
+    
+    if (isNewUser) {
+        console.log('👋 New user detected - skipping version splash and marking current version as seen');
+        
+        // Mark current version as seen for new users (without showing splash)
+        seenVersions.push(APP_VERSION);
+        localStorage.setItem('seenVersions', JSON.stringify(seenVersions));
+        
+        return; // Exit early - no splash for new users
+    }
+    
+    // 🔄 Existing user - show splash only for new versions they haven't seen
     if (!seenVersions.includes(APP_VERSION) && VERSION_FEATURES[APP_VERSION]) {
+        console.log(`🎉 Existing user - showing splash for new version ${APP_VERSION}`);
+        
         const splash = document.createElement('div');
         splash.className = 'version-splash-overlay';
         
         const features = VERSION_FEATURES[APP_VERSION];
+        // ... rest of your existing splash code ...
+        
         const featuresList = features.features.map((feature, index) => {
-
-             // ADD THE STREAK DEMO HERE - BEFORE THE ADD LATER DEMO
+            // Your existing feature mapping code...
             if (index === 0 && feature.includes('Daily Streak')) {
                 return `
                     <li>
@@ -13526,6 +16390,8 @@ function showVersionSplashScreen() {
         setTimeout(() => {
             primaryBtn.focus();
         }, 500);
+    } else {
+        console.log('✅ No new version updates to show');
     }
 }
 
@@ -16414,6 +19280,8 @@ function createFullViewTaskHTML(task) {
         </div>
     `;
 }
+
+
 
 function addFullViewTaskHandlers() {
     if (!fullViewOverlay) return;
