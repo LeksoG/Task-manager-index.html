@@ -13831,8 +13831,40 @@ body.compact-mode .main-content {
 
            
         // Update these constants at the top of your JavaScript
-const APP_VERSION = "2.6";
+const APP_VERSION = "2.6.1";
 const VERSION_FEATURES = {
+
+    "2.6.1": {
+    title: "🐛 Bug Fixes & User Experience Improvements",
+    description: "Critical fixes and refinements to enhance stability and user experience.",
+    features: [
+        {
+            type: "improvement",
+            title: "🔧 Sample Task Management",
+            description: "Fixed issue where sample tasks would reappear after deletion on page refresh. Sample tasks now only show for first-time users."
+        },
+        {
+            type: "improvement", 
+            title: "📱 Mobile Touch Responsiveness",
+            description: "Improved touch sensitivity and gesture recognition for better mobile interaction."
+        },
+        {
+            type: "improvement",
+            title: "⚡ Performance Optimizations",
+            description: "Reduced memory usage and faster task rendering for smoother user experience."
+        }
+    ],
+    improvements: [
+        "🐛 Fixed sample tasks reappearing after deletion and page refresh",
+        "🎯 Improved task deletion persistence across sessions",
+        "📱 Enhanced mobile touch event handling and responsiveness", 
+        "⚡ Optimized app initialization and loading times",
+        "🔧 Fixed scroll detection issues on certain devices",
+        "🎨 Smoother animations and reduced visual glitches",
+        "💾 Better data persistence and local storage management",
+        "🖱️ Improved mouse and keyboard interaction reliability"
+    ]
+},
     "2.6": {
         title: "🔍 Full View Mode & Enhanced Experience",
         description: "Experience tasks like never before with immersive full view mode and performance improvements.",
@@ -14263,6 +14295,11 @@ let currentDetectionPopup = null; // Add this line
 let isTaskContainerExpanded = false;
 let scrollDirectionTimeout;
 let mainContent = null;
+// ADD these new global variables at the top of your script (around line 100):
+let taskAwarenessEnabled = true;
+let taskPatterns = {};
+let currentTaskSuggestion = null;
+let userTopicHistory = [];
 
 // ADD THESE COMPACT NAVIGATION VARIABLES HERE:
 let isCompactMode = false;
@@ -17922,39 +17959,575 @@ function testDashboardAnimation() {
                 setupIntelligentPrioToggles();
             }
 
-            function setupIntelligentPrioToggles() {
-                const autoPriorityOption = document.getElementById('autoPriorityOption');
-                const keywordDetectionOption = document.getElementById('keywordDetectionOption');
-                const smartSuggestionsOption = document.getElementById('smartSuggestionsOption');
+            // REPLACE your setupIntelligentPrioToggles function with this enhanced version:
+function setupIntelligentPrioToggles() {
+    const autoPriorityOption = document.getElementById('autoPriorityOption');
+    const keywordDetectionOption = document.getElementById('keywordDetectionOption');
+    const smartSuggestionsOption = document.getElementById('smartSuggestionsOption');
+    
+    // ADD NEW: Task Awareness Option
+    const taskAwarenessOption = document.getElementById('taskAwarenessOption');
 
-                if (autoPriorityOption) {
-                    autoPriorityOption.addEventListener('click', () => {
-                        const toggle = autoPriorityOption.querySelector('.toggle-switch');
-                        toggle.classList.toggle('active');
-                        intelligentPrioEnabled = toggle.classList.contains('active');
-                        autoPriorityOption.classList.toggle('active', intelligentPrioEnabled);
-                    });
-                }
+    if (autoPriorityOption) {
+        autoPriorityOption.addEventListener('click', () => {
+            const toggle = autoPriorityOption.querySelector('.toggle-switch');
+            toggle.classList.toggle('active');
+            intelligentPrioEnabled = toggle.classList.contains('active');
+            autoPriorityOption.classList.toggle('active', intelligentPrioEnabled);
+        });
+    }
 
-                if (keywordDetectionOption) {
-                    keywordDetectionOption.addEventListener('click', () => {
-                        const toggle = keywordDetectionOption.querySelector('.toggle-switch');
-                        toggle.classList.toggle('active');
-                        keywordDetectionEnabled = toggle.classList.contains('active');
-                        keywordDetectionOption.classList.toggle('active', keywordDetectionEnabled);
-                    });
-                }
+    if (keywordDetectionOption) {
+        keywordDetectionOption.addEventListener('click', () => {
+            const toggle = keywordDetectionOption.querySelector('.toggle-switch');
+            toggle.classList.toggle('active');
+            keywordDetectionEnabled = toggle.classList.contains('active');
+            keywordDetectionOption.classList.toggle('active', keywordDetectionEnabled);
+        });
+    }
 
-                if (smartSuggestionsOption) {
-                    smartSuggestionsOption.addEventListener('click', () => {
-                        const toggle = smartSuggestionsOption.querySelector('.toggle-switch');
-                        toggle.classList.toggle('active');
-                        smartSuggestionsEnabled = toggle.classList.contains('active');
-                        smartSuggestionsOption.classList.toggle('active', smartSuggestionsEnabled);
-                    });
-                }
+    if (smartSuggestionsOption) {
+        smartSuggestionsOption.addEventListener('click', () => {
+            const toggle = smartSuggestionsOption.querySelector('.toggle-switch');
+            toggle.classList.toggle('active');
+            smartSuggestionsEnabled = toggle.classList.contains('active');
+            smartSuggestionsOption.classList.toggle('active', smartSuggestionsEnabled);
+        });
+    }
+    
+    // NEW: Task Awareness Toggle
+    if (taskAwarenessOption) {
+        taskAwarenessOption.addEventListener('click', () => {
+            const toggle = taskAwarenessOption.querySelector('.toggle-switch');
+            toggle.classList.toggle('active');
+            taskAwarenessEnabled = toggle.classList.contains('active');
+            taskAwarenessOption.classList.toggle('active', taskAwarenessEnabled);
+            
+            // Show notification
+            showNotification(
+                `🧠 Task Awareness ${taskAwarenessEnabled ? 'enabled' : 'disabled'}`, 
+                'info'
+            );
+        });
+    }
+}
+
+// ADD this new function to analyze task patterns:
+function analyzeTaskPatterns(inputText) {
+    if (!taskAwarenessEnabled || !inputText || inputText.length < 3) return null;
+    
+    const cleanText = inputText.toLowerCase().trim();
+    const words = cleanText.split(/\s+/);
+    
+    // Extract topics/keywords from the text
+    const topics = extractTopics(words);
+    
+    // Find patterns based on existing tasks
+    for (const topic of topics) {
+        const relatedTasks = findRelatedTasks(topic);
+        
+        if (relatedTasks.length >= 2) {
+            const suggestion = generateSmartSuggestion(topic, relatedTasks);
+            if (suggestion) {
+                return suggestion;
             }
+        }
+    }
+    
+    return null;
+}
 
+// ADD this function to extract topics from text:
+function extractTopics(words) {
+    const topics = [];
+    
+    // Common topic keywords
+    const topicKeywords = {
+        meeting: ['meeting', 'call', 'conference', 'standup', 'sync', 'discussion'],
+        project: ['project', 'development', 'build', 'create', 'design', 'plan'],
+        research: ['research', 'study', 'analyze', 'investigate', 'learn', 'read'],
+        shopping: ['buy', 'purchase', 'shop', 'order', 'get', 'pick up'],
+        exercise: ['workout', 'gym', 'run', 'exercise', 'fitness', 'training'],
+        health: ['doctor', 'appointment', 'checkup', 'medicine', 'health'],
+        finance: ['pay', 'bill', 'budget', 'money', 'bank', 'investment'],
+        home: ['clean', 'organize', 'fix', 'repair', 'maintenance', 'house'],
+        work: ['deadline', 'report', 'presentation', 'review', 'complete'],
+        travel: ['book', 'flight', 'hotel', 'vacation', 'trip', 'travel']
+    };
+    
+    // Check for topic matches
+    for (const [topic, keywords] of Object.entries(topicKeywords)) {
+        for (const word of words) {
+            if (keywords.includes(word)) {
+                topics.push(topic);
+                break;
+            }
+        }
+    }
+    
+    // Also add significant words as potential topics
+    const significantWords = words.filter(word => 
+        word.length > 4 && 
+        !['with', 'about', 'from', 'that', 'this', 'have', 'will', 'need'].includes(word)
+    );
+    
+    topics.push(...significantWords.slice(0, 2));
+    
+    return [...new Set(topics)]; // Remove duplicates
+}
+
+// ADD this function to find related tasks:
+function findRelatedTasks(topic) {
+    return tasks.filter(task => {
+        const taskText = (task.title + ' ' + (task.description || '')).toLowerCase();
+        return taskText.includes(topic.toLowerCase());
+    });
+}
+
+// ADD this function to generate smart suggestions:
+function generateSmartSuggestion(topic, relatedTasks) {
+    const suggestionTemplates = {
+        meeting: [
+            'Prepare agenda for {topic} meeting',
+            'Follow up on {topic} meeting action items',
+            'Send {topic} meeting summary',
+            'Schedule next {topic} meeting'
+        ],
+        project: [
+            'Review {topic} project progress',
+            'Update {topic} project documentation',
+            'Test {topic} project functionality',
+            'Deploy {topic} project to production'
+        ],
+        research: [
+            'Compile {topic} research findings',
+            'Create {topic} research summary',
+            'Share {topic} research with team',
+            'Continue {topic} research investigation'
+        ],
+        shopping: [
+            'Compare prices for {topic}',
+            'Check {topic} reviews online',
+            'Add {topic} to shopping list',
+            'Find best deals for {topic}'
+        ],
+        exercise: [
+            'Plan {topic} workout routine',
+            'Track {topic} progress',
+            'Schedule {topic} session',
+            'Research {topic} techniques'
+        ],
+        health: [
+            'Schedule follow-up {topic} appointment',
+            'Research {topic} options',
+            'Prepare questions for {topic}',
+            'Get second opinion on {topic}'
+        ],
+        finance: [
+            'Review {topic} expenses',
+            'Set up {topic} automatic payment',
+            'Compare {topic} options',
+            'Update {topic} budget'
+        ],
+        work: [
+            'Review {topic} requirements',
+            'Update {topic} status',
+            'Schedule {topic} review',
+            'Complete {topic} documentation'
+        ]
+    };
+    
+    // Get templates for this topic
+    let templates = suggestionTemplates[topic] || [
+        'Follow up on {topic}',
+        'Review {topic} details',
+        'Complete {topic} task',
+        'Research {topic} options'
+    ];
+    
+    // Filter out suggestions that are too similar to existing tasks
+    const existingTitles = relatedTasks.map(task => task.title.toLowerCase());
+    templates = templates.filter(template => {
+        const suggestion = template.replace('{topic}', topic);
+        return !existingTitles.some(title => 
+            title.includes(suggestion.toLowerCase()) || 
+            suggestion.toLowerCase().includes(title)
+        );
+    });
+    
+    if (templates.length === 0) return null;
+    
+    // Pick a random template
+    const selectedTemplate = templates[Math.floor(Math.random() * templates.length)];
+    const suggestionText = selectedTemplate.replace('{topic}', topic);
+    
+    // Determine category and priority based on related tasks
+    const categories = relatedTasks.map(task => task.category);
+    const priorities = relatedTasks.map(task => task.priority);
+    
+    const mostCommonCategory = getMostCommon(categories) || 'personal';
+    const mostCommonPriority = getMostCommon(priorities) || 'medium';
+    
+    return {
+        title: suggestionText,
+        topic: topic,
+        category: mostCommonCategory,
+        priority: mostCommonPriority,
+        relatedTasksCount: relatedTasks.length,
+        confidence: Math.min(80 + relatedTasks.length * 10, 95)
+    };
+}
+
+// ADD this helper function:
+function getMostCommon(arr) {
+    if (arr.length === 0) return null;
+    const frequency = {};
+    let maxCount = 0;
+    let mostCommon = null;
+    
+    arr.forEach(item => {
+        frequency[item] = (frequency[item] || 0) + 1;
+        if (frequency[item] > maxCount) {
+            maxCount = frequency[item];
+            mostCommon = item;
+        }
+    });
+    
+    return mostCommon;
+}
+
+// ADD this function to show suggestion in the task form:
+function showTaskSuggestion(suggestion) {
+    // Remove existing suggestion
+    const existingSuggestion = document.getElementById('taskSuggestionContainer');
+    if (existingSuggestion) {
+        existingSuggestion.remove();
+    }
+    
+    const taskTitleInput = document.getElementById('taskTitle');
+    const taskDescription = document.getElementById('taskDescription');
+    
+    if (!taskTitleInput || !taskDescription) return;
+    
+    // Create suggestion container
+    const suggestionContainer = document.createElement('div');
+    suggestionContainer.id = 'taskSuggestionContainer';
+    suggestionContainer.className = 'task-suggestion-container';
+    
+    suggestionContainer.innerHTML = `
+        <div class="suggestion-header">
+            <div class="suggestion-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="suggestion-title">Smart Suggestion</div>
+            <div class="suggestion-confidence">${suggestion.confidence}% match</div>
+        </div>
+        <div class="suggestion-content">
+            <div class="suggestion-text">"${suggestion.title}"</div>
+            <div class="suggestion-meta">
+                <span class="suggestion-category">${suggestion.category}</span>
+                <span class="suggestion-priority">${suggestion.priority} priority</span>
+                <span class="suggestion-related">Based on ${suggestion.relatedTasksCount} similar tasks</span>
+            </div>
+        </div>
+        <div class="suggestion-actions">
+            <button class="suggestion-btn forget" id="forgetSuggestion">
+                <i class="fas fa-times"></i>
+                Forget
+            </button>
+            <button class="suggestion-btn add" id="addSuggestion">
+                <i class="fas fa-plus"></i>
+                Add Task
+            </button>
+        </div>
+    `;
+    
+    // Add CSS styles
+    addSuggestionStyles();
+    
+    // Insert between title and description
+    const titleGroup = taskTitleInput.closest('.form-group');
+    const descriptionGroup = taskDescription.closest('.form-group');
+    
+    if (titleGroup && descriptionGroup) {
+        descriptionGroup.parentNode.insertBefore(suggestionContainer, descriptionGroup);
+    }
+    
+    // Show with animation
+    setTimeout(() => {
+        suggestionContainer.classList.add('show');
+    }, 100);
+    
+    // Add event listeners
+    document.getElementById('forgetSuggestion').addEventListener('click', () => {
+        forgetSuggestion(suggestion);
+    });
+    
+    document.getElementById('addSuggestion').addEventListener('click', () => {
+        addSuggestedTask(suggestion);
+    });
+    
+    currentTaskSuggestion = suggestion;
+}
+
+// ADD this function to add suggestion styles:
+function addSuggestionStyles() {
+    if (document.getElementById('taskSuggestionStyles')) return;
+    
+    const style = document.createElement('style');
+    style.id = 'taskSuggestionStyles';
+    style.textContent = `
+        .task-suggestion-container {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(124, 58, 237, 0.03) 100%);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .task-suggestion-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #4f46e5, #7c3aed, #4f46e5);
+            background-size: 200% 100%;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .task-suggestion-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .suggestion-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .suggestion-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+        }
+        
+        .suggestion-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            font-size: 0.95rem;
+        }
+        
+        .suggestion-confidence {
+            margin-left: auto;
+            background: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .suggestion-content {
+            margin-bottom: 1rem;
+        }
+        
+        .suggestion-text {
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+        
+        .suggestion-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+        
+        .suggestion-category,
+        .suggestion-priority,
+        .suggestion-related {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .suggestion-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+        
+        .suggestion-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .suggestion-btn.forget {
+            background: rgba(107, 114, 128, 0.1);
+            color: #6b7280;
+            border: 1px solid rgba(107, 114, 128, 0.2);
+        }
+        
+        .suggestion-btn.forget:hover {
+            background: rgba(107, 114, 128, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .suggestion-btn.add {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+        }
+        
+        .suggestion-btn.add:hover {
+            background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+        }
+        
+        /* Dark mode styles */
+        .dark-mode .task-suggestion-container {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
+            border-color: rgba(79, 70, 229, 0.3);
+        }
+        
+        .dark-mode .suggestion-title {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .dark-mode .suggestion-text {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .dark-mode .suggestion-meta {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .dark-mode .suggestion-category,
+        .dark-mode .suggestion-priority,
+        .dark-mode .suggestion-related {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .dark-mode .suggestion-btn.forget {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark-mode .suggestion-btn.forget:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    `;
+    
+    document.head.appendChild(style);
+}
+
+// ADD this function to handle forgetting suggestions:
+function forgetSuggestion(suggestion) {
+    // Add to forgotten suggestions to avoid showing again
+    if (!taskPatterns.forgotten) {
+        taskPatterns.forgotten = [];
+    }
+    
+    taskPatterns.forgotten.push(suggestion.title.toLowerCase());
+    
+    // Remove suggestion container
+    const suggestionContainer = document.getElementById('taskSuggestionContainer');
+    if (suggestionContainer) {
+        suggestionContainer.style.opacity = '0';
+        suggestionContainer.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            suggestionContainer.remove();
+        }, 300);
+    }
+    
+    currentTaskSuggestion = null;
+    showNotification('💭 Suggestion forgotten', 'info');
+}
+
+// ADD this function to add suggested task:
+function addSuggestedTask(suggestion) {
+    // Create task with suggested content
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const suggestedTime = suggestion.priority === 'high' ? '09:00' : 
+                         suggestion.priority === 'medium' ? '14:00' : '18:00';
+    
+    const [hours, minutes] = suggestedTime.split(':');
+    tomorrow.setHours(parseInt(hours), parseInt(minutes));
+    
+    const newTask = {
+        id: generateId(),
+        title: suggestion.title,
+        description: `Auto-suggested based on your ${suggestion.topic} activities`,
+        category: suggestion.category,
+        priority: suggestion.priority,
+        dueDate: tomorrow.toISOString(),
+        completed: false,
+        createdAt: new Date().toISOString(),
+        modifiedAt: new Date().toISOString(),
+        isAISuggested: true
+    };
+    
+    tasks.push(newTask);
+    saveTasks();
+    renderTasks();
+    updateDashboard();
+    updateCategoryCounts();
+    
+    // Close modal
+    if (taskModal) {
+        taskModal.classList.remove('active');
+    }
+    
+    // Reset form
+    if (taskForm) {
+        taskForm.reset();
+        document.querySelectorAll('.category-option, .priority-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+    }
+    
+    currentTaskSuggestion = null;
+    showNotification(`✨ "${suggestion.title}" added to your tasks!`, 'success');
+}
             function enableIntelligentTaskCreation() {
     const taskTitleInput = document.getElementById('taskTitle');
     if (!taskTitleInput) return;
@@ -19555,6 +20128,10 @@ function editTask(taskId) {
             function deleteTask(taskId) {
     // Remove from main tasks
     tasks = tasks.filter(task => task.id !== taskId);
+    // Mark that user has deleted tasks to prevent sample tasks from reappearing
+if (tasks.length === 0) {
+    localStorage.setItem('tasklytic_user_has_deleted_tasks', 'true');
+}
     
     // Also remove any Add Later tasks associated with this task
     const beforeCount = addLaterTasks.length;
@@ -22534,14 +23111,18 @@ function showFullViewExitNotification() {
     }, 2000);
 }
 
+// If you need the complete createFullViewOverlayWithAnimation function, here it is:
 function createFullViewOverlayWithAnimation() {
     // Remove existing overlay if any
     if (fullViewOverlay) {
         fullViewOverlay.remove();
     }
     
+    // Detect current theme
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    
     fullViewOverlay = document.createElement('div');
-    fullViewOverlay.className = 'full-view-overlay';
+    fullViewOverlay.className = `full-view-overlay ${isDarkMode ? 'dark-theme' : 'light-theme'}`;
     
     // Start from bottom center like an app opening
     fullViewOverlay.style.transform = 'translateY(100vh) scale(0.3)';
@@ -22609,20 +23190,13 @@ function createFullViewOverlayWithAnimation() {
         <div class="full-view-content">
             ${filteredTasks.length === 0 ? `
                 <div class="empty-state" style="text-align: center; padding: 4rem 2rem;">
-                    <i class="fas fa-clipboard-list" style="font-size: 5rem; color: rgba(255,255,255,0.3); margin-bottom: 2rem;"></i>
-                    <h3 style="font-size: 2rem; margin-bottom: 1rem; color: rgba(255,255,255,0.9);">No ${sectionTitle.toLowerCase()}</h3>
-                    <p style="font-size: 1.2rem; color: rgba(255,255,255,0.7);">
-                        ${currentCategory !== 'all' ? `No tasks in ${currentCategory} category` :
-                          currentFilter === 'all' ? 'Create your first task to see it here' : 
-                          currentFilter === 'pending' ? 'All tasks are completed! 🎉' :
-                          currentFilter === 'completed' ? 'Complete some tasks to see them here' :
-                          currentFilter === 'overdue' ? 'Great! No overdue tasks' :
-                          'No tasks due today'}
+                    <i class="fas fa-clipboard-list" style="font-size: 5rem; opacity: 0.3; margin-bottom: 2rem;"></i>
+                    <h3 style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.9;">${getEmptyStateTitle()}</h3>
+                    <p style="font-size: 1.2rem; opacity: 0.7;">
+                        ${getEmptyStateMessage()}
                     </p>
                     <button onclick="exitFullView(); setTimeout(openAddTaskModal, 400);" 
-                            style="margin-top: 2rem; background: var(--primary); color: white; border: none; 
-                                   padding: 1rem 2rem; border-radius: 12px; font-size: 1.1rem; cursor: pointer;
-                                   transition: all 0.3s ease;">
+                            class="full-view-add-btn">
                         <i class="fas fa-plus"></i> Add New Task
                     </button>
                 </div>
@@ -22633,6 +23207,9 @@ function createFullViewOverlayWithAnimation() {
             `}
         </div>
     `;
+    
+    // Apply theme-specific styles - THIS IS THE IMPORTANT LINE
+    applyFullViewThemeStyles(fullViewOverlay, isDarkMode);
     
     document.body.appendChild(fullViewOverlay);
     
@@ -22645,29 +23222,852 @@ function createFullViewOverlayWithAnimation() {
         fullViewOverlay.classList.add('active');
     }, 50);
     
+    // Add handlers after animation starts
+    setTimeout(() => {
+        const closeBtn = fullViewOverlay.querySelector('#fullViewCloseBtn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', exitFullView);
+        }
         
-        // Add handlers after animation starts
-setTimeout(() => {
-    const closeBtn = fullViewOverlay.querySelector('#fullViewCloseBtn');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', exitFullView);
+        // Ensure scrolling works first
+        ensureFullViewScrolling();
+        
+        // Add event delegation with minimal interference
+        const fullViewContent = fullViewOverlay.querySelector('.full-view-content');
+        if (fullViewContent) {
+            fullViewContent.addEventListener('click', function(e) {
+                if (e.target.closest('.task-action-btn')) {
+                    handleFullViewActions(e);
+                }
+            }, { passive: false });
+            
+            fullViewContent.addEventListener('change', handleFullViewCheckbox, { passive: true });
+        }
+    }, 100);
+}
+
+function applyFullViewThemeStyles(overlay, isDarkMode) {
+    if (isDarkMode) {
+        // Dark theme styles - FULLY OPAQUE
+        overlay.style.cssText += `
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            z-index: 9999;
+        `;
+    } else {
+        // Light theme styles - FULLY OPAQUE
+        overlay.style.cssText += `
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            color: #1e293b;
+            z-index: 9999;
+            border: 1px solid #e2e8f0;
+        `;
     }
     
-    // Ensure scrolling works first
-    ensureFullViewScrolling();
+    // Add comprehensive theme CSS
+    addFullViewThemeCSS(isDarkMode);
+}
+
+// REPLACE the addFullViewThemeCSS function with this color-fixed version:
+function addFullViewThemeCSS(isDarkMode) {
+    // Remove existing full view theme styles
+    const existingStyle = document.getElementById('fullViewThemeStyles');
+    if (existingStyle) {
+        existingStyle.remove();
+    }
     
-    // Add event delegation with minimal interference
-    const fullViewContent = fullViewOverlay.querySelector('.full-view-content');
-    if (fullViewContent) {
-        fullViewContent.addEventListener('click', function(e) {
-            if (e.target.closest('.task-action-btn')) {
-                handleFullViewActions(e);
+    const style = document.createElement('style');
+    style.id = 'fullViewThemeStyles';
+    
+    if (isDarkMode) {
+        // Dark theme CSS - NO RED/GREEN CONTAINER COLORS
+        style.textContent = `
+            .full-view-overlay.dark-theme {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                z-index: 9999 !important;
+                display: flex;
+                flex-direction: column;
+                background: #0f172a !important;
+                color: #ffffff !important;
+                opacity: 1 !important;
             }
-        }, { passive: false });
-        
-        fullViewContent.addEventListener('change', handleFullViewCheckbox, { passive: true });
+            
+            .full-view-overlay.dark-theme .full-view-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1.5rem 2rem;
+                background: #1e293b !important;
+                border-bottom: 1px solid #334155;
+                flex-shrink: 0;
+                position: relative;
+                z-index: 10;
+            }
+            
+            .full-view-overlay.dark-theme .full-view-title {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #ffffff !important;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            
+            .full-view-overlay.dark-theme .full-view-close {
+                background: #374151 !important;
+                border: 1px solid #4b5563;
+                color: #ffffff !important;
+                padding: 0.75rem 1.25rem;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+            }
+            
+            .full-view-overlay.dark-theme .full-view-close:hover {
+                background: #4b5563 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            }
+            
+            /* CENTERED CONTENT WITH SPACING FROM HEADER */
+            .full-view-overlay.dark-theme .full-view-content {
+                flex: 1;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding: 2rem !important;
+                scroll-behavior: smooth;
+                background: transparent !important;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+            }
+            
+            /* NEUTRAL COLORED TASKS CONTAINER - NO RED/GREEN */
+            .full-view-overlay.dark-theme .full-view-tasks {
+                width: 100%;
+                max-width: 1000px;
+                background: rgba(30, 41, 59, 0.8) !important;
+                border-radius: 20px !important;
+                padding: 0 !important;
+                margin: 0 auto;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(71, 85, 105, 0.3) !important;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                overflow: hidden;
+            }
+            
+            /* TASK ITEMS WITH NEUTRAL BACKGROUNDS */
+            .full-view-overlay.dark-theme .task-item {
+                background: rgba(51, 65, 85, 0.3) !important;
+                border: none !important;
+                border-bottom: 1px solid rgba(71, 85, 105, 0.4) !important;
+                border-radius: 0 !important;
+                padding: 1.5rem 2rem !important;
+                margin: 0 !important;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+                opacity: 1 !important;
+                width: 100% !important;
+                box-sizing: border-box;
+                position: relative;
+            }
+            
+            /* FIRST AND LAST TASK ROUNDED CORNERS */
+            .full-view-overlay.dark-theme .task-item:first-child {
+                border-radius: 20px 20px 0 0 !important;
+            }
+            
+            .full-view-overlay.dark-theme .task-item:last-child {
+                border-radius: 0 0 20px 20px !important;
+                border-bottom: none !important;
+            }
+            
+            /* SINGLE TASK GETS FULL ROUNDED CORNERS */
+            .full-view-overlay.dark-theme .task-item:first-child:last-child {
+                border-radius: 20px !important;
+                border-bottom: none !important;
+            }
+            
+            .full-view-overlay.dark-theme .task-item:hover {
+                background: rgba(71, 85, 105, 0.4) !important;
+                transform: none !important;
+                box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.3) !important;
+            }
+            
+            .full-view-overlay.dark-theme .task-content {
+                flex: 1;
+                min-width: 0;
+            }
+            
+            .full-view-overlay.dark-theme .task-title {
+                color: #f1f5f9 !important;
+                font-size: 1.1rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                word-wrap: break-word;
+            }
+            
+            .full-view-overlay.dark-theme .task-description {
+                color: rgba(203, 213, 225, 0.8) !important;
+                margin-bottom: 1rem;
+                line-height: 1.5;
+                word-wrap: break-word;
+                font-size: 0.95rem;
+            }
+            
+            .full-view-overlay.dark-theme .task-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                align-items: center;
+                color: rgba(148, 163, 184, 0.9) !important;
+                font-size: 0.85rem;
+            }
+            
+            .full-view-overlay.dark-theme .task-category,
+            .full-view-overlay.dark-theme .task-priority,
+            .full-view-overlay.dark-theme .task-date,
+            .full-view-overlay.dark-theme .task-time {
+                background: rgba(71, 85, 105, 0.6) !important;
+                padding: 0.25rem 0.5rem;
+                border-radius: 6px;
+                color: rgba(241, 245, 249, 0.9) !important;
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+                font-size: 0.8rem;
+                border: 1px solid rgba(100, 116, 139, 0.3);
+            }
+            
+            .full-view-overlay.dark-theme .task-actions {
+                display: flex;
+                gap: 0.5rem;
+                flex-shrink: 0;
+                align-items: flex-start;
+            }
+            
+            .full-view-overlay.dark-theme .task-action-btn {
+                background: rgba(71, 85, 105, 0.6) !important;
+                border: 1px solid rgba(100, 116, 139, 0.5) !important;
+                color: #f1f5f9 !important;
+                padding: 0.5rem;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+            }
+            
+            .full-view-overlay.dark-theme .task-action-btn:hover {
+                background: rgba(100, 116, 139, 0.7) !important;
+                transform: scale(1.05);
+            }
+            
+            .full-view-overlay.dark-theme .task-action-btn.delete:hover {
+                background: rgba(239, 68, 68, 0.2) !important;
+                border-color: rgba(239, 68, 68, 0.5) !important;
+                color: #fca5a5 !important;
+            }
+            
+            .full-view-overlay.dark-theme .task-checkbox input {
+                width: 18px;
+                height: 18px;
+                margin-top: 0.25rem;
+                flex-shrink: 0;
+            }
+            
+            /* NEUTRAL EMPTY STATE */
+            .full-view-overlay.dark-theme .empty-state {
+                color: #f1f5f9 !important;
+                background: rgba(30, 41, 59, 0.8) !important;
+                padding: 4rem 2rem;
+                border-radius: 20px !important;
+                text-align: center;
+                width: 100%;
+                max-width: 1000px;
+                margin: 0 auto;
+                border: 1px solid rgba(71, 85, 105, 0.3) !important;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            }
+            
+            .full-view-overlay.dark-theme .empty-state i {
+                color: rgba(148, 163, 184, 0.5) !important;
+            }
+            
+            .full-view-overlay.dark-theme .empty-state h3 {
+                color: #f1f5f9 !important;
+            }
+            
+            .full-view-overlay.dark-theme .empty-state p {
+                color: rgba(203, 213, 225, 0.8) !important;
+            }
+            
+            .full-view-overlay.dark-theme .full-view-add-btn {
+                background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+                color: white !important;
+                border: none;
+                padding: 1rem 2rem;
+                border-radius: 12px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 2rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .full-view-overlay.dark-theme .full-view-add-btn:hover {
+                background: linear-gradient(135deg, #3730a3 0%, #6d28d9 100%) !important;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+            }
+            
+            /* SUBTLE COMPLETED STYLING - NO GREEN CONTAINER */
+            .full-view-overlay.dark-theme .task-item.completed {
+                opacity: 0.7 !important;
+                background: rgba(51, 65, 85, 0.2) !important;
+            }
+            
+            .full-view-overlay.dark-theme .task-item.completed .task-title {
+                text-decoration: line-through;
+                color: rgba(74, 222, 128, 0.8) !important;
+            }
+            
+            .full-view-overlay.dark-theme .task-item.completed .task-description,
+            .full-view-overlay.dark-theme .task-item.completed .task-meta {
+                opacity: 0.6 !important;
+            }
+            
+            /* SUBTLE OVERDUE STYLING - NO RED CONTAINER */
+            .full-view-overlay.dark-theme .task-item.overdue {
+                background: rgba(51, 65, 85, 0.4) !important;
+                border-left: 3px solid rgba(239, 68, 68, 0.6) !important;
+            }
+            
+            .full-view-overlay.dark-theme .task-item.overdue .task-title {
+                color: rgba(248, 113, 113, 0.9) !important;
+            }
+        `;
+    } else {
+        // Light theme CSS - NO RED/GREEN CONTAINER COLORS + OPTIMIZED DELETE
+        style.textContent = `
+            .full-view-overlay.light-theme {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                z-index: 9999 !important;
+                display: flex;
+                flex-direction: column;
+                background: #f8fafc !important;
+                color: #1e293b !important;
+                opacity: 1 !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1.5rem 2rem;
+                background: #ffffff !important;
+                border-bottom: 1px solid #e2e8f0;
+                flex-shrink: 0;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                position: relative;
+                z-index: 10;
+            }
+            
+            .full-view-overlay.light-theme .full-view-title {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #1e293b !important;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            
+            .full-view-overlay.light-theme .full-view-close {
+                background: #f1f5f9 !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #1e293b !important;
+                padding: 0.75rem 1.25rem;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+            }
+            
+            .full-view-overlay.light-theme .full-view-close:hover {
+                background: #e2e8f0 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+            
+            /* CENTERED CONTENT WITH SPACING FROM HEADER */
+            .full-view-overlay.light-theme .full-view-content {
+                flex: 1;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding: 2rem !important;
+                scroll-behavior: smooth;
+                background: transparent !important;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+            }
+            
+            /* NEUTRAL COLORED TASKS CONTAINER - NO RED/GREEN */
+            .full-view-overlay.light-theme .full-view-tasks {
+                width: 100%;
+                max-width: 1000px;
+                background: rgba(255, 255, 255, 0.95) !important;
+                border-radius: 20px !important;
+                padding: 0 !important;
+                margin: 0 auto;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+                border: 1px solid rgba(226, 232, 240, 0.6) !important;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                overflow: hidden;
+            }
+            
+            /* TASK ITEMS WITH NEUTRAL BACKGROUNDS */
+            .full-view-overlay.light-theme .task-item {
+                background: #ffffff !important;
+                border: none !important;
+                border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
+                border-radius: 0 !important;
+                padding: 1.5rem 2rem !important;
+                margin: 0 !important;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+                opacity: 1 !important;
+                width: 100% !important;
+                box-sizing: border-box;
+                position: relative;
+            }
+            
+            /* FIRST AND LAST TASK ROUNDED CORNERS */
+            .full-view-overlay.light-theme .task-item:first-child {
+                border-radius: 20px 20px 0 0 !important;
+            }
+            
+            .full-view-overlay.light-theme .task-item:last-child {
+                border-radius: 0 0 20px 20px !important;
+                border-bottom: none !important;
+            }
+            
+            /* SINGLE TASK GETS FULL ROUNDED CORNERS */
+            .full-view-overlay.light-theme .task-item:first-child:last-child {
+                border-radius: 20px !important;
+                border-bottom: none !important;
+            }
+            
+            .full-view-overlay.light-theme .task-item:hover {
+                background: #f8fafc !important;
+                transform: none !important;
+                box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.15) !important;
+            }
+            
+            .full-view-overlay.light-theme .task-content {
+                flex: 1;
+                min-width: 0;
+            }
+            
+            .full-view-overlay.light-theme .task-title {
+                color: #1e293b !important;
+                font-size: 1.1rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                word-wrap: break-word;
+            }
+            
+            .full-view-overlay.light-theme .task-description {
+                color: #64748b !important;
+                margin-bottom: 1rem;
+                line-height: 1.5;
+                word-wrap: break-word;
+                font-size: 0.95rem;
+            }
+            
+            .full-view-overlay.light-theme .task-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                align-items: center;
+                color: #94a3b8 !important;
+                font-size: 0.85rem;
+            }
+            
+            .full-view-overlay.light-theme .task-category,
+            .full-view-overlay.light-theme .task-priority,
+            .full-view-overlay.light-theme .task-date,
+            .full-view-overlay.light-theme .task-time {
+                background: #f1f5f9 !important;
+                padding: 0.25rem 0.5rem;
+                border-radius: 6px;
+                color: #64748b !important;
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+                font-size: 0.8rem;
+                border: 1px solid #e2e8f0;
+            }
+            
+            .full-view-overlay.light-theme .task-actions {
+                display: flex;
+                gap: 0.5rem;
+                flex-shrink: 0;
+                align-items: flex-start;
+            }
+            
+            .full-view-overlay.light-theme .task-action-btn {
+                background: #f1f5f9 !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #1e293b !important;
+                padding: 0.5rem;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+            }
+            
+            .full-view-overlay.light-theme .task-action-btn:hover {
+                background: #e2e8f0 !important;
+                transform: scale(1.05);
+            }
+            
+            .full-view-overlay.light-theme .task-action-btn.delete:hover {
+                background: rgba(239, 68, 68, 0.1) !important;
+                border-color: rgba(239, 68, 68, 0.3) !important;
+                color: #dc2626 !important;
+            }
+            
+            .full-view-overlay.light-theme .task-checkbox input {
+                width: 18px;
+                height: 18px;
+                margin-top: 0.25rem;
+                flex-shrink: 0;
+            }
+            
+            /* NEUTRAL EMPTY STATE */
+            .full-view-overlay.light-theme .empty-state {
+                color: #1e293b !important;
+                background: rgba(255, 255, 255, 0.95) !important;
+                padding: 4rem 2rem;
+                border-radius: 20px !important;
+                text-align: center;
+                width: 100%;
+                max-width: 1000px;
+                margin: 0 auto;
+                border: 1px solid rgba(226, 232, 240, 0.6) !important;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            }
+            
+            .full-view-overlay.light-theme .empty-state i {
+                color: #cbd5e1 !important;
+            }
+            
+            .full-view-overlay.light-theme .empty-state h3 {
+                color: #1e293b !important;
+            }
+            
+            .full-view-overlay.light-theme .empty-state p {
+                color: #64748b !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-add-btn {
+                background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+                color: white !important;
+                border: none;
+                padding: 1rem 2rem;
+                border-radius: 12px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 2rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .full-view-overlay.light-theme .full-view-add-btn:hover {
+                background: linear-gradient(135deg, #3730a3 0%, #6d28d9 100%) !important;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+            }
+            
+            /* SUBTLE COMPLETED STYLING - NO GREEN CONTAINER */
+            .full-view-overlay.light-theme .task-item.completed {
+                opacity: 0.7 !important;
+                background: #ffffff !important;
+            }
+            
+            .full-view-overlay.light-theme .task-item.completed .task-title {
+                text-decoration: line-through;
+                color: rgba(22, 163, 74, 0.8) !important;
+            }
+            
+            .full-view-overlay.light-theme .task-item.completed .task-description,
+            .full-view-overlay.light-theme .task-item.completed .task-meta {
+                opacity: 0.6 !important;
+            }
+            
+            /* SUBTLE OVERDUE STYLING - NO RED CONTAINER */
+            .full-view-overlay.light-theme .task-item.overdue {
+                background: #ffffff !important;
+                border-left: 3px solid rgba(239, 68, 68, 0.6) !important;
+            }
+            
+            .full-view-overlay.light-theme .task-item.overdue .task-title {
+                color: rgba(220, 38, 38, 0.9) !important;
+            }
+            
+            /* OPTIMIZED DELETE MODAL FOR LIGHT THEME */
+            .full-view-overlay.light-theme .full-view-delete-modal .modal-backdrop {
+                background: rgba(0, 0, 0, 0.4) !important;
+                backdrop-filter: blur(8px);
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .modal-content {
+                background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+                border: 1px solid #e2e8f0 !important;
+                color: #1e293b !important;
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25) !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .modal-header {
+                border-bottom: 1px solid #e2e8f0 !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .modal-header h3 {
+                color: #1e293b !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .warning-icon {
+                color: #f59e0b !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .delete-warning p {
+                color: #374151 !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .task-preview {
+                background: #f1f5f9 !important;
+                border: 1px solid #e2e8f0 !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .task-preview strong {
+                color: #1e293b !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .warning-text {
+                color: #6b7280 !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .modal-footer {
+                border-top: 1px solid #e2e8f0 !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .btn-secondary {
+                background: #f1f5f9 !important;
+                color: #374151 !important;
+                border: 1px solid #d1d5db !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .btn-secondary:hover {
+                background: #e5e7eb !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .btn-danger {
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+                color: #ffffff !important;
+                box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+            }
+            
+            .full-view-overlay.light-theme .full-view-delete-modal .btn-danger:hover {
+                background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+                box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4) !important;
+            }
+        `;
     }
-}, 100);
+    
+    document.head.appendChild(style);
+}
+
+// REPLACE the showFullViewNotification function with this improved light-mode version:
+function showFullViewNotification(message, type = 'info') {
+    if (!fullViewOverlay) return;
+    
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    
+    // Create notification element with better light mode support
+    const notification = document.createElement('div');
+    notification.className = `full-view-notification glass-notification ${type} ${isDarkMode ? 'dark-theme' : 'light-theme'}`;
+    
+    // Get appropriate icon for notification type
+    const iconMap = {
+        success: 'fas fa-check-circle',
+        error: 'fas fa-exclamation-circle',
+        warning: 'fas fa-exclamation-triangle',
+        info: 'fas fa-info-circle'
+    };
+    
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="${iconMap[type]}"></i>
+            <span>${message}</span>
+        </div>
+        <div class="notification-glow"></div>
+    `;
+    
+    // Enhanced theme-aware styling
+    const baseStyle = `
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        border-radius: 16px;
+        padding: 1rem 1.5rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        z-index: 10000;
+        min-width: 280px;
+        max-width: 400px;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        opacity: 0;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, ${isDarkMode ? '0.4' : '0.15'});
+    `;
+    
+    if (isDarkMode) {
+        notification.style.cssText = baseStyle + `
+            background: rgba(30, 41, 59, 0.95) !important;
+            border: 1px solid rgba(71, 85, 105, 0.6) !important;
+            color: #f1f5f9 !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        `;
+    } else {
+        notification.style.cssText = baseStyle + `
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(203, 213, 225, 0.6) !important;
+            color: #1e293b !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        `;
+    }
+    
+    // Add type-specific accent colors
+    const accentColors = {
+        success: isDarkMode ? '74, 222, 128' : '22, 163, 74', // Different shades for each theme
+        error: isDarkMode ? '248, 113, 113' : '220, 38, 38',
+        warning: isDarkMode ? '251, 191, 36' : '217, 119, 6',
+        info: isDarkMode ? '147, 197, 253' : '59, 130, 246'
+    };
+    
+    const accentColor = accentColors[type] || accentColors.info;
+    
+    // Add the notification to full view overlay
+    fullViewOverlay.appendChild(notification);
+    
+    // Enhanced notification CSS with theme-aware colors
+    const notificationStyle = document.createElement('style');
+    notificationStyle.textContent = `
+        .full-view-notification.${isDarkMode ? 'dark-theme' : 'light-theme'} .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .full-view-notification.${isDarkMode ? 'dark-theme' : 'light-theme'} .notification-content i {
+            color: rgb(${accentColor}) !important;
+            font-size: 1.1rem;
+            filter: ${isDarkMode ? 'drop-shadow(0 0 6px rgba(' + accentColor + ', 0.4))' : 'none'};
+        }
+        
+        .full-view-notification.${isDarkMode ? 'dark-theme' : 'light-theme'} .notification-glow {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, 
+                rgba(${accentColor}, ${isDarkMode ? '0.2' : '0.1'}) 0%, 
+                rgba(${accentColor}, ${isDarkMode ? '0.1' : '0.05'}) 50%, 
+                transparent 100%);
+            border-radius: 18px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .full-view-notification.${isDarkMode ? 'dark-theme' : 'light-theme'}:hover .notification-glow {
+            opacity: 1;
+        }
+        
+        .full-view-notification.${type} {
+            ${type === 'success' ? `
+                border-color: rgba(${accentColor}, 0.4) !important;
+                box-shadow: 0 8px 32px rgba(${accentColor}, 0.2) !important;
+            ` : ''}
+        }
+    `;
+    document.head.appendChild(notificationStyle);
+    
+    // Show notification with smooth animation
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateX(-50%) translateY(0)';
+    }, 100);
+    
+    // Hide notification after 3.5 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(-50%) translateY(50px)';
+        
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+                notificationStyle.remove();
+            }
+        }, 400);
+    }, 3500);
+}
 
 
 function createFullViewTaskHTML(task) {
@@ -22879,170 +24279,8 @@ function updateFullViewContent() {
     }, 300);
 }
 
-function showFullViewNotification(message, type = 'info') {
-    if (!fullViewOverlay) return;
-    
-    // Create notification element with glass effect
-    const notification = document.createElement('div');
-    notification.className = `full-view-notification glass-notification ${type}`;
-    
-    // Get appropriate icon for notification type
-    const iconMap = {
-        success: 'fas fa-check-circle',
-        error: 'fas fa-exclamation-circle',
-        warning: 'fas fa-exclamation-triangle',
-        info: 'fas fa-info-circle'
-    };
-    
-    notification.innerHTML = `
-        <div class="notification-content">
-            <i class="${iconMap[type]}"></i>
-            <span>${message}</span>
-        </div>
-        <div class="notification-glow"></div>
-    `;
-    
-    // Enhanced glass styling with bottom center positioning
-    notification.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%) translateY(100px);
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 16px;
-        padding: 1rem 1.5rem;
-        color: white;
-        font-weight: 600;
-        font-size: 0.95rem;
-        box-shadow: 
-            0 8px 32px rgba(0, 0, 0, 0.3),
-            0 2px 8px rgba(255, 255, 255, 0.1) inset;
-        z-index: 1002;
-        min-width: 280px;
-        max-width: 400px;
-        text-align: center;
-        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        opacity: 0;
-    `;
-    
-    // Add type-specific accent colors
-    const accentColors = {
-        success: '16, 185, 129', // green
-        error: '239, 68, 68',     // red
-        warning: '245, 158, 11',  // yellow
-        info: '79, 70, 229'       // blue
-    };
-    
-    const accentColor = accentColors[type] || accentColors.info;
-    
-    // Add the notification to full view overlay
-    fullViewOverlay.appendChild(notification);
-    
-    // Add enhanced CSS for glass effect
-    const style = document.createElement('style');
-    style.textContent = `
-        .glass-notification {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .glass-notification::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, 
-                rgba(${accentColor}, 0.1) 0%, 
-                rgba(${accentColor}, 0.05) 50%, 
-                rgba(255, 255, 255, 0.03) 100%);
-            border-radius: inherit;
-            pointer-events: none;
-        }
-        
-        .glass-notification .notification-content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            justify-content: center;
-        }
-        
-        .glass-notification .notification-content i {
-            font-size: 1.1rem;
-            color: rgb(${accentColor});
-            filter: drop-shadow(0 0 8px rgba(${accentColor}, 0.3));
-        }
-        
-        .glass-notification .notification-glow {
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(135deg, 
-                rgba(${accentColor}, 0.2) 0%, 
-                rgba(${accentColor}, 0.1) 50%, 
-                transparent 100%);
-            border-radius: 18px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        .glass-notification:hover .notification-glow {
-            opacity: 1;
-        }
-        
-        .glass-notification.success .notification-content i {
-            animation: successPulse 0.6s ease-out;
-        }
-        
-        @keyframes successPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        
-        .glass-notification.show {
-            opacity: 1 !important;
-            transform: translateX(-50%) translateY(0) !important;
-        }
-        
-        .glass-notification.hide {
-            opacity: 0 !important;
-            transform: translateX(-50%) translateY(50px) !important;
-        }
-    `;
-    
-    document.head.appendChild(style);
-    
-    // Show notification with smooth animation
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 100);
-    
-    // Hide notification after 3.5 seconds
-    setTimeout(() => {
-        notification.classList.remove('show');
-        notification.classList.add('hide');
-        
-        setTimeout(() => {
-            if (notification.parentElement) {
-                notification.remove();
-                style.remove();
-            }
-        }, 400);
-    }, 3500);
-}
 
-
+// REPLACE the showFullViewDeleteConfirmation function with this centered & blurred version:
 function showFullViewDeleteConfirmation(task, deleteButton) {
     // Remove any existing confirmation
     const existingConfirmation = document.querySelector('.full-view-delete-modal');
@@ -23050,190 +24288,76 @@ function showFullViewDeleteConfirmation(task, deleteButton) {
         existingConfirmation.remove();
     }
     
-    // Create backdrop with blur effect
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    
+    // Add blur to the full view background
+    if (fullViewOverlay) {
+        fullViewOverlay.style.filter = 'blur(8px)';
+        fullViewOverlay.style.transition = 'filter 0.3s ease';
+    }
+    
+    // Create backdrop with enhanced blur effect
     const backdrop = document.createElement('div');
-    backdrop.className = 'full-view-delete-modal';
+    backdrop.className = `full-view-delete-modal ${isDarkMode ? 'dark-theme' : 'light-theme'}`;
     backdrop.innerHTML = `
         <div class="modal-backdrop"></div>
         <div class="modal-content">
             <div class="modal-header">
+                <div class="modal-header-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
                 <h3>Confirm Delete</h3>
             </div>
             <div class="modal-body">
                 <div class="delete-warning">
-                    <i class="fas fa-exclamation-triangle warning-icon"></i>
-                    <p>Are you sure you want to delete this task?</p>
+                    <p class="warning-question">Are you sure you want to delete this task?</p>
                     <div class="task-preview">
+                        <div class="task-preview-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
                         <strong>"${task.title}"</strong>
                     </div>
-                    <p class="warning-text">This action cannot be undone.</p>
+                    <p class="warning-text">
+                        <i class="fas fa-info-circle"></i>
+                        This action cannot be undone.
+                    </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary cancel-delete-btn">Cancel</button>
-                <button class="btn btn-danger confirm-delete-btn">Delete Task</button>
+                <button class="btn btn-secondary cancel-delete-btn">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+                <button class="btn btn-danger confirm-delete-btn">
+                    <i class="fas fa-trash-alt"></i>
+                    Delete Task
+                </button>
             </div>
         </div>
     `;
     
-    // Add styles to match existing modal
+    // Enhanced modal styling for perfect centering
     backdrop.style.cssText = `
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 1003;
+        z-index: 10001;
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.4s ease;
+        padding: 2rem;
+        box-sizing: border-box;
     `;
     
-    // Add comprehensive styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .full-view-delete-modal .modal-backdrop {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-        
-        .full-view-delete-modal .modal-content {
-            position: relative;
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-            max-width: 450px;
-            width: 90%;
-            max-height: 90vh;
-            overflow: hidden;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-        
-        .full-view-delete-modal.active .modal-content {
-            transform: scale(1);
-        }
-        
-        .full-view-delete-modal .modal-header {
-            padding: 1.5rem 1.5rem 1rem 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .full-view-delete-modal .modal-header h3 {
-            margin: 0;
-            color: #ffffff;
-            font-size: 1.5rem;
-            font-weight: 600;
-            text-align: center;
-        }
-        
-        .full-view-delete-modal .modal-body {
-            padding: 1.5rem;
-        }
-        
-        .full-view-delete-modal .delete-warning {
-            text-align: center;
-        }
-        
-        .full-view-delete-modal .warning-icon {
-            font-size: 4rem;
-            color: #f59e0b;
-            margin-bottom: 1rem;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .full-view-delete-modal .delete-warning p {
-            color: rgba(255, 255, 255, 0.9);
-            margin: 0 0 1rem 0;
-            font-size: 1.1rem;
-        }
-        
-        .full-view-delete-modal .task-preview {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .full-view-delete-modal .task-preview strong {
-            color: #ffffff;
-            font-size: 1.1rem;
-            word-break: break-word;
-        }
-        
-        .full-view-delete-modal .warning-text {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            font-style: italic;
-            margin-top: 1rem !important;
-        }
-        
-        .full-view-delete-modal .modal-footer {
-            padding: 1rem 1.5rem 1.5rem 1.5rem;
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .full-view-delete-modal .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-width: 120px;
-            font-size: 1rem;
-        }
-        
-        .full-view-delete-modal .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .full-view-delete-modal .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        
-        .full-view-delete-modal .btn-danger {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-        }
-        
-        .full-view-delete-modal .btn-danger:hover {
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
-        }
-        
-        .full-view-delete-modal .btn:active {
-            transform: translateY(0);
-        }
-    `;
+    // Add enhanced modal styles
+    addDeleteModalStyles(isDarkMode);
     
-    document.head.appendChild(style);
-    fullViewOverlay.appendChild(backdrop);
+    // Add to body instead of fullViewOverlay for proper centering
+    document.body.appendChild(backdrop);
     
     // Animate in
     setTimeout(() => {
@@ -23242,14 +24366,13 @@ function showFullViewDeleteConfirmation(task, deleteButton) {
     }, 10);
     
     // Prevent modal from interfering with background scroll
-backdrop.addEventListener('wheel', function(e) {
-    e.stopPropagation();
-}, { passive: true });
+    backdrop.addEventListener('wheel', function(e) {
+        e.stopPropagation();
+    }, { passive: true });
 
-backdrop.addEventListener('touchmove', function(e) {
-    e.stopPropagation();
-}, { passive: true });
-
+    backdrop.addEventListener('touchmove', function(e) {
+        e.stopPropagation();
+    }, { passive: true });
 
     // Add event listeners
     const cancelBtn = backdrop.querySelector('.cancel-delete-btn');
@@ -23259,19 +24382,30 @@ backdrop.addEventListener('touchmove', function(e) {
     const closeModal = () => {
         backdrop.style.opacity = '0';
         backdrop.classList.remove('active');
+        
+        // Remove blur from full view background
+        if (fullViewOverlay) {
+            fullViewOverlay.style.filter = 'none';
+        }
+        
         setTimeout(() => {
             backdrop.remove();
-            style.remove();
-        }, 300);
+            // Clean up styles
+            const deleteModalStyles = document.getElementById('deleteModalStyles');
+            if (deleteModalStyles) {
+                deleteModalStyles.remove();
+            }
+        }, 400);
     };
     
     cancelBtn.addEventListener('click', closeModal);
     modalBackdrop.addEventListener('click', closeModal);
     
     deleteBtn.addEventListener('click', () => {
-        // Add loading state
+        // Add loading state with better animation
         deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
         deleteBtn.disabled = true;
+        deleteBtn.style.opacity = '0.7';
         
         setTimeout(() => {
             // Delete the task
@@ -23287,7 +24421,7 @@ backdrop.addEventListener('touchmove', function(e) {
             setTimeout(() => {
                 updateFullViewContent();
             }, 100);
-        }, 500);
+        }, 800);
     });
     
     // Close on escape key
@@ -23299,6 +24433,364 @@ backdrop.addEventListener('touchmove', function(e) {
     };
     
     document.addEventListener('keydown', handleEscape);
+}
+
+// ADD this new function for delete modal styles:
+function addDeleteModalStyles(isDarkMode) {
+    // Remove existing styles
+    const existingStyles = document.getElementById('deleteModalStyles');
+    if (existingStyles) {
+        existingStyles.remove();
+    }
+    
+    const style = document.createElement('style');
+    style.id = 'deleteModalStyles';
+    
+    if (isDarkMode) {
+        style.textContent = `
+            .full-view-delete-modal.dark-theme .modal-backdrop {
+                background: rgba(0, 0, 0, 0.7) !important;
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+            }
+            
+            .full-view-delete-modal.dark-theme .modal-content {
+                background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+                border: 1px solid rgba(71, 85, 105, 0.5) !important;
+                color: #f1f5f9 !important;
+                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6) !important;
+                border-radius: 20px;
+                max-width: 480px;
+                width: 100%;
+                transform: scale(0.9);
+                transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+            }
+            
+            .full-view-delete-modal.dark-theme.active .modal-content {
+                transform: scale(1);
+            }
+            
+            .full-view-delete-modal.dark-theme .modal-header {
+                padding: 2rem 2rem 1rem 2rem;
+                border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+                text-align: center;
+            }
+            
+            .full-view-delete-modal.dark-theme .modal-header-icon {
+                width: 80px;
+                height: 80px;
+                background: rgba(245, 158, 11, 0.1);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1rem auto;
+                border: 2px solid rgba(245, 158, 11, 0.3);
+            }
+            
+            .full-view-delete-modal.dark-theme .modal-header-icon i {
+                color: #fbbf24;
+                font-size: 2.5rem;
+                animation: pulse 2s infinite;
+            }
+            
+            .full-view-delete-modal.dark-theme .modal-header h3 {
+                color: #f1f5f9 !important;
+                font-size: 1.8rem;
+                font-weight: 700;
+                margin: 0;
+            }
+            
+            .full-view-delete-modal.dark-theme .modal-body {
+                padding: 1.5rem 2rem;
+            }
+            
+            .full-view-delete-modal.dark-theme .warning-question {
+                color: rgba(241, 245, 249, 0.9) !important;
+                font-size: 1.1rem;
+                margin: 0 0 1.5rem 0;
+                text-align: center;
+            }
+            
+            .full-view-delete-modal.dark-theme .task-preview {
+                background: rgba(51, 65, 85, 0.5) !important;
+                border: 1px solid rgba(71, 85, 105, 0.5) !important;
+                border-radius: 12px;
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .full-view-delete-modal.dark-theme .task-preview-icon {
+                width: 40px;
+                height: 40px;
+                background: rgba(79, 70, 229, 0.2);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            
+            .full-view-delete-modal.dark-theme .task-preview-icon i {
+                color: #a5b4fc;
+                font-size: 1.2rem;
+            }
+            
+            .full-view-delete-modal.dark-theme .task-preview strong {
+                color: #f1f5f9 !important;
+                font-size: 1.1rem;
+                word-break: break-word;
+                line-height: 1.5;
+            }
+            
+            .full-view-delete-modal.dark-theme .warning-text {
+                color: rgba(203, 213, 225, 0.8) !important;
+                font-size: 0.95rem;
+                margin: 1.5rem 0 0 0 !important;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .full-view-delete-modal.dark-theme .warning-text i {
+                color: #60a5fa;
+                font-size: 0.9rem;
+            }
+            
+            .full-view-delete-modal.dark-theme .modal-footer {
+                padding: 1rem 2rem 2rem 2rem;
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                border-top: 1px solid rgba(71, 85, 105, 0.3);
+            }
+            
+            .full-view-delete-modal.dark-theme .btn {
+                padding: 0.875rem 1.75rem;
+                border: none;
+                border-radius: 12px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                min-width: 140px;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .full-view-delete-modal.dark-theme .btn-secondary {
+                background: rgba(71, 85, 105, 0.8) !important;
+                color: #f1f5f9 !important;
+                border: 1px solid rgba(100, 116, 139, 0.5);
+            }
+            
+            .full-view-delete-modal.dark-theme .btn-secondary:hover {
+                background: rgba(100, 116, 139, 0.9) !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .full-view-delete-modal.dark-theme .btn-danger {
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+                color: #ffffff !important;
+                box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+            }
+            
+            .full-view-delete-modal.dark-theme .btn-danger:hover:not(:disabled) {
+                background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+            }
+            
+            .full-view-delete-modal.dark-theme .btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none !important;
+            }
+        `;
+    } else {
+        style.textContent = `
+            .full-view-delete-modal.light-theme .modal-backdrop {
+                background: rgba(0, 0, 0, 0.4) !important;
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+            }
+            
+            .full-view-delete-modal.light-theme .modal-content {
+                background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+                border: 1px solid rgba(203, 213, 225, 0.6) !important;
+                color: #1e293b !important;
+                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15) !important;
+                border-radius: 20px;
+                max-width: 480px;
+                width: 100%;
+                transform: scale(0.9);
+                transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+            }
+            
+            .full-view-delete-modal.light-theme.active .modal-content {
+                transform: scale(1);
+            }
+            
+            .full-view-delete-modal.light-theme .modal-header {
+                padding: 2rem 2rem 1rem 2rem;
+                border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+                text-align: center;
+            }
+            
+            .full-view-delete-modal.light-theme .modal-header-icon {
+                width: 80px;
+                height: 80px;
+                background: rgba(245, 158, 11, 0.1);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1rem auto;
+                border: 2px solid rgba(245, 158, 11, 0.2);
+            }
+            
+            .full-view-delete-modal.light-theme .modal-header-icon i {
+                color: #d97706;
+                font-size: 2.5rem;
+                animation: pulse 2s infinite;
+            }
+            
+            .full-view-delete-modal.light-theme .modal-header h3 {
+                color: #1e293b !important;
+                font-size: 1.8rem;
+                font-weight: 700;
+                margin: 0;
+            }
+            
+            .full-view-delete-modal.light-theme .modal-body {
+                padding: 1.5rem 2rem;
+            }
+            
+            .full-view-delete-modal.light-theme .warning-question {
+                color: #374151 !important;
+                font-size: 1.1rem;
+                margin: 0 0 1.5rem 0;
+                text-align: center;
+            }
+            
+            .full-view-delete-modal.light-theme .task-preview {
+                background: #f8fafc !important;
+                border: 1px solid rgba(226, 232, 240, 0.8) !important;
+                border-radius: 12px;
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .full-view-delete-modal.light-theme .task-preview-icon {
+                width: 40px;
+                height: 40px;
+                background: rgba(79, 70, 229, 0.1);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            
+            .full-view-delete-modal.light-theme .task-preview-icon i {
+                color: #4f46e5;
+                font-size: 1.2rem;
+            }
+            
+            .full-view-delete-modal.light-theme .task-preview strong {
+                color: #1e293b !important;
+                font-size: 1.1rem;
+                word-break: break-word;
+                line-height: 1.5;
+            }
+            
+            .full-view-delete-modal.light-theme .warning-text {
+                color: #6b7280 !important;
+                font-size: 0.95rem;
+                margin: 1.5rem 0 0 0 !important;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .full-view-delete-modal.light-theme .warning-text i {
+                color: #3b82f6;
+                font-size: 0.9rem;
+            }
+            
+            .full-view-delete-modal.light-theme .modal-footer {
+                padding: 1rem 2rem 2rem 2rem;
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                border-top: 1px solid rgba(226, 232, 240, 0.8);
+            }
+            
+            .full-view-delete-modal.light-theme .btn {
+                padding: 0.875rem 1.75rem;
+                border: none;
+                border-radius: 12px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                min-width: 140px;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .full-view-delete-modal.light-theme .btn-secondary {
+                background: #f1f5f9 !important;
+                color: #374151 !important;
+                border: 1px solid #d1d5db;
+            }
+            
+            .full-view-delete-modal.light-theme .btn-secondary:hover {
+                background: #e5e7eb !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .full-view-delete-modal.light-theme .btn-danger {
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+                color: #ffffff !important;
+                box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            }
+            
+            .full-view-delete-modal.light-theme .btn-danger:hover:not(:disabled) {
+                background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+            }
+            
+            .full-view-delete-modal.light-theme .btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none !important;
+            }
+        `;
+    }
+    
+    document.head.appendChild(style);
 }
 
 function ensureFullViewScrolling() {
@@ -23837,42 +25329,40 @@ document.addEventListener('click', (e) => {
     }
 });
 
-            // Add some sample data if no tasks exist
-            if (tasks.length === 0) {
-                const sampleTasks = [
-                    {
-                        id: generateId(),
-                        title: 'Welcome to Tasklytic!',
-                        description: 'This is a sample task to get you started. Try editing or deleting it!',
-                        category: 'personal',
-                        priority: 'medium',
-                        dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-                        completed: false,
-                        createdAt: new Date().toISOString(),
-                        modifiedAt: new Date().toISOString()
-                    },
-                    {
-                        id: generateId(),
-                        title: 'Try the AI Prioritization',
-                        description: 'Click the AI button to see intelligent task creation in action!',
-                        category: 'work',
-                        priority: 'high',
-                        dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
-                        completed: false,
-                        createdAt: new Date().toISOString(),
-                        modifiedAt: new Date().toISOString()
-                    }
-                ];
-                
-                tasks = sampleTasks;
-                saveTasks();
-                renderTasks();
-                updateDashboard();
-                updateCategoryCounts();
-            }
+            // Add sample data only for first-time users
+if (tasks.length === 0 && !localStorage.getItem('tasklytic_user_has_deleted_tasks')) {
+    const sampleTasks = [
+        {
+            id: generateId(),
+            title: 'Welcome to Tasklytic!',
+            description: 'This is a sample task to get you started. Try editing or deleting it!',
+            category: 'personal',
+            priority: 'medium',
+            dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+            completed: false,
+            createdAt: new Date().toISOString(),
+            modifiedAt: new Date().toISOString()
+        },
+        {
+            id: generateId(),
+            title: 'Try the AI Prioritization',
+            description: 'Click the AI button to see intelligent task creation in action!',
+            category: 'work',
+            priority: 'high',
+            dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+            completed: false,
+            createdAt: new Date().toISOString(),
+            modifiedAt: new Date().toISOString()
         }
-        });
-
+    ];
+    
+    tasks = sampleTasks;
+    saveTasks();
+    renderTasks();
+    updateDashboard();
+    updateCategoryCounts();
+}
+});
         // Handle unhandled promise rejections
         window.addEventListener('unhandledrejection', (e) => {
             console.error('Unhandled promise rejection:', e.reason);
