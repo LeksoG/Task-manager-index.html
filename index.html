@@ -12936,6 +12936,821 @@ body.compact-mode .main-content {
         height: 100px !important;
     }
 }
+
+/* Enhanced expanding tab styles - no left overlap */
+.filter-btn {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: visible;
+    transform-origin: left center; /* Expand from left edge */
+}
+
+/* Completed tab - green theme */
+.filter-btn.completed-expanded {
+    padding-right: 3.5rem !important;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    transform: scaleX(1.3) !important; /* Only expand horizontally */
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    z-index: 8;
+}
+
+/* Pending tab - amber theme */
+.filter-btn.pending-expanded {
+    padding-right: 3.5rem !important;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: white !important;
+    transform: scaleX(1.3) !important;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    z-index: 8;
+}
+
+/* Due today tab - blue theme */
+.filter-btn.today-expanded {
+    padding-right: 3.5rem !important;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: white !important;
+    transform: scaleX(1.3) !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    z-index: 10;
+}
+
+/* Count badges */
+.tab-count-badge {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.filter-btn.completed-expanded .tab-count-badge,
+.filter-btn.pending-expanded .tab-count-badge,
+.filter-btn.today-expanded .tab-count-badge {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+}
+
+/* Animated spinning clock */
+.spinning-clock {
+    animation: clockSpin 2s linear infinite;
+    font-size: 0.7rem;
+}
+
+@keyframes clockSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Push only tabs to the right */
+.filter-btn.pushed-right {
+    transform: translateX(35px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Hover effects */
+.filter-btn.completed-expanded:hover {
+    transform: scaleX(1.45) !important;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4) !important;
+}
+
+.filter-btn.pending-expanded:hover {
+    transform: scaleX(1.45) !important;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4) !important;
+}
+
+.filter-btn.today-expanded:hover {
+    transform: scaleX(1.45) !important;
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
+}
+
+/* Prevent badge content from stretching */
+.badge-icon, .badge-count {
+    display: inline-block;
+    transform: scale(1) !important;
+}
+
+.badge-icon {
+    margin-right: 0.2rem;
+}
+
+.badge-count {
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+/* Add this CSS to your existing styles */
+
+/* Cleanup Tab Styles */
+.cleanup-tab-btn {
+    position: relative;
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 107, 53, 0.3) !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3) !important;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cleanup-tab-btn.slide-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.cleanup-tab-btn.slide-out {
+    opacity: 0;
+    transform: translateX(20px) scale(0.8);
+}
+
+.cleanup-tab-btn.glow-intro {
+    animation: cleanupGlowPulse 2s ease-in-out;
+}
+
+.cleanup-tab-btn.active {
+    background: linear-gradient(135deg, #ff4520 0%, #e6821a 100%) !important;
+    box-shadow: 0 6px 25px rgba(255, 107, 53, 0.5) !important;
+    transform: translateY(-2px);
+}
+
+.cleanup-tab-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4) !important;
+}
+
+.cleanup-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 2px solid white;
+    animation: badgePulse 2s infinite;
+    z-index: 10;
+}
+
+.cleanup-badge.high-priority {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    animation: urgentPulse 1.5s infinite;
+}
+
+.cleanup-badge.medium-priority {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.cleanup-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.4) 0%, transparent 70%);
+    border-radius: inherit;
+    transform: translate(-50%, -50%);
+    animation: cleanupPulse 3s infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Cleanup Interface Styles */
+.cleanup-interface {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    box-sizing: border-box;
+}
+
+.cleanup-interface-header {
+    padding: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.cleanup-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cleanup-title h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+}
+
+.cleanup-title i {
+    color: #ff6b35;
+    font-size: 2rem;
+}
+
+.cleanup-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.cleanup-close-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.cleanup-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cleanup-interface-content {
+    flex: 1;
+    padding: 1.5rem 2rem;
+    overflow-y: auto;
+}
+
+.cleanup-section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.cleanup-section:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.cleanup-section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.section-icon.completed {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.section-icon.duplicates {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.section-info {
+    flex: 1;
+}
+
+.section-info h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+}
+
+.section-info p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+}
+
+.section-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.section-badge.high-priority {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.section-badge.medium-priority {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+/* Preview Styles */
+.cleanup-preview {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.preview-header {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+}
+
+.preview-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.preview-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+.preview-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.preview-item i {
+    color: #10b981;
+    font-size: 0.9rem;
+}
+
+.preview-item span {
+    flex: 1;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.preview-item small {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+}
+
+.preview-more {
+    padding: 0.5rem 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+}
+
+/* Duplicate specific styles */
+.duplicate-groups-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.duplicate-group-preview {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.duplicate-original {
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 6px;
+    border-left: 3px solid #10b981;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.duplicate-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.duplicate-item-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    background: rgba(245, 158, 11, 0.1);
+    border-radius: 6px;
+    border-left: 3px solid #f59e0b;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.duplicate-item-preview i {
+    color: #f59e0b;
+}
+
+.quick-remove {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: auto;
+}
+
+.quick-remove:hover {
+    background: rgba(239, 68, 68, 0.3);
+    transform: scale(1.05);
+}
+
+.duplicate-more {
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+/* Action Buttons */
+.cleanup-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.cleanup-action-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 1.25rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.cleanup-action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.cleanup-action-btn:hover::before {
+    left: 100%;
+}
+
+.cleanup-action-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.cleanup-action-btn i {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.cleanup-action-btn span {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.cleanup-action-btn small {
+    display: block;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    position: relative;
+    z-index: 2;
+}
+
+.cleanup-action-btn.archive {
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.cleanup-action-btn.archive:hover {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.5);
+}
+
+.cleanup-action-btn.archive i {
+    color: #10b981;
+}
+
+.cleanup-action-btn.delete-completed {
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.cleanup-action-btn.delete-completed:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+.cleanup-action-btn.delete-completed i {
+    color: #ef4444;
+}
+
+.cleanup-action-btn.smart-merge {
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+.cleanup-action-btn.smart-merge:hover {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.5);
+}
+
+.cleanup-action-btn.smart-merge i {
+    color: #8b5cf6;
+}
+
+.cleanup-action-btn.manual-review {
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.cleanup-action-btn.manual-review:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.cleanup-action-btn.manual-review i {
+    color: #3b82f6;
+}
+
+/* Footer */
+.cleanup-interface-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.cleanup-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cleanup-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cleanup-stat i {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Empty State */
+.cleanup-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.cleanup-empty i {
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.3);
+    margin-bottom: 1.5rem;
+}
+
+.cleanup-empty h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.cleanup-empty p {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Animations */
+@keyframes cleanupGlowPulse {
+    0%, 100% { 
+        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    }
+    50% { 
+        box-shadow: 0 8px 30px rgba(255, 107, 53, 0.6), 0 0 20px rgba(255, 107, 53, 0.4);
+    }
+}
+
+@keyframes badgePulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: scale(1.1);
+        opacity: 0.9;
+    }
+}
+
+@keyframes urgentPulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    }
+    50% { 
+        transform: scale(1.15);
+        opacity: 0.8;
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5);
+    }
+}
+
+@keyframes cleanupPulse {
+    0%, 100% { 
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% { 
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.3);
+    }
+}
+
+/* Dark mode specific adjustments */
+.dark-mode .cleanup-interface {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.95) 100%);
+}
+
+.dark-mode .cleanup-section {
+    background: rgba(51, 65, 85, 0.3);
+    border-color: rgba(71, 85, 105, 0.3);
+}
+
+.dark-mode .cleanup-preview {
+    background: rgba(15, 23, 42, 0.5);
+}
+
+/* Light mode adjustments */
+.light-mode .cleanup-interface {
+    background: linear-gradient(135deg, rgba(248, 250, 252, 0.98) 0%, rgba(241, 245, 249, 0.95) 100%);
+    color: #1e293b;
+}
+
+.light-mode .cleanup-title h2,
+.light-mode .section-info h3 {
+    color: #1e293b;
+}
+
+.light-mode .cleanup-subtitle,
+.light-mode .section-info p {
+    color: rgba(30, 41, 59, 0.7);
+}
+
+.light-mode .cleanup-section {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(226, 232, 240, 0.6);
+}
+
+.light-mode .cleanup-preview {
+    background: rgba(241, 245, 249, 0.8);
+}
+
+.light-mode .cleanup-close-btn {
+    background: rgba(30, 41, 59, 0.1);
+    color: #1e293b;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .cleanup-interface {
+        width: 100% !important;
+        border-radius: 0 !important;
+        left: 0 !important;
+    }
+    
+    .cleanup-interface-header {
+        padding: 1.5rem 1rem;
+    }
+    
+    .cleanup-interface-content {
+        padding: 1rem;
+    }
+    
+    .cleanup-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .cleanup-stats {
+        gap: 1rem;
+        justify-content: flex-start;
+    }
+    
+    .cleanup-tab-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .cleanup-tab-btn span {
+        display: none;
+    }
+    
+    .section-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .section-info h3 {
+        font-size: 1.1rem;
+    }
+    
+    .section-info p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cleanup-badge {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+        top: -6px;
+        right: -6px;
+    }
+    
+    .cleanup-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .section-badge {
+        align-self: flex-end;
+    }
+}
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13831,17 +14646,17 @@ body.compact-mode .main-content {
 
            
         // Update these constants at the top of your JavaScript
-const APP_VERSION = "2.6.1";
+const APP_VERSION = "2.7";
 const VERSION_FEATURES = {
 
-    "2.6.1": {
-    title: "🐛 Bug Fixes & User Experience Improvements",
-    description: "Critical fixes and refinements to enhance stability and user experience.",
-    features: [
-        {
-            type: "improvement",
-            title: "🔧 Sample Task Management",
-            description: "Fixed issue where sample tasks would reappear after deletion on page refresh. Sample tasks now only show for first-time users."
+    "2.7": {
+   "title": "✨ User Improvements & Cleanup Feature",
+    "description": "Introducing usability enhancements and a new tool to help manage your tasks more effectively.",
+    "features": [
+         {
+            "type": "Cleanup Feature",
+            "title": "🧹 New Cleanup Feature",
+            "description": "A new feature designed to help you better organize tasks by detecting and removing unnecessary duplicate tasks and clutter. Currently in development — you may notice some issues. Stay tuned for improvements in the next release!"
         },
         {
             type: "improvement", 
@@ -13849,9 +14664,9 @@ const VERSION_FEATURES = {
             description: "Improved touch sensitivity and gesture recognition for better mobile interaction."
         },
         {
-            type: "improvement",
-            title: "⚡ Performance Optimizations",
-            description: "Reduced memory usage and faster task rendering for smoother user experience."
+            "type": "improvement",
+            "title": "🛠 Enhanced Task Flow",
+            "description": "Adjustements to task behavior and new tab reactions when tasks are added or interacted for a smoother user experience."
         }
     ],
     improvements: [
@@ -14291,6 +15106,12 @@ let currentDetectionPopup = null; // Add this line
             let suggestionPatterns = {};
             let reminderSoundEnabled = true; // Set to false to disable sound
             let reminderSoundUrl = 'sounds/Alert notification.mp3'; // Replace with your actual file path
+
+            // ADD THE NEW CLEANUP VARIABLES HERE:
+let cleanupTabActive = false;
+let cleanupTabElement = null;
+let cleanupData = {};
+
             // Expandable Tasks Container functionality
 let isTaskContainerExpanded = false;
 let scrollDirectionTimeout;
@@ -14304,6 +15125,8 @@ let userTopicHistory = [];
 // ADD THESE COMPACT NAVIGATION VARIABLES HERE:
 let isCompactMode = false;
 let isCompactSearchActive = false;
+
+
 
 // ADD THESE FULL VIEW MODE VARIABLES:
 let fullViewActive = false;
@@ -16411,6 +17234,7 @@ function adjustLayoutForScreenSize() {
     console.log(`📏 Screen height: ${viewportHeight}px, Task list height: ${availableHeight}px`);
 }
 
+
             function initializeApp() {
     hideWelcomeAnimation(); // This now handles immediate reveals
     showVersionSplashScreen();
@@ -16433,6 +17257,7 @@ function adjustLayoutForScreenSize() {
     initializeStreaks();
     initializeFullViewMode();
     initializeBroadViewMode();
+    initializeCleanupTabSystem();
     renderTasks();
     updateDashboard();
     updateCategoryCounts();
@@ -20157,8 +20982,7 @@ if (tasks.length === 0) {
     updateCategoryCounts();
 }
 
-            // Update your toggleTaskCompletion function to include streak tracking
-function toggleTaskCompletion(taskId) {
+            function toggleTaskCompletion(taskId) {
     const taskIndex = tasks.findIndex(task => task.id === taskId);
     if (taskIndex !== -1) {
         const wasCompleted = tasks[taskIndex].completed;
@@ -20169,24 +20993,123 @@ function toggleTaskCompletion(taskId) {
             // Task was just completed
             tasks[taskIndex].completedAt = new Date().toISOString();
             
-            // Record for streak tracking
             recordTaskCompletion();
-            
-            // Play completion sound
             playTaskCompletionSound();
+            
+            // Trigger completed tab expansion
+            setTimeout(() => {
+                expandCompletedTab();
+            }, 500);
             
             showNotification(`🎉 Task "${tasks[taskIndex].title}" completed!`, 'success');
         } else if (!tasks[taskIndex].completed && wasCompleted) {
-            // Task was uncompleted
+            // Task was uncompleted - show pending tab
             delete tasks[taskIndex].completedAt;
-            // Note: We don't remove from streak immediately to avoid accidental uncheck issues
+            
+            setTimeout(() => {
+                expandPendingTab();
+            }, 500);
         }
+
+        // Add to your toggleTaskCompletion() function (at the end)
+setTimeout(() => {
+    checkCleanupNeeded();
+}, 500);
         
         saveTasks();
         renderTasks();
         updateDashboard();
         updateCategoryCounts();
     }
+}
+
+// Generic function to expand any tab
+function expandTab(tabType, count, duration = 3000) {
+    const targetBtn = document.querySelector(`.filter-btn[data-filter="${tabType}"]`);
+    if (!targetBtn) return;
+    
+    // Get all buttons and find the index of target button
+    const allBtns = document.querySelectorAll('.filter-btn');
+    const targetIndex = Array.from(allBtns).indexOf(targetBtn);
+    
+    // Only push buttons to the right of the target
+    const buttonsToRight = Array.from(allBtns).slice(targetIndex + 1);
+    
+    // Add expansion class
+    targetBtn.classList.add(`${tabType}-expanded`);
+    
+    // Add count badge if it doesn't exist
+    let countBadge = targetBtn.querySelector('.tab-count-badge');
+    if (!countBadge) {
+        countBadge = document.createElement('span');
+        countBadge.className = 'tab-count-badge';
+        targetBtn.appendChild(countBadge);
+    }
+    
+    // Set appropriate icon and count based on tab type
+    let icon = '';
+    switch(tabType) {
+        case 'completed':
+            icon = '<i class="fas fa-check"></i>';
+            break;
+        case 'pending':
+            icon = '<i class="fas fa-clock spinning-clock"></i>';
+            break;
+        case 'today':
+            icon = '<i class="fas fa-clock spinning-clock"></i>';
+            break;
+    }
+    
+    countBadge.innerHTML = `${icon} ${count}`;
+    
+    // Push only buttons to the right
+    buttonsToRight.forEach(btn => {
+        btn.classList.add('pushed-right');
+    });
+    
+    // Auto-collapse after specified duration
+    setTimeout(() => {
+        collapseTab(tabType);
+    }, duration);
+}
+
+function collapseTab(tabType) {
+    const targetBtn = document.querySelector(`.filter-btn[data-filter="${tabType}"]`);
+    if (!targetBtn) return;
+    
+    const allBtns = document.querySelectorAll('.filter-btn');
+    
+    // Remove expansion class
+    targetBtn.classList.remove(`${tabType}-expanded`);
+    
+    // Remove push from all tabs
+    allBtns.forEach(btn => {
+        btn.classList.remove('pushed-right');
+    });
+}
+
+// Specific expansion functions
+function expandCompletedTab() {
+    const completedCount = tasks.filter(task => task.completed).length;
+    expandTab('completed', completedCount, 3000);
+}
+
+function expandPendingTab() {
+    const pendingCount = tasks.filter(task => !task.completed).length;
+    expandTab('pending', pendingCount, 3500);
+}
+
+function expandTodayTab() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const todayCount = tasks.filter(task => {
+        const dueDate = new Date(task.dueDate);
+        dueDate.setHours(0, 0, 0, 0);
+        return dueDate.getTime() === today.getTime();
+    }).length;
+    
+    expandTab('today', todayCount, 3500);
 }
 
             function renderTasks() {
@@ -20399,6 +21322,11 @@ function toggleTaskCompletion(taskId) {
             if (!canScroll) {
                 taskListContainer.style.minHeight = '350px';
                 console.log('🔧 Applied minimum height to enable scrolling');
+
+                // Add to your renderTasks() function (at the end)
+setTimeout(() => {
+    checkCleanupNeeded();
+}, 100);
             }
         }
     }, 150);
@@ -21445,7 +22373,23 @@ if (taskId) {
     tasks.push(taskData);
     finalTask = taskData;
     showNotification('Task created successfully!', 'success');
+
+    // ADD THE NEW CODE HERE - right after new task creation:
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const taskDate = new Date(dueDateObj);
+        taskDate.setHours(0, 0, 0, 0);
+        
+        setTimeout(() => {
+            if (taskDate.getTime() === today.getTime()) {
+                expandTodayTab();
+            } else {
+                expandPendingTab();
+            }
+        }, 800);
 }
+
+
 
 saveTasks();
 
@@ -22617,6 +23561,1594 @@ body.app-ready .dashboard-card {
 const enhancedStyle = document.createElement('style');
 enhancedStyle.textContent = enhancedAnimationCSS;
 document.head.appendChild(enhancedStyle);
+
+// ENHANCED findDuplicateTasks function to ensure it works properly
+function findDuplicateTasks() {
+    console.log('🔍 Searching for duplicate tasks...');
+    
+    const duplicates = [];
+    const seen = new Map();
+    
+    tasks.forEach(task => {
+        // Use title and category as the key for finding duplicates
+        const key = `${task.title.toLowerCase().trim()}_${task.category}`;
+        
+        if (seen.has(key)) {
+            const existing = seen.get(key);
+            // Find if we already have a duplicate group for this key
+            let existingGroup = duplicates.find(d => d.original.id === existing.id);
+            
+            if (!existingGroup) {
+                // Create new duplicate group
+                existingGroup = {
+                    original: existing,
+                    duplicates: []
+                };
+                duplicates.push(existingGroup);
+                console.log(`📋 New duplicate group for: "${existing.title}"`);
+            }
+            
+            // Add current task as duplicate
+            existingGroup.duplicates.push(task);
+            console.log(`🔗 Added duplicate: "${task.title}" (ID: ${task.id})`);
+        } else {
+            seen.set(key, task);
+        }
+    });
+    
+    console.log(`🔍 Found ${duplicates.length} duplicate groups:`, duplicates.map(d => ({
+        original: d.original.title,
+        duplicateCount: d.duplicates.length
+    })));
+    
+    return duplicates;
+}
+
+// DEBUGGING function to test cleanup manually
+window.testWorkingCleanup = function() {
+    console.log('🧪 Testing WORKING cleanup functions...');
+    
+    // Check what we have
+    const completedTasks = tasks.filter(task => task.completed);
+    const duplicateGroups = findDuplicateTasks();
+    
+    console.log(`📊 Current state:`, {
+        totalTasks: tasks.length,
+        completedTasks: completedTasks.length,
+        duplicateGroups: duplicateGroups.length
+    });
+    
+    // Test auto cleanup
+    if (completedTasks.length > 0 || duplicateGroups.length > 0) {
+        console.log('🚀 Testing auto cleanup...');
+        startWorkingAutoCleanup();
+    } else {
+        console.log('ℹ️ Nothing to clean - adding test data...');
+        
+        // Add some test duplicates
+        const testTask1 = {
+            id: 'test1',
+            title: 'Test Task',
+            description: 'This is a test',
+            category: 'work',
+            priority: 'medium',
+            dueDate: new Date().toISOString(),
+            completed: false,
+            createdAt: new Date().toISOString(),
+            modifiedAt: new Date().toISOString()
+        };
+        
+        const testTask2 = {
+            id: 'test2',
+            title: 'Test Task', // Same title = duplicate
+            description: 'This is also a test',
+            category: 'work',
+            priority: 'high',
+            dueDate: new Date().toISOString(),
+            completed: true, // This one is completed
+            createdAt: new Date().toISOString(),
+            modifiedAt: new Date().toISOString()
+        };
+        
+        tasks.push(testTask1, testTask2);
+        saveTasks();
+        renderTasks();
+        updateDashboard();
+        
+        console.log('✅ Test data added! Try the cleanup now.');
+    }
+};
+
+// Enhanced cleanup detection with debugging
+function checkCleanupNeeded() {
+    console.log('🧹 Checking cleanup needs...');
+    console.log('📊 Total tasks:', tasks.length);
+    
+    const completedTasks = tasks.filter(task => task.completed);
+    const duplicateTasks = findDuplicateTasks();
+    
+    console.log('✅ Completed tasks:', completedTasks.length);
+    console.log('👥 Duplicate groups:', duplicateTasks.length);
+    
+    const needsCleanup = completedTasks.length > 5 || duplicateTasks.length > 0;
+    
+    cleanupData = {
+        completedCount: completedTasks.length,
+        duplicateCount: duplicateTasks.length,
+        duplicateTasks: duplicateTasks,
+        needsCleanup: needsCleanup,
+        issues: []
+    };
+    
+    // Add specific cleanup issues with debugging
+    if (completedTasks.length > 5) {
+        console.log('🟡 Adding completed tasks issue');
+        cleanupData.issues.push({
+            type: 'completed',
+            title: 'Too Many Completed Tasks',
+            description: `${completedTasks.length} completed tasks can be archived`,
+            priority: 'medium'
+        });
+    }
+    
+    if (duplicateTasks.length > 0) {
+        console.log('🔴 Adding duplicate tasks issue');
+        cleanupData.issues.push({
+            type: 'duplicates',
+            title: 'Duplicate Tasks Found',
+            description: `${duplicateTasks.length} duplicate task groups detected`,
+            priority: 'high'
+        });
+    }
+    
+    console.log('🎯 Cleanup needed:', needsCleanup);
+    console.log('📋 Issues found:', cleanupData.issues.length);
+    
+    updateCleanupTabVisibility();
+    
+    return needsCleanup;
+}
+
+// Enhanced tab visibility function with debugging
+function updateCleanupTabVisibility() {
+    console.log('👀 Updating cleanup tab visibility...');
+    
+    // Try multiple possible containers for the filter buttons
+    let filterButtons = document.querySelector('.filter-buttons');
+    if (!filterButtons) {
+        filterButtons = document.querySelector('.task-filters');
+    }
+    if (!filterButtons) {
+        filterButtons = document.querySelector('.filter-container');
+    }
+    if (!filterButtons) {
+        // Find any container with filter buttons
+        filterButtons = document.querySelector('[class*="filter"]');
+    }
+    
+    console.log('🎯 Filter buttons container:', filterButtons);
+    
+    if (!filterButtons) {
+        console.error('❌ No filter buttons container found!');
+        // Let's find all possible containers
+        console.log('🔍 Available containers:');
+        document.querySelectorAll('[class*="filter"], [class*="button"]').forEach((el, i) => {
+            console.log(`${i}: .${el.className} ->`, el);
+        });
+        return;
+    }
+    
+    if (cleanupData.needsCleanup && !cleanupTabElement) {
+        console.log('✅ Creating cleanup tab...');
+        createCleanupTab();
+    } else if (!cleanupData.needsCleanup && cleanupTabElement) {
+        console.log('🗑️ Removing cleanup tab...');
+        removeCleanupTab();
+    } else if (cleanupTabElement) {
+        console.log('🔄 Updating cleanup tab badge...');
+        updateCleanupTabBadge();
+    } else {
+        console.log('ℹ️ No action needed for cleanup tab');
+    }
+}
+
+// REPLACE your cleanup functions with these FULL SCREEN versions
+
+// FULL SCREEN cleanup interface creation
+function createEnhancedCleanupInterfaceImmediate() {
+    console.log('🎯 Creating FULL SCREEN cleanup interface...');
+    
+    // Remove existing cleanup interface
+    const existingCleanup = document.getElementById('cleanupInterface');
+    if (existingCleanup) {
+        existingCleanup.remove();
+    }
+    
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    
+    const cleanupInterface = document.createElement('div');
+    cleanupInterface.id = 'cleanupInterface';
+    cleanupInterface.className = `cleanup-interface-fullscreen ${isDarkMode ? 'dark-theme' : 'light-theme'}`;
+    
+    cleanupInterface.innerHTML = `
+        <div class="cleanup-overlay-backdrop"></div>
+        <div class="cleanup-main-container">
+            <div class="cleanup-interface-header">
+                <div class="cleanup-title">
+                    <i class="fas fa-magic"></i>
+                    <h2>🧹 Auto Cleanup Center</h2>
+                    <span class="cleanup-subtitle">Intelligent task organization & cleanup</span>
+                </div>
+                <button class="cleanup-close-btn" onclick="exitCleanupMode()">
+                    <i class="fas fa-times"></i>
+                    <span>Close</span>
+                </button>
+            </div>
+            
+            <div class="cleanup-interface-content">
+                ${createLiveCleanupSections()}
+            </div>
+            
+            <div class="cleanup-interface-footer">
+                <div class="cleanup-master-controls">
+                    <button class="master-cleanup-btn" onclick="startAutoCleanup()">
+                        <i class="fas fa-magic"></i>
+                        <span>Auto Clean Everything</span>
+                        <small>Smart cleanup with live progress</small>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // FULL SCREEN IMMEDIATE positioning and styling
+    cleanupInterface.style.cssText = `
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        opacity: 0 !important;
+        transform: scale(0.8) !important;
+        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+        backdrop-filter: blur(0px) !important;
+        -webkit-backdrop-filter: blur(0px) !important;
+    `;
+    
+    // Add to DOM IMMEDIATELY
+    document.body.appendChild(cleanupInterface);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    
+    // Add full screen cleanup styles
+    addFullScreenCleanupStyles(isDarkMode);
+    
+    // SMOOTH ENTRANCE ANIMATION
+    setTimeout(() => {
+        cleanupInterface.style.opacity = '1';
+        cleanupInterface.style.transform = 'scale(1)';
+        cleanupInterface.style.backdropFilter = 'blur(15px)';
+        cleanupInterface.style.webkitBackdropFilter = 'blur(15px)';
+    }, 50);
+    
+    console.log('✅ FULL SCREEN cleanup interface created and animating in!');
+    
+    // Add event listeners
+    addEnhancedCleanupListeners();
+}
+
+// ADD FULL SCREEN STYLES
+function addFullScreenCleanupStyles(isDarkMode) {
+    // Remove existing styles
+    const existingStyle = document.getElementById('fullScreenCleanupStyles');
+    if (existingStyle) {
+        existingStyle.remove();
+    }
+    
+    const style = document.createElement('style');
+    style.id = 'fullScreenCleanupStyles';
+    
+    style.textContent = `
+        .cleanup-interface-fullscreen {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 9999 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        .cleanup-overlay-backdrop {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: ${isDarkMode ? 
+                'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.98) 100%)' : 
+                'linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.98) 100%)'
+            } !important;
+            z-index: 1 !important;
+        }
+        
+        .cleanup-main-container {
+            position: relative !important;
+            z-index: 2 !important;
+            width: 90% !important;
+            max-width: 1200px !important;
+            height: 85% !important;
+            max-height: 800px !important;
+            background: ${isDarkMode ? 
+                'linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%)' : 
+                'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%)'
+            } !important;
+            border-radius: 24px !important;
+            border: 1px solid ${isDarkMode ? 'rgba(71, 85, 105, 0.3)' : 'rgba(203, 213, 225, 0.5)'} !important;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, ${isDarkMode ? '0.6' : '0.2'}) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            overflow: hidden !important;
+            display: flex !important;
+            flex-direction: column !important;
+            color: ${isDarkMode ? '#ffffff' : '#1e293b'} !important;
+        }
+        
+        .cleanup-interface-fullscreen .cleanup-interface-header {
+            padding: 2rem 3rem !important;
+            border-bottom: 1px solid ${isDarkMode ? 'rgba(71, 85, 105, 0.3)' : 'rgba(226, 232, 240, 0.5)'} !important;
+            background: ${isDarkMode ? 'rgba(15, 23, 42, 0.5)' : 'rgba(248, 250, 252, 0.5)'} !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            flex-shrink: 0 !important;
+        }
+        
+        .cleanup-interface-fullscreen .cleanup-title h2 {
+            font-size: 2.5rem !important;
+            font-weight: 800 !important;
+            margin: 0 0 0.5rem 0 !important;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+        
+        .cleanup-interface-fullscreen .cleanup-subtitle {
+            font-size: 1.2rem !important;
+            opacity: 0.8 !important;
+            font-weight: 500 !important;
+        }
+        
+        .cleanup-interface-fullscreen .cleanup-close-btn {
+            background: ${isDarkMode ? 'rgba(71, 85, 105, 0.6)' : 'rgba(226, 232, 240, 0.6)'} !important;
+            border: 1px solid ${isDarkMode ? 'rgba(100, 116, 139, 0.5)' : 'rgba(203, 213, 225, 0.5)'} !important;
+            color: ${isDarkMode ? '#ffffff' : '#1e293b'} !important;
+            padding: 1rem 2rem !important;
+            border-radius: 16px !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.75rem !important;
+            font-weight: 600 !important;
+            font-size: 1.1rem !important;
+        }
+        
+        .cleanup-interface-fullscreen .cleanup-close-btn:hover {
+            background: ${isDarkMode ? 'rgba(100, 116, 139, 0.8)' : 'rgba(203, 213, 225, 0.8)'} !important;
+            transform: translateY(-2px) scale(1.05) !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        .cleanup-interface-fullscreen .cleanup-interface-content {
+            flex: 1 !important;
+            overflow-y: auto !important;
+            padding: 3rem !important;
+            scroll-behavior: smooth !important;
+        }
+        
+        .cleanup-interface-fullscreen .cleanup-interface-footer {
+            padding: 2rem 3rem !important;
+            border-top: 1px solid ${isDarkMode ? 'rgba(71, 85, 105, 0.3)' : 'rgba(226, 232, 240, 0.5)'} !important;
+            background: ${isDarkMode ? 'rgba(15, 23, 42, 0.5)' : 'rgba(248, 250, 252, 0.5)'} !important;
+            flex-shrink: 0 !important;
+        }
+        
+        .cleanup-interface-fullscreen .master-cleanup-btn {
+            width: 100% !important;
+            max-width: 400px !important;
+            margin: 0 auto !important;
+            padding: 2rem 3rem !important;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 20px !important;
+            font-size: 1.4rem !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+        
+        .cleanup-interface-fullscreen .master-cleanup-btn:hover {
+            transform: translateY(-4px) scale(1.02) !important;
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.5) !important;
+            background: linear-gradient(135deg, #ff4520 0%, #e6821a 100%) !important;
+        }
+        
+        .cleanup-interface-fullscreen .master-cleanup-btn i {
+            font-size: 2.5rem !important;
+        }
+        
+        .cleanup-interface-fullscreen .master-cleanup-btn small {
+            font-size: 1rem !important;
+            opacity: 0.9 !important;
+            font-weight: 400 !important;
+        }
+        
+        /* Smooth entrance animations */
+        .cleanup-interface-fullscreen.entering .cleanup-main-container {
+            animation: cleanupSlideIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        
+        @keyframes cleanupSlideIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .cleanup-main-container {
+                width: 95% !important;
+                height: 90% !important;
+                margin: 2.5% !important;
+            }
+            
+            .cleanup-interface-fullscreen .cleanup-interface-header {
+                padding: 1.5rem 2rem !important;
+            }
+            
+            .cleanup-interface-fullscreen .cleanup-title h2 {
+                font-size: 2rem !important;
+            }
+            
+            .cleanup-interface-fullscreen .cleanup-interface-content {
+                padding: 2rem !important;
+            }
+        }
+    `;
+    
+    document.head.appendChild(style);
+}
+
+// ADD this missing function to your code
+function initializeCleanupTabSystem() {
+    console.log('🧹 Initializing Cleanup Tab System...');
+    
+    // Add enhanced cleanup styles first
+    addEnhancedCleanupStyles();
+    
+    // Initialize progress ring styles
+    addProgressRingStyles();
+    
+    // Check cleanup needs initially after a delay
+    setTimeout(() => {
+        console.log('🔍 Initial cleanup check...');
+        checkCleanupNeeded();
+    }, 2000);
+    
+    // Set up periodic cleanup checks (every 30 seconds)
+    setInterval(() => {
+        if (!cleanupTabActive) {
+            checkCleanupNeeded();
+        }
+    }, 30000);
+    
+    // Listen for task changes to trigger cleanup checks
+    const originalSaveTask = window.saveTask;
+    if (originalSaveTask) {
+        window.saveTask = function() {
+            originalSaveTask.apply(this, arguments);
+            setTimeout(() => {
+                checkCleanupNeeded();
+            }, 500);
+        };
+    }
+    
+    // Listen for task deletions
+    const originalDeleteTask = window.deleteTask;
+    if (originalDeleteTask) {
+        window.deleteTask = function(taskId) {
+            originalDeleteTask.apply(this, arguments);
+            setTimeout(() => {
+                checkCleanupNeeded();
+            }, 500);
+        };
+    }
+    
+    // Listen for task completion changes
+    const originalToggleTaskCompletion = window.toggleTaskCompletion;
+    if (originalToggleTaskCompletion) {
+        window.toggleTaskCompletion = function(taskId) {
+            originalToggleTaskCompletion.apply(this, arguments);
+            setTimeout(() => {
+                checkCleanupNeeded();
+            }, 500);
+        };
+    }
+    
+    console.log('✅ Cleanup Tab System initialized successfully');
+}
+
+// Also add the missing addEnhancedCleanupStyles function if it doesn't exist
+function addEnhancedCleanupStyles() {
+    if (document.getElementById('enhancedCleanupStyles')) return;
+    
+    const style = document.createElement('style');
+    style.id = 'enhancedCleanupStyles';
+    style.textContent = `
+        /* Enhanced cleanup tab styling */
+        .cleanup-tab-btn {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
+            color: white !important;
+            border: 1px solid rgba(255, 107, 53, 0.3) !important;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3) !important;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cleanup-tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4) !important;
+            background: linear-gradient(135deg, #ff5722 0%, #e6821a 100%) !important;
+        }
+        
+        .cleanup-tab-btn.active {
+            background: linear-gradient(135deg, #ff4520 0%, #e6821a 100%) !important;
+            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.5) !important;
+            transform: translateY(-2px);
+        }
+        
+        .cleanup-tab-btn.slide-in {
+            animation: slideInFromRight 0.5s ease-out forwards;
+        }
+        
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+        
+        /* Cleanup badge for showing issue count */
+        .cleanup-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Live cleanup sections styling */
+        .live-cleanup-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(15px);
+            transition: all 0.3s ease;
+        }
+        
+        .live-cleanup-section:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .section-icon.completed {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .section-icon.duplicates {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+        }
+        
+        .section-info h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: currentColor;
+        }
+        
+        .section-info p {
+            margin: 0;
+            opacity: 0.8;
+            font-size: 1rem;
+            color: currentColor;
+        }
+        
+        /* Progress ring container */
+        .progress-ring-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .progress-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: scale(1.02);
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            color: currentColor;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            color: currentColor;
+        }
+        
+        /* Cleanup controls */
+        .cleanup-controls {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .cleanup-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+        }
+        
+        .cleanup-btn.primary {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+        
+        .cleanup-btn.primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+            background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+        }
+        
+        .cleanup-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* Empty state styling */
+        .cleanup-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: currentColor;
+        }
+        
+        .cleanup-empty i {
+            font-size: 5rem;
+            opacity: 0.3;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cleanup-empty h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: currentColor;
+        }
+        
+        .cleanup-empty p {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            color: currentColor;
+        }
+    `;
+    
+    document.head.appendChild(style);
+}
+
+
+// ADD THE PROGRESS RING STYLES RIGHT HERE:
+function addProgressRingStyles() {
+    const style = document.createElement('style');
+    style.id = 'progressRingStyles';
+    style.textContent = `
+        .progress-ring {
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .progress-ring-fill {
+            transition: stroke-dashoffset 0.5s ease;
+            transform-origin: center;
+        }
+        
+        .progress-text {
+            font-family: 'SF Pro Display', -apple-system, sans-serif;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .progress-label {
+            opacity: 0.8;
+            font-weight: 600;
+        }
+        
+        /* Celebration animation for clean state */
+        .celebration-circle {
+            animation: celebrationRotate 3s ease-in-out infinite;
+        }
+        
+        @keyframes celebrationRotate {
+            0%, 100% { stroke-dashoffset: 0; }
+            50% { stroke-dashoffset: 141; }
+        }
+        
+        .cleanup-celebration {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .celebration-ring {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    `;
+    
+    document.head.appendChild(style);
+}
+
+// Initialize progress ring styles when cleanup opens
+window.initializeProgressRings = function() {
+    addProgressRingStyles();
+    console.log('✅ Progress ring styles initialized');
+};
+
+// SAFE exit function with protection
+function exitCleanupModeSafe() {
+    console.log('🚪 SAFE exit cleanup mode...');
+    
+    if (!cleanupTabActive) {
+        console.log('⚠️ Cleanup not active, skipping exit...');
+        return;
+    }
+    
+    cleanupTabActive = false;
+    
+    // Update tab appearance
+    if (cleanupTabElement) {
+        cleanupTabElement.classList.remove('active');
+        
+        // Restore active to all filter
+        const allFilterBtn = document.querySelector('.filter-btn[data-filter="all"]');
+        if (allFilterBtn) {
+            allFilterBtn.classList.add('active');
+        }
+    }
+    
+    // Smooth exit animation
+    const cleanupInterface = document.getElementById('cleanupInterface');
+    if (cleanupInterface) {
+        cleanupInterface.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        cleanupInterface.style.opacity = '0';
+        cleanupInterface.style.transform = 'scale(0.8)';
+        cleanupInterface.style.backdropFilter = 'blur(0px)';
+        cleanupInterface.style.webkitBackdropFilter = 'blur(0px)';
+        
+        setTimeout(() => {
+            if (cleanupInterface.parentElement) {
+                cleanupInterface.remove();
+                console.log('✅ Cleanup interface removed');
+            }
+            
+            // Restore body scroll
+            document.body.style.overflow = '';
+            
+            // Remove styles
+            const fullScreenStyles = document.getElementById('fullScreenCleanupStyles');
+            if (fullScreenStyles) {
+                fullScreenStyles.remove();
+            }
+        }, 600);
+    }
+    
+    // Show notification
+    showNotification('✅ Cleanup mode closed', 'success');
+    
+    // Reset filter
+    currentFilter = 'all';
+    renderTasks();
+}
+
+// SIMPLE test function to force trigger cleanup
+window.forceCleanupTest = function() {
+    console.log('🚀 FORCE TRIGGERING FULL SCREEN CLEANUP!');
+    
+    // Force set the flag
+    cleanupTabActive = false;
+    
+    // Call the immediate function
+    enterCleanupModeImmediate();
+};
+
+// REPLACE your createCleanupTab function with this FIXED version
+function createCleanupTab() {
+    console.log('🔧 Creating cleanup tab with FIXED click handler...');
+    
+    let filterButtons = document.querySelector('.filter-buttons') ||
+                       document.querySelector('.task-filters') ||
+                       document.querySelector('.filter-container') ||
+                       document.querySelector('[class*="filter"]');
+    
+    if (!filterButtons) {
+        const existingFilterBtn = document.querySelector('.filter-btn');
+        if (existingFilterBtn) {
+            filterButtons = existingFilterBtn.parentElement;
+        }
+    }
+    
+    if (!filterButtons) {
+        console.error('❌ Cannot create cleanup tab - no container found!');
+        return;
+    }
+    
+    cleanupTabElement = document.createElement('button');
+    cleanupTabElement.className = 'filter-btn cleanup-tab-btn';
+    cleanupTabElement.id = 'cleanupTabBtn';
+    
+    cleanupTabElement.innerHTML = `
+        <i class="fas fa-broom"></i>
+        <span>Clean Up</span>
+    `;
+    
+    // FIXED click handler with proper event handling
+    cleanupTabElement.addEventListener('click', function(e) {
+        console.log('🖱️ Cleanup button clicked - FIXED HANDLER!');
+        
+        // PREVENT ALL EVENT PROPAGATION
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        
+        // Add small delay to prevent conflicts
+        setTimeout(() => {
+            if (cleanupTabActive) {
+                console.log('📤 Exiting cleanup mode...');
+                exitCleanupModeSafe();
+            } else {
+                console.log('📥 Entering cleanup mode...');
+                enterCleanupModeSafe();
+            }
+        }, 50);
+    }, { once: false, capture: true });
+    
+    filterButtons.appendChild(cleanupTabElement);
+    
+    // Animate in
+    setTimeout(() => {
+        cleanupTabElement.classList.add('slide-in');
+    }, 100);
+    
+    console.log('✅ Cleanup tab created with FIXED handlers');
+}
+
+// SAFE cleanup mode entry with protection against auto-close
+function enterCleanupModeSafe() {
+    console.log('🚀 SAFE cleanup mode entry!');
+    
+    if (cleanupTabActive) {
+        console.log('⚠️ Cleanup already active, skipping...');
+        return;
+    }
+    
+    // Set flag IMMEDIATELY to prevent conflicts
+    cleanupTabActive = true;
+    
+    // Update tab appearance IMMEDIATELY
+    if (cleanupTabElement) {
+        cleanupTabElement.classList.add('active');
+        console.log('✅ Tab marked as active');
+        
+        // Remove active from other filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            if (btn !== cleanupTabElement) {
+                btn.classList.remove('active');
+            }
+        });
+    }
+    
+    // Show notification IMMEDIATELY
+    showNotification('🧹 Cleanup mode activated', 'info');
+    
+    // Create cleanup interface with protection
+    createProtectedCleanupInterface();
+}
+
+// PROTECTED cleanup interface that won't auto-close
+function createProtectedCleanupInterface() {
+    console.log('🛡️ Creating PROTECTED cleanup interface...');
+    
+    // Remove existing cleanup interface
+    const existingCleanup = document.getElementById('cleanupInterface');
+    if (existingCleanup) {
+        existingCleanup.remove();
+    }
+    
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    
+    const cleanupInterface = document.createElement('div');
+    cleanupInterface.id = 'cleanupInterface';
+    cleanupInterface.className = `cleanup-interface-fullscreen ${isDarkMode ? 'dark-theme' : 'light-theme'}`;
+    
+    cleanupInterface.innerHTML = `
+        <div class="cleanup-overlay-backdrop"></div>
+        <div class="cleanup-main-container">
+            <div class="cleanup-interface-header">
+                <div class="cleanup-title">
+                    <i class="fas fa-magic"></i>
+                    <h2>🧹 Auto Cleanup Center</h2>
+                    <span class="cleanup-subtitle">Intelligent task organization & cleanup</span>
+                </div>
+                <button class="cleanup-close-btn" id="cleanupCloseBtn">
+                    <i class="fas fa-times"></i>
+                    <span>Close</span>
+                </button>
+            </div>
+            
+            <div class="cleanup-interface-content">
+                ${createLiveCleanupSections()}
+            </div>
+            
+            <div class="cleanup-interface-footer">
+                <div class="cleanup-master-controls">
+                    <button class="master-cleanup-btn" id="masterCleanupBtn">
+                        <i class="fas fa-magic"></i>
+                        <span>Auto Clean Everything</span>
+                        <small>Smart cleanup with live progress</small>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // PROTECTED styling - prevents auto-close
+    cleanupInterface.style.cssText = `
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        opacity: 0 !important;
+        transform: scale(0.8) !important;
+        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+        backdrop-filter: blur(0px) !important;
+        -webkit-backdrop-filter: blur(0px) !important;
+        pointer-events: auto !important;
+    `;
+    
+    // Add to DOM
+    document.body.appendChild(cleanupInterface);
+    document.body.style.overflow = 'hidden';
+    
+    // Add protected event handlers
+    addProtectedCleanupHandlers(cleanupInterface);
+    
+    // Add styles
+    addFullScreenCleanupStyles(isDarkMode);
+    addProgressRingStyles(); // ADD THIS LINE
+    
+    // SMOOTH ENTRANCE with protection
+    setTimeout(() => {
+        if (cleanupInterface && cleanupInterface.parentElement) {
+            cleanupInterface.style.opacity = '1';
+            cleanupInterface.style.transform = 'scale(1)';
+            cleanupInterface.style.backdropFilter = 'blur(15px)';
+            cleanupInterface.style.webkitBackdropFilter = 'blur(15px)';
+            
+            console.log('✅ PROTECTED cleanup interface displayed!');
+        }
+    }, 100);
+}
+
+// REPLACE your addProtectedCleanupHandlers function with this WORKING version
+function addProtectedCleanupHandlers(cleanupInterface) {
+    console.log('🛡️ Adding WORKING cleanup handlers...');
+    
+    // Prevent all outside clicks from closing
+    cleanupInterface.addEventListener('click', function(e) {
+        console.log('🖱️ Cleanup interface clicked');
+        e.stopPropagation();
+    }, { capture: true });
+    
+    // Only close button can close
+    const closeBtn = cleanupInterface.querySelector('#cleanupCloseBtn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function(e) {
+            console.log('🖱️ Close button clicked');
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            setTimeout(() => {
+                exitCleanupModeSafe();
+            }, 50);
+        }, { once: false, capture: true });
+    }
+    
+    // FIXED Master cleanup button - THIS WAS THE ISSUE!
+    const masterBtn = cleanupInterface.querySelector('#masterCleanupBtn');
+    if (masterBtn) {
+        console.log('✅ Found master cleanup button, attaching WORKING handler...');
+        
+        masterBtn.addEventListener('click', function(e) {
+            console.log('🚀 Master cleanup ACTUALLY clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            // Start the actual cleanup process
+            startWorkingAutoCleanup();
+            
+        }, { once: false, capture: true });
+    } else {
+        console.error('❌ Master cleanup button not found!');
+    }
+    
+    // FIXED individual cleanup buttons
+    const completedBtn = cleanupInterface.querySelector('.live-cleanup-section[data-type="completed"] .cleanup-btn');
+    if (completedBtn) {
+        console.log('✅ Found completed cleanup button');
+        completedBtn.addEventListener('click', function(e) {
+            console.log('🗂️ Completed cleanup button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            startWorkingCompletedCleanup();
+        });
+    }
+    
+    const duplicatesBtn = cleanupInterface.querySelector('.live-cleanup-section[data-type="duplicates"] .cleanup-btn');
+    if (duplicatesBtn) {
+        console.log('✅ Found duplicates cleanup button');
+        duplicatesBtn.addEventListener('click', function(e) {
+            console.log('🔀 Duplicates cleanup button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            startWorkingDuplicatesCleanup();
+        });
+    }
+    
+    // Prevent ESC key from interfering
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && cleanupTabActive) {
+            console.log('⌨️ Escape key pressed in cleanup mode');
+            e.preventDefault();
+            exitCleanupModeSafe();
+        }
+    });
+    
+    console.log('✅ ALL WORKING handlers attached successfully');
+}
+
+// Enhanced interface transformation
+function transformToCleanupInterface() {
+    console.log('🔄 Transforming to cleanup interface...');
+    
+    const taskListSection = document.querySelector('.task-list-section');
+    const dashboard = document.querySelector('.dashboard');
+    const mainContent = document.querySelector('.main-content');
+    
+    if (!mainContent) {
+        console.error('❌ Main content not found!');
+        return;
+    }
+    
+    // Hide normal content with fade
+    if (dashboard) {
+        dashboard.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        dashboard.style.opacity = '0.3';
+        dashboard.style.transform = 'scale(0.95)';
+    }
+    
+    if (taskListSection) {
+        taskListSection.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        taskListSection.style.opacity = '0.3';
+        taskListSection.style.transform = 'scale(0.95)';
+    }
+    
+    // Create cleanup interface
+    setTimeout(() => {
+        createEnhancedCleanupInterface();
+    }, 400);
+}
+
+// Create enhanced cleanup interface with live animations
+function createEnhancedCleanupInterface() {
+    const mainContent = document.querySelector('.main-content');
+    if (!mainContent) return;
+    
+    // Remove existing cleanup interface
+    const existingCleanup = document.getElementById('cleanupInterface');
+    if (existingCleanup) {
+        existingCleanup.remove();
+    }
+    
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    
+    const cleanupInterface = document.createElement('div');
+    cleanupInterface.id = 'cleanupInterface';
+    cleanupInterface.className = `cleanup-interface ${isDarkMode ? 'dark-theme' : 'light-theme'}`;
+    
+    cleanupInterface.innerHTML = `
+        <div class="cleanup-interface-header">
+            <div class="cleanup-title">
+                <i class="fas fa-magic"></i>
+                <h2>Auto Cleanup Center</h2>
+                <span class="cleanup-subtitle">Intelligent task organization</span>
+            </div>
+            <button class="cleanup-close-btn" onclick="exitCleanupMode()">
+                <i class="fas fa-times"></i>
+                <span>Close</span>
+            </button>
+        </div>
+        
+        <div class="cleanup-interface-content">
+            ${createLiveCleanupSections()}
+        </div>
+        
+        <div class="cleanup-interface-footer">
+            <div class="cleanup-master-controls">
+                <button class="master-cleanup-btn" id="autoCleanupBtn">
+                    <i class="fas fa-magic"></i>
+                    <span>Auto Clean Everything</span>
+                    <small>Smart cleanup with live progress</small>
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Enhanced positioning for right-side overlay
+    cleanupInterface.style.cssText = `
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100vh;
+        background: ${isDarkMode ? 
+            'linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.95) 100%)' : 
+            'linear-gradient(135deg, rgba(248, 250, 252, 0.98) 0%, rgba(241, 245, 249, 0.95) 100%)'
+        };
+        border-radius: 20px 0 0 20px;
+        box-shadow: -10px 0 50px rgba(0, 0, 0, 0.3);
+        border: 1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
+        backdrop-filter: blur(20px);
+        z-index: 1000;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        overflow-y: auto;
+        color: ${isDarkMode ? 'white' : '#1e293b'};
+        display: flex;
+        flex-direction: column;
+    `;
+    
+    document.body.appendChild(cleanupInterface);
+    
+    // Animate in
+    setTimeout(() => {
+        cleanupInterface.style.opacity = '1';
+        cleanupInterface.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Add event listeners
+    addEnhancedCleanupListeners();
+    
+    console.log('✅ Enhanced cleanup interface created');
+}
+
+// REPLACE your createLiveCleanupSections function with this FIXED version
+function createLiveCleanupSections() {
+    const completedTasks = tasks.filter(task => task.completed);
+    const duplicateTasks = findDuplicateTasks();
+    
+    let sections = '';
+    
+    // Completed tasks section
+    if (completedTasks.length > 5) {
+        sections += `
+            <div class="live-cleanup-section" data-type="completed">
+                <div class="section-header">
+                    <div class="section-icon completed">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="section-info">
+                        <h3>Completed Tasks (${completedTasks.length})</h3>
+                        <p>Archive or remove completed tasks to free up space</p>
+                    </div>
+                </div>
+                
+                <div class="progress-ring-container">
+                    <div class="progress-ring" data-progress="0">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle class="progress-ring-bg" cx="60" cy="60" r="54" 
+                                   fill="none" stroke="rgba(16, 185, 129, 0.1)" stroke-width="8"/>
+                            <circle class="progress-ring-fill" cx="60" cy="60" r="54" 
+                                   fill="none" stroke="#10b981" stroke-width="8" 
+                                   stroke-linecap="round" stroke-dasharray="339.292" 
+                                   stroke-dashoffset="339.292" transform="rotate(-90 60 60)"/>
+                            <text class="progress-text" x="60" y="55" text-anchor="middle" dy="0.3em" 
+                                  fill="currentColor" font-size="20" font-weight="bold">0</text>
+                            <text class="progress-label" x="60" y="75" text-anchor="middle" dy="0.3em" 
+                                  fill="currentColor" font-size="12">Cleaned</text>
+                        </svg>
+                    </div>
+                    <div class="progress-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="completedCleaned">0</span>
+                            <span class="stat-label">Archived</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">${completedTasks.length}</span>
+                            <span class="stat-label">Total</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cleanup-controls">
+                    <button class="cleanup-btn primary" onclick="startCompletedCleanupFixed()">
+                        <i class="fas fa-archive"></i>
+                        <span>Auto Archive</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Duplicates section
+    if (duplicateTasks.length > 0) {
+        const totalDuplicates = duplicateTasks.reduce((sum, group) => sum + group.duplicates.length, 0);
+        
+        sections += `
+            <div class="live-cleanup-section" data-type="duplicates">
+                <div class="section-header">
+                    <div class="section-icon duplicates">
+                        <i class="fas fa-copy"></i>
+                    </div>
+                    <div class="section-info">
+                        <h3>Duplicate Tasks (${duplicateTasks.length} groups)</h3>
+                        <p>Remove ${totalDuplicates} duplicate tasks intelligently</p>
+                    </div>
+                </div>
+                
+                <div class="progress-ring-container">
+                    <div class="progress-ring" data-progress="0">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle class="progress-ring-bg" cx="60" cy="60" r="54" 
+                                   fill="none" stroke="rgba(245, 158, 11, 0.1)" stroke-width="8"/>
+                            <circle class="progress-ring-fill" cx="60" cy="60" r="54" 
+                                   fill="none" stroke="#f59e0b" stroke-width="8" 
+                                   stroke-linecap="round" stroke-dasharray="339.292" 
+                                   stroke-dashoffset="339.292" transform="rotate(-90 60 60)"/>
+                            <text class="progress-text" x="60" y="55" text-anchor="middle" dy="0.3em" 
+                                  fill="currentColor" font-size="20" font-weight="bold">0</text>
+                            <text class="progress-label" x="60" y="75" text-anchor="middle" dy="0.3em" 
+                                  fill="currentColor" font-size="12">Merged</text>
+                        </svg>
+                    </div>
+                    <div class="progress-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="duplicatesCleaned">0</span>
+                            <span class="stat-label">Removed</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">${totalDuplicates}</span>
+                            <span class="stat-label">Total</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cleanup-controls">
+                    <button class="cleanup-btn primary" onclick="startDuplicatesCleanupFixed()">
+                        <i class="fas fa-magic"></i>
+                        <span>Smart Merge</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
+    if (!sections) {
+        sections = `
+            <div class="cleanup-empty">
+                <i class="fas fa-sparkles"></i>
+                <h3>All Clean!</h3>
+                <p>Your task list is perfectly organized</p>
+                <div class="cleanup-celebration">
+                    <div class="celebration-ring">
+                        <svg width="100" height="100" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" 
+                                   stroke="#10b981" stroke-width="6" 
+                                   stroke-dasharray="283" stroke-dashoffset="0" 
+                                   transform="rotate(-90 50 50)" class="celebration-circle"/>
+                            <text x="50" y="55" text-anchor="middle" 
+                                  fill="currentColor" font-size="30">✨</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    return sections;
+}
+
+// Add enhanced event listeners
+function addEnhancedCleanupListeners() {
+    // Auto cleanup button
+    const autoCleanupBtn = document.getElementById('autoCleanupBtn');
+    if (autoCleanupBtn) {
+        autoCleanupBtn.addEventListener('click', startAutoCleanup);
+    }
+    
+    // Individual cleanup functions
+    window.startCompletedCleanup = startCompletedCleanup;
+    window.startDuplicatesCleanup = startDuplicatesCleanup;
+    window.startAutoCleanup = startAutoCleanup;
+}
+
+// REPLACE startDuplicatesCleanupFixed with this WORKING version
+function startWorkingDuplicatesCleanup() {
+    console.log('🔀 Starting WORKING duplicates cleanup...');
+    
+    const duplicateGroups = findDuplicateTasks();
+    
+    if (duplicateGroups.length === 0) {
+        console.log('ℹ️ No duplicate tasks to clean');
+        showNotification('ℹ️ No duplicate tasks found', 'info');
+        return;
+    }
+    
+    const totalDuplicates = duplicateGroups.reduce((sum, group) => sum + group.duplicates.length, 0);
+    console.log(`📊 Found ${duplicateGroups.length} duplicate groups with ${totalDuplicates} total duplicates`);
+    
+    const progressSection = document.querySelector('.live-cleanup-section[data-type="duplicates"]');
+    const progressRing = progressSection?.querySelector('.progress-ring');
+    const progressFill = progressRing?.querySelector('.progress-ring-fill');
+    const progressText = progressRing?.querySelector('.progress-text');
+    const cleanedCounter = document.getElementById('duplicatesCleaned');
+    
+    if (!progressRing || !progressFill || !progressText || !cleanedCounter) {
+        console.error('❌ Duplicates progress elements not found! Creating fallback...');
+        
+        // Fallback: Just remove duplicates without animation
+        duplicateGroups.forEach(group => {
+            group.duplicates.forEach(duplicate => {
+                const index = tasks.findIndex(t => t.id === duplicate.id);
+                if (index !== -1) {
+                    tasks.splice(index, 1);
+                }
+            });
+        });
+        
+        saveTasks();
+        renderTasks();
+        updateDashboard();
+        updateCategoryCounts();
+        
+        showNotification(`🎯 Merged ${totalDuplicates} duplicate tasks!`, 'success');
+        setTimeout(() => createProtectedCleanupInterface(), 2000);
+        return;
+    }
+    
+    let cleaned = 0;
+    const circumference = 339.292;
+    
+    console.log(`🎯 Starting duplicates animation for ${totalDuplicates} duplicates`);
+    showNotification(`🔀 Merging ${totalDuplicates} duplicate tasks...`, 'info');
+    
+    // Disable button during cleanup
+    const cleanupBtn = progressSection.querySelector('.cleanup-btn');
+    if (cleanupBtn) {
+        cleanupBtn.disabled = true;
+        cleanupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Merging...</span>';
+    }
+    
+    // WORKING duplicates animation with actual removal
+    const cleanupInterval = setInterval(() => {
+        cleaned++;
+        const progress = (cleaned / totalDuplicates) * 100;
+        
+        console.log(`🔄 Duplicates progress: ${cleaned}/${totalDuplicates} (${Math.round(progress)}%)`);
+        
+        // Update progress ring with WORKING animation
+        const offset = circumference - (circumference * progress / 100);
+        progressFill.style.strokeDashoffset = offset;
+        progressFill.style.transition = 'stroke-dashoffset 0.3s ease';
+        
+        // Update text and counter
+        progressText.textContent = Math.round(progress);
+        cleanedCounter.textContent = cleaned;
+        
+        // Visual feedback
+        progressRing.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+            progressRing.style.transform = 'scale(1)';
+        }, 150);
+        
+        // When cleanup is complete
+        if (cleaned >= totalDuplicates) {
+            clearInterval(cleanupInterval);
+            
+            console.log(`✅ Duplicates animation complete! Now removing duplicates...`);
+            
+            // ACTUALLY remove the duplicate tasks
+            const beforeCount = tasks.length;
+            duplicateGroups.forEach(group => {
+                group.duplicates.forEach(duplicate => {
+                    const index = tasks.findIndex(t => t.id === duplicate.id);
+                    if (index !== -1) {
+                        console.log(`🗑️ Removing duplicate: "${duplicate.title}"`);
+                        tasks.splice(index, 1);
+                    }
+                });
+            });
+            const afterCount = tasks.length;
+            const actuallyRemoved = beforeCount - afterCount;
+            
+            console.log(`📊 Duplicate removal: ${beforeCount} -> ${afterCount} (removed ${actuallyRemoved})`);
+            
+            // Save and update everything
+            saveTasks();
+            renderTasks();
+            updateDashboard();
+            updateCategoryCounts();
+            
+            showNotification(`🎯 Merged ${actuallyRemoved} duplicate tasks!`, 'success');
+            
+            // Update button
+            if (cleanupBtn) {
+                cleanupBtn.disabled = false;
+                cleanupBtn.innerHTML = '<i class="fas fa-check"></i> <span>Complete!</span>';
+            }
+            
+            // Refresh cleanup interface after delay
+            setTimeout(() => {
+                console.log('🔄 Refreshing cleanup interface...');
+                createProtectedCleanupInterface();
+            }, 2000);
+        }
+        
+    }, 180); // Animation speed: 180ms per step
+}
+
+// FIXED auto cleanup everything
+function startAutoCleanup() {
+    console.log('🚀 Starting FIXED auto cleanup...');
+    
+    const completedTasks = tasks.filter(task => task.completed);
+    const duplicateGroups = findDuplicateTasks();
+    
+    if (completedTasks.length > 5) {
+        console.log('🗂️ Auto cleanup: Starting completed tasks...');
+        startCompletedCleanupFixed();
+        
+        // Chain duplicates cleanup after completed tasks
+        if (duplicateGroups.length > 0) {
+            setTimeout(() => {
+                console.log('🔀 Auto cleanup: Starting duplicates...');
+                startDuplicatesCleanupFixed();
+            }, (completedTasks.length * 200) + 2000);
+        }
+    } else if (duplicateGroups.length > 0) {
+        console.log('🔀 Auto cleanup: Starting duplicates only...');
+        startDuplicatesCleanupFixed();
+    } else {
+        console.log('✨ Auto cleanup: Nothing to clean!');
+        showNotification('✨ Everything is already clean!', 'success');
+    }
+    
+    showNotification('🚀 Starting complete auto cleanup...', 'info');
+}
 
             // Initialize the application
 initializeApp();
