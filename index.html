@@ -13751,6 +13751,99 @@ body.compact-mode .main-content {
         align-self: flex-end;
     }
 }
+
+/* Timeline Toggle Styles */
+.timeline-toggle-container {
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.timeline-toggle-container:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+.timeline-toggle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-toggle-label {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+}
+
+.timeline-toggle-switch {
+    width: 48px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.timeline-toggle-switch.active {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+}
+
+.timeline-toggle-handle {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-toggle-switch.active .timeline-toggle-handle {
+    transform: translateX(24px);
+}
+
+.timeline-toggle-description {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+}
+
+/* Timeline View Container */
+.timeline-view-container {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.timeline-view-container.active {
+    display: block;
+    animation: timelineSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes timelineSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13892,6 +13985,21 @@ body.compact-mode .main-content {
         <div class="container">
             <div class="main-content">
                 <aside class="sidebar" id="sidebar">
+
+                    <div class="sidebar">
+    <!-- ADD THE TIMELINE TOGGLE HERE -->
+    <div class="timeline-toggle-container">
+        <div class="timeline-toggle-header">
+            <span class="timeline-toggle-label">Timeline View</span>
+            <div class="timeline-toggle-switch" id="timelineToggleSwitch">
+                <div class="timeline-toggle-handle"></div>
+            </div>
+        </div>
+        <div class="timeline-toggle-description">
+            Switch to calendar & timeline view
+        </div>
+    </div>
+
                     <div class="sidebar-header">
                         <h3>Categories</h3>
                     </div>
@@ -15107,15 +15215,16 @@ let currentDetectionPopup = null; // Add this line
             let reminderSoundEnabled = true; // Set to false to disable sound
             let reminderSoundUrl = 'sounds/Alert notification.mp3'; // Replace with your actual file path
 
-            // ADD THE NEW CLEANUP VARIABLES HERE:
-let cleanupTabActive = false;
-let cleanupTabElement = null;
-let cleanupData = {};
 
             // Expandable Tasks Container functionality
 let isTaskContainerExpanded = false;
 let scrollDirectionTimeout;
 let mainContent = null;
+
+// Timeline Overview Variables
+let timelineViewActive = false;
+let timelineData = {};
+
 // ADD these new global variables at the top of your script (around line 100):
 let taskAwarenessEnabled = true;
 let taskPatterns = {};
@@ -23562,283 +23671,6 @@ const enhancedStyle = document.createElement('style');
 enhancedStyle.textContent = enhancedAnimationCSS;
 document.head.appendChild(enhancedStyle);
 
-// ENHANCED findDuplicateTasks function to ensure it works properly
-function findDuplicateTasks() {
-    console.log('🔍 Searching for duplicate tasks...');
-    
-    const duplicates = [];
-    const seen = new Map();
-    
-    tasks.forEach(task => {
-        // Use title and category as the key for finding duplicates
-        const key = `${task.title.toLowerCase().trim()}_${task.category}`;
-        
-        if (seen.has(key)) {
-            const existing = seen.get(key);
-            // Find if we already have a duplicate group for this key
-            let existingGroup = duplicates.find(d => d.original.id === existing.id);
-            
-            if (!existingGroup) {
-                // Create new duplicate group
-                existingGroup = {
-                    original: existing,
-                    duplicates: []
-                };
-                duplicates.push(existingGroup);
-                console.log(`📋 New duplicate group for: "${existing.title}"`);
-            }
-            
-            // Add current task as duplicate
-            existingGroup.duplicates.push(task);
-            console.log(`🔗 Added duplicate: "${task.title}" (ID: ${task.id})`);
-        } else {
-            seen.set(key, task);
-        }
-    });
-    
-    console.log(`🔍 Found ${duplicates.length} duplicate groups:`, duplicates.map(d => ({
-        original: d.original.title,
-        duplicateCount: d.duplicates.length
-    })));
-    
-    return duplicates;
-}
-
-// DEBUGGING function to test cleanup manually
-window.testWorkingCleanup = function() {
-    console.log('🧪 Testing WORKING cleanup functions...');
-    
-    // Check what we have
-    const completedTasks = tasks.filter(task => task.completed);
-    const duplicateGroups = findDuplicateTasks();
-    
-    console.log(`📊 Current state:`, {
-        totalTasks: tasks.length,
-        completedTasks: completedTasks.length,
-        duplicateGroups: duplicateGroups.length
-    });
-    
-    // Test auto cleanup
-    if (completedTasks.length > 0 || duplicateGroups.length > 0) {
-        console.log('🚀 Testing auto cleanup...');
-        startWorkingAutoCleanup();
-    } else {
-        console.log('ℹ️ Nothing to clean - adding test data...');
-        
-        // Add some test duplicates
-        const testTask1 = {
-            id: 'test1',
-            title: 'Test Task',
-            description: 'This is a test',
-            category: 'work',
-            priority: 'medium',
-            dueDate: new Date().toISOString(),
-            completed: false,
-            createdAt: new Date().toISOString(),
-            modifiedAt: new Date().toISOString()
-        };
-        
-        const testTask2 = {
-            id: 'test2',
-            title: 'Test Task', // Same title = duplicate
-            description: 'This is also a test',
-            category: 'work',
-            priority: 'high',
-            dueDate: new Date().toISOString(),
-            completed: true, // This one is completed
-            createdAt: new Date().toISOString(),
-            modifiedAt: new Date().toISOString()
-        };
-        
-        tasks.push(testTask1, testTask2);
-        saveTasks();
-        renderTasks();
-        updateDashboard();
-        
-        console.log('✅ Test data added! Try the cleanup now.');
-    }
-};
-
-// Enhanced cleanup detection with debugging
-function checkCleanupNeeded() {
-    console.log('🧹 Checking cleanup needs...');
-    console.log('📊 Total tasks:', tasks.length);
-    
-    const completedTasks = tasks.filter(task => task.completed);
-    const duplicateTasks = findDuplicateTasks();
-    
-    console.log('✅ Completed tasks:', completedTasks.length);
-    console.log('👥 Duplicate groups:', duplicateTasks.length);
-    
-    const needsCleanup = completedTasks.length > 5 || duplicateTasks.length > 0;
-    
-    cleanupData = {
-        completedCount: completedTasks.length,
-        duplicateCount: duplicateTasks.length,
-        duplicateTasks: duplicateTasks,
-        needsCleanup: needsCleanup,
-        issues: []
-    };
-    
-    // Add specific cleanup issues with debugging
-    if (completedTasks.length > 5) {
-        console.log('🟡 Adding completed tasks issue');
-        cleanupData.issues.push({
-            type: 'completed',
-            title: 'Too Many Completed Tasks',
-            description: `${completedTasks.length} completed tasks can be archived`,
-            priority: 'medium'
-        });
-    }
-    
-    if (duplicateTasks.length > 0) {
-        console.log('🔴 Adding duplicate tasks issue');
-        cleanupData.issues.push({
-            type: 'duplicates',
-            title: 'Duplicate Tasks Found',
-            description: `${duplicateTasks.length} duplicate task groups detected`,
-            priority: 'high'
-        });
-    }
-    
-    console.log('🎯 Cleanup needed:', needsCleanup);
-    console.log('📋 Issues found:', cleanupData.issues.length);
-    
-    updateCleanupTabVisibility();
-    
-    return needsCleanup;
-}
-
-// Enhanced tab visibility function with debugging
-function updateCleanupTabVisibility() {
-    console.log('👀 Updating cleanup tab visibility...');
-    
-    // Try multiple possible containers for the filter buttons
-    let filterButtons = document.querySelector('.filter-buttons');
-    if (!filterButtons) {
-        filterButtons = document.querySelector('.task-filters');
-    }
-    if (!filterButtons) {
-        filterButtons = document.querySelector('.filter-container');
-    }
-    if (!filterButtons) {
-        // Find any container with filter buttons
-        filterButtons = document.querySelector('[class*="filter"]');
-    }
-    
-    console.log('🎯 Filter buttons container:', filterButtons);
-    
-    if (!filterButtons) {
-        console.error('❌ No filter buttons container found!');
-        // Let's find all possible containers
-        console.log('🔍 Available containers:');
-        document.querySelectorAll('[class*="filter"], [class*="button"]').forEach((el, i) => {
-            console.log(`${i}: .${el.className} ->`, el);
-        });
-        return;
-    }
-    
-    if (cleanupData.needsCleanup && !cleanupTabElement) {
-        console.log('✅ Creating cleanup tab...');
-        createCleanupTab();
-    } else if (!cleanupData.needsCleanup && cleanupTabElement) {
-        console.log('🗑️ Removing cleanup tab...');
-        removeCleanupTab();
-    } else if (cleanupTabElement) {
-        console.log('🔄 Updating cleanup tab badge...');
-        updateCleanupTabBadge();
-    } else {
-        console.log('ℹ️ No action needed for cleanup tab');
-    }
-}
-
-// REPLACE your cleanup functions with these FULL SCREEN versions
-
-// FULL SCREEN cleanup interface creation
-function createEnhancedCleanupInterfaceImmediate() {
-    console.log('🎯 Creating FULL SCREEN cleanup interface...');
-    
-    // Remove existing cleanup interface
-    const existingCleanup = document.getElementById('cleanupInterface');
-    if (existingCleanup) {
-        existingCleanup.remove();
-    }
-    
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    
-    const cleanupInterface = document.createElement('div');
-    cleanupInterface.id = 'cleanupInterface';
-    cleanupInterface.className = `cleanup-interface-fullscreen ${isDarkMode ? 'dark-theme' : 'light-theme'}`;
-    
-    cleanupInterface.innerHTML = `
-        <div class="cleanup-overlay-backdrop"></div>
-        <div class="cleanup-main-container">
-            <div class="cleanup-interface-header">
-                <div class="cleanup-title">
-                    <i class="fas fa-magic"></i>
-                    <h2>🧹 Auto Cleanup Center</h2>
-                    <span class="cleanup-subtitle">Intelligent task organization & cleanup</span>
-                </div>
-                <button class="cleanup-close-btn" onclick="exitCleanupMode()">
-                    <i class="fas fa-times"></i>
-                    <span>Close</span>
-                </button>
-            </div>
-            
-            <div class="cleanup-interface-content">
-                ${createLiveCleanupSections()}
-            </div>
-            
-            <div class="cleanup-interface-footer">
-                <div class="cleanup-master-controls">
-                    <button class="master-cleanup-btn" onclick="startAutoCleanup()">
-                        <i class="fas fa-magic"></i>
-                        <span>Auto Clean Everything</span>
-                        <small>Smart cleanup with live progress</small>
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    // FULL SCREEN IMMEDIATE positioning and styling
-    cleanupInterface.style.cssText = `
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        z-index: 9999 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        opacity: 0 !important;
-        transform: scale(0.8) !important;
-        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-        backdrop-filter: blur(0px) !important;
-        -webkit-backdrop-filter: blur(0px) !important;
-    `;
-    
-    // Add to DOM IMMEDIATELY
-    document.body.appendChild(cleanupInterface);
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
-    
-    // Add full screen cleanup styles
-    addFullScreenCleanupStyles(isDarkMode);
-    
-    // SMOOTH ENTRANCE ANIMATION
-    setTimeout(() => {
-        cleanupInterface.style.opacity = '1';
-        cleanupInterface.style.transform = 'scale(1)';
-        cleanupInterface.style.backdropFilter = 'blur(15px)';
-        cleanupInterface.style.webkitBackdropFilter = 'blur(15px)';
-    }, 50);
-    
-    console.log('✅ FULL SCREEN cleanup interface created and animating in!');
-    
-    // Add event listeners
-    addEnhancedCleanupListeners();
-}
 
 // ADD FULL SCREEN STYLES
 function addFullScreenCleanupStyles(isDarkMode) {
@@ -24676,24 +24508,40 @@ function addProtectedCleanupHandlers(cleanupInterface) {
         }, { once: false, capture: true });
     }
     
-    // FIXED Master cleanup button - THIS WAS THE ISSUE!
-    const masterBtn = cleanupInterface.querySelector('#masterCleanupBtn');
-    if (masterBtn) {
-        console.log('✅ Found master cleanup button, attaching WORKING handler...');
+    // IMMEDIATE WORKING Master cleanup button handler
+const masterBtn = cleanupInterface.querySelector('#masterCleanupBtn');
+if (masterBtn) {
+    console.log('✅ Found master cleanup button, attaching IMMEDIATE handler...');
+    
+    // Remove any existing listeners first
+    masterBtn.replaceWith(masterBtn.cloneNode(true));
+    const newMasterBtn = cleanupInterface.querySelector('#masterCleanupBtn');
+    
+    newMasterBtn.addEventListener('click', function(e) {
+        console.log('🚀 Master cleanup button clicked - IMMEDIATE ACTION!');
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
         
-        masterBtn.addEventListener('click', function(e) {
-            console.log('🚀 Master cleanup ACTUALLY clicked!');
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            
-            // Start the actual cleanup process
+        // Call the function IMMEDIATELY - no delays
+        if (typeof startWorkingAutoCleanup === 'function') {
+            console.log('✅ Calling startWorkingAutoCleanup immediately...');
             startWorkingAutoCleanup();
-            
-        }, { once: false, capture: true });
-    } else {
-        console.error('❌ Master cleanup button not found!');
-    }
+        } else {
+            console.error('❌ startWorkingAutoCleanup function not found!');
+            // Fallback - call the old function if it exists
+            if (typeof startAutoCleanup === 'function') {
+                console.log('🔄 Falling back to startAutoCleanup...');
+                startAutoCleanup();
+            }
+        }
+        
+    }, { passive: false });
+    
+    console.log('✅ Master button handler attached successfully');
+} else {
+    console.error('❌ Master cleanup button not found!');
+}
     
     // FIXED individual cleanup buttons
     const completedBtn = cleanupInterface.querySelector('.live-cleanup-section[data-type="completed"] .cleanup-btn');
@@ -25121,33 +24969,232 @@ function startWorkingDuplicatesCleanup() {
     }, 180); // Animation speed: 180ms per step
 }
 
-// FIXED auto cleanup everything
-function startAutoCleanup() {
-    console.log('🚀 Starting FIXED auto cleanup...');
+// ADD this function right after startWorkingDuplicatesCleanup()
+function startWorkingCompletedCleanup() {
+    console.log('🗂️ Starting WORKING completed tasks cleanup...');
+    
+    const completedTasks = tasks.filter(task => task.completed);
+    
+    if (completedTasks.length <= 5) {
+        console.log('ℹ️ Not enough completed tasks to clean');
+        showNotification('ℹ️ Not enough completed tasks to clean', 'info');
+        return;
+    }
+    
+    const tasksToClean = completedTasks.length - 5; // Keep 5 most recent
+    console.log(`📊 Found ${completedTasks.length} completed tasks, will clean ${tasksToClean}`);
+    
+    const progressSection = document.querySelector('.live-cleanup-section[data-type="completed"]');
+    const progressRing = progressSection?.querySelector('.progress-ring');
+    const progressFill = progressRing?.querySelector('.progress-ring-fill');
+    const progressText = progressRing?.querySelector('.progress-text');
+    const cleanedCounter = document.getElementById('completedCleaned');
+    
+    if (!progressRing || !progressFill || !progressText || !cleanedCounter) {
+        console.error('❌ Completed progress elements not found! Creating fallback...');
+        
+        // Fallback: Just remove old completed tasks without animation
+        const sortedCompleted = completedTasks.sort((a, b) => new Date(a.completedAt || a.modifiedAt) - new Date(b.completedAt || b.modifiedAt));
+        const tasksToRemove = sortedCompleted.slice(0, tasksToClean);
+        
+        tasksToRemove.forEach(task => {
+            const index = tasks.findIndex(t => t.id === task.id);
+            if (index !== -1) {
+                tasks.splice(index, 1);
+            }
+        });
+        
+        saveTasks();
+        renderTasks();
+        updateDashboard();
+        updateCategoryCounts();
+        
+        showNotification(`🗂️ Archived ${tasksToClean} completed tasks!`, 'success');
+        setTimeout(() => createProtectedCleanupInterface(), 2000);
+        return;
+    }
+    
+    let cleaned = 0;
+    const circumference = 339.292;
+    
+    console.log(`🎯 Starting completed tasks animation for ${tasksToClean} tasks`);
+    showNotification(`🗂️ Archiving ${tasksToClean} completed tasks...`, 'info');
+    
+    // Disable button during cleanup
+    const cleanupBtn = progressSection.querySelector('.cleanup-btn');
+    if (cleanupBtn) {
+        cleanupBtn.disabled = true;
+        cleanupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Archiving...</span>';
+    }
+    
+    // WORKING completed tasks animation with actual removal
+    const cleanupInterval = setInterval(() => {
+        cleaned++;
+        const progress = (cleaned / tasksToClean) * 100;
+        
+        console.log(`🔄 Completed progress: ${cleaned}/${tasksToClean} (${Math.round(progress)}%)`);
+        
+        // Update progress ring with WORKING animation
+        const offset = circumference - (circumference * progress / 100);
+        progressFill.style.strokeDashoffset = offset;
+        progressFill.style.transition = 'stroke-dashoffset 0.3s ease';
+        
+        // Update text and counter
+        progressText.textContent = Math.round(progress);
+        cleanedCounter.textContent = cleaned;
+        
+        // Visual feedback
+        progressRing.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+            progressRing.style.transform = 'scale(1)';
+        }, 150);
+        
+        // When cleanup is complete
+        if (cleaned >= tasksToClean) {
+            clearInterval(cleanupInterval);
+            
+            console.log(`✅ Completed tasks animation complete! Now removing tasks...`);
+            
+            // ACTUALLY remove the old completed tasks (keep 5 most recent)
+            const beforeCount = tasks.length;
+            const sortedCompleted = completedTasks.sort((a, b) => new Date(b.completedAt || b.modifiedAt) - new Date(a.completedAt || a.modifiedAt));
+            const tasksToKeep = sortedCompleted.slice(0, 5); // Keep 5 most recent
+            const tasksToRemove = sortedCompleted.slice(5); // Remove the rest
+            
+            tasksToRemove.forEach(task => {
+                const index = tasks.findIndex(t => t.id === task.id);
+                if (index !== -1) {
+                    console.log(`🗑️ Archiving completed task: "${task.title}"`);
+                    tasks.splice(index, 1);
+                }
+            });
+            
+            const afterCount = tasks.length;
+            const actuallyRemoved = beforeCount - afterCount;
+            
+            console.log(`📊 Completed tasks removal: ${beforeCount} -> ${afterCount} (archived ${actuallyRemoved})`);
+            
+            // Save and update everything
+            saveTasks();
+            renderTasks();
+            updateDashboard();
+            updateCategoryCounts();
+            
+            showNotification(`🗂️ Archived ${actuallyRemoved} completed tasks!`, 'success');
+            
+            // Update button
+            if (cleanupBtn) {
+                cleanupBtn.disabled = false;
+                cleanupBtn.innerHTML = '<i class="fas fa-check"></i> <span>Complete!</span>';
+            }
+            
+            // Refresh cleanup interface after delay
+            setTimeout(() => {
+                console.log('🔄 Refreshing cleanup interface...');
+                createProtectedCleanupInterface();
+            }, 2000);
+        }
+        
+    }, 150); // Animation speed: 150ms per step
+}
+
+function startWorkingAutoCleanup() {
+    console.log('🚀 Starting COMPLETE auto cleanup with smooth animation...');
     
     const completedTasks = tasks.filter(task => task.completed);
     const duplicateGroups = findDuplicateTasks();
+    const totalDuplicates = duplicateGroups.reduce((sum, group) => sum + group.duplicates.length, 0);
     
-    if (completedTasks.length > 5) {
-        console.log('🗂️ Auto cleanup: Starting completed tasks...');
-        startCompletedCleanupFixed();
-        
-        // Chain duplicates cleanup after completed tasks
-        if (duplicateGroups.length > 0) {
-            setTimeout(() => {
-                console.log('🔀 Auto cleanup: Starting duplicates...');
-                startDuplicatesCleanupFixed();
-            }, (completedTasks.length * 200) + 2000);
-        }
-    } else if (duplicateGroups.length > 0) {
-        console.log('🔀 Auto cleanup: Starting duplicates only...');
-        startDuplicatesCleanupFixed();
-    } else {
-        console.log('✨ Auto cleanup: Nothing to clean!');
+    // Check what needs cleaning
+    const needsCompletedCleanup = completedTasks.length > 5;
+    const needsDuplicateCleanup = duplicateGroups.length > 0;
+    
+    if (!needsCompletedCleanup && !needsDuplicateCleanup) {
+        console.log('✨ Nothing to clean!');
         showNotification('✨ Everything is already clean!', 'success');
+        
+        // Still exit cleanup mode after showing message
+        setTimeout(() => {
+            exitCleanupModeSafe();
+        }, 2000);
+        return;
+    }
+    
+    console.log(`🎯 Auto cleanup plan:`, {
+        completedTasks: completedTasks.length,
+        duplicateGroups: duplicateGroups.length,
+        totalDuplicates: totalDuplicates,
+        needsCompletedCleanup,
+        needsDuplicateCleanup
+    });
+    
+    // Disable the master button during cleanup
+    const masterBtn = document.getElementById('masterCleanupBtn');
+    if (masterBtn) {
+        masterBtn.disabled = true;
+        masterBtn.innerHTML = `
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Auto Cleaning...</span>
+            <small>Please wait...</small>
+        `;
     }
     
     showNotification('🚀 Starting complete auto cleanup...', 'info');
+    
+    // Sequential cleanup with proper timing
+    if (needsCompletedCleanup) {
+        console.log('🗂️ Auto cleanup: Starting completed tasks...');
+        startWorkingCompletedCleanup();
+        
+        // Chain duplicates cleanup after completed tasks
+        if (needsDuplicateCleanup) {
+            const completedCleanupTime = Math.max(completedTasks.length - 5, 1) * 150 + 3000;
+            setTimeout(() => {
+                console.log('🔀 Auto cleanup: Starting duplicates...');
+                startWorkingDuplicatesCleanup();
+                
+                // Exit cleanup mode after duplicates are done
+                const duplicatesCleanupTime = totalDuplicates * 180 + 3000;
+                setTimeout(() => {
+                    console.log('✅ All cleanup complete - exiting cleanup mode...');
+                    showNotification('🎉 Auto cleanup completed successfully!', 'success');
+                    
+                    setTimeout(() => {
+                        exitCleanupModeSafe();
+                    }, 2000);
+                }, duplicatesCleanupTime);
+                
+            }, completedCleanupTime);
+        } else {
+            // Exit after completed tasks only
+            const completedCleanupTime = Math.max(completedTasks.length - 5, 1) * 150 + 3000;
+            setTimeout(() => {
+                console.log('✅ Completed cleanup finished - exiting cleanup mode...');
+                showNotification('🎉 Auto cleanup completed successfully!', 'success');
+                
+                setTimeout(() => {
+                    exitCleanupModeSafe();
+                }, 2000);
+            }, completedCleanupTime);
+        }
+    } else if (needsDuplicateCleanup) {
+        console.log('🔀 Auto cleanup: Starting duplicates only...');
+        startWorkingDuplicatesCleanup();
+        
+        // Exit after duplicates cleanup
+        const duplicatesCleanupTime = totalDuplicates * 180 + 3000;
+        setTimeout(() => {
+            console.log('✅ Duplicates cleanup finished - exiting cleanup mode...');
+            showNotification('🎉 Auto cleanup completed successfully!', 'success');
+            
+            setTimeout(() => {
+                exitCleanupModeSafe();
+            }, 2000);
+        }, duplicatesCleanupTime);
+    }
+
+    // Make function globally accessible
+    window.startWorkingAutoCleanup = startWorkingAutoCleanup;
 }
 
             // Initialize the application
