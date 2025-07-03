@@ -13752,89 +13752,1751 @@ body.compact-mode .main-content {
     }
 }
 
-/* Timeline Toggle Styles */
-.timeline-toggle-container {
-    padding: 1rem 1.5rem;
-    margin-bottom: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
+/* ========== MODERN BUTTON DESIGN IMPROVEMENTS ========== */
+
+/* Enhanced Base Button Styles */
+.btn {
+    padding: 0.875rem 1.75rem;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-}
-
-.timeline-toggle-container:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-2px);
-}
-
-.timeline-toggle-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
-.timeline-toggle-label {
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.95rem;
-}
-
-.timeline-toggle-switch {
-    width: 48px;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    position: relative;
+    border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.06);
+    letter-spacing: 0.025em;
+    font-size: 0.95rem;
+    touch-action: manipulation;
+    min-height: 48px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
 
-.timeline-toggle-switch.active {
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
-}
-
-.timeline-toggle-handle {
-    width: 20px;
-    height: 20px;
-    background: white;
-    border-radius: 50%;
+/* Modern Shimmer Effect for All Buttons */
+.btn::before {
+    content: '';
     position: absolute;
-    top: 2px;
-    left: 2px;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-.timeline-toggle-switch.active .timeline-toggle-handle {
-    transform: translateX(24px);
-}
-
-.timeline-toggle-description {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1.4;
-}
-
-/* Timeline View Container */
-.timeline-view-container {
-    display: none;
+    top: 0;
+    left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 20px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        transparent 100%);
+    transition: left 0.6s ease;
+    z-index: 1;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-icon {
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+    z-index: 2;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.btn:hover .btn-icon {
+    transform: scale(1.1);
+}
+
+/* Primary Button - Modern Gradient */
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+    background-size: 200% 200%;
+    color: white;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 8px 25px rgba(102, 126, 234, 0.35),
+        0 3px 10px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    animation: gradientShift 8s ease infinite;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+        0 12px 35px rgba(102, 126, 234, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    background-position: 100% 100%;
+}
+
+.btn-primary:active {
+    transform: translateY(0) scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* Secondary Button - Glassmorphism */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--primary);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover {
+    background: rgba(102, 126, 234, 0.1);
+    border-color: rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+        0 12px 35px rgba(102, 126, 234, 0.2),
+        0 8px 25px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Danger Button - Modern Red Gradient */
+.btn-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 50%, #ff6b6b 100%);
+    background-size: 200% 200%;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 8px 25px rgba(255, 107, 107, 0.35),
+        0 3px 10px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    animation: gradientShift 8s ease infinite;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+        0 12px 35px rgba(255, 107, 107, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    background-position: 100% 100%;
+}
+
+/* Cancel Button - Neutral Glassmorphism */
+.btn-cancel {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--gray-600);
+    border: 1px solid rgba(156, 163, 175, 0.2);
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.btn-cancel:hover {
+    background: rgba(156, 163, 175, 0.1);
+    border-color: rgba(156, 163, 175, 0.3);
+    color: var(--gray-700);
+    transform: translateY(-1px) scale(1.01);
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced AI Task Button */
+.ai-task-button {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 2px solid;
+    border-image: linear-gradient(135deg, #667eea, #764ba2, #f093fb) 1;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ai-task-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    z-index: -1;
+    border-radius: 25px;
+}
+
+.ai-task-button:hover::before {
+    opacity: 1;
+}
+
+.ai-task-button:hover {
+    color: white;
+    background-clip: initial;
+    -webkit-background-clip: initial;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+        0 15px 40px rgba(102, 126, 234, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Modern Filter Buttons */
+.filter-btn {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.25rem;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--gray-600);
+    position: relative;
     overflow: hidden;
 }
 
-.timeline-view-container.active {
-    display: block;
-    animation: timelineSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+.filter-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 0%, rgba(102, 126, 234, 0.1) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-@keyframes timelineSlideIn {
+.filter-btn:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+    color: var(--primary);
+    background: rgba(102, 126, 234, 0.08);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+}
+
+.filter-btn:hover::after {
+    opacity: 1;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 8px 25px rgba(102, 126, 234, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Enhanced Survey Buttons */
+.survey-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.survey-btn-next {
+    background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #8b5cf6 100%);
+    background-size: 200% 200%;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 10px 30px rgba(124, 58, 237, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: gradientShift 6s ease infinite;
+}
+
+.survey-btn-next:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 
+        0 15px 40px rgba(124, 58, 237, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    background-position: 100% 100%;
+}
+
+.survey-btn-skip {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(100, 116, 139, 0.8);
+    border: 2px solid rgba(100, 116, 139, 0.2);
+}
+
+.survey-btn-skip:hover {
+    background: rgba(100, 116, 139, 0.1);
+    border-color: rgba(100, 116, 139, 0.4);
+    color: rgba(100, 116, 139, 1);
+    transform: translateY(-2px) scale(1.01);
+}
+
+/* Modern Action Buttons */
+.task-action-btn {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-500);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    font-size: 1.1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.task-action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.task-action-btn:hover::before {
+    opacity: 1;
+}
+
+.task-action-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.task-action-btn.edit:hover {
+    color: #3b82f6;
+    border-color: rgba(59, 130, 246, 0.3);
+    background: rgba(59, 130, 246, 0.1);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+}
+
+.task-action-btn.delete:hover {
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.1);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.2);
+}
+
+/* Floating Action Button Style */
+.fab-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 
+        0 8px 25px rgba(102, 126, 234, 0.4),
+        0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fab-btn:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 
+        0 15px 40px rgba(102, 126, 234, 0.5),
+        0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.fab-btn:active {
+    transform: translateY(-1px) scale(1.05);
+}
+
+/* Enhanced Theme Toggle */
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.theme-toggle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.theme-toggle:hover::before {
+    opacity: 1;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-2px) scale(1.05) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Button Loading State */
+.btn.loading {
+    pointer-events: none;
+    position: relative;
+    color: transparent !important;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 1s linear infinite;
+}
+
+/* Gradient Animation */
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Dark Mode Adjustments */
+body.dark-mode .btn-secondary {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: rgba(102, 126, 234, 0.3);
+    color: rgba(102, 126, 234, 0.9);
+}
+
+body.dark-mode .btn-secondary:hover {
+    background: rgba(102, 126, 234, 0.15);
+    color: white;
+}
+
+body.dark-mode .btn-cancel {
+    background: rgba(0, 0, 0, 0.15);
+    border-color: rgba(156, 163, 175, 0.3);
+    color: var(--gray-400);
+}
+
+body.dark-mode .btn-cancel:hover {
+    background: rgba(156, 163, 175, 0.15);
+    color: var(--gray-300);
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+        min-height: 44px;
+    }
+    
+    .fab-btn {
+        width: 56px;
+        height: 56px;
+        font-size: 1.3rem;
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
+    
+    .task-action-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+/* Focus States for Accessibility */
+.btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.task-action-btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Button Group Styles */
+.btn-group {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.btn-group .btn {
+    flex: 1;
+    min-width: 120px;
+}
+
+@media (max-width: 480px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        width: 100%;
+    }
+}
+
+/* ========== ENHANCED INTERFACE IMPROVEMENTS ========== */
+
+/* 1. SMALLER AI INTELLIGENT PRIORITIZATION BUTTON */
+.ai-task-button-container {
+    margin: 1rem auto;
+    max-width: 400px; /* Reduced from 600px */
+    transform: scale(0.85); /* Make it 15% smaller */
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ai-task-button {
+    padding: 0.75rem 1.5rem !important; /* Reduced padding */
+    font-size: 0.9rem !important; /* Smaller font */
+    border-radius: 20px !important; /* Slightly smaller radius */
+    min-height: 42px; /* Reduced height */
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1.5px solid transparent !important;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)),
+                      linear-gradient(135deg, #667eea, #764ba2, #f093fb) !important;
+    background-origin: border-box !important;
+    background-clip: padding-box, border-box !important;
+    color: #667eea !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.ai-task-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.ai-task-button:hover::before {
+    left: 100%;
+}
+
+.ai-task-button:hover {
+    transform: translateY(-2px) scale(1.03) !important;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3) !important;
+    color: white !important;
+    background-image: linear-gradient(135deg, #667eea, #764ba2) !important;
+}
+
+.beta-badge {
+    top: -10px !important; /* Adjusted for smaller button */
+    font-size: 0.6rem !important;
+    padding: 0.15rem 0.35rem !important;
+    border-radius: 6px !important;
+}
+
+/* 2. ENHANCED FILTER TABS FOR LIGHT MODE VISIBILITY */
+.task-filters-wrapper {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.95) 100%) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 16px !important;
+    padding: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.08),
+        0 1px 3px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.task-filters {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-btn {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1.5px solid rgba(79, 70, 229, 0.15) !important;
+    color: #4f46e5 !important;
+    padding: 0.75rem 1.25rem !important;
+    border-radius: 12px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 2px 8px rgba(79, 70, 229, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+.filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.filter-btn:hover::before {
+    left: 100%;
+}
+
+.filter-btn:hover {
+    background: rgba(79, 70, 229, 0.1) !important;
+    border-color: rgba(79, 70, 229, 0.3) !important;
+    color: #3730a3 !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 
+        0 6px 20px rgba(79, 70, 229, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 
+        0 8px 25px rgba(79, 70, 229, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Dark Mode Filter Adjustments */
+body.dark-mode .task-filters-wrapper {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%) !important;
+    border-color: rgba(75, 85, 99, 0.3) !important;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .filter-btn {
+    background: rgba(55, 65, 81, 0.8) !important;
+    border-color: rgba(79, 70, 229, 0.3) !important;
+    color: rgba(79, 70, 229, 0.9) !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .filter-btn:hover {
+    background: rgba(79, 70, 229, 0.2) !important;
+    color: rgba(167, 139, 250, 1) !important;
+}
+
+/* 3. ENHANCED TASK CONTAINER */
+.task-list {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.95) 100%) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 20px !important;
+    padding: 2rem !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 2px 16px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.task-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.02) 0%, 
+        rgba(139, 92, 246, 0.01) 50%,
+        rgba(6, 182, 212, 0.02) 100%);
+    z-index: -1;
+    border-radius: 20px;
+}
+
+/* Dark Mode Task List */
+body.dark-mode .task-list {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%) !important;
+    border-color: rgba(75, 85, 99, 0.3) !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 4. ENHANCED TASK ITEMS */
+.task-item {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 16px !important;
+    padding: 1.5rem !important;
+    margin-bottom: 1rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 2px 12px rgba(0, 0, 0, 0.06),
+        0 1px 3px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.task-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.05), transparent);
+    transition: left 0.6s ease;
+}
+
+.task-item:hover::before {
+    left: 100%;
+}
+
+.task-item:hover {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: rgba(79, 70, 229, 0.2) !important;
+    transform: translateY(-3px) scale(1.01) !important;
+    box-shadow: 
+        0 8px 32px rgba(79, 70, 229, 0.15),
+        0 4px 20px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Dark Mode Task Items */
+body.dark-mode .task-item {
+    background: rgba(55, 65, 81, 0.8) !important;
+    border-color: rgba(75, 85, 99, 0.3) !important;
+    box-shadow: 
+        0 2px 12px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .task-item:hover {
+    background: rgba(55, 65, 81, 0.95) !important;
+    border-color: rgba(79, 70, 229, 0.4) !important;
+    box-shadow: 
+        0 8px 32px rgba(79, 70, 229, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+/* 5. ENHANCED HEADER */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%) !important;
+    background-size: 200% 200% !important;
+    animation: headerGradientShift 8s ease infinite !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 
+        0 4px 32px rgba(102, 126, 234, 0.2),
+        0 2px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 6. ENHANCED SIDEBAR */
+.sidebar {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+    backdrop-filter: blur(25px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 24px !important;
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.12),
+        0 4px 20px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Dark Mode Sidebar */
+body.dark-mode .sidebar {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.08) 100%) !important;
+    border-color: rgba(75, 85, 99, 0.4) !important;
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 7. ENHANCED DASHBOARD CARDS */
+.stat-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 20px !important;
+    padding: 2rem !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.08),
+        0 1px 3px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.02) 0%, 
+        rgba(139, 92, 246, 0.01) 50%,
+        rgba(16, 185, 129, 0.02) 100%);
+    z-index: -1;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px) scale(1.02) !important;
+    box-shadow: 
+        0 12px 40px rgba(79, 70, 229, 0.15),
+        0 8px 25px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Dark Mode Dashboard Cards */
+body.dark-mode .stat-card {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%) !important;
+    border-color: rgba(75, 85, 99, 0.3) !important;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 8. ENHANCED SEARCH BAR */
+.search-container {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.search-input {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1.5px solid rgba(79, 70, 229, 0.15) !important;
+    border-radius: 16px !important;
+    padding: 1rem 1rem 1rem 3rem !important;
+    font-size: 1rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.search-input:focus {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: rgba(79, 70, 229, 0.4) !important;
+    box-shadow: 
+        0 0 0 4px rgba(79, 70, 229, 0.1),
+        0 8px 32px rgba(79, 70, 229, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    transform: scale(1.02) !important;
+}
+
+/* Dark Mode Search */
+body.dark-mode .search-input {
+    background: rgba(55, 65, 81, 0.9) !important;
+    border-color: rgba(79, 70, 229, 0.3) !important;
+    color: var(--gray-200) !important;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 9. FLOATING SCROLL INDICATORS */
+.scroll-indicator {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.9) 0%, rgba(139, 92, 246, 0.9) 100%) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 25px !important;
+    padding: 0.75rem 1.25rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    box-shadow: 
+        0 8px 25px rgba(79, 70, 229, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 10. ENHANCED ANIMATIONS */
+@keyframes headerGradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes subtleFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
+}
+
+@keyframes gentlePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+/* Apply subtle animations */
+.stat-card,
+.task-item,
+.sidebar {
+    animation: subtleFloat 6s ease-in-out infinite;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0s; }
+.stat-card:nth-child(2) { animation-delay: 1s; }
+.stat-card:nth-child(3) { animation-delay: 2s; }
+.stat-card:nth-child(4) { animation-delay: 3s; }
+
+/* 11. MOBILE OPTIMIZATIONS */
+@media (max-width: 768px) {
+    .ai-task-button-container {
+        transform: scale(0.75); /* Even smaller on mobile */
+        margin: 0.5rem auto;
+    }
+    
+    .task-filters-wrapper {
+        padding: 1rem !important;
+        border-radius: 12px !important;
+    }
+    
+    .filter-btn {
+        padding: 0.6rem 1rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .task-list {
+        padding: 1.5rem !important;
+        border-radius: 16px !important;
+    }
+    
+    .task-item {
+        padding: 1.25rem !important;
+        border-radius: 12px !important;
+    }
+    
+    .stat-card {
+        padding: 1.5rem !important;
+        border-radius: 16px !important;
+    }
+}
+
+/* 12. PERFORMANCE OPTIMIZATIONS */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.task-list-container {
+    transform: translateZ(0); /* Force GPU acceleration */
+    will-change: scroll-position;
+}
+
+.task-item,
+.stat-card,
+.filter-btn {
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* ========== FOCUSED DESIGN IMPROVEMENTS ========== */
+
+/* 1. ENHANCED STAT CARDS DESIGN */
+.stat-card {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(248, 250, 252, 0.9) 100%) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 24px !important;
+    padding: 2rem !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 2px 16px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Floating gradient orb effect */
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, 
+        rgba(79, 70, 229, 0.1) 0%, 
+        rgba(139, 92, 246, 0.05) 30%,
+        transparent 70%);
+    opacity: 0;
+    transition: all 0.6s ease;
+    animation: orbFloat 8s ease-in-out infinite;
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+    box-shadow: 
+        0 20px 60px rgba(79, 70, 229, 0.15),
+        0 12px 40px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(79, 70, 229, 0.2) !important;
+}
+
+/* Enhanced stat header */
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem !important;
+    position: relative;
+    z-index: 2;
+}
+
+.stat-title {
+    font-size: 1rem !important;
+    color: var(--gray-600) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    position: relative !important;
+}
+
+/* Enhanced stat icons with gradient backgrounds */
+.stat-icon {
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.5rem !important;
+    color: white !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.stat-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.stat-icon:hover::before {
+    left: 100%;
+}
+
+.stat-icon.total {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+}
+
+.stat-icon.completed {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+}
+
+.stat-icon.pending {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+}
+
+.stat-icon.overdue {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+}
+
+/* Enhanced stat values */
+.stat-value {
+    font-size: 3rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 0.75rem !important;
+    background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-600) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    position: relative !important;
+    z-index: 2 !important;
+    line-height: 1 !important;
+}
+
+/* Enhanced stat change indicators */
+.stat-change {
+    display: flex !important;
+    align-items: center !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid transparent !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.stat-change.positive {
+    background: rgba(16, 185, 129, 0.1) !important;
+    color: #059669 !important;
+    border-color: rgba(16, 185, 129, 0.2) !important;
+}
+
+.stat-change.negative {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #dc2626 !important;
+    border-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+.stat-change i {
+    margin-right: 0.5rem !important;
+    font-size: 0.8rem !important;
+}
+
+/* Dark mode stat cards */
+body.dark-mode .stat-card {
+    background: linear-gradient(135deg, 
+        rgba(31, 41, 55, 0.95) 0%, 
+        rgba(15, 23, 42, 0.9) 100%) !important;
+    border-color: rgba(75, 85, 99, 0.4) !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .stat-card::before {
+    background: radial-gradient(circle, 
+        rgba(79, 70, 229, 0.15) 0%, 
+        rgba(139, 92, 246, 0.08) 30%,
+        transparent 70%);
+}
+
+body.dark-mode .stat-value {
+    background: linear-gradient(135deg, var(--gray-200) 0%, var(--gray-400) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+body.dark-mode .stat-title {
+    color: var(--gray-400) !important;
+}
+
+/* 2. SHORTER HEADER GRADIENT BACKGROUND */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%) !important;
+    background-size: 200% 200% !important;
+    animation: headerGradientShift 6s ease infinite !important;
+    padding: 1rem 0 !important; /* Reduced from 0.75rem */
+    min-height: 70px !important; /* Reduced height */
+    display: flex !important;
+    align-items: center !important;
+}
+
+header .container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 0 2rem !important; /* Added horizontal padding */
+}
+
+.logo {
+    font-size: 1.6rem !important; /* Slightly smaller */
+    font-weight: 700 !important;
+    color: white !important;
+    display: flex !important;
+    align-items: center !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    letter-spacing: -0.5px !important;
+}
+
+.logo i {
+    margin-right: 0.75rem !important;
+    font-size: 1.8rem !important; /* Slightly smaller */
+    background: white !important;
+    color: var(--primary) !important;
+    width: 40px !important; /* Reduced from 42px */
+    height: 40px !important; /* Reduced from 42px */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Header actions positioning */
+.header-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important; /* Reduced gap */
+}
+
+.theme-toggle, .settings-btn {
+    width: 38px !important; /* Slightly smaller */
+    height: 38px !important;
+    border-radius: 10px !important;
+}
+
+/* ANIMATIONS */
+@keyframes orbFloat {
+    0%, 100% { transform: translate(0%, 0%) rotate(0deg); }
+    25% { transform: translate(10%, -10%) rotate(90deg); }
+    50% { transform: translate(-5%, 5%) rotate(180deg); }
+    75% { transform: translate(-10%, -5%) rotate(270deg); }
+}
+
+@keyframes headerGradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes completedGlow {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.4; }
+}
+
+@keyframes pendingGlow {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.4; }
+}
+
+@keyframes allGlow {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.4; }
+}
+
+@keyframes overdueGlow {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.4; }
+}
+
+@keyframes badgeIconSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .stat-card {
+        padding: 1.5rem !important;
+        border-radius: 20px !important;
+    }
+    
+    .stat-icon {
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 1.3rem !important;
+    }
+    
+    .stat-value {
+        font-size: 2.5rem !important;
+    }
+    
+    header {
+        padding: 0.75rem 0 !important;
+        min-height: 65px !important;
+    }
+    
+    .logo {
+        font-size: 1.4rem !important;
+    }
+    
+    .logo i {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 1.6rem !important;
+    }
+    
+    .filter-btn.completed-expanded,
+    .filter-btn.pending-expanded,
+    .filter-btn.all-expanded,
+    .filter-btn.overdue-expanded {
+        transform: scaleX(1.2) !important; /* Less expansion on mobile */
+        padding-right: 3rem !important;
+    }
+    
+    .filter-btn.pushed-right,
+    .filter-btn.pushed-left {
+        transform: translateX(25px) !important; /* Less push on mobile */
+    }
+}
+
+/* ===== REMOVE FILTER CONTAINER BACKGROUND ===== */
+.task-filters-wrapper {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-bottom: 2rem !important;
+    border-radius: 0 !important;
+}
+
+/* Make sure tabs float independently */
+.task-filters {
+    background: none !important;
+    padding: 0 !important;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+}
+
+/* Ensure individual tabs have their own floating appearance */
+.filter-btn {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 20px !important;
+    padding: 1rem 2rem !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.12),
+        0 4px 16px rgba(0, 0, 0, 0.08) !important;
+    position: relative;
+    isolation: isolate;
+}
+
+/* Remove any parent container styling that might be causing the background */
+.task-filters-wrapper::before,
+.task-filters-wrapper::after,
+.task-filters::before,
+.task-filters::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Dark mode - ensure no background */
+body.dark-mode .task-filters-wrapper {
+    background: transparent !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* ===== ACTIVE TAB STATES WITH COLORS ===== */
+
+/* Default tab state (already floating) */
+.filter-btn {
+    color: rgba(255, 255, 255, 0.7) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* All Tasks - Blue Theme */
+.filter-btn[data-filter="all"].active,
+.filter-btn.active[data-filter="all"] {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(59, 130, 246, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Pending Tasks - Amber/Orange Theme */
+.filter-btn[data-filter="pending"].active,
+.filter-btn.active[data-filter="pending"] {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(245, 158, 11, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Completed Tasks - Green Theme */
+.filter-btn[data-filter="completed"].active,
+.filter-btn.active[data-filter="completed"] {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(16, 185, 129, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Overdue Tasks - Red Theme */
+.filter-btn[data-filter="overdue"].active,
+.filter-btn.active[data-filter="overdue"] {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(239, 68, 68, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Due Today - Purple Theme */
+.filter-btn[data-filter="today"].active,
+.filter-btn.active[data-filter="today"] {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(139, 92, 246, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Generic active class (fallback) */
+.filter-btn.active {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(79, 70, 229, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Hover effects for inactive tabs */
+.filter-btn:not(.active):hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.15),
+        0 8px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Active state glow effects */
+.filter-btn.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    border-radius: inherit;
+    opacity: 0.3;
+    filter: blur(8px);
+    z-index: -1;
+    animation: activeGlow 2s ease-in-out infinite alternate;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .filter-btn {
+    color: rgba(255, 255, 255, 0.6) !important;
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-color: rgba(75, 85, 99, 0.3) !important;
+}
+
+body.dark-mode .filter-btn:not(.active):hover {
+    background: rgba(0, 0, 0, 0.3) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Glow animation */
+@keyframes activeGlow {
+    0% { opacity: 0.3; transform: scale(1); }
+    100% { opacity: 0.5; transform: scale(1.02); }
+}
+
+/* ===== IMMEDIATE TAB SWITCHING WITH HOVER PREVIEWS ===== */
+
+/* Hover Preview Colors (shows what color tab will be when active) */
+.filter-btn[data-filter="all"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.8) 0%, rgba(37, 99, 235, 0.8) 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(59, 130, 246, 0.3),
+        0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+}
+
+.filter-btn[data-filter="pending"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.8) 0%, rgba(217, 119, 6, 0.8) 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(245, 158, 11, 0.3),
+        0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+}
+
+.filter-btn[data-filter="completed"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.8) 0%, rgba(5, 150, 105, 0.8) 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(16, 185, 129, 0.3),
+        0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+}
+
+.filter-btn[data-filter="overdue"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.8) 0%, rgba(220, 38, 38, 0.8) 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(239, 68, 68, 0.3),
+        0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+}
+
+.filter-btn[data-filter="today"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.8) 0%, rgba(124, 58, 237, 0.8) 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(139, 92, 246, 0.3),
+        0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+}
+
+/* ACTIVE STATES - Override hover when clicked */
+.filter-btn.active {
+    transform: translateY(-2px) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Immediate switching - active overrides hover */
+.filter-btn[data-filter="all"].active,
+.filter-btn.active[data-filter="all"] {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(59, 130, 246, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+.filter-btn[data-filter="pending"].active,
+.filter-btn.active[data-filter="pending"] {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(245, 158, 11, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+.filter-btn[data-filter="completed"].active,
+.filter-btn.active[data-filter="completed"] {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(16, 185, 129, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+.filter-btn[data-filter="overdue"].active,
+.filter-btn.active[data-filter="overdue"] {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(239, 68, 68, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+.filter-btn[data-filter="today"].active,
+.filter-btn.active[data-filter="today"] {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(139, 92, 246, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* ===== SMOOTH TASK CONTAINER TRANSITIONS ===== */
+
+/* Task container smooth transitions */
+.tasks-container {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.task-list-wrapper {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+}
+
+.task-list {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+}
+
+/* Smooth task item transitions when filtering */
+.task-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+/* Hiding animation for filtered out tasks */
+.task-item.hiding {
+    opacity: 0 !important;
+    transform: translateY(-20px) scale(0.95) !important;
+    pointer-events: none !important;
+    margin-bottom: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Showing animation for filtered in tasks */
+.task-item.showing {
+    animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+/* Fade transition for task container content */
+.task-list.filtering {
+    opacity: 0.6 !important;
+    transform: translateY(10px) !important;
+    pointer-events: none !important;
+}
+
+.task-list.filtering-complete {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: all !important;
+}
+
+/* Empty state smooth transition */
+.empty-state {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.empty-state.hiding {
+    opacity: 0 !important;
+    transform: translateY(-20px) !important;
+}
+
+.empty-state.showing {
+    animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+/* Smooth dashboard stats transitions */
+.dashboard {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.stat-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.stat-value {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Keyframe animations */
+@keyframes slideInUp {
     from {
         opacity: 0;
         transform: translateY(30px) scale(0.95);
@@ -13844,6 +15506,896 @@ body.compact-mode .main-content {
         transform: translateY(0) scale(1);
     }
 }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading state for smooth transitions */
+.task-list.loading {
+    position: relative !important;
+}
+
+.task-list.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        transparent 100%);
+    animation: shimmerLoading 1.5s ease-in-out infinite;
+    z-index: 1;
+    border-radius: inherit;
+}
+
+@keyframes shimmerLoading {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ===== FIX: ACTIVE STATE OVERRIDES HOVER ===== */
+
+/* Base hover states (lower priority) */
+.filter-btn:not(.active):hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+}
+
+/* Color preview hovers (when NOT active) */
+.filter-btn[data-filter="all"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.7) 0%, rgba(37, 99, 235, 0.7) 100%) !important;
+    color: white !important;
+}
+
+.filter-btn[data-filter="pending"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.7) 0%, rgba(217, 119, 6, 0.7) 100%) !important;
+    color: white !important;
+}
+
+.filter-btn[data-filter="completed"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.7) 0%, rgba(5, 150, 105, 0.7) 100%) !important;
+    color: white !important;
+}
+
+.filter-btn[data-filter="overdue"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.7) 0%, rgba(220, 38, 38, 0.7) 100%) !important;
+    color: white !important;
+}
+
+.filter-btn[data-filter="today"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.7) 0%, rgba(124, 58, 237, 0.7) 100%) !important;
+    color: white !important;
+}
+
+/* ===== ACTIVE STATES (HIGHEST PRIORITY) ===== */
+/* These will override hover states */
+
+.filter-btn.active,
+.filter-btn.active:hover,
+.filter-btn.active:focus,
+.filter-btn[data-filter="all"].active,
+.filter-btn[data-filter="all"].active:hover,
+.filter-btn[data-filter="all"].active:focus {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 12px 40px rgba(59, 130, 246, 0.5),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+.filter-btn[data-filter="pending"].active,
+.filter-btn[data-filter="pending"].active:hover,
+.filter-btn[data-filter="pending"].active:focus {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 12px 40px rgba(245, 158, 11, 0.5),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+.filter-btn[data-filter="completed"].active,
+.filter-btn[data-filter="completed"].active:hover,
+.filter-btn[data-filter="completed"].active:focus {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 12px 40px rgba(16, 185, 129, 0.5),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+.filter-btn[data-filter="overdue"].active,
+.filter-btn[data-filter="overdue"].active:hover,
+.filter-btn[data-filter="overdue"].active:focus {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 12px 40px rgba(239, 68, 68, 0.5),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+.filter-btn[data-filter="today"].active,
+.filter-btn[data-filter="today"].active:hover,
+.filter-btn[data-filter="today"].active:focus {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 12px 40px rgba(139, 92, 246, 0.5),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* ===== ENHANCED ACTIVE GLOW WHEN HOVERED ===== */
+.filter-btn.active:hover {
+    transform: translateY(-3px) scale(1.02) !important;
+    filter: brightness(1.1) !important;
+}
+
+/* Instant transition for clicking */
+.filter-btn {
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Ensure active state shows immediately on click */
+.filter-btn.active {
+    transition: all 0.1s ease !important;
+}
+
+/* Force active state over any other state */
+.filter-btn.active {
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* Additional specificity boost for active states */
+body .filter-btn.active,
+body .filter-btn.active:hover,
+body .filter-btn.active:focus {
+    opacity: 1 !important;
+    pointer-events: all !important;
+}
+
+/* ===== TAB EXPANSION HIGHLIGHT EFFECTS ===== */
+
+/* Base expanding state - applies to any expanding tab */
+.filter-btn.expanding {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    color: white !important;
+    box-shadow: 
+        0 0 30px rgba(255, 255, 255, 0.4),
+        0 12px 40px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    animation: expandGlow 0.6s ease-out !important;
+    z-index: 20 !important;
+}
+
+/* Specific expansion highlights by tab type */
+.filter-btn[data-filter="completed"].expanding,
+.filter-btn.completed-expanding {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.9) 0%, rgba(5, 150, 105, 0.8) 100%) !important;
+    box-shadow: 
+        0 0 40px rgba(16, 185, 129, 0.6),
+        0 12px 40px rgba(16, 185, 129, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    animation: completedExpandGlow 0.8s ease-out !important;
+}
+
+.filter-btn[data-filter="pending"].expanding,
+.filter-btn.pending-expanding {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(217, 119, 6, 0.8) 100%) !important;
+    box-shadow: 
+        0 0 40px rgba(245, 158, 11, 0.6),
+        0 12px 40px rgba(245, 158, 11, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    animation: pendingExpandGlow 0.8s ease-out !important;
+}
+
+.filter-btn[data-filter="all"].expanding,
+.filter-btn.all-expanding {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(37, 99, 235, 0.8) 100%) !important;
+    box-shadow: 
+        0 0 40px rgba(59, 130, 246, 0.6),
+        0 12px 40px rgba(59, 130, 246, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    animation: allExpandGlow 0.8s ease-out !important;
+}
+
+.filter-btn[data-filter="overdue"].expanding,
+.filter-btn.overdue-expanding {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(220, 38, 38, 0.8) 100%) !important;
+    box-shadow: 
+        0 0 40px rgba(239, 68, 68, 0.6),
+        0 12px 40px rgba(239, 68, 68, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    animation: overdueExpandGlow 0.8s ease-out !important;
+}
+
+.filter-btn[data-filter="today"].expanding,
+.filter-btn.today-expanding {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.9) 0%, rgba(124, 58, 237, 0.8) 100%) !important;
+    box-shadow: 
+        0 0 40px rgba(139, 92, 246, 0.6),
+        0 12px 40px rgba(139, 92, 246, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    animation: todayExpandGlow 0.8s ease-out !important;
+}
+
+/* Fade out highlight when expansion ends */
+.filter-btn.expanding-complete {
+    animation: fadeBackToNormal 0.6s ease-out forwards !important;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Expansion glow animations */
+@keyframes expandGlow {
+    0% {
+        box-shadow: 
+            0 0 0px rgba(255, 255, 255, 0),
+            0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px) scale(1);
+    }
+    50% {
+        box-shadow: 
+            0 0 50px rgba(255, 255, 255, 0.6),
+            0 16px 50px rgba(0, 0, 0, 0.25);
+        transform: translateY(-6px) scale(1.08);
+    }
+    100% {
+        box-shadow: 
+            0 0 30px rgba(255, 255, 255, 0.4),
+            0 12px 40px rgba(0, 0, 0, 0.2);
+        transform: translateY(-4px) scale(1.05);
+    }
+}
+
+@keyframes completedExpandGlow {
+    0% {
+        box-shadow: 0 0 0px rgba(16, 185, 129, 0);
+        transform: translateY(-2px) scale(1);
+    }
+    50% {
+        box-shadow: 
+            0 0 60px rgba(16, 185, 129, 0.8),
+            0 16px 50px rgba(16, 185, 129, 0.4);
+        transform: translateY(-6px) scale(1.08);
+    }
+    100% {
+        box-shadow: 
+            0 0 40px rgba(16, 185, 129, 0.6),
+            0 12px 40px rgba(16, 185, 129, 0.4);
+        transform: translateY(-4px) scale(1.05);
+    }
+}
+
+@keyframes pendingExpandGlow {
+    0% {
+        box-shadow: 0 0 0px rgba(245, 158, 11, 0);
+        transform: translateY(-2px) scale(1);
+    }
+    50% {
+        box-shadow: 
+            0 0 60px rgba(245, 158, 11, 0.8),
+            0 16px 50px rgba(245, 158, 11, 0.4);
+        transform: translateY(-6px) scale(1.08);
+    }
+    100% {
+        box-shadow: 
+            0 0 40px rgba(245, 158, 11, 0.6),
+            0 12px 40px rgba(245, 158, 11, 0.4);
+        transform: translateY(-4px) scale(1.05);
+    }
+}
+
+@keyframes allExpandGlow {
+    0% {
+        box-shadow: 0 0 0px rgba(59, 130, 246, 0);
+        transform: translateY(-2px) scale(1);
+    }
+    50% {
+        box-shadow: 
+            0 0 60px rgba(59, 130, 246, 0.8),
+            0 16px 50px rgba(59, 130, 246, 0.4);
+        transform: translateY(-6px) scale(1.08);
+    }
+    100% {
+        box-shadow: 
+            0 0 40px rgba(59, 130, 246, 0.6),
+            0 12px 40px rgba(59, 130, 246, 0.4);
+        transform: translateY(-4px) scale(1.05);
+    }
+}
+
+@keyframes overdueExpandGlow {
+    0% {
+        box-shadow: 0 0 0px rgba(239, 68, 68, 0);
+        transform: translateY(-2px) scale(1);
+    }
+    50% {
+        box-shadow: 
+            0 0 60px rgba(239, 68, 68, 0.8),
+            0 16px 50px rgba(239, 68, 68, 0.4);
+        transform: translateY(-6px) scale(1.08);
+    }
+    100% {
+        box-shadow: 
+            0 0 40px rgba(239, 68, 68, 0.6),
+            0 12px 40px rgba(239, 68, 68, 0.4);
+        transform: translateY(-4px) scale(1.05);
+    }
+}
+
+@keyframes todayExpandGlow {
+    0% {
+        box-shadow: 0 0 0px rgba(139, 92, 246, 0);
+        transform: translateY(-2px) scale(1);
+    }
+    50% {
+        box-shadow: 
+            0 0 60px rgba(139, 92, 246, 0.8),
+            0 16px 50px rgba(139, 92, 246, 0.4);
+        transform: translateY(-6px) scale(1.08);
+    }
+    100% {
+        box-shadow: 
+            0 0 40px rgba(139, 92, 246, 0.6),
+            0 12px 40px rgba(139, 92, 246, 0.4);
+        transform: translateY(-4px) scale(1.05);
+    }
+}
+
+/* Fade back to normal state */
+@keyframes fadeBackToNormal {
+    0% {
+        box-shadow: 
+            0 0 40px rgba(255, 255, 255, 0.6),
+            0 12px 40px rgba(0, 0, 0, 0.2);
+        transform: translateY(-4px) scale(1.05);
+    }
+    100% {
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.12),
+            0 4px 16px rgba(0, 0, 0, 0.08);
+        transform: translateY(0) scale(1);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* Pulse effect during expansion for extra attention */
+.filter-btn.expanding::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: inherit;
+    border-radius: inherit;
+    opacity: 0.3;
+    z-index: -1;
+    animation: expandPulse 1s ease-in-out infinite;
+}
+
+@keyframes expandPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
+/* Override active/hover states during expansion */
+.filter-btn.expanding,
+.filter-btn.expanding:hover,
+.filter-btn.expanding:focus {
+    /* Expansion styles take priority over normal states */
+    z-index: 25 !important;
+}
+
+/* Clean transition back to normal state */
+.filter-btn:not(.expanding):not(.expanding-complete) {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ===== IMMEDIATE TAB EXPANSION HIGHLIGHTS ===== */
+
+/* COMPLETED TAB - GREEN HIGHLIGHT when task marked complete */
+.filter-btn[data-filter="completed"].expanding,
+.filter-btn.completed-expanding,
+.filter-btn.expanding.completed {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 
+        0 0 50px rgba(16, 185, 129, 0.8),
+        0 0 30px rgba(16, 185, 129, 0.6),
+        0 12px 40px rgba(16, 185, 129, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+    transition: all 0.2s ease !important;
+    z-index: 25 !important;
+    animation: greenPulseGlow 1s ease-in-out !important;
+}
+
+/* PENDING TAB - YELLOW/ORANGE HIGHLIGHT when task unmarked/pending */
+.filter-btn[data-filter="pending"].expanding,
+.filter-btn.pending-expanding,
+.filter-btn.expanding.pending {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 
+        0 0 50px rgba(245, 158, 11, 0.8),
+        0 0 30px rgba(245, 158, 11, 0.6),
+        0 12px 40px rgba(245, 158, 11, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+    transition: all 0.2s ease !important;
+    z-index: 25 !important;
+    animation: orangePulseGlow 1s ease-in-out !important;
+}
+
+/* DUE TODAY TAB - PURPLE HIGHLIGHT when switched to */
+.filter-btn[data-filter="today"].expanding,
+.filter-btn.today-expanding,
+.filter-btn.expanding.today {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 
+        0 0 50px rgba(139, 92, 246, 0.8),
+        0 0 30px rgba(139, 92, 246, 0.6),
+        0 12px 40px rgba(139, 92, 246, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+    transition: all 0.2s ease !important;
+    z-index: 25 !important;
+    animation: purplePulseGlow 1s ease-in-out !important;
+}
+
+/* ALL TAB - BLUE HIGHLIGHT when switched to */
+.filter-btn[data-filter="all"].expanding,
+.filter-btn.all-expanding,
+.filter-btn.expanding.all {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 
+        0 0 50px rgba(59, 130, 246, 0.8),
+        0 0 30px rgba(59, 130, 246, 0.6),
+        0 12px 40px rgba(59, 130, 246, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+    transition: all 0.2s ease !important;
+    z-index: 25 !important;
+    animation: bluePulseGlow 1s ease-in-out !important;
+}
+
+/* OVERDUE TAB - RED HIGHLIGHT when switched to */
+.filter-btn[data-filter="overdue"].expanding,
+.filter-btn.overdue-expanding,
+.filter-btn.expanding.overdue {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 
+        0 0 50px rgba(239, 68, 68, 0.8),
+        0 0 30px rgba(239, 68, 68, 0.6),
+        0 12px 40px rgba(239, 68, 68, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+    transition: all 0.2s ease !important;
+    z-index: 25 !important;
+    animation: redPulseGlow 1s ease-in-out !important;
+}
+
+/* ===== PULSE GLOW ANIMATIONS ===== */
+
+@keyframes greenPulseGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 50px rgba(16, 185, 129, 0.8),
+            0 12px 40px rgba(16, 185, 129, 0.4);
+    }
+    50% {
+        box-shadow: 
+            0 0 80px rgba(16, 185, 129, 1),
+            0 0 60px rgba(16, 185, 129, 0.8),
+            0 12px 40px rgba(16, 185, 129, 0.6);
+        transform: translateY(-5px) scale(1.08);
+    }
+}
+
+@keyframes orangePulseGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 50px rgba(245, 158, 11, 0.8),
+            0 12px 40px rgba(245, 158, 11, 0.4);
+    }
+    50% {
+        box-shadow: 
+            0 0 80px rgba(245, 158, 11, 1),
+            0 0 60px rgba(245, 158, 11, 0.8),
+            0 12px 40px rgba(245, 158, 11, 0.6);
+        transform: translateY(-5px) scale(1.08);
+    }
+}
+
+@keyframes purplePulseGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 50px rgba(139, 92, 246, 0.8),
+            0 12px 40px rgba(139, 92, 246, 0.4);
+    }
+    50% {
+        box-shadow: 
+            0 0 80px rgba(139, 92, 246, 1),
+            0 0 60px rgba(139, 92, 246, 0.8),
+            0 12px 40px rgba(139, 92, 246, 0.6);
+        transform: translateY(-5px) scale(1.08);
+    }
+}
+
+@keyframes bluePulseGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 50px rgba(59, 130, 246, 0.8),
+            0 12px 40px rgba(59, 130, 246, 0.4);
+    }
+    50% {
+        box-shadow: 
+            0 0 80px rgba(59, 130, 246, 1),
+            0 0 60px rgba(59, 130, 246, 0.8),
+            0 12px 40px rgba(59, 130, 246, 0.6);
+        transform: translateY(-5px) scale(1.08);
+    }
+}
+
+@keyframes redPulseGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 50px rgba(239, 68, 68, 0.8),
+            0 12px 40px rgba(239, 68, 68, 0.4);
+    }
+    50% {
+        box-shadow: 
+            0 0 80px rgba(239, 68, 68, 1),
+            0 0 60px rgba(239, 68, 68, 0.8),
+            0 12px 40px rgba(239, 68, 68, 0.6);
+        transform: translateY(-5px) scale(1.08);
+    }
+}
+
+/* ===== EXPANDING CLASSES FOR SPECIFIC ACTIONS ===== */
+
+/* When task is completed - GREEN highlight */
+.tab-highlight-completed {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    box-shadow: 
+        0 0 60px rgba(16, 185, 129, 0.9),
+        0 0 40px rgba(16, 185, 129, 0.7) !important;
+    animation: greenFlash 0.8s ease-out !important;
+    z-index: 30 !important;
+}
+
+/* When task is pending/unmarked - ORANGE highlight */
+.tab-highlight-pending {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: white !important;
+    box-shadow: 
+        0 0 60px rgba(245, 158, 11, 0.9),
+        0 0 40px rgba(245, 158, 11, 0.7) !important;
+    animation: orangeFlash 0.8s ease-out !important;
+    z-index: 30 !important;
+}
+
+/* When due today tab is active - PURPLE highlight */
+.tab-highlight-today {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    color: white !important;
+    box-shadow: 
+        0 0 60px rgba(139, 92, 246, 0.9),
+        0 0 40px rgba(139, 92, 246, 0.7) !important;
+    animation: purpleFlash 0.8s ease-out !important;
+    z-index: 30 !important;
+}
+
+/* ===== FLASH ANIMATIONS ===== */
+
+@keyframes greenFlash {
+    0% { 
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0px rgba(16, 185, 129, 0);
+    }
+    30% { 
+        transform: translateY(-6px) scale(1.1);
+        box-shadow: 
+            0 0 80px rgba(16, 185, 129, 1),
+            0 0 60px rgba(16, 185, 129, 0.8);
+    }
+    100% { 
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 
+            0 0 40px rgba(16, 185, 129, 0.7);
+    }
+}
+
+@keyframes orangeFlash {
+    0% { 
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0px rgba(245, 158, 11, 0);
+    }
+    30% { 
+        transform: translateY(-6px) scale(1.1);
+        box-shadow: 
+            0 0 80px rgba(245, 158, 11, 1),
+            0 0 60px rgba(245, 158, 11, 0.8);
+    }
+    100% { 
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 
+            0 0 40px rgba(245, 158, 11, 0.7);
+    }
+}
+
+@keyframes purpleFlash {
+    0% { 
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0px rgba(139, 92, 246, 0);
+    }
+    30% { 
+        transform: translateY(-6px) scale(1.1);
+        box-shadow: 
+            0 0 80px rgba(139, 92, 246, 1),
+            0 0 60px rgba(139, 92, 246, 0.8);
+    }
+    100% { 
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 
+            0 0 40px rgba(139, 92, 246, 0.7);
+    }
+}
+
+/* ===== REMOVE HIGHLIGHT AFTER DELAY ===== */
+.tab-highlight-fade-out {
+    animation: fadeBackToNormal 1s ease-out forwards !important;
+}
+
+@keyframes fadeBackToNormal {
+    to {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.12),
+            0 4px 16px rgba(0, 0, 0, 0.08) !important;
+        transform: translateY(0) scale(1) !important;
+    }
+}
+
+.tab-highlight-completed {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    transition: all 0.3s ease;
+}
+
+.tab-highlight-pending {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    transition: all 0.3s ease;
+}
+
+.tab-highlight-today {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    transition: all 0.3s ease;
+}
+
+.tab-highlight-fade-out {
+    opacity: 0.7;
+    transform: scale(1);
+    transition: all 0.4s ease;
+}
+
+/* Nuclear option - style everything */
+.tab-highlight-completed,
+.tab-highlight-completed:before,
+.tab-highlight-completed:after {
+    background: #10b981 !important;
+    background-color: #10b981 !important;
+    background-image: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3), 0 4px 15px rgba(16, 185, 129, 0.6) !important;
+    transform: scale(1.08) translateY(-2px) !important;
+    z-index: 100 !important;
+    position: relative !important;
+}
+
+.tab-highlight-pending,
+.tab-highlight-pending:before,
+.tab-highlight-pending:after {
+    background: #f59e0b !important;
+    background-color: #f59e0b !important;
+    background-image: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: white !important;
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3), 0 4px 15px rgba(245, 158, 11, 0.6) !important;
+    transform: scale(1.08) translateY(-2px) !important;
+    z-index: 100 !important;
+    position: relative !important;
+}
+
+.tab-highlight-today,
+.tab-highlight-today:before,
+.tab-highlight-today:after {
+    background: #3b82f6 !important;
+    background-color: #3b82f6 !important;
+    background-image: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: white !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3), 0 4px 15px rgba(59, 130, 246, 0.6) !important;
+    transform: scale(1.08) translateY(-2px) !important;
+    z-index: 100 !important;
+    position: relative !important;
+}
+
+/* Style all child elements */
+.tab-highlight-completed *,
+.tab-highlight-pending *,
+.tab-highlight-today * {
+    color: white !important;
+    text-shadow: none !important;
+}
+
+/* ===== ENHANCED LIGHT MODE TAB VISIBILITY ===== */
+
+/* Base tabs in light mode - much better contrast */
+body:not(.dark-mode) .filter-btn {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 2px solid rgba(79, 70, 229, 0.2) !important;
+    color: #4f46e5 !important;
+    font-weight: 700 !important;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.1),
+        0 2px 8px rgba(79, 70, 229, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Light mode hover states */
+body:not(.dark-mode) .filter-btn:not(.active):hover {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: rgba(79, 70, 229, 0.4) !important;
+    color: #3730a3 !important;
+    transform: translateY(-3px) scale(1.05) !important;
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        0 4px 15px rgba(79, 70, 229, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Light mode active states with better visibility */
+body:not(.dark-mode) .filter-btn.active,
+body:not(.dark-mode) .filter-btn[data-filter="all"].active {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%) !important;
+    color: white !important;
+    border-color: #1e40af !important;
+    box-shadow: 
+        0 8px 25px rgba(30, 64, 175, 0.4),
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+body:not(.dark-mode) .filter-btn[data-filter="completed"].active {
+    background: linear-gradient(135deg, #047857 0%, #065f46 100%) !important;
+    border-color: #047857 !important;
+    box-shadow: 
+        0 8px 25px rgba(4, 120, 87, 0.4),
+        0 4px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+body:not(.dark-mode) .filter-btn[data-filter="pending"].active {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+    border-color: #d97706 !important;
+    box-shadow: 
+        0 8px 25px rgba(217, 119, 6, 0.4),
+        0 4px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+body:not(.dark-mode) .filter-btn[data-filter="overdue"].active {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+    border-color: #dc2626 !important;
+    box-shadow: 
+        0 8px 25px rgba(220, 38, 38, 0.4),
+        0 4px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+body:not(.dark-mode) .filter-btn[data-filter="today"].active {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+    border-color: #7c3aed !important;
+    box-shadow: 
+        0 8px 25px rgba(124, 58, 237, 0.4),
+        0 4px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Light mode highlight classes */
+body:not(.dark-mode) .tab-highlight-completed {
+    background: linear-gradient(135deg, #047857 0%, #065f46 100%) !important;
+    box-shadow: 
+        0 0 40px rgba(4, 120, 87, 0.6),
+        0 8px 25px rgba(4, 120, 87, 0.4) !important;
+    border: 2px solid #047857 !important;
+}
+
+body:not(.dark-mode) .tab-highlight-pending {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+    box-shadow: 
+        0 0 40px rgba(217, 119, 6, 0.6),
+        0 8px 25px rgba(217, 119, 6, 0.4) !important;
+    border: 2px solid #d97706 !important;
+}
+
+body:not(.dark-mode) .tab-highlight-today {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%) !important;
+    box-shadow: 
+        0 0 40px rgba(30, 64, 175, 0.6),
+        0 8px 25px rgba(30, 64, 175, 0.4) !important;
+    border: 2px solid #1e40af !important;
+}
+
+
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13985,21 +16537,6 @@ body.compact-mode .main-content {
         <div class="container">
             <div class="main-content">
                 <aside class="sidebar" id="sidebar">
-
-                    <div class="sidebar">
-    <!-- ADD THE TIMELINE TOGGLE HERE -->
-    <div class="timeline-toggle-container">
-        <div class="timeline-toggle-header">
-            <span class="timeline-toggle-label">Timeline View</span>
-            <div class="timeline-toggle-switch" id="timelineToggleSwitch">
-                <div class="timeline-toggle-handle"></div>
-            </div>
-        </div>
-        <div class="timeline-toggle-description">
-            Switch to calendar & timeline view
-        </div>
-    </div>
-
                     <div class="sidebar-header">
                         <h3>Categories</h3>
                     </div>
@@ -15220,11 +17757,6 @@ let currentDetectionPopup = null; // Add this line
 let isTaskContainerExpanded = false;
 let scrollDirectionTimeout;
 let mainContent = null;
-
-// Timeline Overview Variables
-let timelineViewActive = false;
-let timelineData = {};
-
 // ADD these new global variables at the top of your script (around line 100):
 let taskAwarenessEnabled = true;
 let taskPatterns = {};
@@ -21099,26 +23631,28 @@ if (tasks.length === 0) {
         tasks[taskIndex].modifiedAt = new Date().toISOString();
         
         if (tasks[taskIndex].completed && !wasCompleted) {
-            // Task was just completed
-            tasks[taskIndex].completedAt = new Date().toISOString();
-            
-            recordTaskCompletion();
-            playTaskCompletionSound();
-            
-            // Trigger completed tab expansion
-            setTimeout(() => {
-                expandCompletedTab();
-            }, 500);
-            
-            showNotification(`🎉 Task "${tasks[taskIndex].title}" completed!`, 'success');
-        } else if (!tasks[taskIndex].completed && wasCompleted) {
-            // Task was uncompleted - show pending tab
-            delete tasks[taskIndex].completedAt;
-            
-            setTimeout(() => {
-                expandPendingTab();
-            }, 500);
-        }
+    // Task was just completed
+    tasks[taskIndex].completedAt = new Date().toISOString();
+    
+    recordTaskCompletion();
+    playTaskCompletionSound();
+    
+    // Trigger completed tab expansion AND highlighting
+    setTimeout(() => {
+        expandCompletedTab();
+        highlightCompletedTab(); // This will now work
+    }, 500);
+    
+    showNotification(`🎉 Task "${tasks[taskIndex].title}" completed!`, 'success');
+} else if (!tasks[taskIndex].completed && wasCompleted) {
+    // Task was uncompleted - show pending tab
+    delete tasks[taskIndex].completedAt;
+    
+    setTimeout(() => {
+        expandPendingTab();
+        highlightPendingTab(); // This will now work
+    }, 500);
+}
 
         // Add to your toggleTaskCompletion() function (at the end)
 setTimeout(() => {
@@ -21146,6 +23680,9 @@ function expandTab(tabType, count, duration = 3000) {
     
     // Add expansion class
     targetBtn.classList.add(`${tabType}-expanded`);
+
+        highlightTabContainer(tabType);
+
     
     // Add count badge if it doesn't exist
     let countBadge = targetBtn.querySelector('.tab-count-badge');
@@ -21195,6 +23732,9 @@ function collapseTab(tabType) {
     allBtns.forEach(btn => {
         btn.classList.remove('pushed-right');
     });
+
+    // ADD HIGHLIGHTING REMOVAL HERE:
+    removeTabHighlight();
 }
 
 // Specific expansion functions
@@ -21219,6 +23759,148 @@ function expandTodayTab() {
     }).length;
     
     expandTab('today', todayCount, 3500);
+}
+
+function highlightCompletedTab() {
+    const completedTab = document.querySelector('[data-filter="completed"]');
+    if (completedTab) {
+        // Remove any existing highlight classes first
+        completedTab.classList.remove('tab-highlight-pending', 'tab-highlight-today', 'tab-highlight-fade-out');
+        
+        // Add the highlight class
+        completedTab.classList.add('tab-highlight-completed');
+        
+        // Force style update
+        completedTab.style.cssText += `
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            color: white !important;
+            transform: scale(1.08) translateY(-2px) !important;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.6) !important;
+            z-index: 100 !important;
+        `;
+        
+        setTimeout(() => {
+            completedTab.classList.remove('tab-highlight-completed');
+            completedTab.classList.add('tab-highlight-fade-out');
+            
+            // Reset inline styles
+            setTimeout(() => {
+                completedTab.classList.remove('tab-highlight-fade-out');
+                completedTab.style.cssText = '';
+            }, 1200);
+        }, 1400);
+    }
+}
+
+function highlightPendingTab() {
+    const pendingTab = document.querySelector('[data-filter="pending"]');
+    if (pendingTab) {
+        // Remove any existing highlight classes first
+        pendingTab.classList.remove('tab-highlight-completed', 'tab-highlight-today', 'tab-highlight-fade-out');
+        
+        // Add the highlight class
+        pendingTab.classList.add('tab-highlight-pending');
+        
+        // Force style update
+        pendingTab.style.cssText += `
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+            color: white !important;
+            transform: scale(1.08) translateY(-2px) !important;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.6) !important;
+            z-index: 100 !important;
+        `;
+        
+        setTimeout(() => {
+            pendingTab.classList.remove('tab-highlight-pending');
+            pendingTab.classList.add('tab-highlight-fade-out');
+            
+            // Reset inline styles
+            setTimeout(() => {
+                pendingTab.classList.remove('tab-highlight-fade-out');
+                pendingTab.style.cssText = '';
+            }, 1200);
+        }, 1400);
+    }
+}
+
+function highlightTodayTab() {
+    const todayTab = document.querySelector('[data-filter="today"]');
+    if (todayTab) {
+        // Remove any existing highlight classes first
+        todayTab.classList.remove('tab-highlight-completed', 'tab-highlight-pending', 'tab-highlight-fade-out');
+        
+        // Add the highlight class
+        todayTab.classList.add('tab-highlight-today');
+        
+        // Force style update
+        todayTab.style.cssText += `
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+            color: white !important;
+            transform: scale(1.08) translateY(-2px) !important;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.6) !important;
+            z-index: 100 !important;
+        `;
+        
+        setTimeout(() => {
+            todayTab.classList.remove('tab-highlight-today');
+            todayTab.classList.add('tab-highlight-fade-out');
+            
+            // Reset inline styles
+            setTimeout(() => {
+                todayTab.classList.remove('tab-highlight-fade-out');
+                todayTab.style.cssText = '';
+            }, 1200);
+        }, 1400);
+    }
+}
+
+// Function to highlight tab container based on expanded tab
+function highlightTabContainer(tabType) {
+    const tabContainer = document.querySelector('.task-filters-wrapper');
+    if (!tabContainer) return;
+    
+    // Remove all existing highlight classes
+    tabContainer.classList.remove(
+        'pending-highlighted',
+        'completed-highlighted', 
+        'today-highlighted',
+        'overall-highlighted'
+    );
+    
+    // Add appropriate highlight class based on tab type
+    switch(tabType) {
+        case 'pending':
+            tabContainer.classList.add('pending-highlighted');
+            break;
+        case 'completed':
+            tabContainer.classList.add('completed-highlighted');
+            break;
+        case 'today':
+        case 'due-today':
+            tabContainer.classList.add('today-highlighted');
+            break;
+        case 'all':
+        case 'overall':
+            tabContainer.classList.add('overall-highlighted');
+            break;
+        default:
+            // Remove all highlights if no specific tab
+            break;
+    }
+}
+
+// New function to remove highlights when tabs collapse
+function removeTabHighlights() {
+    const allTabs = document.querySelectorAll('[data-filter]');
+    allTabs.forEach(tab => {
+        tab.classList.remove('tab-highlight-completed', 'tab-highlight-pending', 'tab-highlight-today');
+        tab.classList.add('tab-highlight-fade-out');
+        
+        setTimeout(() => {
+            tab.classList.remove('tab-highlight-fade-out');
+            tab.style.cssText = ''; // Reset all inline styles
+        }, 400);
+    });
 }
 
             function renderTasks() {
@@ -22573,6 +25255,11 @@ if (finalTask && finalTask.reminder && finalTask.reminder.enabled) {
                     btn.addEventListener('click', () => {
                         const filter = btn.dataset.filter;
                         if (filter === currentFilter) return;
+
+                        // Add highlighting based on filter
+        if (filter === 'today') {
+            highlightTodayTab();
+        }
                         
                         // Remove active from all filter buttons
                         taskFilterBtns.forEach(filterBtn => {
