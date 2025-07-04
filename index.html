@@ -16395,7 +16395,617 @@ body:not(.dark-mode) .tab-highlight-today {
     border: 2px solid #1e40af !important;
 }
 
+/* ===== ENHANCED 3D CATEGORY SWITCHING ===== */
 
+/* Main tasks container with 3D perspective */
+.tasks-container {
+    perspective: 1200px !important;
+    perspective-origin: 50% 50% !important;
+    overflow: hidden !important;
+}
+
+.task-list-wrapper {
+    transform-style: preserve-3d !important;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    position: relative !important;
+}
+
+/* 3D Animation Classes for Category Switching */
+.task-list-wrapper.switching-out {
+    transform: rotateY(-15deg) translateZ(-100px) scale(0.95) !important;
+    opacity: 0.3 !important;
+    filter: blur(2px) !important;
+}
+
+.task-list-wrapper.switching-in {
+    transform: rotateY(15deg) translateZ(-100px) scale(0.95) !important;
+    opacity: 0 !important;
+    filter: blur(2px) !important;
+}
+
+.task-list-wrapper.switching-active {
+    transform: rotateY(0deg) translateZ(0px) scale(1) !important;
+    opacity: 1 !important;
+    filter: blur(0px) !important;
+}
+
+/* Alternative slide-flip animation */
+.task-list-wrapper.slide-flip-out {
+    transform: translateX(-50%) rotateY(-90deg) scale(0.8) !important;
+    opacity: 0 !important;
+    transform-origin: center center !important;
+}
+
+.task-list-wrapper.slide-flip-in {
+    transform: translateX(50%) rotateY(90deg) scale(0.8) !important;
+    opacity: 0 !important;
+    transform-origin: center center !important;
+}
+
+/* Floating container effect during transition */
+.task-list-wrapper.floating {
+    transform: translateY(-10px) rotateX(5deg) scale(1.02) !important;
+    box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.2),
+        0 15px 40px rgba(79, 70, 229, 0.1) !important;
+}
+
+/* Enhanced sidebar category active states */
+.category.switching-active {
+    transform: translateX(8px) scale(1.05) !important;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
+    box-shadow: 
+        0 8px 25px rgba(79, 70, 229, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    animation: categoryPulse 0.6s ease-out !important;
+}
+
+@keyframes categoryPulse {
+    0% { transform: translateX(8px) scale(1.05); }
+    50% { transform: translateX(12px) scale(1.08); }
+    100% { transform: translateX(8px) scale(1.05); }
+}
+
+/* 3D Card flip animation for individual task items during category switch */
+.task-item.category-switching {
+    transform: rotateY(180deg) scale(0.9) !important;
+    opacity: 0 !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+.task-item.category-revealing {
+    animation: revealCard 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards !important;
+    animation-delay: calc(var(--item-index, 0) * 0.1s) !important;
+}
+
+@keyframes revealCard {
+    0% {
+        transform: rotateY(-180deg) scale(0.9);
+        opacity: 0;
+    }
+    50% {
+        transform: rotateY(-90deg) scale(0.95);
+        opacity: 0.5;
+    }
+    100% {
+        transform: rotateY(0deg) scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===== ENHANCED SMOOTH TASK HOVER ANIMATIONS ===== */
+
+.task-item {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    transform-origin: center center !important;
+    backface-visibility: hidden !important;
+    will-change: transform, box-shadow, background !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Smooth hover state */
+.task-item:hover {
+    transform: translateY(-8px) scale(1.02) rotateX(2deg) !important;
+    z-index: 10 !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-color: rgba(79, 70, 229, 0.3) !important;
+    box-shadow: 
+        0 20px 60px rgba(79, 70, 229, 0.15),
+        0 12px 40px rgba(0, 0, 0, 0.1),
+        0 8px 25px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+/* Prevent glitchy animations */
+.task-item:hover .task-content {
+    transform: translateZ(5px) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.task-item:hover .task-actions {
+    transform: translateZ(10px) scale(1.05) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* Smooth action button hovers */
+.task-action-btn {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    backface-visibility: hidden !important;
+    transform-origin: center !important;
+}
+
+.task-action-btn:hover {
+    transform: translateY(-3px) scale(1.1) rotateZ(2deg) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    z-index: 15 !important;
+}
+
+/* Staggered animation for task items when category changes */
+.task-item {
+    animation-fill-mode: both !important;
+}
+
+.task-item:nth-child(1) { animation-delay: 0.05s !important; }
+.task-item:nth-child(2) { animation-delay: 0.1s !important; }
+.task-item:nth-child(3) { animation-delay: 0.15s !important; }
+.task-item:nth-child(4) { animation-delay: 0.2s !important; }
+.task-item:nth-child(5) { animation-delay: 0.25s !important; }
+.task-item:nth-child(6) { animation-delay: 0.3s !important; }
+
+/* Smooth checkbox hover */
+.task-checkbox {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.task-checkbox:hover {
+    transform: scale(1.15) rotateZ(5deg) !important;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3) !important;
+}
+
+/* Dark mode task hover adjustments */
+body.dark-mode .task-item:hover {
+    background: rgba(55, 65, 81, 0.98) !important;
+    border-color: rgba(79, 70, 229, 0.4) !important;
+    box-shadow: 
+        0 20px 60px rgba(79, 70, 229, 0.2),
+        0 12px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+/* ===== ENHANCED INTELLIGENT PRIORITIZATION INTERFACE ===== */
+
+/* Main container - better integration with design system */
+.intelligent-prio-container {
+    padding: 0 !important;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(248, 250, 252, 0.08) 50%,
+        rgba(255, 255, 255, 0.06) 100%) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.08),
+        0 2px 12px rgba(79, 70, 229, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    margin: 1rem 0 !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Subtle animated background gradient */
+.intelligent-prio-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(102, 126, 234, 0.03) 25%,
+        rgba(118, 75, 162, 0.02) 50%,
+        rgba(6, 182, 212, 0.03) 75%,
+        transparent 100%);
+    animation: aiShimmer 8s ease-in-out infinite !important;
+    z-index: 1 !important;
+}
+
+/* Container hover effect */
+.intelligent-prio-container:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 
+        0 12px 35px rgba(0, 0, 0, 0.1),
+        0 4px 20px rgba(79, 70, 229, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    border-color: rgba(79, 70, 229, 0.2) !important;
+}
+
+/* Header section for better structure */
+.intelligent-prio-header {
+    padding: 1.25rem 1.5rem 0.75rem !important;
+    position: relative !important;
+    z-index: 2 !important;
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.05) 0%, 
+        rgba(118, 75, 162, 0.03) 100%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.intelligent-prio-title {
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    margin-bottom: 0.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.intelligent-prio-title i {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    font-size: 1.2rem !important;
+    animation: iconPulse 3s ease-in-out infinite !important;
+}
+
+.intelligent-prio-subtitle {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.8rem !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+}
+
+/* Options container - better spacing and layout */
+.intelligent-prio-options {
+    padding: 1rem 1.5rem 1.25rem !important;
+    position: relative !important;
+    z-index: 2 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Individual option styling - enhanced cards */
+.intelligent-option {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 1.25rem !important;
+    border-radius: 12px !important;
+    margin-bottom: 0.75rem !important;
+    cursor: pointer !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.08) 0%, 
+        rgba(255, 255, 255, 0.04) 100%) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 2px 12px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Subtle card shimmer effect */
+.intelligent-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 100%);
+    transition: left 0.6s ease !important;
+}
+
+.intelligent-option:hover::before {
+    left: 100% !important;
+}
+
+.intelligent-option:hover {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.12) 0%, 
+        rgba(255, 255, 255, 0.08) 100%) !important;
+    border-color: rgba(79, 70, 229, 0.2) !important;
+    transform: translateY(-2px) scale(1.01) !important;
+    box-shadow: 
+        0 6px 20px rgba(79, 70, 229, 0.12),
+        0 4px 15px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.intelligent-option.active {
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.15) 0%, 
+        rgba(118, 75, 162, 0.1) 100%) !important;
+    border-color: rgba(79, 70, 229, 0.3) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 
+        0 4px 16px rgba(79, 70, 229, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Option info section - better layout */
+.intelligent-option-info {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    flex: 1 !important;
+}
+
+/* Enhanced option icons */
+.intelligent-option-icon {
+    width: 44px !important;
+    height: 44px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.3rem !important;
+    flex-shrink: 0 !important;
+    box-shadow: 
+        0 4px 15px rgba(102, 126, 234, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.intelligent-option-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        transparent 70%);
+    transform: translateX(-100%) !important;
+    transition: transform 0.6s ease !important;
+}
+
+.intelligent-option:hover .intelligent-option-icon::before {
+    transform: translateX(100%) !important;
+}
+
+.intelligent-option:hover .intelligent-option-icon {
+    transform: scale(1.02) rotate(1deg) !important;
+    box-shadow: 
+        0 6px 20px rgba(102, 126, 234, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Option content text */
+.intelligent-option-content {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.intelligent-option-title {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    margin-bottom: 0.25rem !important;
+    line-height: 1.2 !important;
+}
+
+.intelligent-option-description {
+    font-size: 0.8rem !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+}
+
+/* Enhanced toggle switch */
+.intelligent-option-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    flex-shrink: 0 !important;
+}
+
+.toggle-switch {
+    position: relative !important;
+    width: 48px !important;
+    height: 24px !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 24px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 
+        inset 0 1px 2px rgba(0, 0, 0, 0.08),
+        0 1px 4px rgba(0, 0, 0, 0.08) !important;
+}
+
+.toggle-switch.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 4px 15px rgba(102, 126, 234, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.toggle-switch-handle {
+    position: absolute !important;
+    top: 2px !important;
+    left: 2px !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: white !important;
+    border-radius: 50% !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 
+        0 1px 4px rgba(0, 0, 0, 0.15),
+        0 1px 2px rgba(0, 0, 0, 0.08) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.toggle-switch.active .toggle-switch-handle {
+    transform: translateX(24px) !important;
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Toggle switch icon */
+.toggle-switch-handle::after {
+    content: '✓' !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: transparent !important;
+    transition: color 0.3s ease !important;
+}
+
+.toggle-switch.active .toggle-switch-handle::after {
+    color: #667eea !important;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .intelligent-prio-container {
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.2) 0%, 
+        rgba(15, 23, 42, 0.15) 50%,
+        rgba(0, 0, 0, 0.1) 100%) !important;
+    border-color: rgba(75, 85, 99, 0.3) !important;
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .intelligent-prio-header {
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.08) 0%, 
+        rgba(118, 75, 162, 0.05) 100%) !important;
+}
+
+body.dark-mode .intelligent-option {
+    background: linear-gradient(135deg, 
+        rgba(55, 65, 81, 0.6) 0%, 
+        rgba(31, 41, 55, 0.4) 100%) !important;
+    border-color: rgba(75, 85, 99, 0.3) !important;
+}
+
+body.dark-mode .intelligent-option:hover {
+    background: linear-gradient(135deg, 
+        rgba(55, 65, 81, 0.8) 0%, 
+        rgba(31, 41, 55, 0.6) 100%) !important;
+    border-color: rgba(79, 70, 229, 0.3) !important;
+}
+
+body.dark-mode .intelligent-option.active {
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.2) 0%, 
+        rgba(118, 75, 162, 0.15) 100%) !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .intelligent-prio-container {
+        margin: 1rem 0 !important;
+        border-radius: 16px !important;
+    }
+    
+    .intelligent-prio-header {
+        padding: 1rem 1.25rem 0.75rem !important;
+    }
+    
+    .intelligent-prio-title {
+        font-size: 1rem !important;
+    }
+    
+    .intelligent-prio-options {
+        padding: 0.75rem 1.25rem 1rem !important;
+    }
+    
+    .intelligent-option {
+        padding: 1rem !important;
+        border-radius: 12px !important;
+        margin-bottom: 0.75rem !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        text-align: center !important;
+    }
+    
+    .intelligent-option-info {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        width: 100% !important;
+    }
+    
+    .intelligent-option-icon {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.2rem !important;
+    }
+    
+    .intelligent-option-controls {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    
+    .toggle-switch {
+        width: 44px !important;
+        height: 22px !important;
+    }
+    
+    .toggle-switch-handle {
+        width: 18px !important;
+        height: 18px !important;
+    }
+    
+    .toggle-switch.active .toggle-switch-handle {
+        transform: translateX(22px) !important;
+    }
+}
+
+/* Keyframe animations */
+@keyframes aiShimmer {
+    0%, 100% { 
+        left: -100%; 
+        opacity: 0.5;
+    }
+    50% { 
+        left: 0%; 
+        opacity: 1;
+    }
+}
+
+@keyframes iconPulse {
+    0%, 100% { 
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% { 
+        transform: scale(1.05);
+        filter: brightness(1.2);
+    }
+}
+
+/* Performance optimizations */
+.intelligent-prio-container,
+.intelligent-option,
+.intelligent-option-icon,
+.toggle-switch {
+    will-change: transform, opacity, box-shadow !important;
+    backface-visibility: hidden !important;
+    transform-style: preserve-3d !important;
+}
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17237,14 +17847,6 @@ body:not(.dark-mode) .tab-highlight-today {
                             </div>
                         </div>
                         
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-cancel" id="cancelIntelligentPrio">Cancel</button>
-                            <button type="button" class="btn btn-primary" id="createTaskWithAI">Create Task</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Delete Confirmation Modal -->
         <div class="modal delete-modal" id="deleteModal" aria-modal="true" role="dialog">
@@ -17291,38 +17893,43 @@ body:not(.dark-mode) .tab-highlight-today {
 
            
         // Update these constants at the top of your JavaScript
-const APP_VERSION = "2.7";
+const APP_VERSION = "3.0";
 const VERSION_FEATURES = {
 
-    "2.7": {
-   "title": "✨ User Improvements & Cleanup Feature",
-    "description": "Introducing usability enhancements and a new tool to help manage your tasks more effectively.",
+    "3.0": {
+   "title": "🚀 New Redesign & Smarter Features",
+        "description": "A brand-new redesigned interface for a better user experience, smarter task management tools, and more exciting improvements on the way in the next release!",
     "features": [
-         {
-            "type": "Cleanup Feature",
-            "title": "🧹 New Cleanup Feature",
-            "description": "A new feature designed to help you better organize tasks by detecting and removing unnecessary duplicate tasks and clutter. Currently in development — you may notice some issues. Stay tuned for improvements in the next release!"
-        },
-        {
-            type: "improvement", 
-            title: "📱 Mobile Touch Responsiveness",
-            description: "Improved touch sensitivity and gesture recognition for better mobile interaction."
-        },
-        {
-            "type": "improvement",
-            "title": "🛠 Enhanced Task Flow",
-            "description": "Adjustements to task behavior and new tab reactions when tasks are added or interacted for a smoother user experience."
-        }
-    ],
+            {
+                "type": "redesign",
+                "title": "🎨 Redesigned User Interface",
+                "description": "A cleaner, modern look with improved layouts for an easier and more enjoyable experience across devices."
+            },
+            {
+                "type": "ai",
+                "title": "🧠 Intelligent Prioritization",
+                "description": "Automatically sorts and highlights tasks based on urgency and importance, helping you focus on what matters most."
+            },
+            {
+                "type": "ai",
+                "title": "⏰ AI Time Suggestions",
+                "description": "Smart AI recommends optimal times for completing tasks based on your schedule and habits."
+            },
+            {
+                "type": "improvement",
+                "title": "🌟 Bug Fixes & Refinements",
+                "description": "Various stability improvements and performance optimizations for a smoother workflow."
+            }
+        ],
     improvements: [
-        "🐛 Fixed sample tasks reappearing after deletion and page refresh",
-        "🎯 Improved task deletion persistence across sessions",
-        "📱 Enhanced mobile touch event handling and responsiveness", 
-        "⚡ Optimized app initialization and loading times",
-        "🔧 Fixed scroll detection issues on certain devices",
-        "🎨 Smoother animations and reduced visual glitches",
-        "💾 Better data persistence and local storage management",
-        "🖱️ Improved mouse and keyboard interaction reliability"
+        "🐛 Fixed occasional layout glitches on smaller screens.",
+            "⚡ Faster task creation and editing with less lag.",
+            "📅 Improved date and time pickers for better scheduling.",
+            "📱 More responsive mobile gestures and UI animations.",
+            "🔔 Smarter notifications with actionable quick actions.",
+            "🗂️ Enhanced data organization in the background for quicker access.",
+            "🔧 Fixed edge case issues with recurring tasks not saving properly.",
+            "💡 Foundation updates for exciting new features in future versions!"
     ]
 },
     "2.6": {
@@ -18906,7 +19513,7 @@ const enhancedPriorityKeywords = {
             // Nice to have
             'sometime', 'later', 'eventually', 'when possible', 'optional',
             'maybe', 'consider', 'think about', 'explore', 'research',
-            'read', 'watch', 'browse', 'organize', 'clean'
+            'read', 'watch', 'browse', 'organize', 'clean',
         ]
     },
     
@@ -19917,6 +20524,83 @@ function adjustLayoutForScreenSize() {
     }, 1000); // Reduced from 3000 to 1000
 }
 
+// ADD THIS CSS FUNCTION AFTER initializeApp():
+function add3DAnimationStyles() {
+    if (document.getElementById('3dAnimationStyles')) return;
+    
+    const style = document.createElement('style');
+    style.id = '3dAnimationStyles';
+    style.textContent = `
+        /* 3D Category Switching Animations */
+        .task-list-wrapper,
+        .task-list-section {
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .task-list-wrapper.switching-out {
+            transform: rotateY(-15deg) scale(0.95);
+            opacity: 0.7;
+            filter: blur(2px);
+        }
+        
+        .task-list-wrapper.switching-in {
+            transform: rotateY(15deg) scale(0.95);
+            opacity: 0.7;
+            filter: blur(2px);
+        }
+        
+        .task-list-wrapper.switching-active {
+            transform: rotateY(0deg) scale(1);
+            opacity: 1;
+            filter: blur(0px);
+        }
+        
+        /* Task item reveal animations */
+        .task-item.category-revealing {
+            animation: taskReveal 0.6s ease-out forwards;
+            animation-delay: calc(var(--item-index, 0) * 0.1s);
+            opacity: 0;
+            transform: translateY(30px) rotateX(-10deg);
+        }
+        
+        @keyframes taskReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotateX(-10deg);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateY(-5px) rotateX(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
+        }
+        
+        /* Category switching states */
+        .category.switching-active {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+        }
+        
+        /* Enhanced task hover effects */
+        .task-item {
+            transform-style: preserve-3d;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .task-item:hover {
+            transform: translateY(-4px) rotateX(2deg);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+    `;
+    
+    document.head.appendChild(style);
+}
             
 function hideWelcomeAnimation() {
     console.log('🎬 Starting enhanced welcome animation sequence...');
@@ -25206,49 +25890,137 @@ if (finalTask && finalTask.reminder && finalTask.reminder.enabled) {
             // Category and Filter Initialization
             function initializeCategoryAndFilters() {
                 // Category switching
-                const categories = document.querySelectorAll('.category');
-                categories.forEach(category => {
-                    category.addEventListener('click', () => {
-                        const categoryType = category.dataset.category;
-                        if (categoryType === currentCategory) return;
-                        
-                        // Remove active from all categories
-                        categories.forEach(cat => cat.classList.remove('active'));
-                        
-                        // Add active to clicked category
-                        category.classList.add('active');
-                        
-                        // Update current category
-                        currentCategory = categoryType;
-                        
-                        // Update category title and description
-                        if (currentCategoryEl) {
-                            currentCategoryEl.innerHTML = `${categoryIcons[categoryType]} ${categoryType.charAt(0).toUpperCase() + categoryType.slice(1)} Tasks`;
-                        }
-                        
-                        if (categoryDescriptionEl) {
-                            categoryDescriptionEl.textContent = categoryDescriptions[categoryType];
-                        }
-                        
-                        // Render tasks
-                        renderTasks();
-                        
-                        // Show/hide dashboard based on category
-                        if (dashboard) {
-                            if (categoryType === 'all') {
-                                dashboard.classList.remove('hidden');
-                                if (taskListWrapper) {
-                                    taskListWrapper.classList.remove('expanded');
-                                }
-                            } else {
-                                dashboard.classList.add('hidden');
-                                if (taskListWrapper) {
-                                    taskListWrapper.classList.add('expanded');
-                                }
-                            }
-                        }
-                    });
+                // Enhanced 3D Category switching - REPLACE THE CATEGORY SECTION WITH THIS:
+const categories = document.querySelectorAll('.category');
+categories.forEach(category => {
+    category.addEventListener('click', () => {
+        const categoryType = category.dataset.category;
+        if (categoryType === currentCategory) return;
+        
+        // Use 3D transition instead of simple switching
+        switchCategoryWith3D(categoryType);
+    });
+});
+
+// Enhanced category switching with 3D animations - ADD THIS NEW FUNCTION:
+function switchCategoryWith3D(newCategory) {
+    const taskWrapper = document.querySelector('.task-list-wrapper') || 
+                       document.querySelector('.task-list-section') ||
+                       document.getElementById('taskListWrapper');
+    const activeCategory = document.querySelector('.category.active');
+    const newCategoryElement = document.querySelector(`[data-category="${newCategory}"]`);
+    
+    // Remove active state from current category
+    if (activeCategory) {
+        activeCategory.classList.remove('active', 'switching-active');
+    }
+    
+    // Start 3D transition
+    if (taskWrapper) {
+        taskWrapper.classList.add('switching-out');
+    }
+    
+    setTimeout(() => {
+        // Switch content and start switch-in animation
+        if (taskWrapper) {
+            taskWrapper.classList.remove('switching-out');
+            taskWrapper.classList.add('switching-in');
+        }
+        
+        // Update category active state
+        if (newCategoryElement) {
+            newCategoryElement.classList.add('active', 'switching-active');
+        }
+        
+        // Update current category
+        currentCategory = newCategory;
+        
+        // Update category title and description
+        const currentCategoryEl = document.getElementById('currentCategory');
+        const categoryDescriptionEl = document.getElementById('categoryDescription');
+        
+        if (currentCategoryEl) {
+            currentCategoryEl.innerHTML = `${categoryIcons[newCategory]} ${newCategory.charAt(0).toUpperCase() + newCategory.slice(1)} Tasks`;
+        }
+        
+        if (categoryDescriptionEl) {
+            categoryDescriptionEl.textContent = categoryDescriptions[newCategory];
+        }
+        
+        // Show/hide dashboard based on category
+        const dashboard = document.querySelector('.dashboard');
+        const taskListWrapper = document.getElementById('taskListWrapper');
+        
+        if (dashboard) {
+            if (newCategory === 'all') {
+                dashboard.classList.remove('hidden');
+                if (taskListWrapper) {
+                    taskListWrapper.classList.remove('expanded');
+                }
+            } else {
+                dashboard.classList.add('hidden');
+                if (taskListWrapper) {
+                    taskListWrapper.classList.add('expanded');
+                }
+            }
+        }
+        
+        // Render tasks with new filter
+        renderTasks();
+        
+        setTimeout(() => {
+            // Complete the transition
+            if (taskWrapper) {
+                taskWrapper.classList.remove('switching-in');
+                taskWrapper.classList.add('switching-active');
+            }
+            
+            // Add reveal animation to new tasks
+            document.querySelectorAll('.task-item:not(.hiding)').forEach((item, index) => {
+                item.style.setProperty('--item-index', index);
+                item.classList.add('category-revealing');
+            });
+            
+            setTimeout(() => {
+                if (taskWrapper) {
+                    taskWrapper.classList.remove('switching-active');
+                }
+                document.querySelectorAll('.task-item').forEach(item => {
+                    item.classList.remove('category-revealing');
                 });
+                if (newCategoryElement) {
+                    newCategoryElement.classList.remove('switching-active');
+                }
+            }, 800);
+            
+        }, 50);
+    }, 400);
+}
+
+// Smooth hover prevention for glitchy effects - ADD THIS NEW FUNCTION:
+function initializeTaskHoverEffects() {
+    // Use event delegation for dynamic task items
+    const taskList = document.getElementById('taskList') || document.querySelector('.task-list');
+    
+    if (taskList) {
+        taskList.addEventListener('mouseenter', function(e) {
+            const taskItem = e.target.closest('.task-item');
+            if (taskItem) {
+                clearTimeout(taskItem.hoverTimeout);
+                taskItem.style.willChange = 'transform, box-shadow';
+            }
+        }, true);
+        
+        taskList.addEventListener('mouseleave', function(e) {
+            const taskItem = e.target.closest('.task-item');
+            if (taskItem) {
+                taskItem.hoverTimeout = setTimeout(() => {
+                    taskItem.style.willChange = 'auto';
+                }, 400);
+            }
+        }, true);
+    }
+}
 
                 // Filter switching
                 taskFilterBtns.forEach(btn => {
