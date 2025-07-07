@@ -17006,6 +17006,1127 @@ body.dark-mode .intelligent-option.active {
     backface-visibility: hidden !important;
     transform-style: preserve-3d !important;
 }
+
+/* ===== GLOBAL SMOOTH ANIMATION IMPROVEMENTS ===== */
+
+/* Enhanced base transition for all interactive elements */
+* {
+    --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-swift: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smoother button transitions */
+.btn, .filter-btn, .task-action-btn {
+    transition: all 0.3s var(--ease-smooth) !important;
+    will-change: transform, box-shadow, background !important;
+    backface-visibility: hidden !important;
+}
+
+/* Enhanced task item animations */
+.task-item {
+    transition: all 0.4s var(--ease-smooth) !important;
+    will-change: transform, box-shadow, opacity !important;
+}
+
+.task-item:hover {
+    transition: all 0.3s var(--ease-bounce) !important;
+}
+
+/* Smoother modal transitions */
+.modal {
+    transition: all 0.4s var(--ease-smooth) !important;
+}
+
+.modal.active .modal-content {
+    transition: all 0.4s var(--ease-bounce) !important;
+}
+
+/* Enhanced sidebar category animations */
+.category {
+    transition: all 0.3s var(--ease-smooth) !important;
+}
+
+.category:hover, .category.active {
+    transition: all 0.3s var(--ease-bounce) !important;
+}
+
+/* ===== FIX DUE TODAY TAB BLUE HIGHLIGHT ===== */
+
+/* Due Today Tab - Enhanced Blue Highlighting */
+.filter-btn[data-filter="today"]:not(.active):hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.8) 0%, rgba(37, 99, 235, 0.8) 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 12px 40px rgba(59, 130, 246, 0.3),
+        0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-4px) scale(1.05) !important;
+}
+
+/* Due Today Active State - Solid Blue */
+.filter-btn[data-filter="today"].active,
+.filter-btn.active[data-filter="today"] {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 12px 40px rgba(59, 130, 246, 0.5),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Due Today Expanding State - Bright Blue Glow */
+.filter-btn[data-filter="today"].expanding,
+.filter-btn.today-expanding,
+.filter-btn.expanding[data-filter="today"] {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 
+        0 0 60px rgba(59, 130, 246, 0.9),
+        0 0 40px rgba(59, 130, 246, 0.7),
+        0 12px 40px rgba(59, 130, 246, 0.5),
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    transform: translateY(-5px) scale(1.08) !important;
+    z-index: 25 !important;
+    animation: todayBlueGlow 1.2s ease-in-out !important;
+}
+
+/* Due Today Highlight Class */
+.tab-highlight-today,
+.tab-highlight-today:hover,
+.tab-highlight-today:focus {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 
+        0 0 50px rgba(59, 130, 246, 0.8),
+        0 0 30px rgba(59, 130, 246, 0.6),
+        0 12px 40px rgba(59, 130, 246, 0.4) !important;
+    transform: translateY(-4px) scale(1.06) !important;
+    z-index: 30 !important;
+    position: relative !important;
+}
+
+/* Blue Glow Animation */
+@keyframes todayBlueGlow {
+    0% {
+        box-shadow: 
+            0 0 30px rgba(59, 130, 246, 0.5),
+            0 12px 40px rgba(59, 130, 246, 0.3);
+        transform: translateY(-2px) scale(1.02);
+    }
+    50% {
+        box-shadow: 
+            0 0 80px rgba(59, 130, 246, 1),
+            0 0 60px rgba(59, 130, 246, 0.8),
+            0 0 40px rgba(59, 130, 246, 0.6),
+            0 15px 50px rgba(59, 130, 246, 0.5);
+        transform: translateY(-6px) scale(1.1);
+    }
+    100% {
+        box-shadow: 
+            0 0 60px rgba(59, 130, 246, 0.8),
+            0 12px 40px rgba(59, 130, 246, 0.5);
+        transform: translateY(-4px) scale(1.06);
+    }
+}
+
+/* ===== ENHANCED TAB EXPANSION SYSTEM ===== */
+
+/* Base expanding state with smoother transitions */
+.filter-btn.expanding {
+    transition: all 0.4s var(--ease-bounce) !important;
+    animation-duration: 1s !important;
+    animation-timing-function: ease-out !important;
+    animation-fill-mode: forwards !important;
+}
+
+/* Immediate expansion trigger */
+.filter-btn.expand-immediate {
+    transition: all 0.2s var(--ease-swift) !important;
+    transform: translateY(-3px) scale(1.05) !important;
+}
+
+/* Enhanced expansion with count badges */
+.filter-btn.today-expanded {
+    padding-right: 4rem !important;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: white !important;
+    transform: scaleX(1.35) translateY(-2px) !important;
+    box-shadow: 
+        0 0 40px rgba(59, 130, 246, 0.6),
+        0 12px 40px rgba(59, 130, 246, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    z-index: 20 !important;
+    position: relative !important;
+}
+
+/* Count badge for due today */
+.filter-btn.today-expanded .tab-count-badge {
+    background: rgba(255, 255, 255, 0.25) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-50%) scale(1) !important;
+    opacity: 1 !important;
+    animation: badgeSlideIn 0.3s var(--ease-bounce) 0.2s forwards !important;
+}
+
+/* Clock icon animation in badge */
+.filter-btn.today-expanded .badge-clock {
+    animation: clockTick 2s linear infinite !important;
+}
+
+@keyframes clockTick {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(90deg); }
+    50% { transform: rotate(180deg); }
+    75% { transform: rotate(270deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes badgeSlideIn {
+    0% {
+        transform: translateY(-50%) translateX(20px) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-50%) translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===== LIGHT MODE DUE TODAY IMPROVEMENTS ===== */
+
+body:not(.dark-mode) .filter-btn[data-filter="today"].active {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%) !important;
+    border-color: #1e40af !important;
+    box-shadow: 
+        0 8px 25px rgba(30, 64, 175, 0.4),
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+body:not(.dark-mode) .tab-highlight-today {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%) !important;
+    box-shadow: 
+        0 0 40px rgba(30, 64, 175, 0.6),
+        0 8px 25px rgba(30, 64, 175, 0.4) !important;
+    border: 2px solid #1e40af !important;
+}
+
+body:not(.dark-mode) .filter-btn[data-filter="today"].expanding {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%) !important;
+    box-shadow: 
+        0 0 60px rgba(30, 64, 175, 0.8),
+        0 12px 40px rgba(30, 64, 175, 0.5) !important;
+}
+
+/* ADD these styles to your CSS */
+.card-subtitle {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+.dashboard-card.updating {
+    animation: cardPulse 0.8s ease-in-out;
+}
+
+.dashboard-card.excellent {
+    border-left: 4px solid #10b981;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(5, 150, 105, 0.02) 100%);
+}
+
+.dashboard-card.good {
+    border-left: 4px solid #3b82f6;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(29, 78, 216, 0.02) 100%);
+}
+
+.dashboard-card.warning {
+    border-left: 4px solid #f59e0b;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(217, 119, 6, 0.02) 100%);
+}
+
+.dashboard-card.critical {
+    border-left: 4px solid #ef4444;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(220, 38, 38, 0.02) 100%);
+}
+
+.dashboard-card.empty {
+    opacity: 0.6;
+    border-left: 4px solid #6b7280;
+}
+
+@keyframes cardPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.productivity-insights {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.insights-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.productivity-score {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.productivity-score.excellent {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.productivity-score.good {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+}
+
+.productivity-score.average {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+}
+
+.productivity-score.needs-improvement {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.insight-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.insight-card:hover {
+    transform: translateY(-2px);
+}
+
+.insight-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.insight-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.insight-text {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.insights-recommendations {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.recommendation {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.recommendation.success {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border-left: 3px solid #10b981;
+}
+
+.recommendation.warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border-left: 3px solid #f59e0b;
+}
+
+.recommendation.info {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border-left: 3px solid #3b82f6;
+}
+
+/* Today's Progress Card Styles */
+.today-progress {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(29, 78, 216, 0.05) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.progress-circle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.circular-progress {
+    width: 80px;
+    height: 80px;
+}
+
+.circle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.mask {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.mask.full {
+    left: 50%;
+}
+
+.mask.half {
+    right: 50%;
+}
+
+.fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    border-radius: 50%;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.mask.half .fill {
+    transform-origin: 100% 50%;
+}
+
+.mask.full .fill {
+    transform-origin: 0% 50%;
+}
+
+.inside-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.inside-circle .percentage {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+.inside-circle .label {
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.today-stats {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.today-stats .stat {
+    text-align: center;
+}
+
+.today-stats .number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+.today-stats .label {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+/* Enhanced Mobile Dashboard - 2x2 Grid */
+@media (max-width: 768px) {
+    .dashboard {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+        padding: 0.75rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .stat-card {
+        padding: 1rem !important;
+        border-radius: 16px !important;
+        min-height: 120px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+    
+    .stat-header {
+        margin-bottom: 0.75rem !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+    }
+    
+    .stat-title {
+        font-size: 0.8rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    .stat-icon {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 1.1rem !important;
+        align-self: flex-end !important;
+    }
+    
+    .stat-value {
+        font-size: 1.8rem !important;
+        margin-bottom: 0.5rem !important;
+        line-height: 1 !important;
+    }
+    
+    .stat-change {
+        padding: 0.3rem 0.6rem !important;
+        font-size: 0.75rem !important;
+        border-radius: 12px !important;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+    .dashboard {
+        gap: 0.5rem !important;
+        padding: 0.5rem !important;
+    }
+    
+    .stat-card {
+        padding: 0.75rem !important;
+        min-height: 100px !important;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem !important;
+    }
+    
+    .stat-title {
+        font-size: 0.75rem !important;
+    }
+}
+/* Mobile Sidebar Container */
+.mobile-sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 1500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.mobile-sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Enhanced Mobile Sidebar */
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(248, 250, 252, 0.98) 100%);
+    backdrop-filter: blur(25px) saturate(180%);
+    z-index: 1600;
+    transform: translateX(-100%);
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow-y: auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-sidebar.active {
+    transform: translateX(0);
+}
+
+/* Dark mode mobile sidebar */
+body.dark-mode .mobile-sidebar {
+    background: linear-gradient(135deg, 
+        rgba(15, 23, 42, 0.98) 0%, 
+        rgba(30, 41, 59, 0.95) 100%);
+}
+
+/* Mobile Sidebar Header */
+.mobile-sidebar-header {
+    position: sticky;
+    top: 0;
+    height: 80px;
+    background: var(--primary-gradient);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    z-index: 1700;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.mobile-sidebar-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-sidebar-title i {
+    background: white;
+    color: var(--primary);
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-sidebar-close {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.mobile-sidebar-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+/* Mobile Categories Container */
+.mobile-categories-container {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.mobile-categories-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gray-700);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    padding: 1rem;
+    background: rgba(79, 70, 229, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(79, 70, 229, 0.1);
+}
+
+body.dark-mode .mobile-categories-title {
+    color: var(--gray-200);
+    background: rgba(79, 70, 229, 0.1);
+}
+
+/* Enhanced Mobile Category Items */
+.mobile-category {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.8) 0%, 
+        rgba(248, 250, 252, 0.9) 100%);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(79, 70, 229, 0.1);
+    border-radius: 20px;
+    color: var(--gray-700);
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: slideInCategory 0.6s ease-out forwards;
+}
+
+/* Staggered animation delays */
+.mobile-category:nth-child(1) { animation-delay: 0.1s; }
+.mobile-category:nth-child(2) { animation-delay: 0.2s; }
+.mobile-category:nth-child(3) { animation-delay: 0.3s; }
+.mobile-category:nth-child(4) { animation-delay: 0.4s; }
+.mobile-category:nth-child(5) { animation-delay: 0.5s; }
+.mobile-category:nth-child(6) { animation-delay: 0.6s; }
+.mobile-category:nth-child(7) { animation-delay: 0.7s; }
+
+@keyframes slideInCategory {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.mobile-category:hover {
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.1) 0%, 
+        rgba(118, 75, 162, 0.05) 100%);
+    transform: translateX(8px) scale(1.02);
+    border-color: rgba(79, 70, 229, 0.3);
+    box-shadow: 0 8px 30px rgba(79, 70, 229, 0.15);
+}
+
+.mobile-category.active {
+    background: var(--primary-gradient);
+    color: white;
+    transform: translateX(12px) scale(1.03);
+    box-shadow: 0 12px 40px rgba(79, 70, 229, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Dark mode mobile categories */
+body.dark-mode .mobile-category {
+    background: linear-gradient(135deg, 
+        rgba(55, 65, 81, 0.9) 0%, 
+        rgba(31, 41, 55, 0.8) 100%);
+    border-color: rgba(75, 85, 99, 0.3);
+    color: var(--gray-300);
+}
+
+body.dark-mode .mobile-category:hover {
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.2) 0%, 
+        rgba(118, 75, 162, 0.15) 100%);
+}
+
+/* Mobile Category Content */
+.mobile-category-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.mobile-category-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: white;
+    background: var(--primary);
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    transition: all 0.3s ease;
+}
+
+.mobile-category.active .mobile-category-icon {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+}
+
+.mobile-category-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+}
+
+.mobile-task-count {
+    background: rgba(79, 70, 229, 0.15);
+    color: var(--primary);
+    font-size: 1rem;
+    font-weight: 700;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(79, 70, 229, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.mobile-category.active .mobile-task-count {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Enhanced Hamburger Button */
+@media (max-width: 768px) {
+    .mobile-hamburger {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 2000;
+        background: var(--primary-gradient);
+        color: white;
+        border: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .mobile-hamburger:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 25px rgba(79, 70, 229, 0.5);
+    }
+
+    .mobile-hamburger:active {
+        transform: scale(0.95);
+    }
+
+    .mobile-hamburger.active {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        box-shadow: 0 6px 25px rgba(239, 68, 68, 0.4);
+    }
+}
+
+/* Prevent body scroll when mobile sidebar is open */
+body.mobile-sidebar-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Hide desktop sidebar on mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding-top: 70px !important; /* Space for hamburger */
+    }
+}
+
+/* Mobile specific optimizations */
+@media (max-width: 768px) {
+    /* Header adjustments */
+    header {
+        padding: 0.75rem 0 !important;
+        min-height: 60px !important;
+    }
+    
+    header .container {
+        padding: 0 4rem 0 1rem !important; /* Space for hamburger */
+    }
+    
+    .logo {
+        font-size: 1.3rem !important;
+    }
+    
+    /* Task filters - stack vertically on mobile */
+    .task-filters {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        align-items: stretch !important;
+    }
+    
+    .filter-btn {
+        padding: 1rem 1.5rem !important;
+        font-size: 1rem !important;
+        text-align: center !important;
+        justify-content: center !important;
+        border-radius: 16px !important;
+    }
+    
+    /* Task list adjustments */
+    .task-item {
+        padding: 1.25rem !important;
+        margin-bottom: 0.75rem !important;
+        border-radius: 16px !important;
+    }
+    
+    .task-actions {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+    
+    .task-action-btn {
+        width: 100% !important;
+        height: 44px !important;
+        border-radius: 12px !important;
+        justify-content: center !important;
+    }
+    
+    /* AI button smaller on mobile */
+    .ai-task-button-container {
+        transform: scale(0.8) !important;
+        margin: 0.75rem auto !important;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    .mobile-sidebar-header {
+        padding: 0 1rem !important;
+    }
+    
+    .mobile-categories-container {
+        padding: 1rem !important;
+    }
+    
+    .mobile-category {
+        padding: 1.25rem !important;
+        border-radius: 16px !important;
+    }
+    
+    .mobile-category-icon {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.2rem !important;
+    }
+    
+    .mobile-task-count {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .mobile-hamburger {
+        width: 44px !important;
+        height: 44px !important;
+        top: 0.75rem !important;
+        left: 0.75rem !important;
+    }
+}
+
+/* Enhanced Mobile Sidebar Animations */
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.98) 0%, 
+        rgba(248, 250, 252, 0.95) 100%);
+    backdrop-filter: blur(25px) saturate(180%);
+    z-index: 1600;
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 30px rgba(0, 0, 0, 0.2);
+    will-change: transform;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobile-sidebar.active {
+    transform: translateX(0);
+}
+
+/* Smooth overlay transition */
+.mobile-sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    touch-action: none;
+}
+
+.mobile-sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Enhanced hamburger animation */
+.mobile-hamburger {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 2000;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    will-change: transform;
+}
+
+.mobile-hamburger:active {
+    transform: scale(0.9);
+}
+
+.mobile-hamburger.active {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    transform: rotate(90deg) scale(1.05);
+    box-shadow: 0 6px 25px rgba(239, 68, 68, 0.4);
+}
+
+/* Category animation reset */
+.mobile-category {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.3s ease;
+}
+
+/* Ensure categories animate in when sidebar opens */
+.mobile-sidebar.active .mobile-category {
+    animation: slideInCategory 0.4s ease-out forwards;
+}
+
+/* Improved body scroll lock */
+body.mobile-sidebar-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    touch-action: none !important;
+}
+
+/* Hide desktop elements on mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding-top: 70px !important;
+    }
+}
+
+/* Hide mobile elements on desktop */
+.mobile-hamburger,
+.mobile-sidebar-close,
+.mobile-sidebar-overlay {
+    display: none;
+}
+
+/* Mobile Styles - Only show on mobile devices */
+@media (max-width: 768px) {
+    /* Show mobile hamburger button */
+    .mobile-hamburger {
+        display: flex !important;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: rgba(79, 70, 229, 0.9);
+        color: white;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 12px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .mobile-hamburger:hover {
+        background: rgba(79, 70, 229, 1);
+        transform: scale(1.05);
+    }
+    
+    .mobile-hamburger.active {
+        background: rgba(239, 68, 68, 0.9);
+    }
     </style>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17371,114 +18492,114 @@ body.dark-mode .intelligent-option.active {
         </div>
 
          <!-- ADD THE MOBILE SIDEBAR STRUCTURE HERE -->
-    <div class="mobile-sidebar-overlay"></div>
-    <div class="mobile-sidebar">
-        <div class="mobile-sidebar-header">
-            <div class="mobile-sidebar-title">
-                <i class="fas fa-tasks"></i>
-                Categories
+        <div class="mobile-sidebar-overlay"></div>
+        <div class="mobile-sidebar">
+            <div class="mobile-sidebar-header">
+                <div class="mobile-sidebar-title">
+                    <i class="fas fa-tasks"></i>
+                    Categories
+                </div>
+                <button class="mobile-sidebar-close">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <button class="mobile-sidebar-close">
-                <i class="fas fa-times"></i>
-            </button>
+            
+            <div class="mobile-categories-container">
+                <h4 class="mobile-categories-title">Select Category</h4>
+                
+                <div class="mobile-category active" data-category="all">
+                    <div class="mobile-category-content">
+                        <div class="mobile-category-icon" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <span class="mobile-category-name">All Tasks</span>
+                    </div>
+                    <div class="mobile-task-count">0</div>
+                </div>
+                
+                <div class="mobile-category" data-category="work">
+                    <div class="mobile-category-content">
+                        <div class="mobile-category-icon" style="background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <span class="mobile-category-name">Work</span>
+                    </div>
+                    <div class="mobile-task-count">0</div>
+                </div>
+                
+                <div class="mobile-category" data-category="personal">
+                    <div class="mobile-category-content">
+                        <div class="mobile-category-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="mobile-category-name">Personal</span>
+                    </div>
+                    <div class="mobile-task-count">0</div>
+                </div>
+                
+                <div class="mobile-category" data-category="shopping">
+                    <div class="mobile-category-content">
+                        <div class="mobile-category-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <span class="mobile-category-name">Shopping</span>
+                    </div>
+                    <div class="mobile-task-count">0</div>
+                </div>
+                
+                <div class="mobile-category" data-category="health">
+                    <div class="mobile-category-content">
+                        <div class="mobile-category-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <span class="mobile-category-name">Health</span>
+                    </div>
+                    <div class="mobile-task-count">0</div>
+                </div>
+                
+                <div class="mobile-category" data-category="finance">
+                    <div class="mobile-category-content">
+                        <div class="mobile-category-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <span class="mobile-category-name">Finance</span>
+                    </div>
+                    <div class="mobile-task-count">0</div>
+                </div>
+                
+                <div class="mobile-category" data-category="education">
+                    <div class="mobile-category-content">
+                        <div class="mobile-category-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <span class="mobile-category-name">Education</span>
+                    </div>
+                    <div class="mobile-task-count">0</div>
+                </div>
+                
+                <div class="mobile-analytics-preview">
+                    <h4 class="mobile-analytics-title">Quick Stats</h4>
+                    <div class="mobile-stats-grid">
+                        <div class="mobile-stat-item">
+                            <span class="mobile-stat-value" id="mobileTotalTasks">0</span>
+                            <span class="mobile-stat-label">Total</span>
+                        </div>
+                        <div class="mobile-stat-item">
+                            <span class="mobile-stat-value" id="mobileCompletedTasks">0</span>
+                            <span class="mobile-stat-label">Completed</span>
+                        </div>
+                        <div class="mobile-stat-item">
+                            <span class="mobile-stat-value" id="mobilePendingTasks">0</span>
+                            <span class="mobile-stat-label">Pending</span>
+                        </div>
+                        <div class="mobile-stat-item">
+                            <span class="mobile-stat-value" id="mobileOverdueTasks">0</span>
+                            <span class="mobile-stat-label">Overdue</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="mobile-categories-container">
-            <h4 class="mobile-categories-title">Select Category</h4>
-            
-            <div class="mobile-category active" data-category="all">
-                <div class="mobile-category-content">
-                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                    <span class="mobile-category-name">All Tasks</span>
-                </div>
-                <div class="mobile-task-count">0</div>
-            </div>
-            
-            <div class="mobile-category" data-category="work">
-                <div class="mobile-category-content">
-                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <span class="mobile-category-name">Work</span>
-                </div>
-                <div class="mobile-task-count">0</div>
-            </div>
-            
-            <div class="mobile-category" data-category="personal">
-                <div class="mobile-category-content">
-                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <span class="mobile-category-name">Personal</span>
-                </div>
-                <div class="mobile-task-count">0</div>
-            </div>
-            
-            <div class="mobile-category" data-category="shopping">
-                <div class="mobile-category-content">
-                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <span class="mobile-category-name">Shopping</span>
-                </div>
-                <div class="mobile-task-count">0</div>
-            </div>
-            
-            <div class="mobile-category" data-category="health">
-                <div class="mobile-category-content">
-                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <span class="mobile-category-name">Health</span>
-                </div>
-                <div class="mobile-task-count">0</div>
-            </div>
-            
-            <div class="mobile-category" data-category="finance">
-                <div class="mobile-category-content">
-                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <span class="mobile-category-name">Finance</span>
-                </div>
-                <div class="mobile-task-count">0</div>
-            </div>
-            
-            <div class="mobile-category" data-category="education">
-                <div class="mobile-category-content">
-                    <div class="mobile-category-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <span class="mobile-category-name">Education</span>
-                </div>
-                <div class="mobile-task-count">0</div>
-            </div>
-            
-            <div class="mobile-analytics-preview">
-                <h4 class="mobile-analytics-title">Quick Stats</h4>
-                <div class="mobile-stats-grid">
-                    <div class="mobile-stat-item">
-                        <span class="mobile-stat-value" id="mobileTotalTasks">0</span>
-                        <span class="mobile-stat-label">Total</span>
-                    </div>
-                    <div class="mobile-stat-item">
-                        <span class="mobile-stat-value" id="mobileCompletedTasks">0</span>
-                        <span class="mobile-stat-label">Completed</span>
-                    </div>
-                    <div class="mobile-stat-item">
-                        <span class="mobile-stat-value" id="mobilePendingTasks">0</span>
-                        <span class="mobile-stat-label">Pending</span>
-                    </div>
-                    <div class="mobile-stat-item">
-                        <span class="mobile-stat-value" id="mobileOverdueTasks">0</span>
-                        <span class="mobile-stat-label">Overdue</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
         <!-- Add/Edit Task Modal -->
         <div class="modal" id="taskModal" aria-modal="true" role="dialog">
@@ -20367,94 +21488,176 @@ function initializeScrollableTaskList() {
     window.updateTaskCountDisplay = updateTaskCountDisplay;
 }
 
-// ========== ENHANCED MOBILE MENU FUNCTIONALITY ==========
-function initializeMobileMenu() {
-    const hamburger = document.querySelector('.mobile-hamburger');
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const overlay = document.querySelector('.mobile-sidebar-overlay');
-    const sidebar = document.querySelector('.sidebar'); // Use existing sidebar
-    const mobileSidebar = document.querySelector('.mobile-sidebar');
-    const closeBtn = document.querySelector('.mobile-sidebar-close');
-    const body = document.body;
-    
-    // Support both hamburger and toggle button
-    const toggleButton = hamburger || mobileMenuToggle;
-    const activeSidebar = mobileSidebar || sidebar;
-    
-    function openSidebar() {
-        if (overlay) overlay.classList.add('active');
-        if (activeSidebar) activeSidebar.classList.add('mobile-open');
-        body.classList.add('mobile-sidebar-open');
+class MobileSidebar {
+    constructor() {
+        this.hamburger = document.getElementById('mobileHamburger');
+        this.sidebar = document.querySelector('.sidebar'); // Use existing sidebar
+        this.overlay = document.getElementById('mobileSidebarOverlay');
+        this.closeBtn = document.getElementById('mobileSidebarClose');
+        this.body = document.body;
+        this.isOpen = false;
         
-        // Update toggle button icon if it exists
-        const icon = toggleButton?.querySelector('i');
-        if (icon) icon.className = 'fas fa-times';
+        // Only initialize if elements exist and we're on mobile
+        if (this.hamburger && this.sidebar && window.innerWidth <= 768) {
+            this.init();
+        }
     }
     
-    function closeSidebar() {
-        if (overlay) overlay.classList.remove('active');
-        if (activeSidebar) activeSidebar.classList.remove('mobile-open');
-        body.classList.remove('mobile-sidebar-open');
+    init() {
+        console.log('🔧 Initializing mobile sidebar...');
         
-        // Reset toggle button icon if it exists
-        const icon = toggleButton?.querySelector('i');
-        if (icon) icon.className = 'fas fa-bars';
-    }
-    
-    // Event listeners
-    if (toggleButton) toggleButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (activeSidebar?.classList.contains('mobile-open')) {
-            closeSidebar();
-        } else {
-            openSidebar();
+        // Hamburger click event
+        if (this.hamburger) {
+            this.hamburger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🍔 Hamburger clicked!');
+                this.toggle();
+            });
         }
-    });
-    
-    if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
-    if (overlay) overlay.addEventListener('click', closeSidebar);
-    
-    // Close when clicking outside on mobile
-    document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768) {
-            if (!activeSidebar?.contains(e.target) && !toggleButton?.contains(e.target)) {
-                closeSidebar();
-            }
+        
+        // Close button click event
+        if (this.closeBtn) {
+            this.closeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.close();
+            });
         }
-    });
-    
-    // Close on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && activeSidebar?.classList.contains('mobile-open')) {
-            closeSidebar();
+        
+        // Overlay click event
+        if (this.overlay) {
+            this.overlay.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.close();
+            });
         }
-    });
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            closeSidebar();
-        }
-    });
-    
-    // Enhanced category selection for mobile
-    const categories = document.querySelectorAll('.category');
-    const mobileCategories = document.querySelectorAll('.mobile-category');
-    const allCategories = [...categories, ...mobileCategories];
-    
-    allCategories.forEach(category => {
-        category.addEventListener('click', (e) => {
-            const categoryType = category.dataset.category;
-            
-            // Only close sidebar on mobile and if category actually changed
-            if (window.innerWidth <= 768 && categoryType !== currentCategory) {
-                setTimeout(closeSidebar, 300);
+        
+        // Mobile category click events
+        this.setupCategoryClicks();
+        
+        // Escape key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isOpen) {
+                this.close();
             }
         });
-    });
+        
+        // Update counts on load
+        this.updateMobileCategoryCounts();
+        
+        console.log('✅ Mobile sidebar initialized successfully');
+    }
     
-    console.log('✅ Enhanced mobile menu initialized');
+    toggle() {
+        console.log('🔄 Toggling sidebar, current state:', this.isOpen);
+        if (this.isOpen) {
+            this.close();
+        } else {
+            this.open();
+        }
+    }
+    
+    open() {
+        if (this.isOpen) return;
+        
+        console.log('📱 Opening mobile sidebar...');
+        this.isOpen = true;
+        
+        // Add classes for smooth animation
+        if (this.overlay) this.overlay.classList.add('active');
+        if (this.sidebar) this.sidebar.classList.add('mobile-open');
+        if (this.hamburger) this.hamburger.classList.add('active');
+        this.body.classList.add('mobile-sidebar-open');
+        
+        // Update hamburger icon
+        const hamburgerIcon = this.hamburger?.querySelector('i');
+        if (hamburgerIcon) {
+            hamburgerIcon.className = 'fas fa-times';
+        }
+        
+        console.log('✅ Mobile sidebar opened');
+    }
+    
+    close() {
+        if (!this.isOpen) return;
+        
+        console.log('📱 Closing mobile sidebar...');
+        this.isOpen = false;
+        
+        // Remove classes for smooth animation
+        if (this.overlay) this.overlay.classList.remove('active');
+        if (this.sidebar) this.sidebar.classList.remove('mobile-open');
+        if (this.hamburger) this.hamburger.classList.remove('active');
+        this.body.classList.remove('mobile-sidebar-open');
+        
+        // Reset hamburger icon
+        const hamburgerIcon = this.hamburger?.querySelector('i');
+        if (hamburgerIcon) {
+            hamburgerIcon.className = 'fas fa-bars';
+        }
+        
+        console.log('✅ Mobile sidebar closed');
+    }
+    
+    setupCategoryClicks() {
+        const categories = document.querySelectorAll('.category');
+        categories.forEach(category => {
+            category.addEventListener('click', (e) => {
+                const categoryName = category.dataset.category;
+                console.log('📂 Mobile category clicked:', categoryName);
+                
+                // Close sidebar after selection on mobile
+                if (window.innerWidth <= 768) {
+                    setTimeout(() => {
+                        this.close();
+                    }, 300);
+                }
+            });
+        });
+    }
+    
+    updateMobileCategoryCounts() {
+        // This will be called by the main app to update counts
+        console.log('🔢 Mobile category counts updated');
+    }
+    
+    // Public method to update counts from outside
+    updateCounts() {
+        this.updateMobileCategoryCounts();
+    }
 }
+
+// Initialize Mobile Sidebar properly
+function initializeMobileSidebar() {
+    // Only on mobile devices
+    if (window.innerWidth <= 768) {
+        window.mobileSidebar = new MobileSidebar();
+    }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeMobileSidebar);
+
+// Re-initialize on resize
+window.addEventListener('resize', function() {
+    if (window.innerWidth <= 768 && !window.mobileSidebar) {
+        initializeMobileSidebar();
+    } else if (window.innerWidth > 768 && window.mobileSidebar) {
+        // Clean up mobile sidebar on desktop
+        if (window.mobileSidebar.isOpen) {
+            window.mobileSidebar.close();
+        }
+        window.mobileSidebar = null;
+    }
+});
+
+function updateMobileCategoryCounts() {
+    if (window.mobileSidebar) {
+        window.mobileSidebar.updateCounts();
+    }
+}
+
 
 // ========== DYNAMIC HEIGHT ADJUSTMENT ==========
 function adjustLayoutForScreenSize() {
@@ -21004,10 +22207,11 @@ function animateDashboardCardsWithStats() {
                 }, 500);
             }
             
-            // Add progress bar
-            setTimeout(() => {
-                addRealTimeStatsBar(data.card, data.value, data.label, data.color, totalTasks, index);
-            }, 1000);
+            // REPLACE IT WITH:
+setTimeout(() => {
+    const percentage = totalTasks > 0 ? Math.round((data.value / totalTasks) * 100) : 0;
+    animateCardCircularProgress(data.card, percentage, index);
+}, 1000 + (index * 300));
             
         }, index * 300);
     });
@@ -21137,90 +22341,117 @@ function addRealTimeStatsBar(card, value, label, color, totalTasks, cardIndex) {
     let percentage = 0;
     
     if (label === 'Total Tasks') {
-        percentage = 100; // Total is always 100% of itself
+        percentage = 100;
     } else if (totalTasks > 0) {
         percentage = (value / totalTasks) * 100;
     }
     
     console.log(`📊 ${label}: ${value}/${totalTasks} = ${percentage}%`);
     
-    // Don't add bar if no data
-    if (value === 0 && label !== 'Total Tasks') {
-        return;
-    }
-    
-    // Remove existing stats bar if any
+    // Remove any existing stats bars/text that might be lingering
     const existingBar = card.querySelector('.dashboard-stats-bar');
     if (existingBar) {
         existingBar.remove();
     }
     
-    // Create stats bar
-    const statsBar = document.createElement('div');
-    statsBar.className = 'dashboard-stats-bar';
-    statsBar.innerHTML = `
-        <div class="stats-bar-container">
-            <div class="stats-bar-track">
-                <div class="stats-bar-fill" style="background: ${color}; width: 0%;"></div>
-            </div>
-            <div class="stats-bar-label">${Math.round(percentage)}%</div>
-        </div>
-    `;
+    // Remove any subtitle text elements
+    const existingSubtitle = card.querySelector('.card-subtitle');
+    if (existingSubtitle) {
+        existingSubtitle.remove();
+    }
     
-    // Styles
-    statsBar.style.cssText = `
-        margin-top: 0.75rem;
-        opacity: 0;
-        transform: translateY(15px);
-        transition: all 0.6s ease;
-    `;
+    // Store percentage on card for circular progress use
+    card.dataset.percentage = Math.round(percentage);
     
-    const container = statsBar.querySelector('.stats-bar-container');
-    container.style.cssText = `
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    `;
+    // DON'T CREATE ANY VISUAL ELEMENTS - just store the data
+    return percentage;
+}
+
+function animateCardCircularProgress(card, percentage, cardIndex) {
+    // Find circular progress elements in the card
+    let progressCircle = card.querySelector('.circular-progress');
+    let progressNumber = card.querySelector('.dashboard-value');
     
-    const track = statsBar.querySelector('.stats-bar-track');
-    track.style.cssText = `
-        flex: 1;
-        height: 8px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 4px;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    `;
+    // If no circular progress exists, create it
+    if (!progressCircle && card.querySelector('.dashboard-value')) {
+        createCardCircularProgress(card);
+        progressCircle = card.querySelector('.circular-progress');
+    }
     
-    const fill = statsBar.querySelector('.stats-bar-fill');
-    fill.style.cssText = `
-        height: 100%;
-        border-radius: 3px;
-        transition: width 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        box-shadow: 0 0 12px ${color}60;
-    `;
+    if (!progressCircle) return;
     
-    const labelEl = statsBar.querySelector('.stats-bar-label');
-    labelEl.style.cssText = `
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: rgba(255, 255, 255, 0.95);
-        min-width: 45px;
-        text-align: right;
-    `;
+    const circumference = 2 * Math.PI * 45; // radius of 45
+    let currentPercentage = 0;
     
-    card.appendChild(statsBar);
-    
-    // Animate the stats bar
-    setTimeout(() => {
-        statsBar.style.opacity = '1';
-        statsBar.style.transform = 'translateY(0)';
+    // Animate the circular progress
+    const animateInterval = setInterval(() => {
+        currentPercentage += 2; // Increment by 2% each frame
         
-        // Animate the fill
-        setTimeout(() => {
-            fill.style.width = `${percentage}%`;
-        }, 400);
-    }, cardIndex * 200 + 1500);
+        if (currentPercentage >= percentage) {
+            currentPercentage = percentage;
+            clearInterval(animateInterval);
+        }
+        
+        // Update circle stroke
+        const offset = circumference - (circumference * currentPercentage / 100);
+        const progressPath = progressCircle.querySelector('circle:last-child');
+        if (progressPath) {
+            progressPath.style.strokeDashoffset = offset;
+        }
+        
+        // Update percentage text in center
+        const percentageText = progressCircle.querySelector('.progress-percentage');
+        if (percentageText) {
+            percentageText.textContent = Math.round(currentPercentage) + '%';
+        }
+        
+    }, 50); // 50ms intervals for smooth animation
+}
+
+function createCardCircularProgress(card) {
+    const cardContent = card.querySelector('.card-content') || card;
+    const valueElement = card.querySelector('.dashboard-value');
+    
+    if (!valueElement) return;
+    
+    // Create circular progress container
+    const progressContainer = document.createElement('div');
+    progressContainer.className = 'circular-progress';
+    progressContainer.innerHTML = `
+        <svg width="90" height="90" viewBox="0 0 90 90">
+            <circle cx="45" cy="45" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="6"/>
+            <circle cx="45" cy="45" r="40" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="6" 
+                    stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2"
+                    transform="rotate(-90 45 45)" class="progress-circle"/>
+        </svg>
+        <div class="progress-percentage">0%</div>
+    `;
+    
+    // Style the container
+    progressContainer.style.cssText = `
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        width: 90px;
+        height: 90px;
+    `;
+    
+    // Style the percentage text
+    const percentageText = progressContainer.querySelector('.progress-percentage');
+    percentageText.style.cssText = `
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: rgba(255,255,255,0.9);
+        font-size: 0.8rem;
+        font-weight: 700;
+    `;
+    
+    // Add to card
+    cardContent.style.position = 'relative';
+    cardContent.appendChild(progressContainer);
 }
 
 function addViewStatsButtonsToCards() {
@@ -24262,18 +25493,20 @@ function editTask(taskId) {
 }
 
             function confirmDeleteTask(taskId) {
-                const task = tasks.find(t => t.id === taskId);
-                if (!task || !deleteModal) return;
-                
-                taskToDelete = taskId;
-                
-                const deleteTaskTitle = document.getElementById('deleteTaskTitle');
-                if (deleteTaskTitle) {
-                    deleteTaskTitle.textContent = `"${task.title}"`;
-                }
-                
-                deleteModal.classList.add('active');
-            }
+    const task = tasks.find(t => t.id === taskId);
+    if (!task || !deleteModal) return;
+    
+    taskToDelete = taskId;
+    
+    const deleteTaskTitle = document.getElementById('deleteTaskTitle');
+    if (deleteTaskTitle) {
+        deleteTaskTitle.textContent = `"${task.title}"`;
+    }
+    
+    // IMMEDIATE modal show - no setTimeout
+    deleteModal.classList.add('active');
+    console.log('✅ Delete modal shown immediately');
+}
 
             function deleteTask(taskId) {
     // Remove from main tasks
@@ -24421,6 +25654,19 @@ function collapseTab(tabType) {
     removeTabHighlight();
 }
 
+// ADD this missing function
+function removeTabHighlight() {
+    const tabContainer = document.querySelector('.task-filters-wrapper');
+    if (tabContainer) {
+        tabContainer.classList.remove(
+            'pending-highlighted',
+            'completed-highlighted', 
+            'today-highlighted',
+            'overall-highlighted'
+        );
+    }
+}
+
 // Specific expansion functions
 function expandCompletedTab() {
     const completedCount = tasks.filter(task => task.completed).length;
@@ -24507,18 +25753,19 @@ function highlightPendingTab() {
     }
 }
 
-function highlightTodayTab() {
-    const todayTab = document.querySelector('[data-filter="today"]');
+// ADD this missing function for today tab highlighting
+function highlightDueTodayTab() {
+    const todayTab = document.querySelector('.filter-btn[data-filter="today"]');
     if (todayTab) {
-        // Remove any existing highlight classes first
-        todayTab.classList.remove('tab-highlight-completed', 'tab-highlight-pending', 'tab-highlight-fade-out');
+        // Remove any existing highlights
+        todayTab.classList.remove('tab-highlight-completed', 'tab-highlight-pending');
         
-        // Add the highlight class
+        // Add blue highlight for today
         todayTab.classList.add('tab-highlight-today');
         
-        // Force style update
+        // Force blue styling
         todayTab.style.cssText += `
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
             color: white !important;
             transform: scale(1.08) translateY(-2px) !important;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.6) !important;
@@ -24758,14 +26005,20 @@ function removeTabHighlights() {
                         });
                     }
                     
-                    const deleteBtn = taskEl.querySelector('.task-action-btn.delete');
-                    if (deleteBtn) {
-                        deleteBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            confirmDeleteTask(task.id);
-                        });
-                    }
+                    // In renderTasks function, replace the delete button handler with:
+const deleteBtn = taskEl.querySelector('.task-action-btn.delete');
+if (deleteBtn) {
+    deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        
+        // IMMEDIATE modal appearance - no delays
+        const taskId = deleteBtn.dataset.taskId;
+        console.log('🗑️ Delete clicked immediately:', taskId);
+        confirmDeleteTask(taskId);
+    }, { once: false, capture: true });
+}
                     
                     taskList.appendChild(taskEl);
                 });
@@ -24909,25 +26162,472 @@ function renderFilteredTasks(filteredTasks) {
     tasks = originalTasks;
 }
 
-            function updateDashboard() {
-    if (!totalTasksValue || !completedTasksValue || !pendingTasksValue || !overdueTasksValue) return;
+            // ADD THE COMPREHENSIVE STATISTICS FUNCTION HERE
+        function calculateLiveStatistics() {
+            const now = new Date();
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            // Basic counts
+            const totalTasks = tasks.length;
+            const completedTasks = tasks.filter(task => task.completed).length;
+            const pendingTasks = tasks.filter(task => !task.completed).length;
+            const overdueTasks = tasks.filter(task => {
+                const dueDate = new Date(task.dueDate);
+                return !task.completed && dueDate < now;
+            }).length;
+            
+            // Today's tasks
+            const todaysTasks = tasks.filter(task => {
+                const dueDate = new Date(task.dueDate);
+                dueDate.setHours(0, 0, 0, 0);
+                return dueDate.getTime() === today.getTime();
+            });
+            
+            const todaysCompleted = todaysTasks.filter(task => task.completed).length;
+            const todaysPending = todaysTasks.filter(task => !task.completed).length;
+            
+            // This week's data
+            const weekStart = getWeekStart(today);
+            const weekEnd = new Date(weekStart.getTime() + 7 * 24 * 60 * 60 * 1000);
+            
+            const weekTasks = tasks.filter(task => {
+                const dueDate = new Date(task.dueDate);
+                return dueDate >= weekStart && dueDate < weekEnd;
+            });
+            
+            const weekCompleted = weekTasks.filter(task => task.completed).length;
+            
+            // Calculate rates and percentages
+            const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            const pendingRate = totalTasks > 0 ? Math.round((pendingTasks / totalTasks) * 100) : 0;
+            const overdueRate = totalTasks > 0 ? Math.round((overdueTasks / totalTasks) * 100) : 0;
+            const todayCompletionRate = todaysTasks.length > 0 ? Math.round((todaysCompleted / todaysTasks.length) * 100) : 0;
+            const weeklyCompletionRate = weekTasks.length > 0 ? Math.round((weekCompleted / weekTasks.length) * 100) : 0;
+            
+            // Productivity score (0-100)
+            let productivityScore = 0;
+            if (totalTasks > 0) {
+                const completionWeight = (completionRate * 0.4);
+                const overdueWeight = ((100 - overdueRate) * 0.3);
+                const todayWeight = (todayCompletionRate * 0.2);
+                const weeklyWeight = (weeklyCompletionRate * 0.1);
+                productivityScore = Math.round(completionWeight + overdueWeight + todayWeight + weeklyWeight);
+            }
+            
+            // Task creation trend (last 7 days)
+            const last7Days = [];
+            for (let i = 6; i >= 0; i--) {
+                const day = new Date(today);
+                day.setDate(day.getDate() - i);
+                day.setHours(0, 0, 0, 0);
+                
+                const dayEnd = new Date(day);
+                dayEnd.setHours(23, 59, 59, 999);
+                
+                const dayTasks = tasks.filter(task => {
+                    const createdDate = new Date(task.createdAt);
+                    return createdDate >= day && createdDate <= dayEnd;
+                });
+                
+                last7Days.push(dayTasks.length);
+            }
+            
+            const avgDailyCreation = last7Days.reduce((sum, count) => sum + count, 0) / 7;
+            
+            return {
+                // Basic counts
+                totalTasks,
+                completedTasks,
+                pendingTasks,
+                overdueTasks,
+                
+                // Today's data
+                todaysTasks: todaysTasks.length,
+                todaysCompleted,
+                todaysPending,
+                
+                // Weekly data
+                weekTasks: weekTasks.length,
+                weekCompleted,
+                
+                // Rates and percentages
+                completionRate,
+                pendingRate,
+                overdueRate,
+                todayCompletionRate,
+                weeklyCompletionRate,
+                
+                // Advanced metrics
+                productivityScore,
+                avgDailyCreation: Math.round(avgDailyCreation * 10) / 10,
+                
+                // Trends
+                last7Days,
+                
+                // Status indicators
+                isOnTrack: overdueRate < 20 && completionRate > 60,
+                needsAttention: overdueRate > 30 || completionRate < 40,
+                isExcellent: completionRate > 80 && overdueRate < 10
+            };
+        }
+
+        // THEN REPLACE YOUR EXISTING updateDashboard() function with this enhanced version
+        function updateDashboard() {
+            const stats = calculateLiveStatistics();
+            
+            console.log('📊 Live Statistics:', stats);
+            
+            // Update basic counts with animation
+            updateCardValue('totalTasksValue', stats.totalTasks, `${stats.totalTasks} tasks total`);
+            updateCardValue('completedTasksValue', stats.completedTasks, `${stats.completionRate}% complete`);
+            updateCardValue('pendingTasksValue', stats.pendingTasks, `${stats.pendingRate}% pending`);
+            updateCardValue('overdueTasksValue', stats.overdueTasks, `${stats.overdueRate}% overdue`);
+            
+            // Update card appearances based on performance
+            updateCardAppearance('totalTasksValue', stats.totalTasks, 'primary');
+            updateCardAppearance('completedTasksValue', stats.completedTasks, 'success', stats.completionRate);
+            updateCardAppearance('pendingTasksValue', stats.pendingTasks, 'warning', stats.pendingRate);
+            updateCardAppearance('overdueTasksValue', stats.overdueTasks, 'danger', stats.overdueRate);
+            
+            // Add productivity insights
+            updateProductivityInsights(stats);
+            
+            // Update today's progress if card exists
+            updateTodaysProgress(stats);
+        }
+
+        function updateCardValue(elementId, newValue, subtitle = '') {
+    const element = document.getElementById(elementId);
+    if (!element) return;
     
-    const totalTasks = tasks.length;
-    const completedTasks = tasks.filter(task => task.completed).length;
-    const pendingTasks = tasks.filter(task => !task.completed).length;
-    const overdueTasks = tasks.filter(task => {
-        const dueDate = new Date(task.dueDate);
-        return !task.completed && dueDate < new Date();
-    }).length;
+    const currentValue = parseInt(element.textContent) || 0;
     
-    console.log(`📊 Dashboard Data: Total=${totalTasks}, Completed=${completedTasks}, Pending=${pendingTasks}, Overdue=${overdueTasks}`);
+    if (currentValue !== newValue) {
+        // Animate the number change
+        animateNumberChange(element, currentValue, newValue);
+    }
     
-    // Set the actual values
-    totalTasksValue.textContent = totalTasks;
-    completedTasksValue.textContent = completedTasks;
-    pendingTasksValue.textContent = pendingTasks;
-    overdueTasksValue.textContent = overdueTasks;
+    // DON'T add subtitle anymore - we removed that display
 }
+
+        function animateNumberChange(element, fromValue, toValue, subtitle = '') {
+    const card = element.closest('.dashboard-card');
+    const duration = 800;
+    const steps = 20;
+    const stepValue = (toValue - fromValue) / steps;
+    const stepDuration = duration / steps;
+    
+    let currentStep = 0;
+    
+    // Add animation class to card
+    if (card) {
+        card.classList.add('updating');
+    }
+    
+    const interval = setInterval(() => {
+        currentStep++;
+        const currentValue = Math.round(fromValue + (stepValue * currentStep));
+        
+        element.textContent = currentValue;
+        
+        // Visual feedback on change
+        element.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            element.style.transform = 'scale(1)';
+        }, 100);
+        
+        if (currentStep >= steps) {
+            clearInterval(interval);
+            element.textContent = toValue;
+            
+            // Remove animation class
+            if (card) {
+                card.classList.remove('updating');
+            }
+        }
+    }, stepDuration);
+}
+
+        function updateCardAppearance(elementId, value, type, percentage = null) {
+            const element = document.getElementById(elementId);
+            const card = element?.closest('.dashboard-card');
+            if (!card) return;
+            
+            // Remove existing status classes
+            card.classList.remove('excellent', 'good', 'warning', 'critical', 'empty');
+            
+            if (value === 0) {
+                card.classList.add('empty');
+                return;
+            }
+            
+            // Apply status based on type and percentage
+            if (type === 'success' && percentage !== null) {
+                if (percentage >= 80) card.classList.add('excellent');
+                else if (percentage >= 60) card.classList.add('good');
+                else if (percentage >= 40) card.classList.add('warning');
+                else card.classList.add('critical');
+            } else if (type === 'danger' && percentage !== null) {
+                if (percentage === 0) card.classList.add('excellent');
+                else if (percentage <= 10) card.classList.add('good');
+                else if (percentage <= 25) card.classList.add('warning');
+                else card.classList.add('critical');
+            } else if (type === 'warning' && percentage !== null) {
+                if (percentage <= 20) card.classList.add('excellent');
+                else if (percentage <= 40) card.classList.add('good');
+                else if (percentage <= 60) card.classList.add('warning');
+                else card.classList.add('critical');
+            }
+        }
+
+        function updateProductivityInsights(stats) {
+    // Find or create insights container
+    let insightsContainer = document.getElementById('productivityInsights');
+    
+    if (!insightsContainer) {
+        // Create insights container after dashboard
+        const dashboard = document.querySelector('.dashboard');
+        if (dashboard) {
+            insightsContainer = document.createElement('div');
+            insightsContainer.id = 'productivityInsights';
+            insightsContainer.className = 'productivity-insights';
+            dashboard.parentNode.insertBefore(insightsContainer, dashboard.nextSibling);
+        }
+    }
+    
+    if (!insightsContainer) return;
+    
+    // HIDE INSIGHTS ON "ALL TASKS" CATEGORY
+    if (currentCategory === 'all') {
+        insightsContainer.style.display = 'none';
+        return;
+    }
+    
+    // SHOW INSIGHTS ON OTHER CATEGORIES
+    insightsContainer.style.display = 'block';
+    
+    // Generate insights based on data
+    const insights = generateInsights(stats);
+    
+    insightsContainer.innerHTML = `
+        <div class="insights-header">
+            <h3>📊 ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} Category Insights</h3>
+            <div class="productivity-score ${getScoreClass(stats.productivityScore)}">
+                <span class="score-label">Score:</span>
+                <span class="score-value">${stats.productivityScore}/100</span>
+            </div>
+        </div>
+        <div class="insights-grid">
+            <div class="insight-card ${stats.isExcellent ? 'excellent' : stats.isOnTrack ? 'good' : 'needs-attention'}">
+                <div class="insight-icon">
+                    ${stats.isExcellent ? '🏆' : stats.isOnTrack ? '✅' : '⚠️'}
+                </div>
+                <div class="insight-content">
+                    <div class="insight-title">Category Status</div>
+                    <div class="insight-text">
+                        ${stats.isExcellent ? 'Excellent work!' : 
+                          stats.isOnTrack ? 'On track' : 
+                          'Needs attention'}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insight-card">
+                <div class="insight-icon">📅</div>
+                <div class="insight-content">
+                    <div class="insight-title">Today's Progress</div>
+                    <div class="insight-text">
+                        ${stats.todaysCompleted}/${stats.todaysTasks} tasks (${stats.todayCompletionRate}%)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insight-card">
+                <div class="insight-icon">📈</div>
+                <div class="insight-content">
+                    <div class="insight-title">Weekly Rate</div>
+                    <div class="insight-text">
+                        ${stats.weeklyCompletionRate}% completion rate
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insight-card">
+                <div class="insight-icon">⚡</div>
+                <div class="insight-content">
+                    <div class="insight-title">Daily Average</div>
+                    <div class="insight-text">
+                        ${stats.avgDailyCreation} tasks created/day
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="insights-recommendations">
+            ${insights.map(insight => `
+                <div class="recommendation ${insight.type}">
+                    <i class="fas fa-${insight.icon}"></i>
+                    <span>${insight.message}</span>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+        function getScoreClass(score) {
+            if (score >= 80) return 'excellent';
+            if (score >= 60) return 'good';
+            if (score >= 40) return 'average';
+            return 'needs-improvement';
+        }
+
+        function generateInsights(stats) {
+            const insights = [];
+            
+            if (stats.overdueRate > 30) {
+                insights.push({
+                    type: 'warning',
+                    icon: 'exclamation-triangle',
+                    message: `${stats.overdueRate}% of tasks are overdue. Consider prioritizing or rescheduling.`
+                });
+            }
+            
+            if (stats.completionRate > 80) {
+                insights.push({
+                    type: 'success',
+                    icon: 'trophy',
+                    message: 'Excellent completion rate! You\'re highly productive.'
+                });
+            }
+            
+            if (stats.todayCompletionRate === 100 && stats.todaysTasks > 0) {
+                insights.push({
+                    type: 'success',
+                    icon: 'check-circle',
+                    message: 'Perfect! You\'ve completed all of today\'s tasks.'
+                });
+            }
+            
+            if (stats.avgDailyCreation > 5) {
+                insights.push({
+                    type: 'info',
+                    icon: 'lightbulb',
+                    message: 'High task creation rate. Consider batching similar tasks.'
+                });
+            }
+            
+            if (insights.length === 0) {
+                insights.push({
+                    type: 'info',
+                    icon: 'chart-line',
+                    message: 'Keep up the good work! Stay consistent with your task management.'
+                });
+            }
+            
+            return insights.slice(0, 3); // Show max 3 insights
+        }
+
+        // ADD THE TODAY'S PROGRESS FUNCTIONS RIGHT HERE
+        function updateTodaysProgress(stats) {
+            // Find or create today's progress card
+            let todayCard = document.getElementById('todayProgressCard');
+            
+            if (!todayCard && stats.todaysTasks > 0) {
+                // Create today's progress card
+                const dashboard = document.querySelector('.dashboard');
+                if (dashboard) {
+                    todayCard = document.createElement('div');
+                    todayCard.id = 'todayProgressCard';
+                    todayCard.className = 'dashboard-card today-progress';
+                    dashboard.appendChild(todayCard);
+                }
+            }
+            
+            if (todayCard) {
+                if (stats.todaysTasks === 0) {
+                    todayCard.style.display = 'none';
+                } else {
+                    todayCard.style.display = 'block';
+                    todayCard.innerHTML = `
+                        <div class="card-content">
+                            <div class="card-header">
+                                <h3>Today's Progress</h3>
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                            <div class="card-body">
+                                <div class="progress-circle-container">
+                                    <div class="circular-progress" data-percentage="${stats.todayCompletionRate}">
+                                        <div class="circle">
+                                            <div class="mask full">
+                                                <div class="fill"></div>
+                                            </div>
+                                            <div class="mask half">
+                                                <div class="fill"></div>
+                                            </div>
+                                            <div class="inside-circle">
+                                                <div class="percentage">${stats.todayCompletionRate}%</div>
+                                                <div class="label">Complete</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="today-stats">
+                                    <div class="stat">
+                                        <span class="number">${stats.todaysCompleted}</span>
+                                        <span class="label">Completed</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="number">${stats.todaysPending}</span>
+                                        <span class="label">Remaining</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Animate the circular progress
+                    setTimeout(() => {
+                        animateCircularProgress(todayCard, stats.todayCompletionRate);
+                    }, 500);
+                }
+            }
+        }
+
+        function animateCircularProgress(card, percentage) {
+            const circle = card.querySelector('.circular-progress');
+            if (!circle) return;
+            
+            const fills = circle.querySelectorAll('.fill');
+            const percentageEl = circle.querySelector('.percentage');
+            
+            // Animate to percentage
+            let currentPercentage = 0;
+            const increment = percentage / 50; // 50 steps
+            
+            const interval = setInterval(() => {
+                currentPercentage += increment;
+                
+                if (currentPercentage >= percentage) {
+                    currentPercentage = percentage;
+                    clearInterval(interval);
+                }
+                
+                // Update visual
+                percentageEl.textContent = Math.round(currentPercentage) + '%';
+                
+                // Update circle fill
+                const rotation = (currentPercentage / 100) * 180;
+                
+                if (currentPercentage <= 50) {
+                    fills[0].style.transform = `rotate(${rotation}deg)`;
+                    fills[1].style.transform = 'rotate(0deg)';
+                } else {
+                    fills[0].style.transform = 'rotate(180deg)';
+                    fills[1].style.transform = `rotate(${rotation}deg)`;
+                }
+            }, 20);
+        }
 
 
 
@@ -25842,6 +27542,7 @@ if (taskId) {
         finalTask = tasks[taskIndex];
         showNotification('Task updated successfully!', 'success');
     }
+// In the saveTask() function, replace the section after "Creating new task" with:
 } else {
     // Creating new task
     taskData.id = generateId();
@@ -25849,19 +27550,22 @@ if (taskId) {
     finalTask = taskData;
     showNotification('Task created successfully!', 'success');
 
-    // ADD THE NEW CODE HERE - right after new task creation:
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const taskDate = new Date(dueDateObj);
-        taskDate.setHours(0, 0, 0, 0);
-        
-        setTimeout(() => {
-            if (taskDate.getTime() === today.getTime()) {
-                expandTodayTab();
-            } else {
-                expandPendingTab();
-            }
-        }, 800);
+    // ENHANCED: Check if task is due today and highlight accordingly
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const taskDate = new Date(dueDateObj);
+    taskDate.setHours(0, 0, 0, 0);
+    
+    setTimeout(() => {
+        if (taskDate.getTime() === today.getTime()) {
+            console.log('🔵 Task due today - highlighting today tab');
+            expandTodayTab();
+            highlightDueTodayTab(); // Add this call
+        } else {
+            expandPendingTab();
+            highlightPendingTab(); // Add this call
+        }
+    }, 800);
 }
 
 
@@ -25902,6 +27606,42 @@ categories.forEach(category => {
     });
 });
 
+// Add this to your existing task management code
+function filterTasks(category) {
+    console.log('Filtering tasks by category:', category);
+    
+    // Update current category
+    currentCategory = category;
+    
+    // Update category UI
+    document.querySelectorAll('.category').forEach(cat => cat.classList.remove('active'));
+    const categoryElement = document.querySelector(`[data-category="${category}"]`);
+    if (categoryElement) {
+        categoryElement.classList.add('active');
+    }
+    
+    // Update category title and description
+    const currentCategoryEl = document.getElementById('currentCategory');
+    const categoryDescriptionEl = document.getElementById('categoryDescription');
+    
+    if (currentCategoryEl) {
+        currentCategoryEl.innerHTML = `${categoryIcons[category]} ${category.charAt(0).toUpperCase() + category.slice(1)} Tasks`;
+    }
+    
+    if (categoryDescriptionEl) {
+        categoryDescriptionEl.textContent = categoryDescriptions[category];
+    }
+    
+    // Render tasks with new filter
+    renderTasks();
+    updateDashboard();
+    
+    // Update mobile counts after filtering
+    setTimeout(() => {
+        updateMobileCategoryCounts();
+    }, 100);
+}
+
 // Enhanced category switching with 3D animations - ADD THIS NEW FUNCTION:
 function switchCategoryWith3D(newCategory) {
     const taskWrapper = document.querySelector('.task-list-wrapper') || 
@@ -25932,41 +27672,44 @@ function switchCategoryWith3D(newCategory) {
             newCategoryElement.classList.add('active', 'switching-active');
         }
         
-        // Update current category
-        currentCategory = newCategory;
-        
-        // Update category title and description
-        const currentCategoryEl = document.getElementById('currentCategory');
-        const categoryDescriptionEl = document.getElementById('categoryDescription');
-        
-        if (currentCategoryEl) {
-            currentCategoryEl.innerHTML = `${categoryIcons[newCategory]} ${newCategory.charAt(0).toUpperCase() + newCategory.slice(1)} Tasks`;
+        // In the category click handler, add this after currentCategory is updated:
+currentCategory = newCategory;
+
+// Update category title and description
+const currentCategoryEl = document.getElementById('currentCategory');
+const categoryDescriptionEl = document.getElementById('categoryDescription');
+
+if (currentCategoryEl) {
+    currentCategoryEl.innerHTML = `${categoryIcons[newCategory]} ${newCategory.charAt(0).toUpperCase() + newCategory.slice(1)} Tasks`;
+}
+
+if (categoryDescriptionEl) {
+    categoryDescriptionEl.textContent = categoryDescriptions[newCategory];
+}
+
+// Show/hide dashboard based on category
+const dashboard = document.querySelector('.dashboard');
+const taskListWrapper = document.getElementById('taskListWrapper');
+
+if (dashboard) {
+    if (newCategory === 'all') {
+        dashboard.classList.remove('hidden');
+        if (taskListWrapper) {
+            taskListWrapper.classList.remove('expanded');
         }
-        
-        if (categoryDescriptionEl) {
-            categoryDescriptionEl.textContent = categoryDescriptions[newCategory];
+    } else {
+        dashboard.classList.add('hidden');
+        if (taskListWrapper) {
+            taskListWrapper.classList.add('expanded');
         }
-        
-        // Show/hide dashboard based on category
-        const dashboard = document.querySelector('.dashboard');
-        const taskListWrapper = document.getElementById('taskListWrapper');
-        
-        if (dashboard) {
-            if (newCategory === 'all') {
-                dashboard.classList.remove('hidden');
-                if (taskListWrapper) {
-                    taskListWrapper.classList.remove('expanded');
-                }
-            } else {
-                dashboard.classList.add('hidden');
-                if (taskListWrapper) {
-                    taskListWrapper.classList.add('expanded');
-                }
-            }
-        }
-        
-        // Render tasks with new filter
-        renderTasks();
+    }
+}
+
+// Render tasks with new filter
+renderTasks();
+
+// UPDATE INSIGHTS BASED ON NEW CATEGORY
+updateDashboard(); // This will call updateProductivityInsights with the category check
         
         setTimeout(() => {
             // Complete the transition
@@ -26028,10 +27771,10 @@ function initializeTaskHoverEffects() {
                         const filter = btn.dataset.filter;
                         if (filter === currentFilter) return;
 
-                        // Add highlighting based on filter
-        if (filter === 'today') {
-            highlightTodayTab();
-        }
+                        // To this:
+if (filter === 'today') {
+    highlightDueTodayTab(); // Use the existing function
+}
                         
                         // Remove active from all filter buttons
                         taskFilterBtns.forEach(filterBtn => {
@@ -26323,6 +28066,7 @@ document.addEventListener('keydown', (e) => {
                     renderTasks();
                     updateDashboard();
                     updateCategoryCounts();
+                    updateMobileCategoryCounts();
                 }
             }
 
@@ -30174,13 +31918,9 @@ function createFullViewTaskHTML(task) {
 }
 
 function handleFullViewActions(e) {
-    // Don't interfere with scroll events
-    if (e.type === 'wheel' || e.type === 'scroll' || e.type === 'touchmove') {
-        return;
-    }
-    
     e.preventDefault();
     e.stopPropagation();
+    e.stopImmediatePropagation();
     
     const target = e.target;
     const editBtn = target.closest('.task-action-btn.edit');
@@ -30196,12 +31936,15 @@ function handleFullViewActions(e) {
         return;
     }
     
-    // Handle delete button click
+    // Handle delete button click - IMMEDIATE
     if (deleteBtn && !editBtn) {
         const taskId = deleteBtn.dataset.taskId;
         const task = tasks.find(t => t.id === taskId);
         
+        console.log('🗑️ Full view delete clicked immediately:', taskId);
+        
         if (task) {
+            // Call IMMEDIATELY without delay
             showFullViewDeleteConfirmation(task, deleteBtn);
         }
         return;
