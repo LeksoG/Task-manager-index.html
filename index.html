@@ -818,6 +818,13 @@
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
+        .auth-submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         .auth-error-message {
             background: rgba(244, 67, 54, 0.1);
             border: 1px solid rgba(244, 67, 54, 0.3);
@@ -845,6 +852,52 @@
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
+        }
+
+        /* Auth Form Blocking Styles */
+        .auth-form.blocked {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-form.blocked .auth-form-group,
+        .auth-form.blocked .auth-submit-btn,
+        .auth-form.blocked .auth-switch {
+            filter: blur(3px);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .auth-block-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(244, 67, 54, 0.1);
+            backdrop-filter: blur(2px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            border-radius: 15px;
+            border: 2px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .auth-block-message {
+            color: var(--error);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .auth-block-timer {
+            color: var(--error);
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
         }
 
         /* Enhanced Navigation - Hamburger only shows on task tab */
@@ -1568,7 +1621,7 @@
             font-weight: 700;
         }
 
-        /* Enhanced Calendar Header - Simplified */
+        /* Enhanced Calendar Header - Fixed for Mobile */
         .calendar-header {
             display: flex;
             justify-content: center;
@@ -1591,6 +1644,9 @@
             border: 1px solid var(--border-color);
             backdrop-filter: blur(15px);
             box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 600px;
+            justify-content: space-between;
         }
 
         .calendar-nav-btn {
@@ -1605,10 +1661,9 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            min-width: 90px;
-            justify-content: center;
             font-size: 0.85rem;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .calendar-nav-btn:hover {
@@ -1627,7 +1682,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 0.5px;
-            min-width: 200px;
+            flex: 1;
+            text-align: center;
         }
 
         .add-event-btn {
@@ -1644,6 +1700,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            flex-shrink: 0;
         }
 
         .add-event-btn:hover {
@@ -1673,24 +1730,24 @@
             justify-content: center;
         }
 
-        /* Enhanced Calendar Grid with Rounded Edges */
+        /* Enhanced Calendar Grid with Better Mobile Spacing */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 3px;
+            gap: 4px;
             background: var(--bg-secondary);
             border-radius: 25px;
             backdrop-filter: blur(15px);
             border: 1px solid var(--border-color);
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            padding: 15px;
+            padding: 20px;
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
         }
 
-        /* Enhanced Calendar Days with Better Rounded Edges */
+        /* Enhanced Calendar Days with Better Spacing */
         .calendar-day {
             aspect-ratio: 1;
             display: flex;
@@ -1702,9 +1759,9 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
             position: relative;
-            min-height: 80px;
+            min-height: 70px;
             color: var(--text-primary);
-            font-size: 1.1rem;
+            font-size: 1rem;
             border-radius: 15px;
             border: 2px solid transparent;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -1723,7 +1780,7 @@
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.6), 0 8px 25px rgba(102, 126, 234, 0.4);
             transform: scale(1.05);
             z-index: 1;
@@ -1789,7 +1846,7 @@
         .calendar-day.selected {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.8), 0 10px 35px rgba(102, 126, 234, 0.6);
             transform: scale(1.08);
             z-index: 3;
@@ -2604,29 +2661,21 @@
             opacity: 0.6;
         }
 
-        /* MOBILE RESPONSIVE STYLES */
+        /* MOBILE RESPONSIVE STYLES - IMPROVED */
         @media (max-width: 1024px) {
-            /* Mobile-specific changes */
             .mobile-menu-btn {
                 display: flex;
             }
 
-            /* Hide profile button on mobile */
             .profile-container {
                 display: none;
             }
 
-            /* Adjust navigation center for mobile */
             .nav-center {
                 position: relative;
                 left: auto;
                 transform: none;
                 margin-left: 60px;
-            }
-
-            /* Show mobile menu btn only on task tab */
-            .nav-tab.active[data-tab="task-manager"] ~ .mobile-menu-btn {
-                display: flex;
             }
 
             .main-content {
@@ -2638,29 +2687,40 @@
                 flex-direction: column;
             }
 
-            /* Calendar mobile adjustments */
+            /* Improved Mobile Calendar Controls */
             .calendar-header {
-                flex-direction: column;
-                gap: 15px;
                 margin-bottom: 20px;
+                padding: 0 10px;
             }
 
             .calendar-controls {
-                gap: 20px;
-                padding: 10px 20px;
+                flex-direction: row;
+                gap: 15px;
+                padding: 8px 15px;
                 width: 100%;
-                justify-content: center;
-            }
-
-            .calendar-month-year {
-                font-size: 1.2rem;
-                min-width: 180px;
+                max-width: 100%;
+                align-items: center;
+                justify-content: space-between;
             }
 
             .calendar-nav-btn {
-                min-width: 80px;
                 padding: 6px 12px;
                 font-size: 0.8rem;
+                min-width: auto;
+                flex-shrink: 0;
+            }
+
+            .calendar-month-year {
+                font-size: 1.1rem;
+                flex: 1;
+                min-width: auto;
+                margin: 0 10px;
+            }
+
+            .add-event-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                flex-shrink: 0;
             }
 
             .calendar-container {
@@ -2668,9 +2728,10 @@
             }
 
             .calendar-grid {
-                padding: 10px;
+                padding: 15px;
                 border-radius: 20px;
                 max-width: 100%;
+                gap: 3px;
             }
 
             .calendar-day {
@@ -2723,17 +2784,6 @@
                 width: 250px;
             }
 
-            .calendar-controls {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-            .calendar-month-year {
-                order: -1;
-                margin-bottom: 10px;
-            }
-
             .task-grid {
                 grid-template-columns: 1fr;
             }
@@ -2779,8 +2829,18 @@
             }
 
             .calendar-nav-btn {
-                min-width: 70px;
-                padding: 5px 10px;
+                padding: 5px 8px;
+                font-size: 0.75rem;
+                min-width: auto;
+            }
+
+            .calendar-month-year {
+                font-size: 1rem;
+                margin: 0 5px;
+            }
+
+            .add-event-btn {
+                padding: 5px 8px;
                 font-size: 0.75rem;
             }
 
@@ -3447,6 +3507,9 @@
         let swipeThreshold = 50;
         let isSwipeActive = false;
 
+        // Login attempt tracking
+        let loginAttempts = {};
+
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             console.log('TaskFlow Pro Enhanced v3.0 initializing...');
@@ -3650,6 +3713,92 @@
             }
         }
 
+        // Login Attempt Blocking System
+        function isLoginBlocked(email) {
+            const userAttempts = loginAttempts[email];
+            if (!userAttempts) return false;
+            
+            // Check if still blocked
+            if (userAttempts.blockedUntil && userAttempts.blockedUntil > Date.now()) {
+                return true;
+            }
+            
+            // Clear expired block
+            if (userAttempts.blockedUntil && userAttempts.blockedUntil <= Date.now()) {
+                delete loginAttempts[email];
+                return false;
+            }
+            
+            return false;
+        }
+
+        function addLoginAttempt(email) {
+            if (!loginAttempts[email]) {
+                loginAttempts[email] = { attempts: 0, blockedUntil: null };
+            }
+            
+            loginAttempts[email].attempts++;
+            
+            if (loginAttempts[email].attempts >= 3) {
+                // Block for 1 minute
+                loginAttempts[email].blockedUntil = Date.now() + (60 * 1000);
+                loginAttempts[email].attempts = 0; // Reset attempts after blocking
+                return true; // Blocked
+            }
+            
+            return false; // Not blocked yet
+        }
+
+        function clearLoginAttempts(email) {
+            delete loginAttempts[email];
+        }
+
+        function showLoginBlock(email) {
+            const loginForm = document.getElementById('loginForm');
+            const timeRemaining = Math.ceil((loginAttempts[email].blockedUntil - Date.now()) / 1000);
+            
+            loginForm.classList.add('blocked');
+            
+            // Create block overlay
+            const blockOverlay = document.createElement('div');
+            blockOverlay.className = 'auth-block-overlay';
+            blockOverlay.innerHTML = `
+                <div class="auth-block-message">
+                    🚫 Too many failed attempts<br>
+                    Account temporarily locked
+                </div>
+                <div class="auth-block-timer" id="blockTimer">${timeRemaining}s</div>
+            `;
+            
+            loginForm.appendChild(blockOverlay);
+            
+            // Update timer
+            const timer = setInterval(() => {
+                const remaining = Math.ceil((loginAttempts[email].blockedUntil - Date.now()) / 1000);
+                const timerElement = document.getElementById('blockTimer');
+                
+                if (remaining <= 0 || !timerElement) {
+                    clearInterval(timer);
+                    hideLoginBlock(email);
+                } else {
+                    timerElement.textContent = `${remaining}s`;
+                }
+            }, 1000);
+        }
+
+        function hideLoginBlock(email) {
+            const loginForm = document.getElementById('loginForm');
+            const blockOverlay = loginForm.querySelector('.auth-block-overlay');
+            
+            loginForm.classList.remove('blocked');
+            if (blockOverlay) {
+                blockOverlay.remove();
+            }
+            
+            // Clear the block
+            clearLoginAttempts(email);
+        }
+
         // Swipe Gestures for Mobile
         function initializeSwipeGestures() {
             const body = document.body;
@@ -3835,8 +3984,17 @@
                 });
             });
 
-            // Window click handling
+            // Enhanced Window click handling - Fixed to close search when clicking outside
             document.addEventListener('click', function(e) {
+                // Close search when clicking outside
+                const searchContainer = e.target.closest('.search-container');
+                const searchBtn = e.target.closest('.search-btn');
+                const navCenter = e.target.closest('.nav-center');
+                
+                if (!searchContainer && !searchBtn && !navCenter && searchActive) {
+                    toggleSearch();
+                }
+
                 // Close dropdowns when clicking outside
                 const profileDropdown = document.getElementById('profileDropdown');
                 const profileButton = e.target.closest('.profile-button');
@@ -3851,8 +4009,6 @@
                 }
 
                 // Close search results when clicking outside
-                const searchContainer = e.target.closest('.search-container');
-                const searchBtn = e.target.closest('.search-btn');
                 if (!searchContainer && !searchBtn && searchActive) {
                     hideSearchResults();
                 }
@@ -3870,7 +4026,7 @@
                 }
             });
 
-            // Keyboard shortcuts
+            // Enhanced Keyboard shortcuts
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     closeTaskModal();
@@ -3999,6 +4155,14 @@
             document.getElementById('loginForm').reset();
             document.getElementById('signupForm').reset();
             hideAuthError();
+            
+            // Remove any login blocks
+            const loginForm = document.getElementById('loginForm');
+            const blockOverlay = loginForm.querySelector('.auth-block-overlay');
+            if (blockOverlay) {
+                loginForm.classList.remove('blocked');
+                blockOverlay.remove();
+            }
         }
 
         function switchAuthMode(mode) {
@@ -4016,11 +4180,15 @@
             document.getElementById('authErrorMessage').classList.remove('show');
         }
 
-        function showLoginProgress(username) {
+        function showLoginProgress(username, isSignup = false) {
             const loginProgress = document.getElementById('loginProgress');
             const progressText = document.getElementById('loginProgressText');
             
-            progressText.textContent = `Logging in with ${username}`;
+            if (isSignup) {
+                progressText.textContent = `Signing up as ${username}`;
+            } else {
+                progressText.textContent = `Logging in with ${username}`;
+            }
             loginProgress.classList.add('show');
         }
 
@@ -4040,18 +4208,35 @@
                 return;
             }
 
+            // Check if login is blocked
+            if (isLoginBlocked(email)) {
+                showLoginBlock(email);
+                return;
+            }
+
             const existingUsers = JSON.parse(localStorage.getItem('taskflow_users') || '{}');
             const user = existingUsers[email];
             
             if (!user) {
                 showAuthError('This account does not exist. Please create an account to continue.');
+                const blocked = addLoginAttempt(email);
+                if (blocked) {
+                    setTimeout(() => showLoginBlock(email), 500);
+                }
                 return;
             }
             
             if (user.password !== password) {
                 showAuthError('Incorrect password. Please try again.');
+                const blocked = addLoginAttempt(email);
+                if (blocked) {
+                    setTimeout(() => showLoginBlock(email), 500);
+                }
                 return;
             }
+            
+            // Successful login - clear attempts
+            clearLoginAttempts(email);
             
             const submitBtn = document.getElementById('loginSubmitBtn');
             submitBtn.textContent = 'Logging in...';
@@ -4101,12 +4286,13 @@
             }
             
             const submitBtn = document.getElementById('signupSubmitBtn');
-            submitBtn.textContent = 'Creating account...';
+            submitBtn.textContent = 'Signing up...';
             submitBtn.disabled = true;
             
             closeAuthModal();
-            showLoginProgress(name);
+            showLoginProgress(name, true);
             
+            // Show "Signing up" for 3 seconds, then go directly to main app
             setTimeout(() => {
                 const newUser = {
                     name: name,
@@ -4114,7 +4300,7 @@
                     email: email,
                     password: password,
                     createdAt: new Date().toISOString(),
-                    isNewUser: true
+                    isNewUser: false // Don't show version splash for new signups
                 };
                 
                 existingUsers[email] = newUser;
@@ -4126,7 +4312,7 @@
                 showMainApp();
                 submitBtn.textContent = 'Sign Up';
                 submitBtn.disabled = false;
-            }, 2000);
+            }, 3000);
         }
 
         // Account Management
@@ -4998,17 +5184,6 @@
             } else {
                 listElement.innerHTML = dayEvents.map(event => `
                     <div class="event-popup-item">
-                        <div class="event-popup-item-header">
-                            <div class="event-popup-item-title">${event.title}</div>
-                            <div class="event-popup-item-actions">
-                                <button class="event-reschedule-btn" onclick="rescheduleEvent(${event.id})">
-                                    📅 Reschedule
-                                </button>
-                                <button class="event-delete-btn" onclick="deleteEvent(${event.id})">
-                                    🗑️ Delete
-                                </button>
-                            </div>
-                        </div>
                         <div class="event-popup-item-time">${event.time}</div>
                         ${event.location ? `<div class="event-popup-item-location">${event.location}</div>` : ''}
                         ${event.description ? `<div class="event-popup-item-description">${event.description}</div>` : ''}
@@ -5171,7 +5346,10 @@
         console.log('New Features: Task reminders, mobile swipe gestures, reschedule events, enhanced calendar');
         console.log('Mobile: Swipe from left edge to open sidebar (task tab only)');
         console.log('Reminders: Set custom notification times for tasks');
-        console.log('Calendar: Today badge, reschedule events, simplified navigation');
+        console.log('Calendar: Today badge, reschedule events, improved mobile controls');
+        console.log('Login Security: 3-attempt lockout system with 1-minute cooldown');
+        console.log('Search: Enhanced with click-outside-to-close functionality');
+        console.log('Cross-device: Login from any device with your account');
         console.log('Keyboard shortcuts: Ctrl/Cmd+K (search), Ctrl/Cmd+N (new task/event), 1 (tasks), 2 (calendar), Esc (close)');
 
     </script>
