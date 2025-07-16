@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskFlow Pro - Enhanced Task Management & Calendar Solution</title>
@@ -65,66 +66,6 @@
             line-height: 1.6;
             transition: all 0.3s ease;
         }
-
-        /* Enhanced 3D Cube Animation Styles */
-        .cube-container {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            perspective: 300px;
-        }
-
-        .cube {
-            position: relative;
-            width: 80px;
-            height: 80px;
-            transform-style: preserve-3d;
-            animation: rotateCube 3s infinite linear;
-        }
-
-        .cube-face {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: white;
-            font-weight: bold;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .cube-face.front { transform: rotateY(0deg) translateZ(40px); }
-        .cube-face.back { transform: rotateY(180deg) translateZ(40px); }
-        .cube-face.right { transform: rotateY(90deg) translateZ(40px); }
-        .cube-face.left { transform: rotateY(-90deg) translateZ(40px); }
-        .cube-face.top { transform: rotateX(90deg) translateZ(40px); }
-        .cube-face.bottom { transform: rotateX(-90deg) translateZ(40px); }
-
-        @keyframes rotateCube {
-            0% { transform: rotateX(0deg) rotateY(0deg); }
-            100% { transform: rotateX(360deg) rotateY(360deg); }
-        }
-
-        /* Landing page cubes at the top */
-        .landing-cubes {
-            position: absolute;
-            top: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 50px;
-            z-index: 1;
-        }
-
-        .feature-cube:nth-child(1) { animation-delay: 0s; }
-        .feature-cube:nth-child(2) { animation-delay: 1s; }
-        .feature-cube:nth-child(3) { animation-delay: 2s; }
 
         /* Login Progress Screen */
         .login-progress {
@@ -282,6 +223,7 @@
         .splash-feature:nth-child(3) { animation-delay: 0.6s; }
         .splash-feature:nth-child(4) { animation-delay: 0.8s; }
         .splash-feature:nth-child(5) { animation-delay: 1.0s; }
+        .splash-feature:nth-child(6) { animation-delay: 1.2s; }
 
         @keyframes splashFeatureReveal {
             to {
@@ -368,7 +310,7 @@
             }
         }
 
-        /* Landing Page Styles */
+        /* Enhanced Landing Page Styles */
         .landing-page {
             position: fixed;
             top: 0;
@@ -480,7 +422,7 @@
             transform: translateY(-2px);
         }
 
-        /* Enhanced Hero Section */
+        /* Enhanced Hero Section with New 3D Cubes */
         .hero-section {
             min-height: 100vh;
             display: flex;
@@ -504,7 +446,7 @@
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), #64b5f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             line-height: 1.1;
             animation: heroTitleSlideUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             opacity: 0;
@@ -518,11 +460,84 @@
             }
         }
 
+        /* New 3D Cubes Animation */
+        .hero-cubes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            margin: 60px 0;
+            height: 120px;
+            position: relative;
+        }
+
+        .hero-cube {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: heroFloating 3s ease-in-out infinite;
+            transform: translateY(100px);
+            opacity: 0;
+        }
+
+        .hero-cube:nth-child(1) {
+            animation: heroFloating 3s ease-in-out infinite, heroRiseUp 1.5s ease-out 0.3s forwards;
+        }
+
+        .hero-cube:nth-child(2) {
+            animation: heroFloating 3s ease-in-out infinite, heroRiseUp 1.5s ease-out 0.6s forwards;
+        }
+
+        .hero-cube:nth-child(3) {
+            animation: heroFloating 3s ease-in-out infinite, heroRiseUp 1.5s ease-out 0.9s forwards;
+        }
+
+        @keyframes heroRiseUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes heroFloating {
+            0%, 100% {
+                transform: translateY(0) rotateX(0deg) rotateY(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotateX(180deg) rotateY(180deg);
+            }
+        }
+
+        .hero-cube-face {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-cube-face.front { transform: rotateY(0deg) translateZ(40px); }
+        .hero-cube-face.back { transform: rotateY(180deg) translateZ(40px); }
+        .hero-cube-face.right { transform: rotateY(90deg) translateZ(40px); }
+        .hero-cube-face.left { transform: rotateY(-90deg) translateZ(40px); }
+        .hero-cube-face.top { transform: rotateX(90deg) translateZ(40px); }
+        .hero-cube-face.bottom { transform: rotateX(-90deg) translateZ(40px); }
+
         .hero-subtitle {
             font-size: clamp(1.2rem, 3vw, 1.8rem);
             color: var(--text-secondary);
             margin-bottom: 20px;
-            animation: heroSubtitleSlideUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+            animation: heroSubtitleSlideUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
             opacity: 0;
             transform: translateY(30px);
         }
@@ -541,7 +556,7 @@
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            animation: heroDescriptionSlideUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+            animation: heroDescriptionSlideUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1.7s forwards;
             opacity: 0;
             transform: translateY(30px);
         }
@@ -577,9 +592,9 @@
             animation: demoCardSlideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        .demo-card:nth-child(1) { animation-delay: 0.6s; }
-        .demo-card:nth-child(2) { animation-delay: 0.8s; }
-        .demo-card:nth-child(3) { animation-delay: 1s; }
+        .demo-card:nth-child(1) { animation-delay: 2s; }
+        .demo-card:nth-child(2) { animation-delay: 2.2s; }
+        .demo-card:nth-child(3) { animation-delay: 2.4s; }
 
         @keyframes demoCardSlideUp {
             to {
@@ -630,7 +645,7 @@
             gap: 20px;
             justify-content: center;
             flex-wrap: wrap;
-            animation: ctaButtonsSlideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+            animation: ctaButtonsSlideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 2.6s forwards;
             opacity: 0;
             transform: translateY(30px);
         }
@@ -854,7 +869,21 @@
             cursor: pointer;
         }
 
-        /* Auth Form Blocking Styles */
+        .forgot-password-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .forgot-password-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Enhanced Auth Form Blocking Styles */
         .auth-form.blocked {
             position: relative;
             overflow: hidden;
@@ -863,9 +892,9 @@
         .auth-form.blocked .auth-form-group,
         .auth-form.blocked .auth-submit-btn,
         .auth-form.blocked .auth-switch {
-            filter: blur(3px);
+            filter: blur(5px);
             pointer-events: none;
-            opacity: 0.5;
+            opacity: 0.3;
         }
 
         .auth-block-overlay {
@@ -874,7 +903,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(244, 67, 54, 0.1);
+            background: rgba(244, 67, 54, 0.15);
             backdrop-filter: blur(2px);
             display: flex;
             flex-direction: column;
@@ -882,22 +911,112 @@
             align-items: center;
             z-index: 5;
             border-radius: 15px;
-            border: 2px solid rgba(244, 67, 54, 0.3);
+            border: 2px solid rgba(244, 67, 54, 0.4);
         }
 
         .auth-block-message {
             color: var(--error);
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.2rem;
+            font-weight: 700;
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
         }
 
         .auth-block-timer {
             color: var(--error);
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 800;
             font-family: 'Courier New', monospace;
+            text-shadow: 0 0 15px rgba(244, 67, 54, 0.8);
+            animation: blockTimerPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes blockTimerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Forgot Password Modal */
+        .forgot-password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 16000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .forgot-password-content {
+            background: rgba(15, 15, 25, 0.95);
+            backdrop-filter: blur(25px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+            width: 90%;
+            max-width: 500px;
+            transform: scale(0.8) translateY(50px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        [data-theme="light"] .forgot-password-content {
+            background: rgba(248, 249, 250, 0.95);
+        }
+
+        .forgot-password-modal.active .forgot-password-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .forgot-password-step {
+            display: none;
+        }
+
+        .forgot-password-step.active {
+            display: block;
+        }
+
+        .verification-code-input {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .verification-digit {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .verification-digit:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
         }
 
         /* Enhanced Navigation - Hamburger only shows on task tab */
@@ -1466,6 +1585,142 @@
             border-radius: 10px;
             font-size: 0.8rem;
             font-weight: 600;
+        }
+
+        /* Analytics Section */
+        .analytics-section {
+            margin-top: 40px;
+            padding: 25px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .analytics-section.visible {
+            display: block;
+            animation: analyticsFadeIn 0.8s ease-out;
+        }
+
+        @keyframes analyticsFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .analytics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .analytics-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #64b5f6, #42a5f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .analytics-time {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+            padding: 8px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .analytics-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analytics-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .analytics-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .analytics-card-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .analytics-card-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            animation: countUp 1s ease-out;
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .analytics-card-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .analytics-chart-container {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .analytics-chart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .analytics-chart {
+            width: 100%;
+            height: 300px;
+            position: relative;
         }
 
         /* App Layout */
@@ -2249,7 +2504,7 @@
             font-size: 0.95rem;
         }
 
-        .form-input, .form-select {
+        .form-input, .form-select, .form-textarea {
             width: 100%;
             padding: 15px 18px;
             background: var(--bg-secondary);
@@ -2260,7 +2515,12 @@
             transition: all 0.3s ease;
         }
 
-        .form-input:focus, .form-select:focus {
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
             outline: none;
             border-color: var(--accent-primary);
             background: rgba(255, 255, 255, 0.08);
@@ -2687,6 +2947,23 @@
                 flex-direction: column;
             }
 
+            .analytics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .analytics-card {
+                padding: 15px;
+            }
+
+            .analytics-card-value {
+                font-size: 1.8rem;
+            }
+
+            .analytics-chart {
+                height: 200px;
+            }
+
             /* Improved Mobile Calendar Controls */
             .calendar-header {
                 margin-bottom: 20px;
@@ -2757,25 +3034,31 @@
             .reminder-options {
                 grid-template-columns: 1fr;
             }
+
+            .hero-cubes {
+                gap: 40px;
+            }
+
+            .hero-cube {
+                width: 60px;
+                height: 60px;
+            }
+
+            .hero-cube-face {
+                width: 60px;
+                height: 60px;
+                font-size: 1rem;
+            }
+
+            .hero-cube-face.front { transform: rotateY(0deg) translateZ(30px); }
+            .hero-cube-face.back { transform: rotateY(180deg) translateZ(30px); }
+            .hero-cube-face.right { transform: rotateY(90deg) translateZ(30px); }
+            .hero-cube-face.left { transform: rotateY(-90deg) translateZ(30px); }
+            .hero-cube-face.top { transform: rotateX(90deg) translateZ(30px); }
+            .hero-cube-face.bottom { transform: rotateX(-90deg) translateZ(30px); }
         }
 
         @media (max-width: 768px) {
-            .landing-cubes {
-                flex-direction: column;
-                gap: 30px;
-                top: 150px;
-            }
-
-            .demo-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .demo-card {
-                width: 100%;
-                max-width: 350px;
-            }
-
             .nav-center {
                 margin-left: 50px;
             }
@@ -2785,6 +3068,10 @@
             }
 
             .task-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -2798,6 +3085,28 @@
                 gap: 2px;
                 padding: 8px;
             }
+
+            .hero-cubes {
+                gap: 30px;
+            }
+
+            .hero-cube {
+                width: 50px;
+                height: 50px;
+            }
+
+            .hero-cube-face {
+                width: 50px;
+                height: 50px;
+                font-size: 0.9rem;
+            }
+
+            .hero-cube-face.front { transform: rotateY(0deg) translateZ(25px); }
+            .hero-cube-face.back { transform: rotateY(180deg) translateZ(25px); }
+            .hero-cube-face.right { transform: rotateY(90deg) translateZ(25px); }
+            .hero-cube-face.left { transform: rotateY(-90deg) translateZ(25px); }
+            .hero-cube-face.top { transform: rotateX(90deg) translateZ(25px); }
+            .hero-cube-face.bottom { transform: rotateX(-90deg) translateZ(25px); }
         }
 
         @media (max-width: 480px) {
@@ -2882,6 +3191,40 @@
                 padding: 8px 12px;
                 font-size: 12px;
             }
+
+            .analytics-section {
+                padding: 20px;
+            }
+
+            .analytics-card {
+                padding: 15px;
+            }
+
+            .analytics-card-value {
+                font-size: 1.5rem;
+            }
+
+            .hero-cubes {
+                gap: 20px;
+            }
+
+            .hero-cube {
+                width: 40px;
+                height: 40px;
+            }
+
+            .hero-cube-face {
+                width: 40px;
+                height: 40px;
+                font-size: 0.8rem;
+            }
+
+            .hero-cube-face.front { transform: rotateY(0deg) translateZ(20px); }
+            .hero-cube-face.back { transform: rotateY(180deg) translateZ(20px); }
+            .hero-cube-face.right { transform: rotateY(90deg) translateZ(20px); }
+            .hero-cube-face.left { transform: rotateY(-90deg) translateZ(20px); }
+            .hero-cube-face.top { transform: rotateX(90deg) translateZ(20px); }
+            .hero-cube-face.bottom { transform: rotateX(-90deg) translateZ(20px); }
         }
 
         /* Smooth scrolling for touch devices */
@@ -2913,14 +3256,15 @@
         <div class="splash-modal">
             <button class="splash-close" id="splashClose">×</button>
             <div class="splash-logo">TaskFlow Pro</div>
-            <div class="splash-version" id="splashVersion">Version 3.0</div>
+            <div class="splash-version" id="splashVersion">Version 3.6</div>
             <div class="splash-subtitle">What's New in This Release</div>
             <div class="splash-features">
-                <div class="splash-feature">🔔 Task reminders with customizable notification times</div>
-                <div class="splash-feature">📱 Mobile swipe gestures for sidebar navigation</div>
-                <div class="splash-feature">📅 Enhanced calendar with "Today" badge and reschedule options</div>
-                <div class="splash-feature">🎯 Smart tab-based navigation with contextual sidebar</div>
-                <div class="splash-feature">⚡ Optimized mobile experience with gesture support</div>
+                <div class="splash-feature">📊 Advanced Analytics with Real-time Charts</div>
+                <div class="splash-feature">🔐 Enhanced Security with Forgot Password</div>
+                <div class="splash-feature">📱 Improved Mobile User Experience</div>
+                <div class="splash-feature">🎨 Better Task Management Interface</div>
+                <div class="splash-feature">⚡ Performance Optimizations</div>
+                <div class="splash-feature">🐛 Critical Bug Fixes</div>
             </div>
         </div>
     </div>
@@ -2949,32 +3293,42 @@
                     <button class="landing-btn signup" id="signupBtn">Get Started</button>
                 </div>
             </header>
-
-            <!-- Feature Cubes at the top -->
-            <div class="landing-cubes">
-                <div class="feature-cube cube-container">
-                    <div class="cube">
-                        <div class="cube-face left">Schedule</div>
-                        <div class="cube-face top">Remind</div>
-                        <div class="cube-face bottom">Meet</div>
-                    </div>
-                </div>
-                <div class="feature-cube cube-container">
-                    <div class="cube">
-                        <div class="cube-face front">🔍</div>
-                        <div class="cube-face back">Search</div>
-                        <div class="cube-face right">Find</div>
-                        <div class="cube-face left">Filter</div>
-                        <div class="cube-face top">Quick</div>
-                        <div class="cube-face bottom">Easy</div>
-                    </div>
-                </div>
-            </div>
             
             <!-- Hero Section -->
             <section class="hero-section">
                 <div class="hero-content">
                     <h1 class="hero-title">TaskFlow Pro</h1>
+                    
+                    <!-- New 3D Cubes -->
+                    <div class="hero-cubes">
+                        <div class="hero-cube">
+                            <div class="hero-cube-face front">📝</div>
+                            <div class="hero-cube-face back">Tasks</div>
+                            <div class="hero-cube-face right">Organize</div>
+                            <div class="hero-cube-face left">Manage</div>
+                            <div class="hero-cube-face top">Plan</div>
+                            <div class="hero-cube-face bottom">Track</div>
+                        </div>
+                        
+                        <div class="hero-cube">
+                            <div class="hero-cube-face front">📅</div>
+                            <div class="hero-cube-face back">Calendar</div>
+                            <div class="hero-cube-face right">Events</div>
+                            <div class="hero-cube-face left">Schedule</div>
+                            <div class="hero-cube-face top">Meet</div>
+                            <div class="hero-cube-face bottom">Time</div>
+                        </div>
+                        
+                        <div class="hero-cube">
+                            <div class="hero-cube-face front">📊</div>
+                            <div class="hero-cube-face back">Analytics</div>
+                            <div class="hero-cube-face right">Insights</div>
+                            <div class="hero-cube-face left">Reports</div>
+                            <div class="hero-cube-face top">Growth</div>
+                            <div class="hero-cube-face bottom">Data</div>
+                        </div>
+                    </div>
+                    
                     <p class="hero-subtitle">Transform Your Productivity</p>
                     <p class="hero-description">
                         Experience the next generation of task management with our intelligent platform. 
@@ -3001,10 +3355,10 @@
                         </div>
                         
                         <div class="demo-card">
-                            <div class="demo-icon">🔍</div>
-                            <div class="demo-title">Advanced Search</div>
+                            <div class="demo-icon">📊</div>
+                            <div class="demo-title">Live Analytics</div>
                             <div class="demo-description">
-                                Find tasks and events instantly with intelligent search suggestions and real-time filtering.
+                                Track your productivity with real-time analytics, interactive charts, and detailed insights into your workflow.
                             </div>
                         </div>
                     </div>
@@ -3050,6 +3404,8 @@
                 
                 <button type="submit" class="auth-submit-btn" id="loginSubmitBtn">Log In</button>
                 
+                <a class="forgot-password-link" id="forgotPasswordLink">Forgot your password?</a>
+                
                 <div class="auth-switch">
                     Don't have an account? <a class="auth-switch-link" id="switchToSignup">Sign up</a>
                 </div>
@@ -3083,6 +3439,86 @@
                     Already have an account? <a class="auth-switch-link" id="switchToLogin">Log in</a>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="forgot-password-modal" id="forgotPasswordModal">
+        <div class="forgot-password-content">
+            <button class="auth-close" id="forgotPasswordCloseBtn">×</button>
+            
+            <!-- Step 1: Enter Email -->
+            <div class="forgot-password-step active" id="forgotPasswordStep1">
+                <div class="auth-modal-header">
+                    <h2 class="auth-modal-title">Reset Password</h2>
+                    <p class="auth-modal-subtitle">Enter your email address to receive a verification code</p>
+                </div>
+                
+                <div class="auth-error-message" id="forgotPasswordError"></div>
+                
+                <form id="forgotPasswordEmailForm">
+                    <div class="auth-form-group">
+                        <label class="auth-form-label" for="forgotPasswordEmail">Email Address</label>
+                        <input type="email" class="auth-form-input" id="forgotPasswordEmail" placeholder="Enter your email address" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-submit-btn">Send Verification Code</button>
+                </form>
+            </div>
+            
+            <!-- Step 2: Enter Verification Code -->
+            <div class="forgot-password-step" id="forgotPasswordStep2">
+                <div class="auth-modal-header">
+                    <h2 class="auth-modal-title">Enter Verification Code</h2>
+                    <p class="auth-modal-subtitle">We've sent a 6-digit code to your email</p>
+                </div>
+                
+                <div class="auth-error-message" id="verificationCodeError"></div>
+                
+                <form id="verificationCodeForm">
+                    <div class="auth-form-group">
+                        <label class="auth-form-label">Verification Code</label>
+                        <div class="verification-code-input">
+                            <input type="text" class="verification-digit" maxlength="1" id="digit1">
+                            <input type="text" class="verification-digit" maxlength="1" id="digit2">
+                            <input type="text" class="verification-digit" maxlength="1" id="digit3">
+                            <input type="text" class="verification-digit" maxlength="1" id="digit4">
+                            <input type="text" class="verification-digit" maxlength="1" id="digit5">
+                            <input type="text" class="verification-digit" maxlength="1" id="digit6">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="auth-submit-btn">Verify Code</button>
+                    
+                    <div class="auth-switch">
+                        Didn't receive the code? <a class="auth-switch-link" id="resendCodeLink">Resend</a>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Step 3: Set New Password -->
+            <div class="forgot-password-step" id="forgotPasswordStep3">
+                <div class="auth-modal-header">
+                    <h2 class="auth-modal-title">Set New Password</h2>
+                    <p class="auth-modal-subtitle">Create a new password for your account</p>
+                </div>
+                
+                <div class="auth-error-message" id="newPasswordError"></div>
+                
+                <form id="newPasswordForm">
+                    <div class="auth-form-group">
+                        <label class="auth-form-label" for="newPassword">New Password</label>
+                        <input type="password" class="auth-form-input" id="newPassword" placeholder="Enter new password" required>
+                    </div>
+                    
+                    <div class="auth-form-group">
+                        <label class="auth-form-label" for="confirmNewPassword">Confirm New Password</label>
+                        <input type="password" class="auth-form-input" id="confirmNewPassword" placeholder="Confirm new password" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-submit-btn">Reset Password</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -3316,6 +3752,47 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Analytics Section - Only visible on task tab -->
+                <div class="analytics-section" id="analyticsSection">
+                    <div class="analytics-header">
+                        <h2 class="analytics-title">Analytics Dashboard</h2>
+                        <div class="analytics-time" id="analyticsTime">Updated: Just now</div>
+                    </div>
+                    
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <div class="analytics-card-icon">📝</div>
+                            <div class="analytics-card-value" id="totalTasks">0</div>
+                            <div class="analytics-card-label">Total Tasks</div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="analytics-card-icon">✅</div>
+                            <div class="analytics-card-value" id="completedTasks">0</div>
+                            <div class="analytics-card-label">Completed</div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="analytics-card-icon">⏳</div>
+                            <div class="analytics-card-value" id="pendingTasks">0</div>
+                            <div class="analytics-card-label">Pending</div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="analytics-card-icon">📊</div>
+                            <div class="analytics-card-value" id="completionRate">0%</div>
+                            <div class="analytics-card-label">Completion Rate</div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-chart-container">
+                        <h3 class="analytics-chart-title">Task Activity (Last 7 Days)</h3>
+                        <div class="analytics-chart" id="analyticsChart">
+                            <canvas id="taskChart" width="800" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Calendar Section -->
@@ -3366,7 +3843,7 @@
 
                     <div class="form-group">
                         <label class="form-label">Description</label>
-                        <textarea class="form-input form-textarea" id="taskDescription" placeholder="Add more details about this task..."></textarea>
+                        <textarea class="form-textarea" id="taskDescription" placeholder="Add more details about this task..."></textarea>
                     </div>
 
                     <div class="form-row">
@@ -3379,7 +3856,6 @@
                                 <option value="education">Education</option>
                                 <option value="finance">Finance</option>
                                 <option value="hobbies">Hobbies</option>
-                                <option value="other">Other</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -3463,7 +3939,7 @@
 
                 <div class="form-group">
                     <label class="form-label">Description</label>
-                    <textarea class="form-input form-textarea" id="eventDescription" placeholder="Event details and notes..."></textarea>
+                    <textarea class="form-textarea" id="eventDescription" placeholder="Event details and notes..."></textarea>
                 </div>
 
                 <div class="form-row">
@@ -3492,7 +3968,15 @@
 
     <script>
         // App Configuration
-        const APP_VERSION = '3.0.0';
+        const APP_VERSION = '3.6.0';
+        // EmailJS Configuration
+const EMAILJS_PUBLIC_KEY = 'waYmChwv7LiRd1geI'; // Replace with your EmailJS public key
+const EMAILJS_SERVICE_ID = 'service_qpxfn0h'; // Replace with your service ID
+const EMAILJS_TEMPLATE_ID = 'template_m0cac28'; // Replace with your template ID
+
+// Initialize EmailJS
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
         let currentDate = new Date();
         let tasks = [];
         let events = [];
@@ -3506,20 +3990,24 @@
         let touchStartY = 0;
         let swipeThreshold = 50;
         let isSwipeActive = false;
+        let taskChart = null;
+        let analyticsData = [];
+        let isLoggedOut = false;
 
-        // Login attempt tracking
+        // Enhanced Login attempt tracking with persistence
         let loginAttempts = {};
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('TaskFlow Pro Enhanced v3.0 initializing...');
+            console.log('TaskFlow Pro v3.6 initializing...');
             
             initializeTheme();
             initializeAuth();
             setupEventListeners();
             initializeSwipeGestures();
+            initializeAnalytics();
             
-            console.log('TaskFlow Pro Enhanced v3.0 ready!');
+            console.log('TaskFlow Pro v3.6 ready!');
         });
 
         // Theme Management
@@ -3558,6 +4046,18 @@
 
         // Authentication Functions
         function initializeAuth() {
+            loadLoginAttempts();
+            
+            // Check if user was logged out
+            isLoggedOut = localStorage.getItem('taskflow_logged_out') === 'true';
+            
+            if (isLoggedOut) {
+                localStorage.removeItem('taskflow_logged_out');
+                localStorage.removeItem('taskflow_currentUser');
+                showLandingPage();
+                return;
+            }
+            
             const savedUser = localStorage.getItem('taskflow_currentUser');
             if (savedUser) {
                 try {
@@ -3579,6 +4079,9 @@
 
         function showReturningUserWelcome() {
             const welcomeScreen = document.getElementById('returningUserWelcome');
+            const welcomeUserName = document.getElementById('welcomeUserName');
+            
+            welcomeUserName.textContent = `Welcome back, ${currentUser.displayName || currentUser.name}!`;
             welcomeScreen.classList.add('show');
             
             setTimeout(() => {
@@ -3592,6 +4095,7 @@
             updateProfileDisplay();
             loadUserData();
             
+            // Show version splash for new users only
             if (currentUser.isNewUser) {
                 setTimeout(() => {
                     showVersionSplash();
@@ -3624,6 +4128,8 @@
             updateTaskDisplay();
             updateCategoryCounts();
             scheduleNotifications();
+            updateAnalytics();
+            showAnalytics();
         }
 
         // Tab-based layout management
@@ -3632,13 +4138,14 @@
             const desktopSidebar = document.getElementById('desktopSidebar');
             const mainContent = document.getElementById('mainContent');
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const analyticsSection = document.getElementById('analyticsSection');
             
             if (activeTab) {
                 const tabName = activeTab.getAttribute('data-tab');
                 const isMobile = window.innerWidth <= 1024;
                 
                 if (tabName === 'task-manager') {
-                    // Show sidebar and hamburger on task tab
+                    // Show sidebar, hamburger, and analytics on task tab
                     if (!isMobile) {
                         desktopSidebar.classList.add('visible');
                         mainContent.classList.add('with-sidebar');
@@ -3647,11 +4154,13 @@
                         mainContent.classList.remove('with-sidebar');
                     }
                     mobileMenuBtn.classList.add('visible');
+                    analyticsSection.classList.add('visible');
                 } else {
-                    // Hide sidebar and hamburger on other tabs
+                    // Hide sidebar, hamburger, and analytics on other tabs
                     desktopSidebar.classList.remove('visible');
                     mainContent.classList.remove('with-sidebar');
                     mobileMenuBtn.classList.remove('visible');
+                    analyticsSection.classList.remove('visible');
                 }
             }
         }
@@ -3684,19 +4193,22 @@
                 const savedTasks = localStorage.getItem(`taskflow_${currentUser.email}_tasks`);
                 const savedEvents = localStorage.getItem(`taskflow_${currentUser.email}_events`);
                 const savedTheme = localStorage.getItem(`taskflow_${currentUser.email}_theme`);
+                const savedAnalytics = localStorage.getItem(`taskflow_${currentUser.email}_analytics`);
                 
                 tasks = savedTasks ? JSON.parse(savedTasks) : [];
                 events = savedEvents ? JSON.parse(savedEvents) : [];
+                analyticsData = savedAnalytics ? JSON.parse(savedAnalytics) : [];
                 
                 if (savedTheme) {
                     applyTheme(savedTheme);
                 }
                 
-                console.log('User data loaded:', { tasks: tasks.length, events: events.length });
+                console.log('User data loaded:', { tasks: tasks.length, events: events.length, analytics: analyticsData.length });
             } catch (error) {
                 console.error('Error loading user data:', error);
                 tasks = [];
                 events = [];
+                analyticsData = [];
             }
         }
 
@@ -3708,12 +4220,13 @@
                 localStorage.setItem(`taskflow_${currentUser.email}_tasks`, JSON.stringify(tasks));
                 localStorage.setItem(`taskflow_${currentUser.email}_events`, JSON.stringify(events));
                 localStorage.setItem(`taskflow_${currentUser.email}_theme`, currentTheme);
+                localStorage.setItem(`taskflow_${currentUser.email}_analytics`, JSON.stringify(analyticsData));
             } catch (error) {
                 console.error('Error saving data:', error);
             }
         }
 
-        // Login Attempt Blocking System
+        // Enhanced Login Attempt Blocking System with Persistence
         function isLoginBlocked(email) {
             const userAttempts = loginAttempts[email];
             if (!userAttempts) return false;
@@ -3726,6 +4239,7 @@
             // Clear expired block
             if (userAttempts.blockedUntil && userAttempts.blockedUntil <= Date.now()) {
                 delete loginAttempts[email];
+                saveLoginAttempts();
                 return false;
             }
             
@@ -3742,15 +4256,47 @@
             if (loginAttempts[email].attempts >= 3) {
                 // Block for 1 minute
                 loginAttempts[email].blockedUntil = Date.now() + (60 * 1000);
-                loginAttempts[email].attempts = 0; // Reset attempts after blocking
-                return true; // Blocked
+                loginAttempts[email].attempts = 0;
+                saveLoginAttempts();
+                return true;
             }
             
-            return false; // Not blocked yet
+            saveLoginAttempts();
+            return false;
         }
 
         function clearLoginAttempts(email) {
             delete loginAttempts[email];
+            saveLoginAttempts();
+        }
+
+        function saveLoginAttempts() {
+            try {
+                localStorage.setItem('taskflow_loginAttempts', JSON.stringify(loginAttempts));
+            } catch (error) {
+                console.error('Error saving login attempts:', error);
+            }
+        }
+
+        function loadLoginAttempts() {
+            try {
+                const saved = localStorage.getItem('taskflow_loginAttempts');
+                if (saved) {
+                    loginAttempts = JSON.parse(saved);
+                    
+                    // Clean up expired blocks
+                    Object.keys(loginAttempts).forEach(email => {
+                        if (loginAttempts[email].blockedUntil && loginAttempts[email].blockedUntil <= Date.now()) {
+                            delete loginAttempts[email];
+                        }
+                    });
+                    
+                    saveLoginAttempts();
+                }
+            } catch (error) {
+                console.error('Error loading login attempts:', error);
+                loginAttempts = {};
+            }
         }
 
         function showLoginBlock(email) {
@@ -3759,13 +4305,13 @@
             
             loginForm.classList.add('blocked');
             
-            // Create block overlay
+            // Create enhanced block overlay
             const blockOverlay = document.createElement('div');
             blockOverlay.className = 'auth-block-overlay';
             blockOverlay.innerHTML = `
                 <div class="auth-block-message">
-                    🚫 Too many failed attempts<br>
-                    Account temporarily locked
+                    🚫 ACCOUNT LOCKED<br>
+                    Too many failed attempts
                 </div>
                 <div class="auth-block-timer" id="blockTimer">${timeRemaining}s</div>
             `;
@@ -3795,8 +4341,212 @@
                 blockOverlay.remove();
             }
             
-            // Clear the block
             clearLoginAttempts(email);
+        }
+
+        // Analytics System
+        function initializeAnalytics() {
+            // Initialize chart data for the last 7 days
+            const today = new Date();
+            analyticsData = analyticsData.length > 0 ? analyticsData : [];
+            
+            // Ensure we have data for the last 7 days
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                
+                if (!analyticsData.find(d => d.date === dateStr)) {
+                    analyticsData.push({
+                        date: dateStr,
+                        tasksCreated: 0,
+                        tasksCompleted: 0,
+                        timestamp: Date.now()
+                    });
+                }
+            }
+            
+            // Keep only last 7 days of data
+            analyticsData = analyticsData.slice(-7);
+        }
+
+        function updateAnalytics() {
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Calculate analytics
+            const totalTasks = tasks.length;
+            const completedTasks = tasks.filter(t => t.completed).length;
+            const pendingTasks = totalTasks - completedTasks;
+            const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            
+            // Update cards
+            updateAnalyticsCard('totalTasks', totalTasks);
+            updateAnalyticsCard('completedTasks', completedTasks);
+            updateAnalyticsCard('pendingTasks', pendingTasks);
+            updateAnalyticsCard('completionRate', completionRate + '%');
+            
+            // Update timestamp
+            const timeElement = document.getElementById('analyticsTime');
+            if (timeElement) {
+                timeElement.textContent = `Updated: ${new Date().toLocaleTimeString()}`;
+            }
+            
+            // Update chart
+            updateChart();
+        }
+
+        function updateAnalyticsCard(id, value) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value;
+                element.classList.add('countUp');
+                setTimeout(() => element.classList.remove('countUp'), 1000);
+            }
+        }
+
+        function addAnalyticsEvent(type, data = {}) {
+            const today = new Date().toISOString().split('T')[0];
+            let dayData = analyticsData.find(d => d.date === today);
+            
+            if (!dayData) {
+                dayData = {
+                    date: today,
+                    tasksCreated: 0,
+                    tasksCompleted: 0,
+                    timestamp: Date.now()
+                };
+                analyticsData.push(dayData);
+            }
+            
+            switch (type) {
+                case 'task_created':
+                    dayData.tasksCreated++;
+                    break;
+                case 'task_completed':
+                    dayData.tasksCompleted++;
+                    break;
+                case 'task_uncompleted':
+                    dayData.tasksCompleted = Math.max(0, dayData.tasksCompleted - 1);
+                    break;
+            }
+            
+            // Keep only last 7 days
+            analyticsData = analyticsData.slice(-7);
+            
+            updateAnalytics();
+            saveUserData();
+        }
+
+        function updateChart() {
+            const canvas = document.getElementById('taskChart');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Chart styling
+            const padding = 60;
+            const chartWidth = width - (padding * 2);
+            const chartHeight = height - (padding * 2);
+            
+            // Get data
+            const data = analyticsData.slice(-7);
+            const maxValue = Math.max(...data.map(d => Math.max(d.tasksCreated, d.tasksCompleted)), 1);
+            
+            // Draw grid
+            ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--border-color');
+            ctx.lineWidth = 1;
+            
+            // Horizontal grid lines
+            for (let i = 0; i <= 5; i++) {
+                const y = padding + (chartHeight / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+            
+            // Vertical grid lines
+            for (let i = 0; i < data.length; i++) {
+                const x = padding + (chartWidth / (data.length - 1)) * i;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+            }
+            
+            // Draw bars instead of lines
+            const barWidth = (chartWidth / data.length) * 0.6;
+            const barSpacing = (chartWidth / data.length) * 0.2;
+            
+            for (let i = 0; i < data.length; i++) {
+                const x = padding + (chartWidth / data.length) * i + barSpacing;
+                
+                // Tasks created bar
+                const createdHeight = (data[i].tasksCreated / maxValue) * chartHeight;
+                const createdY = height - padding - createdHeight;
+                
+                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-primary');
+                ctx.fillRect(x, createdY, barWidth / 2, createdHeight);
+                
+                // Tasks completed bar
+                const completedHeight = (data[i].tasksCompleted / maxValue) * chartHeight;
+                const completedY = height - padding - completedHeight;
+                
+                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--success');
+                ctx.fillRect(x + barWidth / 2, completedY, barWidth / 2, completedHeight);
+            }
+            
+            // Draw labels
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-muted');
+            ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            ctx.textAlign = 'center';
+            
+            // Date labels
+            for (let i = 0; i < data.length; i++) {
+                const x = padding + (chartWidth / data.length) * i + (chartWidth / data.length) / 2;
+                const date = new Date(data[i].date);
+                const label = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                ctx.fillText(label, x, height - 10);
+            }
+            
+            // Y-axis labels
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 5; i++) {
+                const y = padding + (chartHeight / 5) * i;
+                const value = Math.round(maxValue - (maxValue / 5) * i);
+                ctx.fillText(value.toString(), padding - 10, y + 4);
+            }
+            
+            // Legend
+            ctx.textAlign = 'left';
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-primary');
+            ctx.fillRect(padding, 10, 15, 3);
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-secondary');
+            ctx.fillText('Tasks Created', padding + 20, 18);
+            
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--success');
+            ctx.fillRect(padding + 120, 10, 15, 3);
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-secondary');
+            ctx.fillText('Tasks Completed', padding + 140, 18);
+        }
+
+        function showAnalytics() {
+            const analyticsSection = document.getElementById('analyticsSection');
+            if (analyticsSection) {
+                analyticsSection.classList.add('visible');
+            }
+        }
+
+        function hideAnalytics() {
+            const analyticsSection = document.getElementById('analyticsSection');
+            if (analyticsSection) {
+                analyticsSection.classList.remove('visible');
+            }
         }
 
         // Swipe Gestures for Mobile
@@ -3816,7 +4566,7 @@
             const touch = e.touches[0];
             touchStartX = touch.clientX;
             touchStartY = touch.clientY;
-            isSwipeActive = touchStartX <= 20; // Only activate if starting from left edge
+            isSwipeActive = touchStartX <= 20;
         }
 
         function handleTouchMove(e) {
@@ -3829,7 +4579,6 @@
             const deltaX = touchCurrentX - touchStartX;
             const deltaY = touchCurrentY - touchStartY;
             
-            // Check if it's a horizontal swipe
             if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0) {
                 const swipeIndicator = document.getElementById('swipeIndicator');
                 if (deltaX > swipeThreshold) {
@@ -3852,7 +4601,6 @@
             swipeIndicator.classList.remove('visible');
             
             if (deltaX > swipeThreshold) {
-                // Trigger sidebar opening
                 toggleMobileSidebar();
             }
             
@@ -3875,11 +4623,21 @@
             document.getElementById('switchToSignup').addEventListener('click', () => switchAuthMode('signup'));
             document.getElementById('switchToLogin').addEventListener('click', () => switchAuthMode('login'));
             
+            // Forgot password
+            document.getElementById('forgotPasswordLink').addEventListener('click', openForgotPasswordModal);
+            document.getElementById('forgotPasswordCloseBtn').addEventListener('click', closeForgotPasswordModal);
+            
             // Auth forms
             document.getElementById('loginForm').addEventListener('submit', handleLogin);
             document.getElementById('signupForm').addEventListener('submit', handleSignup);
+            
+            // Forgot password forms
+            document.getElementById('forgotPasswordEmailForm').addEventListener('submit', handleForgotPasswordEmail);
+            document.getElementById('verificationCodeForm').addEventListener('submit', handleVerificationCode);
+            document.getElementById('newPasswordForm').addEventListener('submit', handleNewPassword);
+            document.getElementById('resendCodeLink').addEventListener('click', resendVerificationCode);
 
-            // Profile dropdown (desktop - hidden on mobile)
+            // Profile dropdown
             document.getElementById('profileButton').addEventListener('click', toggleProfileDropdown);
             document.getElementById('logoutBtn').addEventListener('click', logout);
             document.getElementById('accountManagementBtn').addEventListener('click', openAccountModal);
@@ -3917,14 +4675,13 @@
             document.getElementById('searchInput').addEventListener('input', handleSearch);
             document.getElementById('searchInput').addEventListener('focus', showSearchResults);
 
-            // Category sidebar (both desktop and mobile)
+            // Category sidebar
             document.querySelectorAll('.category-item').forEach(item => {
                 item.addEventListener('click', function() {
                     if (this.hasAttribute('data-category')) {
                         const category = this.getAttribute('data-category');
                         switchCategory(category);
                         
-                        // Close mobile sidebar after selection
                         if (window.innerWidth <= 1024) {
                             closeMobileSidebar();
                         }
@@ -3984,9 +4741,23 @@
                 });
             });
 
-            // Enhanced Window click handling - Fixed to close search when clicking outside
+            // Verification code input handling
+            document.querySelectorAll('.verification-digit').forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1 && index < 5) {
+                        document.getElementById(`digit${index + 2}`).focus();
+                    }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value === '' && index > 0) {
+                        document.getElementById(`digit${index}`).focus();
+                    }
+                });
+            });
+
+            // Window click handling
             document.addEventListener('click', function(e) {
-                // Close search when clicking outside
                 const searchContainer = e.target.closest('.search-container');
                 const searchBtn = e.target.closest('.search-btn');
                 const navCenter = e.target.closest('.nav-center');
@@ -3995,7 +4766,6 @@
                     toggleSearch();
                 }
 
-                // Close dropdowns when clicking outside
                 const profileDropdown = document.getElementById('profileDropdown');
                 const profileButton = e.target.closest('.profile-button');
                 if (!profileButton && profileDropdown.classList.contains('active')) {
@@ -4008,7 +4778,6 @@
                     mobileAccountDropdown.classList.remove('active');
                 }
 
-                // Close search results when clicking outside
                 if (!searchContainer && !searchBtn && searchActive) {
                     hideSearchResults();
                 }
@@ -4017,6 +4786,7 @@
             // Window resize handling
             window.addEventListener('resize', function() {
                 handleTabLayout();
+                updateChart();
                 
                 const activeTab = document.querySelector('.nav-tab.active');
                 if (activeTab && activeTab.getAttribute('data-tab') === 'calendar') {
@@ -4026,13 +4796,14 @@
                 }
             });
 
-            // Enhanced Keyboard shortcuts
+            // Keyboard shortcuts
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     closeTaskModal();
                     closeEventModal();
                     closeAuthModal();
                     closeAccountModal();
+                    closeForgotPasswordModal();
                     hideVersionSplash();
                     hideCalendarEventPopup();
                     closeMobileSidebar();
@@ -4042,17 +4813,14 @@
                     }
                 }
 
-                // Skip if user is typing in an input field
                 if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
                     return;
                 }
                 
-                // Don't handle shortcuts on landing page
                 if (!document.getElementById('landingPage').classList.contains('hidden')) {
                     return;
                 }
                 
-                // Ctrl/Cmd + K for search
                 if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                     e.preventDefault();
                     if (!searchActive) {
@@ -4061,7 +4829,6 @@
                     document.getElementById('searchInput').focus();
                 }
                 
-                // Ctrl/Cmd + N for new task/event
                 if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
                     e.preventDefault();
                     const activeTab = document.querySelector('.nav-tab.active');
@@ -4075,7 +4842,6 @@
                     }
                 }
                 
-                // Tab switching with number keys
                 if (e.key === '1' && !e.ctrlKey && !e.metaKey) {
                     switchTab('task-manager');
                 }
@@ -4135,6 +4901,30 @@
                 subtitle.textContent = 'Sign in to your account';
                 loginForm.style.display = 'block';
                 signupForm.style.display = 'none';
+                
+                // Check if any email is currently blocked
+                const emailInput = document.getElementById('loginEmail');
+                if (emailInput.value.trim()) {
+                    const email = emailInput.value.trim();
+                    if (isLoginBlocked(email)) {
+                        setTimeout(() => showLoginBlock(email), 100);
+                    }
+                }
+                
+                // Monitor email input for block status
+                emailInput.addEventListener('input', function() {
+                    const email = this.value.trim();
+                    const blockOverlay = loginForm.querySelector('.auth-block-overlay');
+                    
+                    if (email && isLoginBlocked(email)) {
+                        if (!blockOverlay) {
+                            showLoginBlock(email);
+                        }
+                    } else if (blockOverlay) {
+                        hideLoginBlock(email);
+                    }
+                });
+                
             } else {
                 title.textContent = 'Join TaskFlow Pro';
                 subtitle.textContent = 'Create your account';
@@ -4151,7 +4941,6 @@
             document.getElementById('authModal').classList.remove('active');
             document.body.style.overflow = 'auto';
             
-            // Reset forms
             document.getElementById('loginForm').reset();
             document.getElementById('signupForm').reset();
             hideAuthError();
@@ -4235,7 +5024,7 @@
                 return;
             }
             
-            // Successful login - clear attempts
+            // Successful login
             clearLoginAttempts(email);
             
             const submitBtn = document.getElementById('loginSubmitBtn');
@@ -4248,6 +5037,7 @@
             setTimeout(() => {
                 currentUser = user;
                 localStorage.setItem('taskflow_currentUser', JSON.stringify(user));
+                localStorage.removeItem('taskflow_logged_out'); // Clear logout flag
                 hideLoginProgress();
                 showMainApp();
                 submitBtn.textContent = 'Log In';
@@ -4292,7 +5082,6 @@
             closeAuthModal();
             showLoginProgress(name, true);
             
-            // Show "Signing up" for 3 seconds, then go directly to main app
             setTimeout(() => {
                 const newUser = {
                     name: name,
@@ -4300,7 +5089,7 @@
                     email: email,
                     password: password,
                     createdAt: new Date().toISOString(),
-                    isNewUser: false // Don't show version splash for new signups
+                    isNewUser: true
                 };
                 
                 existingUsers[email] = newUser;
@@ -4308,6 +5097,7 @@
                 
                 currentUser = newUser;
                 localStorage.setItem('taskflow_currentUser', JSON.stringify(newUser));
+                localStorage.removeItem('taskflow_logged_out'); // Clear logout flag
                 hideLoginProgress();
                 showMainApp();
                 submitBtn.textContent = 'Sign Up';
@@ -4315,15 +5105,232 @@
             }, 3000);
         }
 
+        // Forgot Password Functions
+        function openForgotPasswordModal() {
+            closeAuthModal();
+            document.getElementById('forgotPasswordModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Reset to first step
+            document.querySelectorAll('.forgot-password-step').forEach(step => step.classList.remove('active'));
+            document.getElementById('forgotPasswordStep1').classList.add('active');
+            
+            // Clear all forms
+            document.getElementById('forgotPasswordEmailForm').reset();
+            document.getElementById('verificationCodeForm').reset();
+            document.getElementById('newPasswordForm').reset();
+            
+            // Clear verification code inputs
+            document.querySelectorAll('.verification-digit').forEach(input => input.value = '');
+            
+            // Clear error messages
+            document.getElementById('forgotPasswordError').classList.remove('show');
+            document.getElementById('verificationCodeError').classList.remove('show');
+            document.getElementById('newPasswordError').classList.remove('show');
+        }
+
+        function closeForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleForgotPasswordEmail(e) {
+    e.preventDefault();
+
+    const userEmail = document.getElementById("forgotPasswordEmail").value;
+    
+    const email = document.getElementById('forgotPasswordEmail').value.trim();
+    const errorElement = document.getElementById('forgotPasswordError');
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    
+    if (!email) {
+        showForgotPasswordError('Please enter your email address.');
+        return;
+    }
+    
+    // Check if user exists
+    const existingUsers = JSON.parse(localStorage.getItem('taskflow_users') || '{}');
+    if (!existingUsers[email]) {
+        showForgotPasswordError('No account found with this email address.');
+        return;
+    }
+    
+    // Generate verification code
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    // Store verification code temporarily
+    localStorage.setItem('taskflow_verification_code', verificationCode);
+localStorage.setItem('taskflow_verification_timestamp', Date.now().toString());
+localStorage.setItem('taskflow_verification_email', email);
+    
+    // Show loading state
+    submitBtn.textContent = 'Sending email...';
+    submitBtn.disabled = true;
+    errorElement.classList.remove('show');
+    
+    const params = {
+    to_email: userEmail,                  // 👈 matches {{email}} in EmailJS template
+    from_name: "Planner App",
+    verification_code: "Here is your password reset link!"
+  };
+  
+    emailjs.send("service_qpxfn0h", "template_luhmcbj", params)
+
+        .then(function(response) {
+            console.log('Email sent successfully:', response);
+            
+            // Move to step 2
+            document.querySelectorAll('.forgot-password-step').forEach(step => step.classList.remove('active'));
+            document.getElementById('forgotPasswordStep2').classList.add('active');
+            
+            // Focus on first digit
+            document.getElementById('digit1').focus();
+            
+            showNotification('Verification code sent to your email!', 'success');
+            
+            // Reset button
+            submitBtn.textContent = 'Send Verification Code';
+            submitBtn.disabled = false;
+            
+        }, function(error) {
+            console.error('Failed to send email:', error);
+            showForgotPasswordError('Failed to send email. Please try again.');
+            
+            // Reset button
+            submitBtn.textContent = 'Send Verification Code';
+            submitBtn.disabled = false;
+        });
+}
+
+        function handleVerificationCode(e) {
+    e.preventDefault();
+    
+    const digits = [];
+    for (let i = 1; i <= 6; i++) {
+        digits.push(document.getElementById(`digit${i}`).value);
+    }
+    
+    const enteredCode = digits.join('');
+    const storedCode = localStorage.getItem('taskflow_verification_code');
+    const codeTimestamp = localStorage.getItem('taskflow_verification_timestamp');
+    const errorElement = document.getElementById('verificationCodeError');
+    
+    if (enteredCode.length !== 6) {
+        showVerificationError('Please enter the complete 6-digit code.');
+        return;
+    }
+    
+    // Check if code has expired (10 minutes)
+    if (codeTimestamp && Date.now() - parseInt(codeTimestamp) > 10 * 60 * 1000) {
+        showVerificationError('Verification code has expired. Please request a new one.');
+        return;
+    }
+    
+    if (enteredCode !== storedCode) {
+        showVerificationError('Invalid verification code. Please try again.');
+        return;
+    }
+    
+    // Move to step 3
+    document.querySelectorAll('.forgot-password-step').forEach(step => step.classList.remove('active'));
+    document.getElementById('forgotPasswordStep3').classList.add('active');
+    
+    errorElement.classList.remove('show');
+    document.getElementById('newPassword').focus();
+}
+
+        function handleNewPassword(e) {
+            e.preventDefault();
+            
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+            const email = localStorage.getItem('taskflow_verification_email');
+            const errorElement = document.getElementById('newPasswordError');
+            
+            if (!newPassword || !confirmNewPassword) {
+                showNewPasswordError('Please fill in all fields.');
+                return;
+            }
+            
+            if (newPassword !== confirmNewPassword) {
+                showNewPasswordError('Passwords do not match.');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                showNewPasswordError('Password must be at least 6 characters long.');
+                return;
+            }
+            
+            // Update password
+            const existingUsers = JSON.parse(localStorage.getItem('taskflow_users') || '{}');
+            if (existingUsers[email]) {
+                existingUsers[email].password = newPassword;
+                localStorage.setItem('taskflow_users', JSON.stringify(existingUsers));
+                
+                // Clean up verification data
+                localStorage.removeItem('taskflow_verification_code');
+                localStorage.removeItem('taskflow_verification_email');
+                
+                closeForgotPasswordModal();
+                showNotification('Password reset successfully!', 'success');
+                
+                // Auto-fill login form
+                setTimeout(() => {
+                    openAuthModal('login');
+                    document.getElementById('loginEmail').value = email;
+                    document.getElementById('loginPassword').focus();
+                }, 500);
+            }
+        }
+
+        function resendVerificationCode() {
+    const email = localStorage.getItem('taskflow_verification_email');
+    if (email) {
+        const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+        localStorage.setItem('taskflow_verification_code', verificationCode);
+        localStorage.setItem('taskflow_verification_timestamp', Date.now().toString());
+        
+        const existingUsers = JSON.parse(localStorage.getItem('taskflow_users') || '{}');
+        const templateParams = {
+            to_email: email,
+            verification_code: verificationCode,
+            user_name: existingUsers[email].name || 'User'
+        };
+        
+        emailjs.send(service_qpxfn0h, template_luhmcbj, templateParams)
+            .then(function(response) {
+                showNotification('New verification code sent!', 'success');
+            }, function(error) {
+                showNotification('Failed to resend code. Please try again.', 'error');
+            });
+    }
+}
+
+        function showForgotPasswordError(message) {
+            const errorElement = document.getElementById('forgotPasswordError');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function showVerificationError(message) {
+            const errorElement = document.getElementById('verificationCodeError');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function showNewPasswordError(message) {
+            const errorElement = document.getElementById('newPasswordError');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
         // Account Management
         function openAccountModal() {
             document.getElementById('accountModal').classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            // Populate current values
             document.getElementById('accountName').value = currentUser.displayName || currentUser.name;
-            
-            // Close profile dropdown
             document.getElementById('profileDropdown').classList.remove('active');
         }
 
@@ -4355,13 +5362,11 @@
                 return;
             }
             
-            // Update user data
             currentUser.displayName = newName;
             if (newPassword) {
                 currentUser.password = newPassword;
             }
             
-            // Update stored user data
             const existingUsers = JSON.parse(localStorage.getItem('taskflow_users') || '{}');
             existingUsers[currentUser.email] = currentUser;
             localStorage.setItem('taskflow_users', JSON.stringify(existingUsers));
@@ -4370,7 +5375,6 @@
             updateProfileDisplay();
             closeAccountModal();
             
-            // Show success message
             showNotification('Account updated successfully!', 'success');
         }
 
@@ -4381,40 +5385,35 @@
         }
 
         function logout() {
+            localStorage.setItem('taskflow_logged_out', 'true');
             localStorage.removeItem('taskflow_currentUser');
             currentUser = null;
             tasks = [];
             events = [];
+            analyticsData = [];
             
-            // Reset UI
             document.getElementById('taskGrid').innerHTML = '<div class="empty-state" id="emptyState"><h3>📝 No tasks yet</h3><p>Click "Add New Task" to create your first task</p></div>';
             
-            // Close mobile sidebar if open
             closeMobileSidebar();
-            
             showLandingPage();
         }
 
-        // Tab switching with responsive sidebar handling
+        // Tab switching
         function switchTab(targetTab) {
             const navTabs = document.querySelectorAll('.nav-tab');
             const contentSections = document.querySelectorAll('.content-section');
             
-            // Remove active classes
             navTabs.forEach(t => t.classList.remove('active'));
             contentSections.forEach(s => s.classList.remove('active'));
             
-            // Add active class to target tab
             const targetTabElement = document.querySelector(`[data-tab="${targetTab}"]`);
             const targetSection = document.getElementById(targetTab);
             
             if (targetTabElement && targetSection) {
                 targetTabElement.classList.add('active');
                 
-                // Handle sidebar and hamburger visibility
                 handleTabLayout();
                 
-                // Smooth transition
                 setTimeout(() => {
                     targetSection.classList.add('active');
                     
@@ -4432,11 +5431,9 @@
             const modalTabs = document.querySelectorAll('.modal-tab');
             const modalTabContents = document.querySelectorAll('.modal-tab-content');
             
-            // Remove active classes
             modalTabs.forEach(t => t.classList.remove('active'));
             modalTabContents.forEach(c => c.classList.remove('active'));
             
-            // Add active class to target tab
             const targetTabElement = document.querySelector(`[data-tab="${targetTab}"]`);
             const targetContent = document.getElementById(targetTab);
             
@@ -4447,7 +5444,7 @@
             }
         }
 
-        // Enhanced Search Functionality
+        // Search Functionality
         function toggleSearch() {
             const searchContainer = document.getElementById('searchContainer');
             const searchBtn = document.getElementById('searchBtn');
@@ -4482,7 +5479,6 @@
             
             const results = [];
             
-            // Search tasks
             tasks.forEach(task => {
                 if (task.title.toLowerCase().includes(query) || 
                     task.description.toLowerCase().includes(query) ||
@@ -4496,7 +5492,6 @@
                 }
             });
             
-            // Search events
             events.forEach(event => {
                 if (event.title.toLowerCase().includes(query) || 
                     event.description.toLowerCase().includes(query) ||
@@ -4529,7 +5524,6 @@
                     </div>
                 `).join('');
                 
-                // Add click handlers
                 resultsContainer.querySelectorAll('.search-result-item').forEach(item => {
                     item.addEventListener('click', function() {
                         const type = this.getAttribute('data-type');
@@ -4574,7 +5568,6 @@
             setTimeout(() => {
                 const event = events.find(e => e.id === eventId);
                 if (event) {
-                    // Navigate to the month of the event
                     const eventDate = new Date(event.date);
                     currentDate = new Date(eventDate.getFullYear(), eventDate.getMonth(), 1);
                     generateCalendarWithAnimation();
@@ -4591,11 +5584,10 @@
             }, 500);
         }
 
-        // Enhanced Category Management
+        // Category Management
         function switchCategory(category) {
             currentCategory = category;
             
-            // Update both desktop and mobile sidebar
             document.querySelectorAll('.category-item[data-category]').forEach(item => {
                 item.classList.remove('active');
             });
@@ -4643,17 +5635,14 @@
                     document.getElementById('taskModalTitle').textContent = 'Edit Task';
                     document.getElementById('taskSubmitBtn').textContent = 'Update Task';
                     
-                    // Populate form with task data
                     document.getElementById('taskTitle').value = task.title;
                     document.getElementById('taskDescription').value = task.description || '';
                     document.getElementById('taskCategory').value = task.category;
                     document.getElementById('taskDueDate').value = task.dueDate || '';
                     
-                    // Set priority
                     document.querySelectorAll('.priority-option').forEach(p => p.classList.remove('selected'));
                     document.querySelector(`[data-priority="${task.priority}"]`).classList.add('selected');
                     
-                    // Set reminder
                     if (task.reminderMinutes) {
                         document.querySelectorAll('.reminder-option').forEach(r => r.classList.remove('selected'));
                         if ([5, 10, 30, 60].includes(task.reminderMinutes)) {
@@ -4669,13 +5658,11 @@
                 document.getElementById('taskModalTitle').textContent = 'Create New Task';
                 document.getElementById('taskSubmitBtn').textContent = 'Create Task';
                 
-                // Set default category if one is selected
                 if (currentCategory !== 'all') {
                     document.getElementById('taskCategory').value = currentCategory;
                 }
             }
             
-            // Reset to first tab
             switchModalTab('task-details');
         }
 
@@ -4685,28 +5672,29 @@
             document.getElementById('taskForm').reset();
             currentTaskId = null;
             
-            // Reset priority selection
             document.querySelectorAll('.priority-option').forEach(p => p.classList.remove('selected'));
             document.querySelector('.priority-option.medium').classList.add('selected');
             
-            // Reset reminder selection
             document.querySelectorAll('.reminder-option').forEach(r => r.classList.remove('selected'));
             document.getElementById('customReminderInput').classList.add('hidden');
             
-            // Reset to first tab
             switchModalTab('task-details');
         }
 
         function handleTaskSubmit(e) {
             e.preventDefault();
             
-            const title = document.getElementById('taskTitle').value;
-            const description = document.getElementById('taskDescription').value;
+            const title = document.getElementById('taskTitle').value.trim();
+            const description = document.getElementById('taskDescription').value.trim();
             const category = document.getElementById('taskCategory').value;
             const dueDate = document.getElementById('taskDueDate').value;
             const priority = document.querySelector('.priority-option.selected').getAttribute('data-priority');
             
-            // Get reminder settings
+            if (!title) {
+                showNotification('Please enter a task title', 'error');
+                return;
+            }
+            
             const selectedReminder = document.querySelector('.reminder-option.selected');
             let reminderMinutes = null;
             
@@ -4720,7 +5708,6 @@
             }
             
             if (currentTaskId) {
-                // Update existing task
                 const task = tasks.find(t => t.id === currentTaskId);
                 if (task) {
                     task.title = title;
@@ -4734,7 +5721,6 @@
                     showNotification('Task updated successfully!', 'success');
                 }
             } else {
-                // Create new task
                 const task = {
                     id: Date.now(),
                     title,
@@ -4749,27 +5735,28 @@
                 };
                 
                 tasks.push(task);
+                addAnalyticsEvent('task_created');
                 showNotification('Task created successfully!', 'success');
             }
             
             closeTaskModal();
             updateTaskDisplay();
             updateCategoryCounts();
+            updateAnalytics();
             saveUserData();
             scheduleNotifications();
         }
 
         function updateTaskDisplay() {
             const taskGrid = document.getElementById('taskGrid');
+            const emptyState = document.getElementById('emptyState');
             
-            // Filter tasks
             let filteredTasks = tasks;
             
             if (currentCategory !== 'all') {
                 filteredTasks = filteredTasks.filter(task => task.category === currentCategory);
             }
             
-            // Clear grid
             taskGrid.innerHTML = '';
             
             if (filteredTasks.length === 0) {
@@ -4848,15 +5835,18 @@
                     taskTitle.style.textDecoration = 'line-through';
                     completeBtn.innerHTML = '↩';
                     completeBtn.title = 'Mark as incomplete';
+                    addAnalyticsEvent('task_completed');
                     showNotification('Task completed!', 'success');
                 } else {
                     taskCard.style.opacity = '1';
                     taskTitle.style.textDecoration = 'none';
                     completeBtn.innerHTML = '✓';
                     completeBtn.title = 'Mark as complete';
+                    addAnalyticsEvent('task_uncompleted');
                     showNotification('Task reopened!', 'info');
                 }
                 
+                updateAnalytics();
                 saveUserData();
             }
         }
@@ -4870,8 +5860,8 @@
                     setTimeout(() => {
                         taskCard.remove();
                         updateCategoryCounts();
+                        updateAnalytics();
                         
-                        // Show empty state if no tasks left
                         if (document.getElementById('taskGrid').children.length === 0) {
                             updateTaskDisplay();
                         }
@@ -4890,18 +5880,15 @@
                 return;
             }
             
-            // Request notification permission
             if (Notification.permission === 'default') {
                 Notification.requestPermission();
             }
             
-            // Clear existing timeouts
             if (window.notificationTimeouts) {
                 window.notificationTimeouts.forEach(timeout => clearTimeout(timeout));
             }
             window.notificationTimeouts = [];
             
-            // Schedule new notifications
             tasks.forEach(task => {
                 if (task.dueDate && task.reminderMinutes && !task.completed) {
                     const dueDate = new Date(task.dueDate);
@@ -4937,7 +5924,6 @@
                 setTimeout(() => notification.close(), 10000);
             }
             
-            // Also show in-app notification
             showNotification(`Task due soon: ${task.title}`, 'warning');
         }
 
@@ -4948,7 +5934,6 @@
             document.getElementById('eventSubmitBtn').textContent = 'Schedule Event';
             document.body.style.overflow = 'hidden';
             
-            // Set today as default date
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('eventDate').value = today;
         }
@@ -4962,11 +5947,21 @@
         function handleEventSubmit(e) {
             e.preventDefault();
             
-            const title = document.getElementById('eventTitle').value;
-            const description = document.getElementById('eventDescription').value;
+            const title = document.getElementById('eventTitle').value.trim();
+            const description = document.getElementById('eventDescription').value.trim();
             const date = document.getElementById('eventDate').value;
             const time = document.getElementById('eventTime').value;
-            const location = document.getElementById('eventLocation').value;
+            const location = document.getElementById('eventLocation').value.trim();
+            
+            if (!title) {
+                showNotification('Please enter an event title', 'error');
+                return;
+            }
+            
+            if (!date || !time) {
+                showNotification('Please select both date and time', 'error');
+                return;
+            }
             
             const event = {
                 id: Date.now(),
@@ -4987,7 +5982,7 @@
             showNotification('Event scheduled successfully!', 'success');
         }
 
-        // Enhanced Calendar Functions
+        // Calendar Functions
         function generateCalendarWithAnimation() {
             const calendarGrid = document.getElementById('calendarGrid');
             const monthYear = document.getElementById('monthYear');
@@ -5033,7 +6028,7 @@
             
             // Next month's leading days
             const totalCells = calendarGrid.children.length;
-            const remainingCells = 42 - totalCells; // 6 weeks * 7 days
+            const remainingCells = 42 - totalCells;
             for (let day = 1; day <= remainingCells; day++) {
                 const dayElement = createCalendarDay(day, true, false, year, month + 1);
                 dayElements.push(dayElement);
@@ -5053,7 +6048,6 @@
             generateCalendarWithAnimation();
         }
 
-        // Enhanced createCalendarDay function with improved interactivity
         function createCalendarDay(day, otherMonth, isToday, year, month) {
             const dayElement = document.createElement('div');
             dayElement.className = 'calendar-day';
@@ -5063,18 +6057,15 @@
             const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             dayElement.setAttribute('data-date', dateString);
             
-            // Initial animation state
             dayElement.style.opacity = '0';
             dayElement.style.transform = 'translateY(20px) scale(0.8)';
             dayElement.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
             
-            // Check if there are events on this day
             const dayEvents = events.filter(event => event.date === dateString);
             
             if (dayEvents.length > 0 && !otherMonth) {
                 dayElement.classList.add('has-events');
                 
-                // Add event count indicator for multiple events
                 if (dayEvents.length > 1) {
                     const eventCount = document.createElement('div');
                     eventCount.className = 'event-count';
@@ -5093,27 +6084,22 @@
             `;
             dayElement.appendChild(dayNumber);
             
-            // Enhanced click handler for center popup
             dayElement.addEventListener('click', function(e) {
                 e.preventDefault();
                 
                 if (!otherMonth) {
-                    // Always select the day first
                     selectCalendarDay(this);
                     
                     if (dayEvents.length > 0) {
-                        // Show center popup for days with events
                         showCalendarEventPopup(dateString, dayEvents);
                     }
                 }
                 
-                // Set the date in event modal if it's open
                 if (document.getElementById('eventModal').classList.contains('active')) {
                     document.getElementById('eventDate').value = dateString;
                 }
             });
             
-            // Enhanced hover effects
             dayElement.addEventListener('mouseenter', function() {
                 if (!otherMonth) {
                     dayNumber.style.transform = 'scale(1.15)';
@@ -5129,7 +6115,6 @@
             return dayElement;
         }
 
-        // Calendar navigation
         function previousMonth() {
             hideCalendarEventPopup();
             currentDate.setMonth(currentDate.getMonth() - 1);
@@ -5148,7 +6133,6 @@
             }, 200);
         }
 
-        // Calendar day selection
         function selectCalendarDay(dayElement) {
             document.querySelectorAll('.calendar-day.selected').forEach(day => {
                 day.classList.remove('selected');
@@ -5159,14 +6143,12 @@
             }, 50);
         }
 
-        // Enhanced Calendar Event Popup with Reschedule Functionality
         function showCalendarEventPopup(dateString, dayEvents) {
             const popup = document.getElementById('calendarEventPopup');
             const dateElement = document.getElementById('eventPopupDate');
             const dayElement = document.getElementById('eventPopupDay');
             const listElement = document.getElementById('eventPopupList');
             
-            // Format the date
             const dateObj = new Date(dateString);
             const formattedDate = dateObj.toLocaleDateString('en-US', { 
                 month: 'long', 
@@ -5178,12 +6160,22 @@
             dateElement.textContent = formattedDate;
             dayElement.textContent = dayName;
             
-            // Create event list with reschedule and delete buttons
             if (dayEvents.length === 0) {
                 listElement.innerHTML = '<div class="event-popup-no-events">No events scheduled for this day</div>';
             } else {
                 listElement.innerHTML = dayEvents.map(event => `
                     <div class="event-popup-item">
+                        <div class="event-popup-item-header">
+                            <div class="event-popup-item-title">${event.title}</div>
+                            <div class="event-popup-item-actions">
+                                <button class="event-reschedule-btn" onclick="rescheduleEvent(${event.id})">
+                                    📅 Reschedule
+                                </button>
+                                <button class="event-delete-btn" onclick="deleteEvent(${event.id})">
+                                    🗑️ Delete
+                                </button>
+                            </div>
+                        </div>
                         <div class="event-popup-item-time">${event.time}</div>
                         ${event.location ? `<div class="event-popup-item-location">${event.location}</div>` : ''}
                         ${event.description ? `<div class="event-popup-item-description">${event.description}</div>` : ''}
@@ -5191,7 +6183,6 @@
                 `).join('');
             }
             
-            // Show popup with animation
             popup.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -5201,7 +6192,6 @@
             popup.classList.remove('active');
             document.body.style.overflow = 'auto';
             
-            // Remove selection from all days
             setTimeout(() => {
                 document.querySelectorAll('.calendar-day.selected').forEach(day => {
                     day.classList.remove('selected');
@@ -5209,37 +6199,47 @@
             }, 200);
         }
 
-        // Reschedule Event Function
         window.rescheduleEvent = function(eventId) {
             const event = events.find(e => e.id === eventId);
             if (event) {
-                // Hide event popup
                 hideCalendarEventPopup();
                 
-                // Open event modal with existing data
                 document.getElementById('eventModal').classList.add('active');
                 document.getElementById('eventModalTitle').textContent = 'Reschedule Event';
                 document.getElementById('eventSubmitBtn').textContent = 'Update Event';
                 document.body.style.overflow = 'hidden';
                 
-                // Populate form with event data
                 document.getElementById('eventTitle').value = event.title;
                 document.getElementById('eventDescription').value = event.description || '';
                 document.getElementById('eventDate').value = event.date;
                 document.getElementById('eventTime').value = event.time;
                 document.getElementById('eventLocation').value = event.location || '';
                 
-                // Update form submission handler
                 const eventForm = document.getElementById('eventForm');
                 eventForm.onsubmit = function(e) {
                     e.preventDefault();
                     
-                    // Update event
-                    event.title = document.getElementById('eventTitle').value;
-                    event.description = document.getElementById('eventDescription').value;
-                    event.date = document.getElementById('eventDate').value;
-                    event.time = document.getElementById('eventTime').value;
-                    event.location = document.getElementById('eventLocation').value;
+                    const title = document.getElementById('eventTitle').value.trim();
+                    const description = document.getElementById('eventDescription').value.trim();
+                    const date = document.getElementById('eventDate').value;
+                    const time = document.getElementById('eventTime').value;
+                    const location = document.getElementById('eventLocation').value.trim();
+                    
+                    if (!title) {
+                        showNotification('Please enter an event title', 'error');
+                        return;
+                    }
+                    
+                    if (!date || !time) {
+                        showNotification('Please select both date and time', 'error');
+                        return;
+                    }
+                    
+                    event.title = title;
+                    event.description = description;
+                    event.date = date;
+                    event.time = time;
+                    event.location = location;
                     event.updatedAt = new Date();
                     
                     closeEventModal();
@@ -5248,25 +6248,20 @@
                     
                     showNotification('Event rescheduled successfully!', 'success');
                     
-                    // Reset form handler
                     eventForm.onsubmit = handleEventSubmit;
                 };
             }
         }
 
-        // Delete Event Function
         window.deleteEvent = function(eventId) {
             if (confirm('Are you sure you want to delete this event?')) {
                 events = events.filter(event => event.id !== eventId);
                 saveUserData();
                 
-                // Regenerate calendar to update display
                 generateCalendarWithAnimation();
                 
-                // Update the popup if it's still open
                 const popup = document.getElementById('calendarEventPopup');
                 if (popup.classList.contains('active')) {
-                    // Get the date from the popup and refresh it
                     const dateElement = document.getElementById('eventPopupDate');
                     if (dateElement) {
                         const dateText = dateElement.textContent;
@@ -5342,16 +6337,13 @@
             }
         });
 
-        console.log('TaskFlow Pro Enhanced v3.0: All systems initialized and ready!');
-        console.log('New Features: Task reminders, mobile swipe gestures, reschedule events, enhanced calendar');
-        console.log('Mobile: Swipe from left edge to open sidebar (task tab only)');
-        console.log('Reminders: Set custom notification times for tasks');
-        console.log('Calendar: Today badge, reschedule events, improved mobile controls');
-        console.log('Login Security: 3-attempt lockout system with 1-minute cooldown');
-        console.log('Search: Enhanced with click-outside-to-close functionality');
-        console.log('Cross-device: Login from any device with your account');
+        console.log('TaskFlow Pro v3.6: All systems initialized and ready!');
+        console.log('New Features: Advanced analytics, forgot password, improved mobile UX');
+        console.log('Analytics: Real-time task tracking with interactive bar charts');
+        console.log('Security: Enhanced login system with forgot password functionality');
+        console.log('Mobile: Optimized responsive design for all screen sizes');
+        console.log('Bug Fixes: Tasks now properly save and display, logout persistence fixed');
         console.log('Keyboard shortcuts: Ctrl/Cmd+K (search), Ctrl/Cmd+N (new task/event), 1 (tasks), 2 (calendar), Esc (close)');
-
     </script>
 </body>
 </html>
