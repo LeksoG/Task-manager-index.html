@@ -5,6 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskFlow Pro - Professional Weekly Planner & Calendar Solution</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TaskFlow Pro">
+    <meta name="description" content="Professional task management and weekly planning solution">
+    
+    <!-- PWA Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iNDAiIGZpbGw9InVybCgjZ3JhZGllbnQwKSIvPgo8ZGVmcz4KPGXEZ3JhZGllbnQgaWQ9ImdyYWRpZW50MCIgeDE9IjAiIHkxPSIwIiB4Mj0iMjAwIiB5Mj0iMjAwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiM2NjdlZWEiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeD0iNDAiIHk9IjQwIiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IndoaXRlIj4KPHA+YmRhdGggZD0iTTQgNGgxNnYySDR6bTAgNmgxNnYySDR6bTAgNmgxMHYySDR6Ii8+Cjwvc3ZnPgo8L3N2Zz4=">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iNDAiIGZpbGw9InVybCgjZ3JhZGllbnQwKSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDAiIHgxPSIwIiB5MT0iMCIgeDI9IjIwMCIgeTI9IjIwMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NGJhMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjxwb2x5Z29uIGZpbGw9IndoaXRlIiBwb2ludHM9IjUwLDUwIDUwLDcwIDE1MCw3MCAxNTAsNTAgNTAsNTAgODAsOTAgODAsOTAgMTIwLDkwIDEyMCwxMTAgODAsMTEwIDgwLDEzMCAxMjAsMTMwIDEyMCwxNTAgODAsMTUwIi8+Cjwvc3ZnPgo=">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIlRhc2tGbG93IFBybyIsCiAgInNob3J0X25hbWUiOiAiVGFza0Zsb3ciLAogICJkZXNjcmlwdGlvbiI6ICJQcm9mZXNzaW9uYWwgdGFzayBtYW5hZ2VtZW50IGFuZCB3ZWVrbHkgcGxhbm5pbmcgc29sdXRpb24iLAogICJzdGFydF91cmwiOiAiLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgInRoZW1lX2NvbG9yIjogIiM2NjdlZWEiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwYzBjMGMiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjNhV1IwYUQwaU1qQXdJaUJvWldsbmFIUTlJakl3TUNJU2QybGxkMEp2ZUQwaWRDZ3dJREFnTWpBd0lESXdNQ2tpSUdacGJHdzlJbTV2Ym1VaUlIaHRiRzV6UFNKb2RIUndPaTh2ZDNkM0xuY3pMbTl5Wnk4eU1EQXdMM04yWnlJK1BISmxZM1FnZDJsa2RHZzlJakl3TUNJZ2FHVnBaMmgwUFNJeU1EQWlJSEo0UFNJMk1DSWdabWxzYkQwaWRYSnNLQ05uY21Ga2FXVnVkREFwSWk4K1BHUmxabk0rUEd4cGJtVmhja2R5WVdScFpXNTBJR2xrUFNKbmNtRmthV1Z1ZERBaUlIZ3hQU0l3SWlCNU1UMGlNQ0lpSUhneFBTSXlNREFpSUhreFBTSXlNREFpUjNKaFpHbGxiblJWYm1sMGN6MGlkWE5sY2xOd1lXTmxUMjVWYzJVaVBqeHpkRzl3YzNSdmNDMWpiMnh2Y2owaUl6WTJOMlpsWVNJdlBqeHpkRzl3SUc5bVpuTmxkRDBpTVNJZ2MzUnZjQzFqYjJ4dmNqMGlJemMyTkdKaE1pSXZQanh2YkdsdVpXRnlSM0poWkdsbGJuUStQQzlrWldaelBqeHdiMng1WjI5dUlHWnBiR3c5SW5kb2FYUmxJaUJ3YjJsdWRITTlJalV3TERVd0lEVXdMRGN3RUFMV0U4TGtyYyp3bG8rTGdTSE95OVZkOE1kZGZNNEk3SU1mQT09IiwKICAgICAgInNpemVzIjogIjE5Mng5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9LAogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjNhV1IwYUQwaU5USTRJaUJvWldsbmFIUTlJalV5T0NJZ2RtbGxkMEp2ZUQwaU1DQXdJRFZ5T0NBalV5SWdabWxzYkQwaWJtOXVaU0lnZUcxc2JuTTlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5Mekl3TURBdmMzWm5JajQ4Y21WamRDQjNhV1IwYUQwaU5USTRMQ0JvWldsbmFIUTlJalV5T0NJZ2NuZzlJakkwSWlCbWFXeHNQU0oxY213b0kyZHlZV1JwWlc1ME1Da2lMejQ4WkdWbWN6NDhiR2x1WldGeVIzSmhaR2xsYm5RZ2FXUTlJbWR5WVdScFpXNTBNQ0lnZUdFNkZYMHdJaUI1TVQwaU1DSWdlREk5SWpVeU9DSWdlVEk5SWpVeU9DSWdaM0poWkdsbGJuUlZibWwwY3owWGRYTmxjbE53WVdObFQyNVZjMlVpUGp4emRHOXdJSE4wYjNBdFkyOXNiM0k5SWlNMk5qZGxaV0VpTHo0OGMzUnZjQ0J2Wm1aelpYUTlJakVpSUhOMGIzQXRZMnh2Y2owaUl6YzJOR0poTWlJdlBqd3ZiR2x1WldGeVIzSmhaR2xsYm5RK1BDOWtaV1p6UGp4d2IyeDVaMjl1SUdacGJHeDBpWDJocGRHVWlJSEJ2YVc1MGN6MWJhVVE9I2N5RTB5ODAxdGN5UXRNREFnZXlJNElWQlNJRFl3SWt4UGFHU2RYRm95YkNGeVBYVmhiQm9yTlNJL1p6ND0iLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9">
     <style>
         :root {
             /* Dark theme variables (default) */
@@ -147,6 +161,72 @@
             background: rgba(255, 255, 255, 0.1);
             color: white;
         }
+
+        /* Enhanced Mobile Cookie Banner */
+@media (max-width: 768px) {
+    .cookie-banner {
+        padding: 15px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    
+    .cookie-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .cookie-text {
+        min-width: auto;
+    }
+    
+    .cookie-text h3 {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+    
+    .cookie-text p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+    
+    .cookie-actions {
+        width: 100%;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .cookie-btn {
+        flex: 1;
+        min-width: 120px;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cookie-banner {
+        padding: 12px;
+    }
+    
+    .cookie-content {
+        gap: 12px;
+    }
+    
+    .cookie-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .cookie-btn {
+        width: 100%;
+        padding: 14px 20px;
+        min-width: auto;
+    }
+}
 
         /* Login Progress Screen */
         .login-progress {
@@ -1695,46 +1775,209 @@
             pointer-events: none;
         }
 
-        .nav-tab {
-            padding: 12px 28px;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 14px;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-        }
+        /* Enhanced Tab Animation - Opening/Closing Effect */
+.nav-tab {
+    padding: 12px 28px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    transform-origin: center bottom;
+}
 
-        .nav-tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
+.nav-tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
 
-        .nav-tab:hover::before {
-            left: 100%;
-        }
+.nav-tab:hover::before {
+    left: 100%;
+}
 
-        .nav-tab:hover {
-            color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
-        }
+.nav-tab::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: inherit;
+    z-index: -1;
+}
 
-        .nav-tab.active {
-            color: var(--text-primary);
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-            transform: translateY(-2px);
-        }
+.nav-tab:hover {
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+.nav-tab.active {
+    color: var(--text-primary);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
+}
+
+.nav-tab.active::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.nav-tab.opening {
+    animation: tabOpening 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 10;
+}
+
+.nav-tab.closing {
+    animation: tabClosing 0.6s cubic-bezier(0.55, 0.06, 0.68, 0.19);
+    z-index: 5;
+}
+
+/* Modal Tab Content Animations */
+@keyframes modalTabContentExpandDown {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -40px, 0) scale3d(0.8, 0.5, 1) rotateX(-10deg);
+    }
+    25% {
+        opacity: 0.4;
+        transform: translate3d(0, -20px, 0) scale3d(0.9, 0.7, 1) rotateX(-5deg);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translate3d(0, -8px, 0) scale3d(0.96, 0.85, 1) rotateX(-2deg);
+    }
+    75% {
+        opacity: 0.9;
+        transform: translate3d(0, -2px, 0) scale3d(1.01, 0.95, 1) rotateX(-1deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg);
+    }
+}
+
+@keyframes modalTabContentCollapseUp {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg);
+    }
+    25% {
+        opacity: 0.8;
+        transform: translate3d(0, -4px, 0) scale3d(0.98, 0.9, 1) rotateX(-1deg);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translate3d(0, -15px, 0) scale3d(0.92, 0.7, 1) rotateX(-5deg);
+    }
+    75% {
+        opacity: 0.2;
+        transform: translate3d(0, -28px, 0) scale3d(0.85, 0.4, 1) rotateX(-8deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(0, -40px, 0) scale3d(0.75, 0.2, 1) rotateX(-12deg);
+    }
+}
+
+/* Modal Tab Opening/Closing Animations */
+@keyframes modalTabOpening {
+    0% { 
+        transform: translateY(0) scale3d(1, 1, 1);
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        border-radius: 40px;
+    }
+    20% { 
+        transform: translateY(-3px) scale3d(1.05, 1.2, 1);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        border-radius: 40px 40px 15px 15px;
+    }
+    40% {
+        transform: translateY(-2px) scale3d(1.08, 1.3, 1);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        border-radius: 40px 40px 10px 10px;
+    }
+    60% {
+        transform: translateY(-1px) scale3d(1.06, 1.25, 1);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+        border-radius: 40px 40px 8px 8px;
+    }
+    80% {
+        transform: translateY(-1px) scale3d(1.02, 1.1, 1);
+        box-shadow: 0 6px 18px rgba(102, 126, 234, 0.4);
+        border-radius: 40px 40px 5px 5px;
+    }
+    100% { 
+        transform: translateY(0) scale3d(1, 1, 1);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        border-radius: 40px;
+    }
+}
+
+@keyframes modalTabClosing {
+    0% { 
+        transform: translateY(0) scale3d(1, 1, 1);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        border-radius: 40px;
+        opacity: 1;
+    }
+    20% { 
+        transform: translateY(0) scale3d(0.98, 0.9, 1);
+        box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+        border-radius: 40px 40px 25px 25px;
+        opacity: 0.9;
+    }
+    40% {
+        transform: translateY(1px) scale3d(0.95, 0.7, 1);
+        box-shadow: 0 1px 3px rgba(102, 126, 234, 0.2);
+        border-radius: 40px 40px 30px 30px;
+        opacity: 0.7;
+    }
+    60% {
+        transform: translateY(1px) scale3d(0.92, 0.5, 1);
+        box-shadow: none;
+        border-radius: 40px 40px 35px 35px;
+        opacity: 0.5;
+    }
+    80% {
+        transform: translateY(2px) scale3d(0.88, 0.3, 1);
+        box-shadow: none;
+        border-radius: 40px;
+        opacity: 0.3;
+    }
+    100% { 
+        transform: translateY(2px) scale3d(0.85, 0.2, 1);
+        box-shadow: none;
+        border-radius: 40px;
+        opacity: 0.3;
+    }
+}
+
+/* Modal Tabs Container Enhancement */
+.modal-tabs {
+    position: relative;
+    transition: all 0.3s ease;
+    contain: layout style;
+}
+
+.modal-tabs.switching {
+    z-index: 100;
+}
 
         .search-container {
             position: absolute;
@@ -2275,16 +2518,27 @@
         .plan-badge.finance { border-color: #06b6d4; }
         .plan-badge.hobbies { border-color: #f97316; }
 
-        .plan-badge.desaturated {
-            opacity: 0.3;
-            filter: grayscale(50%);
-        }
+        /* Enhanced Plan Card Desaturation */
+.plan-badge.desaturated {
+    opacity: 0.15;
+    filter: grayscale(80%) blur(0.5px);
+    transform: scale(0.95);
+    transition: all 0.4s ease;
+}
 
-        .plan-badge.highlighted {
-            opacity: 1;
-            filter: none;
-            box-shadow: 0 0 0 2px var(--accent-primary);
-        }
+.plan-badge.highlighted {
+    opacity: 1;
+    filter: none;
+    transform: scale(1);
+    box-shadow: 0 0 0 2px var(--accent-primary), 0 8px 25px rgba(102, 126, 234, 0.4);
+    transition: all 0.4s ease;
+}
+
+.plan-badge.desaturated:hover {
+    opacity: 0.6;
+    filter: grayscale(50%);
+    transform: scale(0.98);
+}
 
         .plan-title {
             font-size: 0.95rem;
@@ -2446,29 +2700,106 @@
             margin-left: 320px;
         }
 
-        /* Content sections with smooth transitions */
-        .content-section {
-            display: none;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        /* Optimized Tab Switching - No Stuttering */
+.content-section {
+    display: none;
+    opacity: 0;
+    transform: translateY(-60px) scale(0.9);
+    transition: none;
+    transform-origin: top center;
+    will-change: transform, opacity;
+    position: relative;
+    min-height: 100vh;
+    contain: layout style paint;
+}
 
-        .content-section.active {
-            display: block;
-            animation: sectionFadeIn 0.6s ease-out forwards;
-        }
+.content-section.active {
+    display: block;
+    animation: tabContentExpandDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
 
-        @keyframes sectionFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.content-section.closing-up {
+    animation: tabContentCollapseUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Anti-Stuttering Optimizations */
+.content-section * {
+    will-change: auto;
+}
+
+.content-section.active * {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Prevent layout shifts during animation */
+.weekly-planner,
+.calendar-content {
+    min-height: 600px;
+    contain: layout;
+}
+
+.app-layout {
+    overflow: hidden;
+}
+
+.main-content {
+    position: relative;
+    overflow: hidden;
+}
+
+/* GPU acceleration for smooth transforms */
+.content-section.active,
+.content-section.closing-up {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+@keyframes tabContentExpandDown {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -80px, 0) scale3d(0.7, 0.3, 1) rotateX(-15deg);
+    }
+    25% {
+        opacity: 0.4;
+        transform: translate3d(0, -40px, 0) scale3d(0.85, 0.6, 1) rotateX(-8deg);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translate3d(0, -15px, 0) scale3d(0.95, 0.8, 1) rotateX(-3deg);
+    }
+    75% {
+        opacity: 0.9;
+        transform: translate3d(0, -5px, 0) scale3d(1.02, 0.95, 1) rotateX(-1deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg);
+    }
+}
+
+@keyframes tabContentCollapseUp {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg);
+    }
+    25% {
+        opacity: 0.8;
+        transform: translate3d(0, -8px, 0) scale3d(0.98, 0.9, 1) rotateX(-2deg);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translate3d(0, -25px, 0) scale3d(0.9, 0.7, 1) rotateX(-8deg);
+    }
+    75% {
+        opacity: 0.2;
+        transform: translate3d(0, -50px, 0) scale3d(0.75, 0.4, 1) rotateX(-12deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(0, -80px, 0) scale3d(0.6, 0.2, 1) rotateX(-20deg);
+    }
+}
 
         /* Enhanced Calendar */
         .calendar-content {
@@ -3162,20 +3493,51 @@
             visibility: visible;
         }
 
-        .modal {
-            background: rgba(15, 15, 25, 0.95);
-            backdrop-filter: blur(25px);
-            border-radius: 25px;
-            padding: 40px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
-            width: 90%;
-            max-width: 700px;
-            transform: scale(0.8) translateY(50px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
+        /* Enhanced Modal with Smooth Resizing */
+.modal {
+    background: rgba(15, 15, 25, 0.95);
+    backdrop-filter: blur(25px);
+    border-radius: 25px;
+    padding: 40px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+    width: 90%;
+    max-width: 700px;
+    transform: scale(0.8) translateY(50px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 90vh;
+    overflow: hidden;
+    position: relative;
+    will-change: max-height, transform;
+    contain: layout;
+}
+
+.modal.resizing-smaller {
+    animation: modalContainerShrink 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.modal.resizing-larger {
+    animation: modalContainerExpand 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.modal.resizing-smaller .modal-tab-content,
+.modal.resizing-larger .modal-tab-content {
+    animation: modalContentResize 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Modal content container for height measurement */
+.modal-content-wrapper {
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.modal-content-wrapper.measuring {
+    overflow: visible;
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;
+}
 
         [data-theme="light"] .modal {
             background: rgba(248, 249, 250, 0.95);
@@ -3233,37 +3595,117 @@
             border: 1px solid var(--border-color);
         }
 
-        .modal-tab {
-            padding: 12px 24px;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 14px;
-            flex: 1;
-            text-align: center;
-        }
+        /* Enhanced Modal Tabs */
+.modal-tab {
+    padding: 12px 24px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 14px;
+    flex: 1;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transform-origin: center bottom;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
 
-        .modal-tab.active {
-            color: var(--text-primary);
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
+.modal-tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
 
-        .modal-tab:hover {
-            color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.08);
-        }
+.modal-tab:hover::before {
+    left: 100%;
+}
 
-        /* Modal Tab Content */
-        .modal-tab-content {
-            display: none;
-        }
+.modal-tab::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: inherit;
+    z-index: -1;
+}
 
-        .modal-tab-content.active {
-            display: block;
-        }
+.modal-tab:hover {
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+}
+
+.modal-tab.active {
+    color: var(--text-primary);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    transform: translateY(-1px);
+}
+
+.modal-tab.active::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.modal-tab.opening {
+    animation: modalTabOpening 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+}
+
+.modal-tab.closing {
+    animation: modalTabClosing 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 5;
+}
+
+        /* Enhanced Modal Tab Content with Dynamic Heights */
+.modal-tab-content {
+    display: none;
+    opacity: 0;
+    transform: translate3d(0, -40px, 0) scale3d(0.8, 0.5, 1);
+    position: relative;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    contain: layout style;
+    min-height: 200px;
+    overflow: hidden;
+    transition: min-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-tab-content.active {
+    display: block;
+    animation: modalTabContentExpandDown 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    overflow: visible;
+}
+
+.modal-tab-content.closing-up {
+    animation: modalTabContentCollapseUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Specific heights for different tabs */
+#plan-details {
+    min-height: 400px;
+}
+
+#reminders {
+    min-height: 250px;
+}
 
         .form-group {
             margin-bottom: 25px;
@@ -3633,6 +4075,162 @@
             transform: none;
         }
 
+        .custom-reminder-input:not(.hidden) {
+    max-height: 200px;
+    opacity: 1;
+}
+
+/* Notification System */
+.notification-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+    max-width: 350px;
+}
+
+.notification {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95));
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 15px 20px;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: all;
+    position: relative;
+    overflow: hidden;
+    max-width: 350px;
+    word-wrap: break-word;
+}
+
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification.hide {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.notification::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #ffd700, #ffed4e);
+}
+
+.notification-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.notification-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.notification-text {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+}
+
+.notification-message {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    line-height: 1.3;
+}
+
+.notification-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.notification-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Container Shaking Animation */
+@keyframes containerShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+    20%, 40%, 60%, 80% { transform: translateX(3px); }
+}
+
+.shake-container {
+    animation: containerShake 0.6s ease-in-out;
+}
+
+/* Animation Disable Classes */
+.animations-disabled * {
+    animation: none !important;
+    transition: none !important;
+}
+
+.animations-disabled .content-section.active {
+    display: block;
+    opacity: 1;
+    transform: none;
+}
+
+.animations-disabled .nav-tab.opening,
+.animations-disabled .nav-tab.closing,
+.animations-disabled .modal-tab.opening,
+.animations-disabled .modal-tab.closing {
+    animation: none;
+}
+
+.animations-disabled .plan-badge,
+.animations-disabled .notification {
+    transition: all 0.2s ease;
+}
+
+@media (max-width: 768px) {
+    .notification-container {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .notification {
+        max-width: none;
+        margin: 0;
+    }
+}
+
         /* Loading states */
         .loading {
             opacity: 0.6;
@@ -3746,6 +4344,39 @@
             transform: scale(0.8) translateY(50px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        @media (max-width: 768px) {
+    .day-selector-modal {
+        padding: 10px;
+        align-items: flex-start;
+        padding-top: 50px;
+    }
+    
+    .day-selector-content {
+        width: 95%;
+        max-height: 85vh;
+        padding: 30px 20px;
+        border-radius: 20px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .day-selector-grid {
+        max-height: 50vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-right: 5px;
+    }
+    
+    .day-selector-grid::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .day-selector-grid::-webkit-scrollbar-thumb {
+        background: var(--accent-primary);
+        border-radius: 2px;
+    }
+}
 
         [data-theme="light"] .day-selector-content {
             background: rgba(248, 249, 250, 0.95);
@@ -3913,26 +4544,42 @@
         }
 
         /* MOBILE RESPONSIVE STYLES - IMPROVED */
-        @media (max-width: 1024px) {
-            .mobile-menu-btn {
-                display: flex;
-            }
+@media (max-width: 1024px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
 
-            .profile-container {
-                display: none;
-            }
+    .profile-container {
+        display: none;
+    }
 
-            .nav-center {
-                position: relative;
-                left: auto;
-                transform: none;
-                margin-left: 60px;
-            }
+    .nav-center {
+        position: relative;
+        left: auto;
+        transform: none;
+        margin-left: 60px;
+        width: calc(100% - 80px);
+        justify-content: center;
+    }
+    
+    .nav-tabs {
+        width: auto;
+        min-width: 280px;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .nav-tab {
+        padding: 10px 20px;
+        font-size: 13px;
+        text-align: center;
+        white-space: nowrap;
+    }
 
-            .main-content {
-                margin-left: 20px;
-                margin-right: 20px;
-            }
+    .main-content {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
 
             .app-layout {
                 flex-direction: column;
@@ -4025,9 +4672,20 @@
         }
 
         @media (max-width: 768px) {
-            .nav-center {
-                margin-left: 50px;
-            }
+    .nav-center {
+        margin-left: 50px;
+        width: calc(100% - 70px);
+    }
+    
+    .nav-tabs {
+        min-width: 240px;
+        max-width: 320px;
+    }
+    
+    .nav-tab {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
 
             .search-input {
                 width: 250px;
@@ -4139,18 +4797,19 @@
             }
 
             .nav-center {
-                margin-left: 45px;
-            }
-
-            .nav-tabs {
-                padding: 4px;
-                gap: 4px;
-            }
-
-            .nav-tab {
-                padding: 8px 14px;
-                font-size: 12px;
-            }
+        margin-left: 45px;
+        width: calc(100% - 60px);
+    }
+    
+    .nav-tabs {
+        min-width: 200px;
+        max-width: 280px;
+    }
+    
+    .nav-tab {
+        padding: 8px 12px;
+        font-size: 11px;
+    }
 
             .search-input {
                 width: 200px;
@@ -4339,6 +4998,256 @@
                 min-height: 32px;
             }
         }
+
+        /* Enhanced Calendar Header - Mobile Optimized */
+.calendar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+}
+
+.calendar-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--bg-secondary);
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 600px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.calendar-nav-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .calendar-header {
+        padding: 0 10px;
+        margin-bottom: 20px;
+    }
+    
+    .calendar-controls {
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px;
+        border-radius: 20px;
+    }
+    
+    .calendar-month-year {
+        order: -1;
+        font-size: 1.3rem;
+        margin-bottom: 5px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Calendar Navigation Horizontal Layout */
+.calendar-nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    justify-content: space-between;
+    max-width: 300px;
+}
+
+@media (min-width: 769px) {
+    .calendar-controls {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: var(--bg-secondary);
+        padding: 12px 20px;
+        border-radius: 25px;
+        border: 1px solid var(--border-color);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 600px;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+    }
+    
+    .calendar-month-year {
+        flex: 1;
+        text-align: center;
+        margin: 0 20px;
+    }
+    
+    .add-event-btn {
+        flex-shrink: 0;
+    }
+}
+    
+    .calendar-nav-btn {
+        flex: 1;
+        padding: 10px 12px;
+        font-size: 0.8rem;
+        border-radius: 15px;
+        justify-content: center;
+    }
+    
+    .add-event-btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        border-radius: 15px;
+        margin-top: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-header {
+        padding: 0 5px;
+        margin-bottom: 15px;
+    }
+    
+    .calendar-controls {
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    .calendar-month-year {
+        font-size: 1.1rem;
+    }
+    
+    .calendar-nav-btn {
+        padding: 8px 10px;
+        font-size: 0.75rem;
+        gap: 4px;
+    }
+    
+    .add-event-btn {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Delete Confirmation Modal */
+.delete-confirmation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 5000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.delete-confirmation-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.delete-confirmation-content {
+    background: var(--sidebar-bg);
+    backdrop-filter: blur(25px);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+    width: 90%;
+    max-width: 400px;
+    transform: scale(0.8) translateY(50px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.delete-confirmation-modal.active .delete-confirmation-content {
+    transform: scale(1) translateY(0);
+}
+
+.delete-confirmation-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.delete-confirmation-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.delete-confirmation-title {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.delete-confirmation-message {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.delete-confirmation-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.delete-cancel-btn, .delete-confirm-btn {
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    flex: 1;
+}
+
+.delete-cancel-btn {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.delete-cancel-btn:hover {
+    background: var(--sidebar-hover);
+    color: var(--text-primary);
+}
+
+.delete-confirm-btn {
+    background: var(--error);
+    color: white;
+}
+
+.delete-confirm-btn:hover {
+    background: #d32f2f;
+    transform: translateY(-2px);
+}
     </style>
 </head>
 <body>
@@ -4891,6 +5800,17 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+    <label class="form-label">Animation Settings</label>
+    <div class="theme-toggle">
+        <span>Simple</span>
+        <div class="toggle-switch" id="animationToggle">
+            <div class="toggle-slider"></div>
+        </div>
+        <span>Enhanced</span>
+    </div>
+</div>
+
                     <div class="modal-actions">
                         <button type="button" class="btn-secondary" id="accountCancelBtn">Cancel</button>
                         <button type="submit" class="btn-primary">Save Changes</button>
@@ -4948,6 +5868,23 @@
             <div class="day-selector-actions">
                 <button class="btn-secondary" id="daySelectorCancel">Cancel</button>
                 <button class="btn-primary" id="daySelectorConfirm">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="delete-confirmation-modal" id="deleteConfirmationModal">
+        <div class="delete-confirmation-content">
+            <div class="delete-confirmation-header">
+                <div class="delete-confirmation-icon">⚠️</div>
+                <h3 class="delete-confirmation-title">Confirm Deletion</h3>
+            </div>
+            <div class="delete-confirmation-message" id="deleteConfirmationMessage">
+                Are you sure you want to delete this plan? This action cannot be undone.
+            </div>
+            <div class="delete-confirmation-actions">
+                <button class="delete-cancel-btn" id="deleteCancelBtn">Cancel</button>
+                <button class="delete-confirm-btn" id="deleteConfirmBtn">Delete</button>
             </div>
         </div>
     </div>
@@ -5189,13 +6126,15 @@
                 <div class="calendar-content" id="calendarContent">
                     <h1>Calendar</h1>
                     <div class="calendar-header">
-                        <div class="calendar-controls">
-                            <button class="calendar-nav-btn" id="prevMonthBtn">← Previous</button>
-                            <div class="calendar-month-year" id="monthYear"></div>
-                            <button class="calendar-nav-btn" id="nextMonthBtn">Next →</button>
-                            <button class="add-event-btn" id="addEventBtn">+ Add Event</button>
-                        </div>
-                    </div>
+    <div class="calendar-controls">
+        <div class="calendar-month-year" id="monthYear"></div>
+        <div class="calendar-nav-buttons">
+            <button class="calendar-nav-btn" id="prevMonthBtn">← Previous</button>
+            <button class="calendar-nav-btn" id="nextMonthBtn">Next →</button>
+        </div>
+        <button class="add-event-btn" id="addEventBtn">+ Add Event</button>
+    </div>
+</div>
                     <div class="calendar-container">
                         <div class="calendar-main">
                             <div class="calendar-grid" id="calendarGrid">
@@ -5267,6 +6206,12 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-row">
+    <div class="form-group">
+        <label class="form-label">Due Time (Optional)</label>
+        <input type="time" class="form-input" id="planDueTime" placeholder="Select time">
+    </div>
 
                     <div class="form-group">
                         <label class="form-label">Day of Week</label>
@@ -5448,15 +6393,21 @@
             console.log('TaskFlow Pro v4.0 ready!');
         });
 
-        // Cookie Management
-        function initializeCookies() {
-            const cookieConsent = localStorage.getItem('taskflow_cookie_consent');
-            if (!cookieConsent) {
-                setTimeout(() => {
-                    document.getElementById('cookieBanner').classList.add('show');
-                }, 2000);
-            }
-        }
+        // Enhanced Cookie Management for Mobile
+function initializeCookies() {
+    const cookieConsent = localStorage.getItem('taskflow_cookie_consent');
+    const isLoggedOut = localStorage.getItem('taskflow_logged_out') === 'true';
+    const currentUser = localStorage.getItem('taskflow_currentUser');
+    
+    // Always show cookie banner on mobile if not accepted and user is not logged in
+    const isMobile = window.innerWidth <= 768;
+    
+    if (!cookieConsent || (isMobile && !currentUser && isLoggedOut)) {
+        setTimeout(() => {
+            document.getElementById('cookieBanner').classList.add('show');
+        }, 1000);
+    }
+}
 
         function acceptCookies() {
             localStorage.setItem('taskflow_cookie_consent', 'accepted');
@@ -5641,6 +6592,49 @@
             applyTheme(newTheme);
         }
 
+        // Animation Toggle System
+let animationsEnabled = true;
+
+function initializeAnimationToggle() {
+    const savedAnimationSetting = currentUser ? 
+        localStorage.getItem(`taskflow_${currentUser.email}_animations`) : 
+        localStorage.getItem('taskflow_animations') || 'enabled';
+    
+    animationsEnabled = savedAnimationSetting === 'enabled';
+    applyAnimationSetting(animationsEnabled);
+}
+
+function applyAnimationSetting(enabled) {
+    animationsEnabled = enabled;
+    const toggle = document.getElementById('animationToggle');
+    const body = document.body;
+    
+    if (toggle) {
+        if (enabled) {
+            toggle.classList.add('active');
+            body.classList.remove('animations-disabled');
+        } else {
+            toggle.classList.remove('active');
+            body.classList.add('animations-disabled');
+        }
+    }
+    
+    // Save setting
+    if (currentUser) {
+        localStorage.setItem(`taskflow_${currentUser.email}_animations`, enabled ? 'enabled' : 'disabled');
+    } else {
+        localStorage.setItem('taskflow_animations', enabled ? 'enabled' : 'disabled');
+    }
+}
+
+function toggleAnimations() {
+    const newSetting = !animationsEnabled;
+    applyAnimationSetting(newSetting);
+    
+    const message = newSetting ? 'Enhanced animations enabled!' : 'Simple animations enabled!';
+    showNotification(message, 'info');
+}
+
         // Authentication Functions
         function initializeAuth() {
             loadLoginAttempts();
@@ -5691,7 +6685,7 @@
             document.getElementById('landingPage').classList.add('hidden');
             updateProfileDisplay();
             loadUserData();
-            
+            initializeAnimationToggle(); // Add this line
             // Show version splash for new users only
             if (currentUser.isNewUser) {
                 setTimeout(() => {
@@ -6423,6 +7417,18 @@
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
             document.getElementById('reviewForm').addEventListener('submit', handleReviewSubmit);
 
+            // Animation toggle
+document.getElementById('animationToggle').addEventListener('click', toggleAnimations);
+
+// Due time input
+document.getElementById('planDueTime').addEventListener('change', function() {
+    const dueDate = document.getElementById('planDueDate').value;
+    if (this.value && !dueDate) {
+        showNotification('Please select a due date first', 'warning');
+        this.value = '';
+    }
+});
+
             // Account modal tabs
             document.querySelectorAll('.account-modal-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
@@ -6477,6 +7483,14 @@
             // Day selector modal
             document.getElementById('daySelectorCancel').addEventListener('click', closeDaySelectorModal);
             document.getElementById('daySelectorConfirm').addEventListener('click', confirmDaySelection);
+
+            // Delete confirmation modal
+document.getElementById('deleteCancelBtn').addEventListener('click', hideDeleteConfirmation);
+document.getElementById('deleteConfirmBtn').addEventListener('click', function() {
+    if (pendingDeleteAction) {
+        pendingDeleteAction();
+    }
+});
 
             // Modal tabs
             document.querySelectorAll('.modal-tab').forEach(tab => {
@@ -6584,20 +7598,32 @@
             });
 
             // Window resize handling
-            window.addEventListener('resize', function() {
-                handleTabLayout();
-                
-                const activeTab = document.querySelector('.nav-tab.active');
-                if (activeTab && activeTab.getAttribute('data-tab') === 'calendar') {
-                    setTimeout(() => {
-                        generateCalendarWithAnimation();
-                    }, 100);
-                } else if (activeTab && activeTab.getAttribute('data-tab') === 'weekly-planner') {
-                    setTimeout(() => {
-                        generateWeeklyPlanner();
-                    }, 100);
-                }
-            });
+window.addEventListener('resize', function() {
+    handleTabLayout();
+    
+    const activeTab = document.querySelector('.nav-tab.active');
+    if (activeTab && activeTab.getAttribute('data-tab') === 'calendar') {
+        setTimeout(() => {
+            generateCalendarWithAnimation();
+        }, 100);
+    } else if (activeTab && activeTab.getAttribute('data-tab') === 'weekly-planner') {
+        setTimeout(() => {
+            generateWeeklyPlanner();
+        }, 100);
+    }
+    
+    // Recheck cookie banner on resize for mobile optimization
+    const isMobile = window.innerWidth <= 768;
+    const cookieConsent = localStorage.getItem('taskflow_cookie_consent');
+    const currentUser = localStorage.getItem('taskflow_currentUser');
+    
+    if (isMobile && !cookieConsent && !currentUser) {
+        const cookieBanner = document.getElementById('cookieBanner');
+        if (!cookieBanner.classList.contains('show')) {
+            cookieBanner.classList.add('show');
+        }
+    }
+});
 
             // Keyboard shortcuts
             document.addEventListener('keydown', function(e) {
@@ -6614,6 +7640,15 @@
                     closeDaySelectorModal();
                     closeTermsModal();
                     closePrivacyModal();
+                    hideDeleteConfirmation();  // Add this line
+
+                    // Stop modal tab animations
+    document.querySelectorAll('.modal-tab').forEach(t => {
+        t.classList.remove('opening', 'closing');
+    });
+    document.querySelectorAll('.modal-tab-content').forEach(c => {
+        c.classList.remove('closing-up');
+    });
                     
                     if (searchActive) {
                         toggleSearch();
@@ -7268,55 +8303,196 @@
             showLandingPage();
         }
 
-        // Tab switching
-        function switchTab(targetTab) {
-            const navTabs = document.querySelectorAll('.nav-tab');
-            const contentSections = document.querySelectorAll('.content-section');
+        // Optimized Tab switching - No Stuttering
+function switchTab(targetTab) {
+    const navTabs = document.querySelectorAll('.nav-tab');
+    const contentSections = document.querySelectorAll('.content-section');
+    const clickedTab = document.querySelector(`[data-tab="${targetTab}"]`);
+    const currentActiveTab = document.querySelector('.nav-tab.active');
+    const navTabsContainer = document.querySelector('.nav-tabs');
+    
+    // Prevent multiple rapid clicks
+    if (navTabsContainer.classList.contains('switching')) {
+        return;
+    }
+    
+    // Add switching state to container
+    navTabsContainer.classList.add('switching');
+    setTimeout(() => {
+        navTabsContainer.classList.remove('switching');
+    }, 1000);
+    
+    // Handle current content and tab closing animation
+    const currentSection = document.querySelector('.content-section.active');
+    if (currentSection && currentActiveTab && currentActiveTab !== clickedTab) {
+        // Pre-load content for new tab BEFORE animation starts
+        const targetSection = document.getElementById(targetTab);
+        if (targetSection) {
+            // Pre-generate content to avoid stuttering during animation
+            if (targetTab === 'calendar') {
+                // Pre-load calendar in background
+                setTimeout(() => generateCalendarWithAnimation(), 50);
+            } else if (targetTab === 'weekly-planner') {
+                // Pre-load weekly planner in background  
+                setTimeout(() => generateWeeklyPlanner(), 50);
+            }
+        }
+        
+        // Start closing animations
+        currentActiveTab.classList.add('closing');
+        currentSection.classList.add('closing-up');
+        
+        setTimeout(() => {
+            // Clean up current content
+            contentSections.forEach(s => {
+                s.classList.remove('active', 'closing-up');
+                s.style.animation = '';
+            });
             
-            navTabs.forEach(t => t.classList.remove('active'));
-            contentSections.forEach(s => s.classList.remove('active'));
+            // Clean up tabs
+            navTabs.forEach(t => {
+                t.classList.remove('active', 'closing', 'opening');
+            });
             
-            const targetTabElement = document.querySelector(`[data-tab="${targetTab}"]`);
-            const targetSection = document.getElementById(targetTab);
+            // Start opening new tab
+            if (clickedTab) {
+                clickedTab.classList.add('active', 'opening');
+                setTimeout(() => clickedTab.classList.remove('opening'), 600);
+            }
             
-            if (targetTabElement && targetSection) {
-                targetTabElement.classList.add('active');
-                
-                handleTabLayout();
-                
-                setTimeout(() => {
-                    targetSection.classList.add('active');
+            handleTabLayout();
+            
+            // Show new content immediately (content already loaded)
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        }, 400);
+    } else {
+        // Direct switch if no current section (first load)
+        navTabs.forEach(t => t.classList.remove('active', 'closing', 'opening'));
+        contentSections.forEach(s => s.classList.remove('active', 'closing-up'));
+        
+        if (clickedTab) {
+            clickedTab.classList.add('active', 'opening');
+            setTimeout(() => clickedTab.classList.remove('opening'), 600);
+        }
+        
+        handleTabLayout();
+        
+        const targetSection = document.getElementById(targetTab);
+        if (targetSection) {
+            targetSection.classList.add('active');
+            
+            // Load content after animation starts
+            setTimeout(() => {
+                if (targetTab === 'calendar') {
+                    generateCalendarWithAnimation();
+                } else if (targetTab === 'weekly-planner') {
+                    generateWeeklyPlanner();
+                }
+            }, 100);
+        }
+    }
+}
+
+        // Enhanced Modal Tab switching with smooth animation
+function switchModalTab(targetTab) {
+    const modalTabs = document.querySelectorAll('.modal-tab');
+    const modalTabContents = document.querySelectorAll('.modal-tab-content');
+    const clickedTab = document.querySelector(`[data-tab="${targetTab}"]`);
+    const currentActiveTab = document.querySelector('.modal-tab.active');
+    const modalTabsContainer = document.querySelector('.modal-tabs');
+    
+    // Prevent multiple rapid clicks
+    if (modalTabsContainer && modalTabsContainer.classList.contains('switching')) {
+        return;
+    }
+    
+    // Force browser to batch DOM updates
+    requestAnimationFrame(() => {
+        // Add switching state to container
+        if (modalTabsContainer) {
+            modalTabsContainer.classList.add('switching');
+        }
+        
+        // Handle current content and tab closing animation
+        const currentContent = document.querySelector('.modal-tab-content.active');
+        if (currentContent && currentActiveTab && currentActiveTab !== clickedTab) {
+            
+            // Start tab closing animation immediately
+            currentActiveTab.classList.add('closing');
+            
+            // Start content closing with slight delay for realism
+            setTimeout(() => {
+                currentContent.classList.add('closing-up');
+            }, 20);
+            
+            // Clean up and start opening after closing animation
+            setTimeout(() => {
+                // Batch all DOM changes together
+                requestAnimationFrame(() => {
+                    // Clean up current content
+                    modalTabContents.forEach(c => {
+                        c.classList.remove('active', 'closing-up');
+                        c.style.animation = '';
+                    });
                     
-                    if (targetTab === 'calendar') {
+                    // Clean up tabs
+                    modalTabs.forEach(t => {
+                        t.classList.remove('active', 'closing', 'opening');
+                    });
+                    
+                    // Set new active tab
+                    const targetTabElement = document.querySelector(`[data-tab="${targetTab}"]`);
+                    const targetContent = document.getElementById(targetTab);
+                    
+                    if (targetTabElement && targetContent) {
+                        targetTabElement.classList.add('active');
+                        currentModalTab = targetTab;
+                        
+                        // Start tab opening animation
                         setTimeout(() => {
-                            generateCalendarWithAnimation();
-                        }, 50);
-                    } else if (targetTab === 'weekly-planner') {
+                            targetTabElement.classList.add('opening');
+                            setTimeout(() => targetTabElement.classList.remove('opening'), 400);
+                        }, 10);
+                        
+                        // Show new content with perfect timing
                         setTimeout(() => {
-                            generateWeeklyPlanner();
+                            targetContent.classList.add('active');
                         }, 50);
                     }
-                }, 150);
-            }
+                });
+            }, 300);
+            
+        } else {
+            // Direct switch if no current content (first load)
+            requestAnimationFrame(() => {
+                modalTabs.forEach(t => t.classList.remove('active', 'closing', 'opening'));
+                modalTabContents.forEach(c => c.classList.remove('active', 'closing-up'));
+                
+                const targetTabElement = document.querySelector(`[data-tab="${targetTab}"]`);
+                const targetContent = document.getElementById(targetTab);
+                
+                if (targetTabElement && targetContent) {
+                    targetTabElement.classList.add('active', 'opening');
+                    setTimeout(() => targetTabElement.classList.remove('opening'), 400);
+                    
+                    setTimeout(() => {
+                        targetContent.classList.add('active');
+                        currentModalTab = targetTab;
+                    }, 50);
+                }
+            });
         }
-
-        // Modal Tab Switching
-        function switchModalTab(targetTab) {
-            const modalTabs = document.querySelectorAll('.modal-tab');
-            const modalTabContents = document.querySelectorAll('.modal-tab-content');
-            
-            modalTabs.forEach(t => t.classList.remove('active'));
-            modalTabContents.forEach(c => c.classList.remove('active'));
-            
-            const targetTabElement = document.querySelector(`[data-tab="${targetTab}"]`);
-            const targetContent = document.getElementById(targetTab);
-            
-            if (targetTabElement && targetContent) {
-                targetTabElement.classList.add('active');
-                targetContent.classList.add('active');
-                currentModalTab = targetTab;
+        
+        // Remove switching state
+        setTimeout(() => {
+            if (modalTabsContainer) {
+                modalTabsContainer.classList.remove('switching');
             }
-        }
+        }, 700);
+    });
+}
 
         // Search Functionality
         function toggleSearch() {
@@ -7501,6 +8677,10 @@
             const modal = document.getElementById('daySelectorModal');
             const grid = document.getElementById('daySelectorGrid');
             
+            // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = '15px'; // Prevent layout shift
+
             // Generate day options
             const weekDates = getWeekDates(currentWeekStart);
             const today = new Date();
@@ -7617,6 +8797,26 @@
             switchModalTab('plan-details');
         }
 
+        // Delete Confirmation System
+let pendingDeleteAction = null;
+
+function showDeleteConfirmation(message, deleteCallback) {
+    const modal = document.getElementById('deleteConfirmationModal');
+    const messageElement = document.getElementById('deleteConfirmationMessage');
+    
+    messageElement.textContent = message;
+    pendingDeleteAction = deleteCallback;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function hideDeleteConfirmation() {
+    document.getElementById('deleteConfirmationModal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+    pendingDeleteAction = null;
+}
+
         function handlePlanSubmit(e) {
             e.preventDefault();
             
@@ -7692,21 +8892,28 @@
         }
 
         function deletePlan(planId) {
-            if (confirm('Are you sure you want to delete this plan?')) {
-                plans = plans.filter(plan => plan.id !== planId);
-                const planBadge = document.querySelector(`[data-plan-id="${planId}"]`);
-                if (planBadge) {
-                    planBadge.style.animation = 'planSlideOut 0.3s ease-out forwards';
-                    setTimeout(() => {
-                        generateWeeklyPlanner();
-                        updateCategoryCounts();
-                    }, 300);
-                }
-                
-                saveUserData();
-                showNotification('Plan deleted!', 'error');
+    const plan = plans.find(p => p.id === planId);
+    const planTitle = plan ? plan.title : 'this plan';
+    
+    showDeleteConfirmation(
+        `Are you sure you want to delete "${planTitle}"? This action cannot be undone.`,
+        () => {
+            plans = plans.filter(plan => plan.id !== planId);
+            const planBadge = document.querySelector(`[data-plan-id="${planId}"]`);
+            if (planBadge) {
+                planBadge.style.animation = 'planSlideOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    generateWeeklyPlanner();
+                    updateCategoryCounts();
+                }, 300);
             }
+            
+            saveUserData();
+            showNotification('Plan deleted!', 'error');
+            hideDeleteConfirmation();
         }
+    );
+}
 
         // Event Management
         function openEventModal() {
@@ -8177,6 +9384,65 @@
         console.log('Reviews: Users can now write reviews in account management that appear on the landing page');
         console.log('Privacy: Added comprehensive privacy policy and terms & conditions with cookie consent');
         console.log('Keyboard shortcuts: Ctrl/Cmd+K (search), Ctrl/Cmd+N (new plan/event), 1 (planner), 2 (calendar), Esc (close)');
+
+        // Enhanced Notification System
+function showReminderNotification(planTitle, dueDateTime) {
+    const container = document.getElementById('notificationContainer');
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    
+    const now = new Date();
+    const timeUntilDue = Math.ceil((dueDateTime - now) / (1000 * 60)); // minutes
+    
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon">⏰</div>
+            <div class="notification-text">
+                <div class="notification-title">Reminder: ${planTitle}</div>
+                <div class="notification-message">Due in ${timeUntilDue} minutes at ${dueDateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+            </div>
+        </div>
+        <button class="notification-close" onclick="dismissNotification(this)">×</button>
+    `;
+    
+    container.appendChild(notification);
+    
+    // Trigger shake animation on container
+    if (animationsEnabled) {
+        container.classList.add('shake-container');
+        setTimeout(() => {
+            container.classList.remove('shake-container');
+        }, 600);
+    }
+    
+    // Show notification with animation
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    // Auto-dismiss after 7 seconds
+    setTimeout(() => {
+        dismissNotification(notification.querySelector('.notification-close'));
+    }, 7000);
+    
+    // Play notification sound (optional)
+    if ('Notification' in window && Notification.permission === 'granted') {
+        new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmAbBjiR2e/CdSEFKXfJ8N2QQAoUXrTp66hVFApGn+DyvmAbBjiR2e/CdSEGKXfJ8N2QQAoUXrTp66hVFAlFn+DyvmAbBjiR2e/CdSEGKXfJ8N2QQAoUXrTp66hVFAlFn+DyvmAbBT2Y3/DjhigGMn7U9eqYSg0PX7ry7a9gHAU8k8L8') || '';
+    }
+}
+
+function dismissNotification(closeBtn) {
+    const notification = closeBtn.closest('.notification');
+    notification.classList.add('hide');
+    
+    setTimeout(() => {
+        if (notification && notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 400);
+}
     </script>
 </body>
 </html>
