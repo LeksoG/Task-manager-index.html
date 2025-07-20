@@ -6328,6 +6328,544 @@
         min-height: 44px;
     }
 }
+
+/* FIXED Modal Actions - Better Mobile Visibility */
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding: 20px 20px 20px 20px; /* Equal padding all around */
+    border-top: 1px solid var(--border-color);
+    background: var(--sidebar-bg); /* Use consistent background */
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    flex-shrink: 0;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+}
+
+@media (max-width: 768px) {
+    .modal-actions {
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px; /* Full padding on mobile */
+        margin: 20px -20px -20px -20px; /* Extend to modal edges */
+        border-radius: 0 0 20px 20px; /* Round bottom corners */
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        padding: 16px 20px; /* Larger touch targets */
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 12px;
+        min-height: 48px; /* Ensure minimum touch target */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .btn-primary {
+        order: 1; /* Primary button first on mobile */
+    }
+    
+    .btn-secondary {
+        order: 2; /* Secondary button second */
+    }
+}
+
+/* Progress Bar Enhancements */
+.progress-bar {
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-text {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+@keyframes progressComplete {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+    }
+    50% { 
+        transform: scale(1.02);
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.6);
+    }
+}
+
+/* Custom Day Selector */
+.custom-day-selector {
+    position: relative;
+    width: 100%;
+}
+
+.day-selector-current {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 18px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+}
+
+.day-selector-current:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-primary);
+}
+
+.day-selector-current.active {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.day-selector-text {
+    font-size: 15px;
+}
+
+.day-selector-arrow {
+    transition: transform 0.3s ease;
+    color: var(--text-muted);
+}
+
+.day-selector-current.active .day-selector-arrow {
+    transform: rotate(180deg);
+}
+
+.day-selector-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--sidebar-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin-top: 5px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.day-selector-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.day-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.day-option:last-child {
+    border-bottom: none;
+}
+
+.day-option:hover {
+    background: var(--sidebar-hover);
+    transform: translateX(5px);
+}
+
+.day-option.selected {
+    background: rgba(102, 126, 234, 0.2);
+    color: var(--accent-primary);
+}
+
+.day-emoji {
+    font-size: 1.5rem;
+    width: 30px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.day-info {
+    flex: 1;
+}
+
+.day-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.day-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: block;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .day-selector-dropdown {
+        max-height: 250px;
+    }
+    
+    .day-option {
+        padding: 12px 15px;
+    }
+    
+    .day-emoji {
+        font-size: 1.3rem;
+        width: 25px;
+    }
+}
+
+/* Fix Day Selector Dropdown Mobile Overlay */
+.day-selector-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--sidebar-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin-top: 5px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 500; /* Lower than modal actions (1000) */
+    max-height: 300px;
+    overflow-y: auto;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile-specific dropdown fixes */
+@media (max-width: 768px) {
+    .day-selector-dropdown {
+        max-height: 200px; /* Shorter on mobile */
+        z-index: 500; /* Ensure it's below modal actions */
+        position: fixed; /* Use fixed positioning on mobile */
+        left: 20px;
+        right: 20px;
+        width: calc(100% - 40px); /* Account for modal padding */
+    }
+    
+    /* Add extra bottom padding to modal content on mobile to prevent overlap */
+    .modal-content-wrapper {
+        padding-bottom: 120px; /* Extra space for dropdown */
+    }
+    
+    /* Ensure modal actions stay on top */
+    .modal-actions {
+        z-index: 1000; /* Higher than dropdown */
+        position: sticky;
+        bottom: 0;
+    }
+    
+    /* Add scroll margin to form groups near bottom */
+    .form-group:last-of-type {
+        margin-bottom: 40px;
+    }
+}
+
+/* Enhanced Modal Layout - Desktop */
+.modal {
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 5px 40px 0; /* Add bottom padding */
+    margin: 0 -5px 0 0;
+    max-height: calc(90vh - 200px);
+}
+
+/* Ensure proper spacing between form sections */
+.modal-tab-content {
+    min-height: auto;
+    padding-bottom: 30px; /* Add space before actions */
+}
+
+/* Fix Modal Actions Positioning */
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: auto; /* Push to bottom */
+    padding: 25px 20px 20px 20px; /* More top padding */
+    border-top: 1px solid var(--border-color);
+    background: var(--sidebar-bg);
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    flex-shrink: 0;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Desktop specific modal improvements */
+@media (min-width: 769px) {
+    .modal-content-wrapper {
+        padding-bottom: 20px; /* Less padding on desktop */
+    }
+    
+    .modal-actions {
+        margin-top: 30px; /* More separation on desktop */
+        padding: 30px 40px 25px 40px; /* Larger padding on desktop */
+    }
+    
+    /* Ensure day dropdown doesn't interfere */
+    .day-selector-dropdown {
+        z-index: 600; /* Still below modal actions but higher than mobile */
+    }
+}
+
+/* Enhanced Form Spacing */
+.form-group {
+    margin-bottom: 25px;
+    position: relative; /* For dropdown positioning */
+}
+
+.form-row .form-group {
+    margin-bottom: 25px;
+}
+
+/* Last form group needs extra space on mobile */
+@media (max-width: 768px) {
+    .modal-tab-content .form-group:last-child {
+        margin-bottom: 50px;
+    }
+    
+    /* Special handling for custom day selector */
+    .custom-day-selector {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.selected-day-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 18px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+}
+
+.change-day-btn {
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.change-day-btn:hover {
+    background: var(--accent-secondary);
+}
+
+/* Fixed Modal Layout Without Day Selector */
+.modal {
+    max-height: 95vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 10px 20px 0;
+    margin: 0 -10px 0 0;
+    max-height: calc(95vh - 180px);
+    min-height: 300px; /* Ensure minimum height */
+}
+
+.modal-tab-content {
+    min-height: 250px; /* Ensure content area is tall enough */
+    padding-bottom: 20px;
+    display: none;
+}
+
+.modal-tab-content.active {
+    display: block !important;
+}
+
+/* Enhanced Modal Actions - Always Visible */
+.modal-actions {
+    display: flex !important;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: auto;
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+    background: var(--sidebar-bg);
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    flex-shrink: 0;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile Modal Optimizations */
+@media (max-width: 768px) {
+    .modal {
+        width: 95vw;
+        height: 90vh;
+        max-height: 90vh;
+        margin: 5vh auto;
+        padding: 15px;
+    }
+    
+    .modal-content-wrapper {
+        max-height: calc(90vh - 160px);
+        padding-bottom: 10px;
+    }
+    
+    .modal-tab-content {
+        min-height: 200px;
+        padding-bottom: 15px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px;
+        margin: 10px -15px -15px -15px;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        padding: 16px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 12px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .btn-primary {
+        order: 1;
+    }
+    
+    .btn-secondary {
+        order: 2;
+    }
+}
+
+/* Desktop Modal Improvements */
+@media (min-width: 769px) {
+    .modal {
+        max-width: 600px;
+        max-height: 85vh;
+    }
+    
+    .modal-content-wrapper {
+        max-height: calc(85vh - 180px);
+    }
+    
+    .modal-actions {
+        padding: 25px 30px;
+        margin-top: 20px;
+    }
+    
+    .btn-primary, .btn-secondary {
+        padding: 14px 28px;
+        font-size: 15px;
+        min-width: 120px;
+    }
+}
+
+/* Enhanced Modal Tab Content */
+.modal-tab-content {
+    display: none !important;
+    opacity: 0;
+    min-height: 250px;
+    padding: 20px 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-tab-content.active {
+    display: block !important;
+    opacity: 1;
+}
+
+/* Ensure reminder options display properly */
+.reminder-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.reminder-option {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px 12px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-weight: 500;
+    min-height: 50px;
+}
+
+.reminder-option:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.reminder-option.selected {
+    background: rgba(102, 126, 234, 0.2);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+/* Mobile reminder options */
+@media (max-width: 768px) {
+    .reminder-options {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .reminder-option {
+        padding: 16px 14px;
+        min-height: 52px;
+    }
+}
     </style>
 </head>
 <body>
@@ -7338,56 +7876,68 @@
         <input type="time" class="form-input" id="planDueTime" placeholder="Select time">
     </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Day of Week</label>
-                        <select class="form-select" id="planDayOfWeek">
-                            <option value="">Select a day</option>
-                            <option value="0">Sunday</option>
-                            <option value="1">Monday</option>
-                            <option value="2">Tuesday</option>
-                            <option value="3">Wednesday</option>
-                            <option value="4">Thursday</option>
-                            <option value="5">Friday</option>
-                            <option value="6">Saturday</option>
-                        </select>
-                    </div>
-                </div>
-                </div>
+    <div class="form-group">
+    <label class="form-label">Due Time (Optional)</label>
+    <input type="time" class="form-input" id="planDueTime" placeholder="Select time">
+    <!-- Keep hidden select for form processing -->
+    <select class="form-select" id="planDayOfWeek" style="display: none;">
+        <option value="">Select a day</option>
+        <option value="0">Sunday</option>
+        <option value="1">Monday</option>
+        <option value="2">Tuesday</option>
+        <option value="3">Wednesday</option>
+        <option value="4">Thursday</option>
+        <option value="5">Friday</option>
+        <option value="6">Saturday</option>
+    </select>
+</div>
 
-                <!-- Reminders Tab - FIXED -->
-                <div class="modal-tab-content" id="reminders">
-                    <div class="form-group">
-                        <label class="form-label">Reminder Settings</label>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
-                            Set how many minutes before the due date you want to be reminded
-                        </p>
-                        <div class="reminder-options">
-                            <div class="reminder-option" data-minutes="5">
-                                🔔 5 minutes before
-                            </div>
-                            <div class="reminder-option" data-minutes="10">
-                                🔔 10 minutes before
-                            </div>
-                            <div class="reminder-option" data-minutes="30">
-                                🔔 30 minutes before
-                            </div>
-                            <div class="reminder-option" data-minutes="60">
-                                🔔 1 hour before
-                            </div>
-                            <div class="reminder-option" data-minutes="custom">
-                                ⚙️ Custom time
-                            </div>
-                        </div>
-                        
-                        <div class="custom-reminder-input hidden" id="customReminderInput">
-                            <label class="form-label">Custom reminder time</label>
-                            <div class="custom-time-input">
-                                <input type="number" class="form-input" id="customReminderMinutes" placeholder="30" min="1" max="1440">
-                                <span style="color: var(--text-secondary);">minutes before due date</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- FIND the reminders tab content and REPLACE it with this: -->
+<div class="modal-tab-content" id="reminders">
+    <div class="form-group">
+        <label class="form-label">Reminder Settings</label>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; line-height: 1.4;">
+            Set how many minutes before the due date you want to be reminded
+        </p>
+        <div class="reminder-options">
+            <div class="reminder-option" data-minutes="5">
+                <span style="margin-right: 8px;">🔔</span>
+                <span>5 minutes before</span>
+            </div>
+            <div class="reminder-option" data-minutes="10">
+                <span style="margin-right: 8px;">🔔</span>
+                <span>10 minutes before</span>
+            </div>
+            <div class="reminder-option" data-minutes="30">
+                <span style="margin-right: 8px;">🔔</span>
+                <span>30 minutes before</span>
+            </div>
+            <div class="reminder-option" data-minutes="60">
+                <span style="margin-right: 8px;">🔔</span>
+                <span>1 hour before</span>
+            </div>
+            <div class="reminder-option" data-minutes="custom">
+                <span style="margin-right: 8px;">⚙️</span>
+                <span>Custom time</span>
+            </div>
+            <div class="reminder-option" data-minutes="none">
+                <span style="margin-right: 8px;">🔕</span>
+                <span>No reminder</span>
+            </div>
+        </div>
+        
+        <div class="custom-reminder-input hidden" id="customReminderInput">
+            <label class="form-label" style="margin-top: 15px;">Custom reminder time</label>
+            <div class="custom-time-input">
+                <input type="number" class="form-input" id="customReminderMinutes" placeholder="30" min="1" max="1440" style="width: 120px; display: inline-block; margin-right: 10px;">
+                <span style="color: var(--text-secondary);">minutes before due date</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add some filler content to ensure proper height -->
+    <div style="height: 50px;"></div>
+</div>
 
                 <div class="modal-actions">
                     <button type="button" class="btn-secondary" id="planCancelBtn">Cancel</button>
@@ -7868,7 +8418,6 @@ function toggleAnimations() {
             generateCalendar();
             updateCategoryCounts();
             scheduleNotifications();
-            initializeEnhancedWeeklyPlanner();
         }
 
         // Tab-based layout management
@@ -8181,124 +8730,539 @@ function toggleAnimations() {
     updateWeeklyStats();
         }
 
-        function createDayColumn(date, dayIndex, today, weekStatus) {
-            const dayColumn = document.createElement('div');
-            dayColumn.className = 'day-column';
-            dayColumn.setAttribute('data-day', dayIndex);
-            dayColumn.setAttribute('data-date', date.toISOString().split('T')[0]);
-            
-            // Check if this is today
-            const isToday = date.toDateString() === today.toDateString();
-            if (isToday) {
-                dayColumn.classList.add('today');
+        // Enhanced Weekly Statistics with Real-Time Updates
+function updateWeeklyStats() {
+    const weekDates = getWeekDates(currentWeekStart);
+    
+    // Get all plans for current week
+    const currentWeekPlans = plans.filter(plan => {
+        // Check if plan belongs to current week
+        if (plan.dayOfWeek !== null && plan.dayOfWeek !== undefined) {
+            return true; // Plan has a day assigned
+        }
+        
+        // Check if plan has specific due date in current week
+        if (plan.dueDate) {
+            const planDate = new Date(plan.dueDate);
+            return weekDates.some(weekDate => 
+                weekDate.toDateString() === planDate.toDateString()
+            );
+        }
+        
+        return false;
+    });
+    
+    const completed = currentWeekPlans.filter(p => p.completed).length;
+    const total = currentWeekPlans.length;
+    const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+    
+    // Calculate priority counts
+    const priorityCounts = {
+        high: currentWeekPlans.filter(p => p.priority === 'high').length,
+        medium: currentWeekPlans.filter(p => p.priority === 'medium').length,
+        low: currentWeekPlans.filter(p => p.priority === 'low').length
+    };
+    
+    // Update progress bar with animation
+    updateProgressBar(progress, total > 0);
+    
+    // Update stats display
+    updateStatsDisplay(completed, total, priorityCounts, progress);
+    
+    // Update progress text
+    const progressText = document.querySelector('.progress-text');
+    if (progressText) {
+        progressText.textContent = `${progress}% Complete (${completed}/${total} tasks)`;
+    }
+}
+
+function updateProgressBar(percentage, hasPlans) {
+    const progressFill = document.querySelector('.progress-fill');
+    const progressBar = document.querySelector('.progress-bar');
+    
+    if (progressFill && progressBar) {
+        // Animate progress bar
+        progressFill.style.transition = 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        progressFill.style.width = `${percentage}%`;
+        
+        // Change color based on progress
+        if (percentage === 100) {
+            progressFill.style.background = 'linear-gradient(90deg, var(--success), #22c55e)';
+        } else if (percentage >= 75) {
+            progressFill.style.background = 'linear-gradient(90deg, #22c55e, var(--accent-primary))';
+        } else if (percentage >= 50) {
+            progressFill.style.background = 'linear-gradient(90deg, var(--warning), var(--accent-primary))';
+        } else {
+            progressFill.style.background = 'linear-gradient(90deg, var(--accent-primary), var(--accent-secondary))';
+        }
+        
+        // Add pulse animation when completed
+        if (percentage === 100 && hasPlans) {
+            progressBar.style.animation = 'progressComplete 2s ease-in-out';
+            setTimeout(() => {
+                progressBar.style.animation = '';
+            }, 2000);
+        }
+    }
+}
+
+function updateStatsDisplay(completed, total, priorityCounts, progress) {
+    const statsContainer = document.querySelector('.week-stats');
+    if (statsContainer) {
+        statsContainer.innerHTML = `
+            <div class="stat-item">
+                <div class="stat-number">${completed}/${total}</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">${priorityCounts.high}</div>
+                <div class="stat-label">High Priority</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">${progress}%</div>
+                <div class="stat-label">Week Progress</div>
+            </div>
+        `;
+    }
+}
+
+// Enhanced Weekly Planner Features
+let currentView = 'list'; // 'list' or 'time'
+let draggedPlan = null;
+
+// Initialize Enhanced Weekly Planner
+function initializeEnhancedWeeklyPlanner() {
+    setupDragAndDrop(); // Desktop drag & drop
+    
+    // Add mobile-specific features
+    if (window.innerWidth <= 768) {
+        setupMobileDragAndDrop();
+    }
+    
+    updateWeeklyStats();
+    generateTimeSlots();
+    
+    // Only add keyboard shortcuts on desktop
+    if (window.innerWidth > 768) {
+        addKeyboardShortcuts();
+    }
+}
+
+// Drag and Drop Implementation
+function setupDragAndDrop() {
+    document.addEventListener('dragstart', handleDragStart);
+    document.addEventListener('dragover', handleDragOver);
+    document.addEventListener('drop', handleDrop);
+    document.addEventListener('dragend', handleDragEnd);
+}
+
+function handleDragStart(e) {
+    if (e.target.classList.contains('plan-badge')) {
+        draggedPlan = e.target;
+        e.target.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', e.target.outerHTML);
+    }
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    const dayColumn = e.target.closest('.day-column');
+    if (dayColumn) {
+        dayColumn.classList.add('drag-over');
+    }
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    const dayColumn = e.target.closest('.day-column');
+    if (dayColumn && draggedPlan) {
+        const planId = draggedPlan.getAttribute('data-plan-id');
+        const newDayOfWeek = parseInt(dayColumn.getAttribute('data-day'));
+        
+        // Update plan day
+        const plan = plans.find(p => p.id === planId);
+        if (plan) {
+            plan.dayOfWeek = newDayOfWeek;
+            saveUserData();
+            generateWeeklyPlanner();
+            showNotification('Plan moved successfully!', 'success');
+        }
+    }
+    
+    // Clean up
+    document.querySelectorAll('.day-column').forEach(col => {
+        col.classList.remove('drag-over');
+    });
+}
+
+function handleDragEnd(e) {
+    if (e.target.classList.contains('plan-badge')) {
+        e.target.classList.remove('dragging');
+    }
+    draggedPlan = null;
+}
+
+// Quick Edit Functionality
+function enableQuickEdit(planElement) {
+    const planId = planElement.getAttribute('data-plan-id');
+    const plan = plans.find(p => p.id === planId);
+    const titleElement = planElement.querySelector('.plan-title');
+    
+    planElement.classList.add('editing');
+    
+    const input = document.createElement('input');
+    input.className = 'plan-inline-edit';
+    input.value = plan.title;
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            saveQuickEdit(planId, input.value);
+        } else if (e.key === 'Escape') {
+            cancelQuickEdit();
+        }
+    });
+    
+    titleElement.innerHTML = '';
+    titleElement.appendChild(input);
+    
+    const actions = document.createElement('div');
+    actions.className = 'plan-edit-actions';
+    actions.innerHTML = `
+        <button class="plan-edit-btn plan-edit-save" onclick="saveQuickEdit('${planId}', this.parentElement.previousElementSibling.querySelector('.plan-inline-edit').value)">Save</button>
+        <button class="plan-edit-btn plan-edit-cancel" onclick="cancelQuickEdit()">Cancel</button>
+    `;
+    
+    planElement.appendChild(actions);
+    input.focus();
+}
+
+function saveQuickEdit(planId, newTitle) {
+    const plan = plans.find(p => p.id === planId);
+    if (plan && newTitle.trim()) {
+        plan.title = newTitle.trim();
+        saveUserData();
+        generateWeeklyPlanner();
+        showNotification('Plan updated!', 'success');
+    }
+}
+
+function cancelQuickEdit() {
+    generateWeeklyPlanner(); // Refresh to cancel edit
+}
+
+// Time View Toggle
+function toggleView(view) {
+    currentView = view;
+    
+    // Update toggle buttons
+    document.querySelectorAll('.view-toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[data-view="${view}"]`).classList.add('active');
+    
+    generateWeeklyPlanner();
+}
+
+// Generate Time Slots
+function generateTimeSlots() {
+    const timeSlots = [];
+    for (let hour = 6; hour < 23; hour++) {
+        timeSlots.push({
+            time: `${hour.toString().padStart(2, '0')}:00`,
+            label: formatTime12Hour(hour, 0)
+        });
+        timeSlots.push({
+            time: `${hour.toString().padStart(2, '0')}:30`,
+            label: formatTime12Hour(hour, 30)
+        });
+    }
+    return timeSlots;
+}
+
+function formatTime12Hour(hour, minute) {
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 || 12;
+    return `${hour12}:${minute.toString().padStart(2, '0')} ${ampm}`;
+}
+
+// Keyboard Shortcuts
+function addKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey || e.metaKey) {
+            switch(e.key) {
+                case 'n':
+                    e.preventDefault();
+                    openPlanModal();
+                    break;
+                case 'f':
+                    e.preventDefault();
+                    toggleSearch();
+                    break;
             }
-            
-            // Add week status classes
-            if (weekStatus === 'past') {
-                dayColumn.classList.add('past');
-            } else if (weekStatus === 'future') {
-                dayColumn.classList.add('future');
+        }
+    });
+}
+
+// Quick Actions
+function markAllCompleted() {
+    const confirmed = confirm('Mark all plans for this week as completed?');
+    if (confirmed) {
+        plans.forEach(plan => {
+            if (isInCurrentWeek(plan)) {
+                plan.completed = true;
             }
+        });
+        saveUserData();
+        generateWeeklyPlanner();
+        showNotification('All plans marked as completed!', 'success');
+    }
+}
+
+function clearCompleted() {
+    const confirmed = confirm('Remove all completed plans from this week?');
+    if (confirmed) {
+        plans = plans.filter(plan => !(isInCurrentWeek(plan) && plan.completed));
+        saveUserData();
+        generateWeeklyPlanner();
+        showNotification('Completed plans cleared!', 'success');
+    }
+}
+
+function duplicateWeek() {
+    const confirmed = confirm('Duplicate this week\'s plans to next week?');
+    if (confirmed) {
+        // Implementation for duplicating week
+        showNotification('Week duplicated!', 'success');
+    }
+}
+
+// Helper function to check if plan is in current week
+function isInCurrentWeek(plan) {
+    // Simple implementation - you can enhance this logic
+    return plan.dayOfWeek !== null && plan.dayOfWeek !== undefined;
+}
+
+// Mobile-Friendly Drag & Drop
+function setupMobileDragAndDrop() {
+    let touchItem = null;
+    let touchOffset = { x: 0, y: 0 };
+    let isDragging = false;
+
+    document.addEventListener('touchstart', handleTouchStart, { passive: false });
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd, { passive: false });
+
+    function handleTouchStart(e) {
+        const planBadge = e.target.closest('.plan-badge');
+        if (planBadge) {
+            touchItem = planBadge;
+            const touch = e.touches[0];
+            const rect = planBadge.getBoundingClientRect();
+            touchOffset.x = touch.clientX - rect.left;
+            touchOffset.y = touch.clientY - rect.top;
             
-            // Create day header
-            const dayHeader = document.createElement('div');
-            dayHeader.className = 'day-header';
-            
-            const dayName = document.createElement('div');
-            dayName.className = 'day-name';
-            dayName.textContent = daysOfWeek[dayIndex];
-            
-            const dayDate = document.createElement('div');
-            dayDate.className = 'day-date';
-            dayDate.textContent = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            
-            dayHeader.appendChild(dayName);
-            dayHeader.appendChild(dayDate);
-            
-            // Create plans container
-            const dayPlans = document.createElement('div');
-            dayPlans.className = 'day-plans';
-            
-            // Only show current week plans, filter out future/past week plans appropriately
-            let dayPlansFiltered = plans.filter(plan => {
-                const planMatches = plan.dayOfWeek === dayIndex || 
-                               (plan.dueDate && new Date(plan.dueDate).toDateString() === date.toDateString());
-                
-                if (!planMatches) return false;
-                
-                // For future weeks, don't show plans unless they have specific due dates
-                if (weekStatus === 'future' && !plan.dueDate) {
-                    return false;
+            // Add long press detection
+            setTimeout(() => {
+                if (touchItem === planBadge) {
+                    isDragging = true;
+                    planBadge.classList.add('dragging');
+                    // Haptic feedback if available
+                    if (navigator.vibrate) {
+                        navigator.vibrate(50);
+                    }
                 }
+            }, 500); // 500ms long press
+        }
+    }
+
+    function handleTouchMove(e) {
+        if (!isDragging || !touchItem) return;
+        
+        e.preventDefault();
+        const touch = e.touches[0];
+        
+        // Move the dragging element
+        touchItem.style.position = 'fixed';
+        touchItem.style.left = (touch.clientX - touchOffset.x) + 'px';
+        touchItem.style.top = (touch.clientY - touchOffset.y) + 'px';
+        touchItem.style.zIndex = '1000';
+        
+        // Find day column under touch
+        const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+        const dayColumn = elementBelow?.closest('.day-column');
+        
+        // Remove previous highlights
+        document.querySelectorAll('.day-column').forEach(col => {
+            col.classList.remove('drag-over');
+        });
+        
+        // Highlight current day column
+        if (dayColumn) {
+            dayColumn.classList.add('drag-over');
+        }
+    }
+
+    function handleTouchEnd(e) {
+        if (!isDragging || !touchItem) {
+            touchItem = null;
+            isDragging = false;
+            return;
+        }
+
+        const touch = e.changedTouches[0];
+        const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+        const dayColumn = elementBelow?.closest('.day-column');
+        
+        if (dayColumn) {
+            // Move plan to new day
+            const planId = touchItem.getAttribute('data-plan-id');
+            const newDayOfWeek = parseInt(dayColumn.getAttribute('data-day'));
+            
+            const plan = plans.find(p => p.id === planId);
+            if (plan) {
+                plan.dayOfWeek = newDayOfWeek;
+                saveUserData();
+                generateWeeklyPlanner();
+                showNotification('Plan moved successfully!', 'success');
+            }
+        }
+        
+        // Reset dragging element
+        touchItem.style.position = '';
+        touchItem.style.left = '';
+        touchItem.style.top = '';
+        touchItem.style.zIndex = '';
+        touchItem.classList.remove('dragging');
+        
+        // Clean up
+        document.querySelectorAll('.day-column').forEach(col => {
+            col.classList.remove('drag-over');
+        });
+        
+        touchItem = null;
+        isDragging = false;
+    }
+}
+
+        function createDayColumn(date, dayIndex, today, weekStatus) {
+    const dayColumn = document.createElement('div');
+    dayColumn.className = 'day-column';
+    dayColumn.setAttribute('data-day', dayIndex);
+    dayColumn.setAttribute('data-date', date.toISOString().split('T')[0]);
+    
+    // Check if this is today
+    const isToday = date.toDateString() === today.toDateString();
+    if (isToday) {
+        dayColumn.classList.add('today');
+    }
+    
+    // Add week status classes
+    if (weekStatus === 'past') {
+        dayColumn.classList.add('past');
+    } else if (weekStatus === 'future') {
+        dayColumn.classList.add('future');
+    }
+    
+    // Create day header
+    const dayHeader = document.createElement('div');
+    dayHeader.className = 'day-header';
+    
+    const dayName = document.createElement('div');
+    dayName.className = 'day-name';
+    dayName.textContent = daysOfWeek[dayIndex];
+    
+    const dayDate = document.createElement('div');
+    dayDate.className = 'day-date';
+    dayDate.textContent = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    
+    dayHeader.appendChild(dayName);
+    dayHeader.appendChild(dayDate);
+    
+    // Create plans container
+    const dayPlans = document.createElement('div');
+    dayPlans.className = 'day-plans';
+    
+    // UPDATED PLAN FILTERING - Fix the logic here:
+    let dayPlansFiltered = plans.filter(plan => {
+        // Check if plan matches this day
+        const matchesDayOfWeek = plan.dayOfWeek !== null && plan.dayOfWeek !== undefined && plan.dayOfWeek === dayIndex;
+        const matchesDueDate = plan.dueDate && new Date(plan.dueDate).toDateString() === date.toDateString();
+        
+        // Debug logging
+        if (matchesDayOfWeek || matchesDueDate) {
+            console.log('Plan matches day:', plan.title, 'dayIndex:', dayIndex, 'plan.dayOfWeek:', plan.dayOfWeek);
+        }
+        
+        return matchesDayOfWeek || matchesDueDate;
+    });
+    
+    console.log(`Day ${dayIndex} (${daysOfWeek[dayIndex]}): ${dayPlansFiltered.length} plans found`);
+    
+    // Show only the first plan, and indicate if there are more
+    if (dayPlansFiltered.length > 0) {
+        const firstPlan = dayPlansFiltered[0];
+        const planBadge = createPlanBadge(firstPlan);
+        dayPlans.appendChild(planBadge);
+        
+        // If there are more plans, show indicator with dropdown
+        if (dayPlansFiltered.length > 1) {
+            const moreIndicator = document.createElement('div');
+            moreIndicator.className = 'more-plans-indicator';
+            const remainingCount = dayPlansFiltered.length - 1;
+            moreIndicator.textContent = `+${remainingCount} more`;
+            
+            // Create dropdown for additional plans
+            const dropdown = document.createElement('div');
+            dropdown.className = 'more-plans-dropdown';
+            
+            // Add remaining plans to dropdown
+            for (let i = 1; i < dayPlansFiltered.length; i++) {
+                const plan = dayPlansFiltered[i];
+                const planBadge = createPlanBadge(plan, true);
+                dropdown.appendChild(planBadge);
+            }
+            
+            moreIndicator.appendChild(dropdown);
+            
+            moreIndicator.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('active');
                 
-                // For past weeks, show all plans
-                return true;
+                // Close other dropdowns
+                document.querySelectorAll('.more-plans-dropdown.active').forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
             });
             
-            // Show only the first plan, and indicate if there are more
-            if (dayPlansFiltered.length > 0) {
-                const firstPlan = dayPlansFiltered[0];
-                const planBadge = createPlanBadge(firstPlan);
-                dayPlans.appendChild(planBadge);
-                
-                // If there are more plans, show indicator with dropdown
-                if (dayPlansFiltered.length > 1) {
-                    const moreIndicator = document.createElement('div');
-                    moreIndicator.className = 'more-plans-indicator';
-                    const remainingCount = dayPlansFiltered.length - 1;
-                    moreIndicator.textContent = `+${remainingCount} more`;
-                    
-                    // Create dropdown for additional plans
-                    const dropdown = document.createElement('div');
-                    dropdown.className = 'more-plans-dropdown';
-                    
-                    // Add remaining plans to dropdown
-                    for (let i = 1; i < dayPlansFiltered.length; i++) {
-                        const plan = dayPlansFiltered[i];
-                        const planBadge = createPlanBadge(plan, true); // true for dropdown mode
-                        dropdown.appendChild(planBadge);
-                    }
-                    
-                    moreIndicator.appendChild(dropdown);
-                    
-                    moreIndicator.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        dropdown.classList.toggle('active');
-                        
-                        // Close other dropdowns
-                        document.querySelectorAll('.more-plans-dropdown.active').forEach(otherDropdown => {
-                            if (otherDropdown !== dropdown) {
-                                otherDropdown.classList.remove('active');
-                            }
-                        });
-                    });
-                    
-                    dayPlans.appendChild(moreIndicator);
-                }
-            }
-            
-            // Add "Add Plan" button (only for current and future weeks)
-            if (weekStatus !== 'past') {
-                const addPlanToDay = document.createElement('div');
-                addPlanToDay.className = 'add-plan-to-day';
-                addPlanToDay.innerHTML = `
-                    <div style="font-size: 1.5rem; margin-bottom: 5px;">+</div>
-                    <div style="font-size: 0.8rem;">Add Plan</div>
-                `;
-                
-                addPlanToDay.addEventListener('click', () => {
-                    selectedDayOfWeek = dayIndex;
-                    openPlanModal();
-                });
-                
-                dayPlans.appendChild(addPlanToDay);
-            }
-            
-            dayColumn.appendChild(dayHeader);
-            dayColumn.appendChild(dayPlans);
-            
-            return dayColumn;
+            dayPlans.appendChild(moreIndicator);
         }
+    }
+    
+    // Add "Add Plan" button (only for current and future weeks)
+    if (weekStatus !== 'past') {
+        const addPlanToDay = document.createElement('div');
+        addPlanToDay.className = 'add-plan-to-day';
+        addPlanToDay.innerHTML = `
+            <div style="font-size: 1.5rem; margin-bottom: 5px;">+</div>
+            <div style="font-size: 0.8rem;">Add Plan</div>
+        `;
+        
+        addPlanToDay.addEventListener('click', () => {
+            selectedDayOfWeek = dayIndex;
+            console.log('Selected day from column:', dayIndex);
+            openPlanModal();
+        });
+        
+        dayPlans.appendChild(addPlanToDay);
+    }
+    
+    dayColumn.appendChild(dayHeader);
+    dayColumn.appendChild(dayPlans);
+    
+    return dayColumn;
+}
 
         function createPlanBadge(plan, isDropdown = false) {
             const planBadge = document.createElement('div');
@@ -8602,77 +9566,86 @@ function toggleAnimations() {
             generateCalendar();
         }
 
-        // Modal Functions
         function openPlanModal(planId = null) {
-            currentPlanId = planId;
-            const modal = document.getElementById('planModal');
-            const title = document.getElementById('planModalTitle');
-            const submitBtn = document.getElementById('planSubmitBtn');
-            
-            // Reset form
-            document.getElementById('planForm').reset();
-            
-            // Reset priority selection
-            document.querySelectorAll('.priority-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            document.querySelector('.priority-option[data-priority="medium"]').classList.add('selected');
-            
-            // Reset reminder selection
-            document.querySelectorAll('.reminder-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            document.getElementById('customReminderInput').classList.add('hidden');
-            
-            if (planId) {
-                // Edit mode
-                const plan = plans.find(p => p.id === planId);
-                if (plan) {
-                    title.textContent = 'Edit Plan';
-                    submitBtn.textContent = 'Update Plan';
-                    populatePlanForm(plan);
-                }
-            } else {
-                // Create mode
-                title.textContent = 'Create New Plan';
-                submitBtn.textContent = 'Create Plan';
-                
-                // Pre-select day if one was chosen
-                if (selectedDayOfWeek !== null) {
-                    document.getElementById('planDayOfWeek').value = selectedDayOfWeek;
-                }
-            }
-            
-            modal.classList.add('active');
+    currentPlanId = planId;
+    const modal = document.getElementById('planModal');
+    const title = document.getElementById('planModalTitle');
+    const submitBtn = document.getElementById('planSubmitBtn');
+    
+    // Reset form
+    document.getElementById('planForm').reset();
+    
+    // Reset priority selection
+    document.querySelectorAll('.priority-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    document.querySelector('.priority-option[data-priority="medium"]').classList.add('selected');
+    
+    // Reset reminder selection
+    document.querySelectorAll('.reminder-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    document.getElementById('customReminderInput').classList.add('hidden');
+    
+    if (planId) {
+        // Edit mode
+        const plan = plans.find(p => p.id === planId);
+        if (plan) {
+            title.textContent = 'Edit Plan';
+            submitBtn.textContent = 'Update Plan';
+            populatePlanForm(plan);
         }
+    } else {
+        // Create mode
+        title.textContent = 'Create New Plan';
+        submitBtn.textContent = 'Create Plan';
+        
+        // Pre-select day if one was chosen from day column
+        if (selectedDayOfWeek !== null) {
+            document.getElementById('planDayOfWeek').value = selectedDayOfWeek;
+            console.log('Pre-selected day:', selectedDayOfWeek); // Debug line
+        }
+    }
+    
+    modal.classList.add('active');
+}
 
         function populatePlanForm(plan) {
-            document.getElementById('planTitle').value = plan.title;
-            document.getElementById('planDescription').value = plan.description || '';
-            document.getElementById('planCategory').value = plan.category;
-            document.getElementById('planDueDate').value = plan.dueDate || '';
-            document.getElementById('planDueTime').value = plan.dueTime || '';
-            document.getElementById('planDayOfWeek').value = plan.dayOfWeek !== undefined ? plan.dayOfWeek : '';
-            
-            // Set priority
-            document.querySelectorAll('.priority-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            document.querySelector(`[data-priority="${plan.priority}"]`).classList.add('selected');
-            
-            // Set reminder
-            if (plan.reminderMinutes) {
-                const reminderOption = document.querySelector(`[data-minutes="${plan.reminderMinutes}"]`);
-                if (reminderOption) {
-                    reminderOption.classList.add('selected');
-                } else {
-                    // Custom reminder
-                    document.querySelector('[data-minutes="custom"]').classList.add('selected');
-                    document.getElementById('customReminderInput').classList.remove('hidden');
-                    document.getElementById('customReminderMinutes').value = plan.reminderMinutes;
-                }
-            }
+    document.getElementById('planTitle').value = plan.title;
+    document.getElementById('planDescription').value = plan.description || '';
+    document.getElementById('planCategory').value = plan.category;
+    document.getElementById('planDueDate').value = plan.dueDate || '';
+    document.getElementById('planDueTime').value = plan.dueTime || '';
+    
+    // Set day of week for both hidden select and custom dropdown
+    const dayValue = plan.dayOfWeek !== undefined ? plan.dayOfWeek.toString() : '';
+    const hiddenSelect = document.getElementById('planDayOfWeek');
+    const customDaySelector = document.getElementById('customDaySelector');
+    
+    // Update hidden select
+    if (hiddenSelect) {
+        hiddenSelect.value = dayValue;
+    }
+    
+    // Set priority
+    document.querySelectorAll('.priority-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    document.querySelector(`[data-priority="${plan.priority}"]`).classList.add('selected');
+    
+    // Set reminder
+    if (plan.reminderMinutes) {
+        const reminderOption = document.querySelector(`[data-minutes="${plan.reminderMinutes}"]`);
+        if (reminderOption) {
+            reminderOption.classList.add('selected');
+        } else {
+            // Custom reminder
+            document.querySelector('[data-minutes="custom"]').classList.add('selected');
+            document.getElementById('customReminderInput').classList.remove('hidden');
+            document.getElementById('customReminderMinutes').value = plan.reminderMinutes;
         }
+    }
+}
 
         function closePlanModal() {
             document.getElementById('planModal').classList.remove('active');
@@ -8865,31 +9838,34 @@ function switchModalTab(tabName) {
             document.getElementById(tabName).classList.add('active');
         }
 
-        // Plan Management
         function createPlan(planData) {
-            const plan = {
-                id: Date.now().toString(),
-                title: planData.title,
-                description: planData.description,
-                category: planData.category,
-                priority: planData.priority,
-                dueDate: planData.dueDate,
-                dueTime: planData.dueTime,
-                dayOfWeek: planData.dayOfWeek !== '' ? parseInt(planData.dayOfWeek) : null,
-                reminderMinutes: planData.reminderMinutes,
-                createdAt: new Date().toISOString(),
-                completed: false
-            };
-            
-            plans.push(plan);
-            saveUserData();
-            generateWeeklyPlanner();
-            updateCategoryCounts();
-            scheduleNotifications();
-            
-            showNotification('Plan created successfully!', 'success');
-            return plan;
-        }
+    const plan = {
+        id: Date.now().toString(),
+        title: planData.title,
+        description: planData.description,
+        category: planData.category,
+        priority: planData.priority,
+        dueDate: planData.dueDate,
+        dueTime: planData.dueTime,
+        dayOfWeek: planData.dayOfWeek !== '' ? parseInt(planData.dayOfWeek) : null,
+        reminderMinutes: planData.reminderMinutes,
+        createdAt: new Date().toISOString(),
+        completed: false
+    };
+    
+    // Debug logging
+    console.log('Creating plan:', plan);
+    console.log('Plan dayOfWeek:', plan.dayOfWeek, 'type:', typeof plan.dayOfWeek);
+    
+    plans.push(plan);
+    saveUserData();
+    generateWeeklyPlanner();
+    updateCategoryCounts();
+    scheduleNotifications();
+    
+    showNotification('Plan created successfully!', 'success');
+    return plan;
+}
 
         function updatePlan(planId, planData) {
             const planIndex = plans.findIndex(p => p.id === planId);
@@ -8914,6 +9890,7 @@ function switchModalTab(tabName) {
             scheduleNotifications();
             
             showNotification('Plan updated successfully!', 'success');
+            updateWeeklyStats();
         }
 
         function deletePlan(planId) {
@@ -8928,6 +9905,7 @@ function switchModalTab(tabName) {
             updateCategoryCounts();
             
             showNotification(`"${planTitle}" deleted successfully!`, 'success');
+            updateWeeklyStats();
         }
 
         function togglePlanCompletion(planId) {
@@ -8942,6 +9920,7 @@ function switchModalTab(tabName) {
             
             const status = plan.completed ? 'completed' : 'reopened';
             showNotification(`Plan ${status}!`, 'success');
+            updateWeeklyStats();
         }
 
         // Event Management
@@ -9299,13 +10278,16 @@ function switchModalTab(tabName) {
         }
 
         function confirmDaySelection() {
-            if (selectedDayOfWeek !== null) {
-                closeDaySelectorModal();
-                openPlanModal();
-            } else {
-                showNotification('Please select a day first', 'warning');
-            }
-        }
+    if (selectedDayOfWeek !== null) {
+        closeDaySelectorModal();
+        // Open plan modal immediately after day selection
+        setTimeout(() => {
+            openPlanModal();
+        }, 300); // Small delay for smooth transition
+    } else {
+        showNotification('Please select a day first', 'warning');
+    }
+}
 
         // Delete Confirmation Modal
         function showDeleteConfirmation(onConfirm, type = 'item') {
@@ -9612,9 +10594,15 @@ document.getElementById('accountCancelBtn').addEventListener('click', closeAccou
             document.getElementById('prevMonthBtn').addEventListener('click', previousMonth);
             document.getElementById('nextMonthBtn').addEventListener('click', nextMonth);
             
-            // Add plan/event buttons
-            document.getElementById('addPlanBtn').addEventListener('click', () => openDaySelectorModal());
-            document.getElementById('mobileAddPlan').addEventListener('click', () => openDaySelectorModal());
+            // WITH THIS:
+document.getElementById('addPlanBtn').addEventListener('click', () => {
+    selectedDayOfWeek = null; // Reset selection
+    openDaySelectorModal(); // Show day selector first
+});
+document.getElementById('mobileAddPlan').addEventListener('click', () => {
+    selectedDayOfWeek = null; // Reset selection
+    openDaySelectorModal(); // Show day selector first
+});
             document.getElementById('addEventBtn').addEventListener('click', () => openEventModal());
             
             // Modal close buttons  
@@ -9892,32 +10880,43 @@ document.querySelectorAll('.category-item').forEach(item => {
         }
 
         function handlePlanForm(e) {
-            e.preventDefault();
-            
-            const formData = {
-                title: document.getElementById('planTitle').value.trim(),
-                description: document.getElementById('planDescription').value.trim(),
-                category: document.getElementById('planCategory').value,
-                priority: getSelectedPriority(),
-                dueDate: document.getElementById('planDueDate').value,
-                dueTime: document.getElementById('planDueTime').value,
-                dayOfWeek: document.getElementById('planDayOfWeek').value,
-                reminderMinutes: getSelectedReminder()
-            };
-            
-            if (!formData.title) {
-                showNotification('Please enter a plan title', 'error');
-                return;
-            }
-            
-            if (currentPlanId) {
-                updatePlan(currentPlanId, formData);
-            } else {
-                createPlan(formData);
-            }
-            
-            closePlanModal();
-        }
+    e.preventDefault();
+    
+    const formData = {
+        title: document.getElementById('planTitle').value.trim(),
+        description: document.getElementById('planDescription').value.trim(),
+        category: document.getElementById('planCategory').value,
+        priority: getSelectedPriority(),
+        dueDate: document.getElementById('planDueDate').value,
+        dueTime: document.getElementById('planDueTime').value,
+        dayOfWeek: document.getElementById('planDayOfWeek').value,
+        reminderMinutes: getSelectedReminder()
+    };
+    
+    // Debug logging
+    console.log('Form submission - selectedDayOfWeek:', selectedDayOfWeek);
+    console.log('Form submission - formData.dayOfWeek:', formData.dayOfWeek);
+    console.log('Form submission - complete formData:', formData);
+    
+    if (!formData.title) {
+        showNotification('Please enter a plan title', 'error');
+        return;
+    }
+    
+    // Use selectedDayOfWeek if dayOfWeek is empty
+    if (!formData.dayOfWeek && selectedDayOfWeek !== null) {
+        formData.dayOfWeek = selectedDayOfWeek.toString();
+        console.log('Using selectedDayOfWeek:', formData.dayOfWeek);
+    }
+    
+    if (currentPlanId) {
+        updatePlan(currentPlanId, formData);
+    } else {
+        createPlan(formData);
+    }
+    
+    closePlanModal();
+}
 
         function handleEventForm(e) {
             e.preventDefault();
@@ -10143,9 +11142,6 @@ document.querySelectorAll('.category-item').forEach(item => {
 
         console.log('TaskFlow Pro v4.0 - All systems ready! 🚀');
 
-        // Enhanced Weekly Planner Features
-let currentView = 'list'; // 'list' or 'time'
-let draggedPlan = null;
 
 // Update your existing initializeEnhancedWeeklyPlanner function
 function initializeEnhancedWeeklyPlanner() {
@@ -10165,30 +11161,83 @@ function initializeEnhancedWeeklyPlanner() {
     }
 }
 
-// Weekly Statistics
+// Enhanced Weekly Statistics with Real-Time Updates
 function updateWeeklyStats() {
+    const weekDates = getWeekDates(currentWeekStart);
+    
+    // Get all plans for current week
     const currentWeekPlans = plans.filter(plan => {
-        // Filter plans for current week
-        return true; // Implement your week filtering logic
+        // Check if plan belongs to current week
+        if (plan.dayOfWeek !== null && plan.dayOfWeek !== undefined) {
+            return true; // Plan has a day assigned
+        }
+        
+        // Check if plan has specific due date in current week
+        if (plan.dueDate) {
+            const planDate = new Date(plan.dueDate);
+            return weekDates.some(weekDate => 
+                weekDate.toDateString() === planDate.toDateString()
+            );
+        }
+        
+        return false;
     });
     
     const completed = currentWeekPlans.filter(p => p.completed).length;
     const total = currentWeekPlans.length;
-    const progress = total > 0 ? (completed / total) * 100 : 0;
+    const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
     
-    // Update UI
-    updateProgressBar(progress);
-    updateStatsDisplay(completed, total, calculatePriorityCounts());
-}
-
-function updateProgressBar(percentage) {
-    const progressFill = document.querySelector('.progress-fill');
-    if (progressFill) {
-        progressFill.style.width = `${percentage}%`;
+    // Calculate priority counts
+    const priorityCounts = {
+        high: currentWeekPlans.filter(p => p.priority === 'high').length,
+        medium: currentWeekPlans.filter(p => p.priority === 'medium').length,
+        low: currentWeekPlans.filter(p => p.priority === 'low').length
+    };
+    
+    // Update progress bar with animation
+    updateProgressBar(progress, total > 0);
+    
+    // Update stats display
+    updateStatsDisplay(completed, total, priorityCounts, progress);
+    
+    // Update progress text
+    const progressText = document.querySelector('.progress-text');
+    if (progressText) {
+        progressText.textContent = `${progress}% Complete (${completed}/${total} tasks)`;
     }
 }
 
-function updateStatsDisplay(completed, total, priorityCounts) {
+function updateProgressBar(percentage, hasPlans) {
+    const progressFill = document.querySelector('.progress-fill');
+    const progressBar = document.querySelector('.progress-bar');
+    
+    if (progressFill && progressBar) {
+        // Animate progress bar
+        progressFill.style.transition = 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        progressFill.style.width = `${percentage}%`;
+        
+        // Change color based on progress
+        if (percentage === 100) {
+            progressFill.style.background = 'linear-gradient(90deg, var(--success), #22c55e)';
+        } else if (percentage >= 75) {
+            progressFill.style.background = 'linear-gradient(90deg, #22c55e, var(--accent-primary))';
+        } else if (percentage >= 50) {
+            progressFill.style.background = 'linear-gradient(90deg, var(--warning), var(--accent-primary))';
+        } else {
+            progressFill.style.background = 'linear-gradient(90deg, var(--accent-primary), var(--accent-secondary))';
+        }
+        
+        // Add pulse animation when completed
+        if (percentage === 100 && hasPlans) {
+            progressBar.style.animation = 'progressComplete 2s ease-in-out';
+            setTimeout(() => {
+                progressBar.style.animation = '';
+            }, 2000);
+        }
+    }
+}
+
+function updateStatsDisplay(completed, total, priorityCounts, progress) {
     const statsContainer = document.querySelector('.week-stats');
     if (statsContainer) {
         statsContainer.innerHTML = `
@@ -10201,7 +11250,7 @@ function updateStatsDisplay(completed, total, priorityCounts) {
                 <div class="stat-label">High Priority</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">${Math.round((completed/total) * 100) || 0}%</div>
+                <div class="stat-number">${progress}%</div>
                 <div class="stat-label">Week Progress</div>
             </div>
         `;
